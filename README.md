@@ -1,1 +1,1 @@
-# choice-discourse
+# CHOICE Discourse
