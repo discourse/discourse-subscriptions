@@ -1,3 +1,3 @@
 Choice::Engine.routes.draw do
-  get "about" => "choice#about"
+  get "about" => "choice#index"
 end
