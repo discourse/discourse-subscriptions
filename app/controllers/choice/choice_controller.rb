@@ -1,6 +1,6 @@
 module Choice
   class ChoiceController < Choice::ApplicationController
-    def index
+    def create
       head 200
     end
   end

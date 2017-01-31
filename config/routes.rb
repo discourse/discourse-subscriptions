@@ -1,3 +1,3 @@
 Choice::Engine.routes.draw do
-  get "about" => "choice#index"
+  get 'stripe' => 'choice#create'
 end
