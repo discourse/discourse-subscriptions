@@ -1,9 +1,6 @@
 module Choice
   class ChoiceController < Choice::ApplicationController
     def create
-      @badge = consumer_defender_badge
-      @user = @discourse_api.client.user
-
       customer = Stripe::Customer.create(
        :email => params[:stripeEmail],
        :source  => params[:stripeToken]
