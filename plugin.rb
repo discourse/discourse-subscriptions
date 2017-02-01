@@ -3,6 +3,8 @@
 # version: 0.0.2
 # authors: Rimian Perkins
 
+gem 'stripe'
+
 module ::Choice
   class Engine < ::Rails::Engine
     engine_name 'choice'
