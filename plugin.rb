@@ -3,7 +3,7 @@
 # version: 0.0.2
 # authors: Rimian Perkins
 
-gem 'stripe'
+gem 'stripe', '1.58.0'
 
 module ::Choice
   class Engine < ::Rails::Engine
