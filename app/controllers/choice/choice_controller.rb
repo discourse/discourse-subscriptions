@@ -16,7 +16,7 @@ module Choice
         :currency    => 'aud'
       )
 
-
+      BadgeGranter.grant(consumer_defender_badge, current_user)
 
       head :created
     end
@@ -24,7 +24,7 @@ module Choice
     private
 
     def consumer_defender_badge
-      Discourse.badges['badges'].select { |b| b['name'] == 'Consumer Defender' }.first
+      Badge.find_by_name('Consumer Defender')
     end
   end
 end
