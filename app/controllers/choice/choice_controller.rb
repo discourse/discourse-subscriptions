@@ -1,6 +1,12 @@
 module Choice
   class ChoiceController < Choice::ApplicationController
     def create
+      badge = Badge.find_by_name('Consumer Defender')
+
+      if badge.nil?
+        head 422 and return
+      end
+
       customer = Stripe::Customer.create(
        :email => params[:stripeEmail],
        :source  => params[:stripeToken]
@@ -8,20 +14,18 @@ module Choice
 
       charge = Stripe::Charge.create(
         :customer    => customer.id,
-        :amount      => params[:amount],
+        :amount      => 1000,
         :description => 'Consumer Defender',
         :currency    => 'aud'
       )
 
-      BadgeGranter.grant(consumer_defender_badge, current_user)
+      BadgeGranter.grant(badge, current_user)
 
-      head :created
-    end
-
-    private
-
-    def consumer_defender_badge
-      Badge.find_by_name('Consumer Defender')
+      respond_to do |format|
+        format.html
+        format.js
+        format.json { render :json => { status: 'OK' } }
+      end
     end
   end
 end
