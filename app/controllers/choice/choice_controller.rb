@@ -21,11 +21,7 @@ module Choice
 
       BadgeGranter.grant(badge, current_user)
 
-      respond_to do |format|
-        format.html
-        format.js
-        format.json { render :json => { status: 'OK' } }
-      end
+      render :json => { status: 'OK' }
     end
   end
 end
