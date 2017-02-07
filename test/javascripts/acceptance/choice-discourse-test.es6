@@ -6,5 +6,6 @@ test('Choice Page Exists', () => {
 
   andThen(() => {
     ok(exists('h1'), 'Choice');
+    ok(exists('form'), 'Something');
   });
 });
