@@ -19,8 +19,6 @@ module ::Choice
   end
 end
 
-after_initialize do
-  Discourse::Application.routes.prepend do
-    mount ::Choice::Engine, at: '/choice'
-  end
+Discourse::Application.routes.prepend do
+  mount ::Choice::Engine, at: '/choice'
 end

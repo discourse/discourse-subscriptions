@@ -1,5 +1,9 @@
 module Choice
-  class ChoiceController < Choice::ApplicationController
+  class ChoiceController < ApplicationController
+    def index
+      render json: {}
+    end
+
     def create
       badge = Badge.find_by_name('Consumer Defender')
 
