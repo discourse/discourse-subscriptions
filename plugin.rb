@@ -1,6 +1,6 @@
 # name: choice-plugin
 # about: Integrating Discourse with Stripe
-# version: 0.0.3
+# version: 0.1.0
 # authors: Rimian Perkins
 
 gem 'stripe', '1.58.0'
@@ -12,12 +12,7 @@ Rails.configuration.stripe = {
 
 Stripe.api_key = Rails.configuration.stripe[:secret_key]
 
-module ::Choice
-  class Engine < ::Rails::Engine
-    engine_name 'choice'
-    isolate_namespace Choice
-  end
-end
+load File.expand_path('../lib/choice-discourse/engine.rb', __FILE__)
 
 Discourse::Application.routes.prepend do
   mount ::Choice::Engine, at: '/choice'
