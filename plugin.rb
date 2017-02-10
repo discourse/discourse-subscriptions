@@ -15,5 +15,5 @@ Stripe.api_key = Rails.configuration.stripe[:secret_key]
 load File.expand_path('../lib/choice-discourse/engine.rb', __FILE__)
 
 Discourse::Application.routes.prepend do
-  mount ::Choice::Engine, at: '/choice'
+  mount ::Choice::Engine, at: '/'
 end

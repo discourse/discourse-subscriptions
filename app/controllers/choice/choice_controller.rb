@@ -4,6 +4,10 @@ module Choice
       render json: {}
     end
 
+    def show
+      render json: {}
+    end
+
     def create
       badge = Badge.find_by_name('Consumer Defender')
 

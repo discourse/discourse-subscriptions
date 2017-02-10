@@ -1,5 +1,6 @@
-export default function() {
-  this.route('choice', function() {
-    this.route('form');
-  });
-}
+export default {
+  resource: 'user',
+  map() {
+    this.route('choice');
+  }
+};
