@@ -6,6 +6,16 @@ test('Choice Page Exists', () => {
 
   andThen(() => {
     ok(exists('h1'), 'Heading exists');
-    ok($.trim($('.payments').text()) == 'eviltrout', 'eviltrout');
+    ok($.trim($('.payments').text()) == 'eviltrout', 'username is present on page');
+  });
+});
+
+test('Choice Page response happens', () => {
+  visit('/users/eviltrout/choice');
+
+  click('.choice-btn');
+
+  andThen(() => {
+    ok(exists('.choice-response'), 'Response happens');
   });
 });

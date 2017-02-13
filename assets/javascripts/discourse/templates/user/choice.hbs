@@ -1,3 +1,11 @@
 <div class="payments">
   {{username}}
 </div>
+
+<button class='btn btn-primary choice-btn' {{action "choiceTest"}}>
+  click
+</button>
+
+{{#if saved}}
+  <div class="choice-response">Response happens</div>
+{{/if}}
