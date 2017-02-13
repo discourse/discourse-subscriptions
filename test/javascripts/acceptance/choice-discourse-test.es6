@@ -5,7 +5,7 @@ test('Choice Page Exists', () => {
   visit('/users/eviltrout/choice');
 
   andThen(() => {
-    ok(exists('h1'), 'Choice');
-    ok(exists('.payments'), 'eviltrout');
+    ok(exists('h1'), 'Heading exists');
+    ok($.trim($('.payments').text()) == 'eviltrout', 'eviltrout');
   });
 });

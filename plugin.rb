@@ -1,6 +1,6 @@
 # name: choice-plugin
 # about: Integrating Discourse with Stripe
-# version: 0.3.0
+# version: 0.3.1
 # authors: Rimian Perkins
 
 gem 'stripe', '1.58.0'
