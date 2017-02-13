@@ -1,7 +1,15 @@
 import { acceptance } from 'helpers/qunit-helpers';
 acceptance('Discourse Payments', { loggedIn: true });
 
-test('Choice Page Exists', () => {
+test('Payments Link Exists', () => {
+  visit('/users/eviltrout');
+
+  andThen(() => {
+    ok(exists('.discourse-payments > a'), 'Link exists on profile page');
+  });
+});
+
+test('Payments Page Exists', () => {
   visit('/users/eviltrout/payments');
 
   andThen(() => {
@@ -10,7 +18,7 @@ test('Choice Page Exists', () => {
   });
 });
 
-test('Choice Page response happens', () => {
+test('Payments Page response happens', () => {
   visit('/users/eviltrout/payments');
 
   click('.choice-btn');
