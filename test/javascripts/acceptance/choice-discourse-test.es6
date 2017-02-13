@@ -1,8 +1,8 @@
 import { acceptance } from 'helpers/qunit-helpers';
-acceptance('Choice Discourse', { loggedIn: true });
+acceptance('Discourse Payments', { loggedIn: true });
 
 test('Choice Page Exists', () => {
-  visit('/users/eviltrout/choice');
+  visit('/users/eviltrout/payments');
 
   andThen(() => {
     ok(exists('h1'), 'Heading exists');
@@ -11,7 +11,7 @@ test('Choice Page Exists', () => {
 });
 
 test('Choice Page response happens', () => {
-  visit('/users/eviltrout/choice');
+  visit('/users/eviltrout/payments');
 
   click('.choice-btn');
 

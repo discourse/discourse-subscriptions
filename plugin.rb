@@ -1,6 +1,6 @@
 # name: choice-plugin
 # about: Integrating Discourse with Stripe
-# version: 0.3.2
+# version: 1.0.0
 # authors: Rimian Perkins
 # url: https://github.com/choiceaustralia/choice-discourse
 
