@@ -1,6 +1,6 @@
 # Discourse Payments
 
-[![Build Status](https://travis-ci.org/choiceaustralia/memberful-integration.svg?branch=master)](https://travis-ci.org/choiceaustralia/choice-discourse)
+[![Build Status](https://travis-ci.org/choiceaustralia/discourse-payments.svg?branch=master)](https://travis-ci.org/choiceaustralia/discourse-payments)
 
 Enables stripe payments from discourse.
 
