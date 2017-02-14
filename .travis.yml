@@ -6,14 +6,10 @@ env:
 
 dist: trusty
 
+cache: bundler
+
 addons:
   postgresql: 9.5
-  apt:
-    packages:
-    - gifsicle
-    - jpegoptim
-    - optipng
-    - jhead
 
 rvm:
   - 2.3.1
