@@ -31,4 +31,4 @@ before_script:
   - bundle exec rake db:create db:migrate
 
 script:
-  - "bundle exec rake plugin:spec && bundle exec rake qunit:test['200000']"
+  - "bundle exec rake plugin:spec[discourse-payments] && bundle exec rake qunit:test['200000']"
