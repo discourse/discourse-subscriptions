@@ -17,6 +17,8 @@ STRIPE_PUBLISHABLE_KEY: 'my_publishable_key'
 
 # Testing
 
+To run the specs, install the plugin.
+
 Run the local js acceptance tests here:
 
 http://localhost:3000/qunit?module=Acceptance%3A%20Discourse%20Payments
