@@ -1,4 +1,4 @@
-# require 'rails_helper'
+require 'rails_helper'
 
 module Choice
   RSpec.describe 'ChoiceController', type: :controller do
