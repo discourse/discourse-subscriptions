@@ -17,7 +17,7 @@ STRIPE_PUBLISHABLE_KEY: 'my_publishable_key'
 
 # Testing
 
-To run the specs, install the plugin.
+To run the specs, install the plugin and run `bundle exec rake plugin:spec` in the discourse root directory.
 
 Run the local js acceptance tests here:
 
