@@ -17,7 +17,9 @@ STRIPE_PUBLISHABLE_KEY: 'my_publishable_key'
 
 # Testing
 
-To run the specs, install the plugin and run `bundle exec rake plugin:spec` in the discourse root directory.
+To run the specs, install the plugin and run `bundle exec rake plugin:spec[discourse-payments]` in the discourse root directory.
+
+If you're using a zsh shell, then you probably get this error: `zsh: no matches found ...` and you'll need to escape the square brackets with backslashes.
 
 Run the local js acceptance tests here:
 
