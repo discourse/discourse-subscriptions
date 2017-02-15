@@ -1,5 +1,21 @@
 import { acceptance } from 'helpers/qunit-helpers';
-acceptance('Discourse Payments', { loggedIn: true });
+acceptance('Discourse Payments', {
+    loggedIn: true,
+    setup() {
+      const response = (object) => {
+        return [
+          200,
+          {"Content-Type": "application/json"},
+          object
+        ];
+      };
+
+      server.post('/payments', () => {
+        return response({ });
+      });
+    }
+  }
+);
 
 test('Payments Link Exists', () => {
   visit('/users/eviltrout');
@@ -21,9 +37,9 @@ test('Payments Page Exists', () => {
 test('Payments Page response happens', () => {
   visit('/users/eviltrout/payments');
 
-  click('.choice-btn');
+  click('.payment-btn');
 
   andThen(() => {
-    ok(exists('.choice-response'), 'Response happens');
+    ok(exists('.payment-response'), 'Response happens');
   });
 });
