@@ -1,5 +1,4 @@
 Choice::Engine.routes.draw do
-  get 'stripe' => 'choice#create'
-  get 'choice-form' => 'choice#index'
+  resources :choice, only: [:create]
   get 'users/:username/payments' => 'choice#show'
 end
