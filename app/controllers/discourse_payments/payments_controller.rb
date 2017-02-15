@@ -1,5 +1,5 @@
 module DiscoursePayments
-  class ChoiceController < ApplicationController
+  class PaymentsController < ApplicationController
     def index
       render json: {}
     end

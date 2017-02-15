@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module DiscoursePayments
-  RSpec.describe ChoiceController, type: :controller do
+  RSpec.describe PaymentsController, type: :controller do
     routes { DiscoursePayments::Engine.routes }
   #
     it 'responds with ok' do
