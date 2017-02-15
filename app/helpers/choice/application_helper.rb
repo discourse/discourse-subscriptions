@@ -1,5 +1,5 @@
 
-module Choice
+module DiscoursePayments
   module ApplicationHelper
   end
 end

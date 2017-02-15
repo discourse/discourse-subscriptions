@@ -1,4 +1,4 @@
-module Choice
+module DiscoursePayments
   class ChoiceController < ApplicationController
     def index
       render json: {}

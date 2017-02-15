@@ -1,4 +1,4 @@
-Choice::Engine.routes.draw do
+DiscoursePayments::Engine.routes.draw do
   resources :choice, only: [:create]
   get 'users/:username/payments' => 'choice#show'
 end

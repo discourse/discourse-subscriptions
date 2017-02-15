@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-module Choice
+module DiscoursePayments
   RSpec.describe ChoiceController, type: :controller do
-    routes { Choice::Engine.routes }
-
+    routes { DiscoursePayments::Engine.routes }
+  #
     it 'responds with ok' do
       post :create
       expect(response).to have_http_status(200)

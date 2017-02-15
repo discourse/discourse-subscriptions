@@ -1,6 +1,6 @@
-require 'choice/engine'
+require 'discourse-payments/engine'
 
 byebug
 
-module Choice
+module DiscoursePayments
 end
