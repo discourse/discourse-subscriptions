@@ -1,4 +1,4 @@
 DiscoursePayments::Engine.routes.draw do
-  resources :payments, only: [:create]
+  resources :charges, only: [:create]
   get 'users/:username/payments' => 'payments#show'
 end
