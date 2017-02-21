@@ -1,5 +1,8 @@
-<div id="stripe-card"></div>
+<form id="payment-form">
+  <div>
+    <label for="card-element">Credit or debit card</label>
+    <div id="card-element"></div>
+  </div>
 
-<button class='btn btn-primary payment-btn' {{action "submitStripeCard"}}>
-  make payment
-</button>
+  <button {{action "submitStripeCard"}}>Submit Payment</button>
+</form>

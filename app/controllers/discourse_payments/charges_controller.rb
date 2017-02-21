@@ -1,5 +1,9 @@
+require_dependency 'discourse'
+
 module DiscoursePayments
   class ChargesController < ActionController::Base
+    include CurrentUser
+
     skip_before_filter :verify_authenticity_token, only: [:create]
 
     def create
@@ -10,13 +14,13 @@ module DiscoursePayments
       # end
 
       customer = Stripe::Customer.create(
-       :email => 'joe@example.com',
+       :email => current_user.email,
        :source  => params[:stripeToken]
       )
 
       charge = Stripe::Charge.create(
         :customer    => customer.id,
-        :amount      => 1001,
+        :amount      => params[:amount],
         :description => 'Consumer Defender',
         :currency    => 'aud'
       )
