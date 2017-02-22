@@ -1,6 +1,6 @@
 # name: discourse-payments
 # about: Integrating Discourse with Stripe
-# version: 1.2.0
+# version: 1.2.1
 # url: https://github.com/choiceaustralia/discourse-payments
 
 gem 'stripe', '1.58.0'
