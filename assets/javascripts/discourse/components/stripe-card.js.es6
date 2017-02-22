@@ -28,7 +28,7 @@ export default Ember.Component.extend({
         else {
           var params = {
             stripeToken: result.token.id,
-            amount: 1234
+            amount: 1235
           };
 
           ajax('/charges', { data: params, method: 'post' }).then(data => {

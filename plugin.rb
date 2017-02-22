@@ -1,9 +1,10 @@
 # name: discourse-payments
 # about: Integrating Discourse with Stripe
-# version: 1.2.1
+# version: 1.3.0
 # url: https://github.com/choiceaustralia/discourse-payments
+# authors: Rimian Perkins
 
-gem 'stripe', '1.58.0'
+gem 'stripe', '2.0.1'
 
 load File.expand_path('../lib/discourse_payments/engine.rb', __FILE__)
 load File.expand_path('../config/stripe.rb', __FILE__)
