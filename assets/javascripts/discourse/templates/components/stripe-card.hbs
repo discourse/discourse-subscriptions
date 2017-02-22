@@ -5,4 +5,8 @@
   </div>
 
   <button {{action "submitStripeCard"}}>Submit Payment</button>
+
+  {{#if result}}
+    <div class="stripe-card-result">payment happened</div>
+  {{/if}}
 </form>
