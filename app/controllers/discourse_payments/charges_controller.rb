@@ -27,7 +27,7 @@ module DiscoursePayments
 
       # BadgeGranter.grant(badge, current_user)
 
-      render :json => { status: 'OK' }
+      render :json => charge
     end
   end
 end

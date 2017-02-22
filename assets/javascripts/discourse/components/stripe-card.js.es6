@@ -26,6 +26,8 @@ export default Ember.Component.extend({
 
           ajax('/charges', { data: data, method: 'post' }).then(data => {
             console.log(data);
+          }).catch(() => {
+            console.log('error');
           });
         }
       });
