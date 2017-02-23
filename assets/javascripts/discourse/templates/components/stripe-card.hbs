@@ -1,7 +1,7 @@
 <form id="payment-form" class="form-horizontal">
 
-  <div class="control-group">
-    <label class="control-label" for="card-element">Credit or debit card</label>
+  <div class="control-group" style="width: 550px;">
+    <label class="control-label" for="card-element">{{i18n 'discourse_payments.card'}}</label>
     <div id="card-element" class="controls"></div>
   </div>
 
@@ -12,6 +12,8 @@
   </div>
 
   {{#if result}}
-    <span>{{i18n 'discourse_payments.success'}}</span>
+    <div class="control-group">
+      <span>{{i18n 'discourse_payments.success'}}</span>
+    </div>
   {{/if}}
 </form>
