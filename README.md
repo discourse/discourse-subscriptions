@@ -4,6 +4,17 @@
 
 Enables stripe payments from discourse.
 
+## Configuration
+
+You can either set your environment vars in docker or save them in a yaml.
+
+In your `app.yml`:
+
+```
+  STRIPE_SECRET_KEY: 'sk_test_key'
+  STRIPE_PUBLISHABLE_KEY: 'pk_test_key'
+```
+
 ## TODO
 
 * Remove hard coded key and use settings.
@@ -11,10 +22,6 @@ Enables stripe payments from discourse.
 * Some tests
 * Handle fails from stripe
 * A button in the user's profile page.
-
-## Configuration
-
-You can either set your environment vars in docker or save them in a yaml.
 
 **In your app.yml**
 
