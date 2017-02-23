@@ -4,7 +4,15 @@
 
 Enables stripe payments from discourse.
 
-# Configuration
+## TODO
+
+* Remove hard coded key and use settings.
+* Add a plugin outlet for custom user fields.
+* Some tests
+* Handle fails from stripe
+* A button in the user's profile page.
+
+## Configuration
 
 You can either set your environment vars in docker or save them in a yaml.
 
@@ -15,7 +23,7 @@ STRIPE_SECRET_KEY: 'my_secret_key'
 STRIPE_PUBLISHABLE_KEY: 'my_publishable_key'
 ```
 
-# Testing
+## Testing
 
 To run the specs, install the plugin and run `bundle exec rake plugin:spec[discourse-payments]` in the discourse root directory.
 
