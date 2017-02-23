@@ -1,6 +1,6 @@
 # name: discourse-payments
 # about: Integrating Discourse with Stripe
-# version: 1.4.0
+# version: 1.5.0
 # url: https://github.com/choiceaustralia/discourse-payments
 # authors: Rimian Perkins
 

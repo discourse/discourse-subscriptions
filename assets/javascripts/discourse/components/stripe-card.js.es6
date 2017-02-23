@@ -2,6 +2,8 @@ import { ajax } from 'discourse/lib/ajax';
 
 export default Ember.Component.extend({
   result: null,
+  paymentAmounts: [5, 10],
+  amount: null,
   stripe: Stripe('pk_test_b8RmhzlL8QPizJRqOrKF3JEV'),
 
   card: function() {
@@ -28,8 +30,10 @@ export default Ember.Component.extend({
         else {
           var params = {
             stripeToken: result.token.id,
-            amount: 1235
+            amount: self.get('amount') * 100
           };
+
+          console.log(params);
 
           ajax('/charges', { data: params, method: 'post' }).then(data => {
             self.set('result', (data.status == 'succeeded' ? true : null));

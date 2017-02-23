@@ -1,6 +1,13 @@
 <form id="payment-form" class="form-horizontal">
 
   <div class="control-group" style="width: 550px;">
+    <label class="control-label" for="card-element">{{i18n 'discourse_payments.amount'}}</label>
+    <div class="controls controls-dropdown">
+      {{combo-box valueAttribute="value" content=paymentAmounts value=amount}}
+    </div>
+  </div>
+
+  <div class="control-group" style="width: 550px;">
     <label class="control-label" for="card-element">{{i18n 'discourse_payments.card'}}</label>
     <div id="card-element" class="controls"></div>
   </div>
@@ -8,12 +15,9 @@
   <div class="control-group save-button">
     <div class="controls">
       <button {{action "submitStripeCard"}} class="btn btn-primary">{{i18n 'discourse_payments.submit'}}</button>
+      {{#if result}}
+        <span>{{i18n 'discourse_payments.success'}}</span>
+      {{/if}}
     </div>
   </div>
-
-  {{#if result}}
-    <div class="control-group">
-      <span>{{i18n 'discourse_payments.success'}}</span>
-    </div>
-  {{/if}}
 </form>
