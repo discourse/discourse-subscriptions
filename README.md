@@ -32,10 +32,11 @@ STRIPE_PUBLISHABLE_KEY: 'my_publishable_key'
 
 ## Testing
 
-To run the specs, install the plugin and run `bundle exec rake plugin:spec[discourse-payments]` in the discourse root directory.
+To run the rails specs, install the plugin and run `bundle exec rake plugin:spec[discourse-payments]` in the discourse root directory.
 
-If you're using a zsh shell, then you probably get this error: `zsh: no matches found ...` and you'll need to escape the square brackets with backslashes.
+To run qunit tests: `MODULE='Acceptance: Discourse Payments' rake qunit:test[20000]`.
 
-Run the local js acceptance tests here:
+**Note:**
 
-http://localhost:3000/qunit?module=Acceptance%3A%20Discourse%20Payments
+* [This fix](https://github.com/discourse/discourse/pull/4719) is required to run qunit test modules.
+* If you're using a zsh shell, then you probably get this error: `zsh: no matches found ...` and you'll need to escape the square brackets with backslashes.
