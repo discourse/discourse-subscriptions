@@ -1,3 +1,6 @@
 en:
   js:
     discourse_payments:
+      title: Donate
+      success: Payment Successful
+      submit: Make Payment

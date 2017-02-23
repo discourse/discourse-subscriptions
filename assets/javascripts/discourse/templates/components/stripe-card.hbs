@@ -1,12 +1,17 @@
-<form id="payment-form">
-  <div>
-    <label for="card-element">Credit or debit card</label>
-    <div id="card-element"></div>
+<form id="payment-form" class="form-horizontal">
+
+  <div class="control-group">
+    <label class="control-label" for="card-element">Credit or debit card</label>
+    <div id="card-element" class="controls"></div>
   </div>
 
-  <button {{action "submitStripeCard"}}>Submit Payment</button>
+  <div class="control-group save-button">
+    <div class="controls">
+      <button {{action "submitStripeCard"}} class="btn btn-primary">{{i18n 'discourse_payments.submit'}}</button>
+    </div>
+  </div>
 
   {{#if result}}
-    <div class="stripe-card-result">payment happened</div>
+    <span>{{i18n 'discourse_payments.success'}}</span>
   {{/if}}
 </form>
