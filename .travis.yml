@@ -29,9 +29,7 @@ before_install:
 
 install:
   - touch config/stripe.yml
-  - ls -l
-  - ls -l ../
-  - ln -s ../discourse-donations plugins
+  - git clone $TRAVIS_BUILD_DIR plugins/discourse-payments --depth 50
 
 before_script:
   - gem install bundler
