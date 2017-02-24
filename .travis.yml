@@ -29,6 +29,8 @@ before_install:
 
 install:
   - touch config/stripe.yml
+  - ls -l
+  - ls -l ../
   - ln -s ../discourse-donations plugins
 
 before_script:
