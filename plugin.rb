@@ -6,7 +6,7 @@
 
 gem 'stripe', '2.0.1'
 
-load File.expand_path('../lib/discourse_payments/engine.rb', __FILE__)
+load File.expand_path('../lib/discourse_donations/engine.rb', __FILE__)
 load File.expand_path('../config/stripe.rb', __FILE__)
 
 after_initialize do
@@ -26,5 +26,5 @@ after_initialize do
 end
 
 Discourse::Application.routes.prepend do
-  mount ::DiscoursePayments::Engine, at: '/'
+  mount ::DiscourseDonations::Engine, at: '/'
 end

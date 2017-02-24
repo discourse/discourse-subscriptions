@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-module DiscoursePayments
+module DiscourseDonations
   RSpec.describe PaymentsController, type: :controller do
-    routes { DiscoursePayments::Engine.routes }
+    routes { DiscourseDonations::Engine.routes }
   end
 end

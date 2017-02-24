@@ -1,6 +1,6 @@
 require_dependency 'discourse'
 
-module DiscoursePayments
+module DiscourseDonations
   class ChargesController < ActionController::Base
     include CurrentUser
 
