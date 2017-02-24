@@ -29,7 +29,7 @@ before_install:
 
 install:
   - touch config/stripe.yml
-  - git clone https://github.com/choiceaustralia/discourse-payments.git plugins/discourse-payments --depth=1
+  - ln -s ../discourse-payments plugins/discourse-payments
 
 before_script:
   - gem install bundler
