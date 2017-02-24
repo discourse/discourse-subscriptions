@@ -1,8 +1,8 @@
-# Discourse Payments
+# Discourse Donations
 
-[![Build Status](https://travis-ci.org/choiceaustralia/discourse-payments.svg?branch=master)](https://travis-ci.org/choiceaustralia/discourse-payments)
+[![Build Status](https://travis-ci.org/choiceaustralia/discourse-donations.svg?branch=master)](https://travis-ci.org/choiceaustralia/discourse-donations)
 
-Enables stripe payments from discourse.
+Accept donations in Discourse! Integrates with [Stripe](https://stripe.com).
 
 ## Configuration
 
