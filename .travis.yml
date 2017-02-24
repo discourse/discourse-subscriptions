@@ -29,7 +29,7 @@ before_install:
 
 install:
   - touch config/stripe.yml
-  - git clone https://github.com/choiceaustralia/discourse-donations.git plugins/discourse-donations --depth=1
+  - ln -s ../discourse-donations plugins/discourse-donations
 
 before_script:
   - gem install bundler
