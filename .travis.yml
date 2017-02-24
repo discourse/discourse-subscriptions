@@ -29,7 +29,7 @@ before_install:
 
 install:
   - touch config/stripe.yml
-  - git clone https://github.com/choiceaustralia/discourse-payments.git plugins/discourse-payments --depth=1
+  - git clone https://github.com/choiceaustralia/discourse-donations.git plugins/discourse-donations --depth=1
 
 before_script:
   - gem install bundler
@@ -37,4 +37,4 @@ before_script:
   - bundle exec rake db:create db:migrate
 
 script:
-  - "bundle exec rake plugin:spec[discourse-payments] && bundle exec rake qunit:test['200000']"
+  - "bundle exec rake plugin:spec[discourse-donations] && bundle exec rake qunit:test['200000']"
