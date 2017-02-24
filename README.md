@@ -34,7 +34,7 @@ STRIPE_PUBLISHABLE_KEY: 'my_publishable_key'
 
 To run the rails specs, install the plugin and run `bundle exec rake plugin:spec[discourse-donations]` in the discourse root directory.
 
-To run qunit tests: `MODULE='Acceptance: Discourse Payments' rake qunit:test[20000]`.
+To run qunit tests: `MODULE='Acceptance: Discourse Donations' rake qunit:test[20000]`.
 
 **Note:**
 

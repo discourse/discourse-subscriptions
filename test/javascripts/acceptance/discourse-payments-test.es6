@@ -1,5 +1,5 @@
 import { acceptance } from 'helpers/qunit-helpers';
-acceptance('Discourse Payments', { loggedIn: true });
+acceptance('Discourse Donations', { loggedIn: true });
 
 test('Payments Link Exists', () => {
   visit('/users/eviltrout');
