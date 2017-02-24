@@ -30,6 +30,8 @@ before_install:
 install:
   - touch config/stripe.yml
   - ln -s ../discourse-donations plugins/discourse-donations
+  - ls -l plugins
+  - ls -l plugins/discourse-donations
 
 before_script:
   - gem install bundler
