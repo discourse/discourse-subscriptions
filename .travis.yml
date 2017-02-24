@@ -6,7 +6,7 @@ env:
 
 dist: trusty
 
-cache: bundler --path discourse/vendor
+cache: bundler --path $TRAVIS_BUILD_DIR/discourse/vendor
 
 addons:
   postgresql: 9.5
@@ -29,9 +29,7 @@ before_install:
 
 install:
   - touch config/stripe.yml
-  - ln -s ../discourse-donations plugins
-  - ls -l plugins
-  - ls -l plugins/discourse-donations
+  - git clone $TRAVIS_BUILD_DIR plugins/discourse-donations --depth 50 --branch $TRAVIS_BRANCH
 
 before_script:
   - gem install bundler
