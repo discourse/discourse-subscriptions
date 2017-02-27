@@ -2,7 +2,7 @@ import { ajax } from 'discourse/lib/ajax';
 
 export default Ember.Component.extend({
   result: null,
-  paymentAmounts: [5, 10],
+  donateAmounts: [5, 10],
   amount: null,
   stripe: Stripe('pk_test_b8RmhzlL8QPizJRqOrKF3JEV'),
 
