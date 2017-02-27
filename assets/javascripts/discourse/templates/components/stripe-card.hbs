@@ -1,22 +1,22 @@
 <form id="payment-form" class="form-horizontal">
 
   <div class="control-group" style="width: 550px;">
-    <label class="control-label" for="card-element">{{i18n 'discourse_payments.amount'}}</label>
+    <label class="control-label" for="card-element">{{i18n 'discourse_donations.amount'}}</label>
     <div class="controls controls-dropdown">
-      {{combo-box valueAttribute="value" content=paymentAmounts value=amount}}
+      {{combo-box valueAttribute="value" content=donateAmounts value=amount}}
     </div>
   </div>
 
   <div class="control-group" style="width: 550px;">
-    <label class="control-label" for="card-element">{{i18n 'discourse_payments.card'}}</label>
+    <label class="control-label" for="card-element">{{i18n 'discourse_donations.card'}}</label>
     <div id="card-element" class="controls"></div>
   </div>
 
   <div class="control-group save-button">
     <div class="controls">
-      <button {{action "submitStripeCard"}} class="btn btn-primary">{{i18n 'discourse_payments.submit'}}</button>
+      <button {{action "submitStripeCard"}} class="btn btn-primary">{{i18n 'discourse_donations.submit'}}</button>
       {{#if result}}
-        <span>{{i18n 'discourse_payments.success'}}</span>
+        <span>{{i18n 'discourse_donations.success'}}</span>
       {{/if}}
     </div>
   </div>

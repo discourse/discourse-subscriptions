@@ -1,8 +1,8 @@
 en:
   js:
-    discourse_payments:
-      title: Donate
-      amount: Amount
-      card: Credit or debit card
-      success: Payment Successful!
-      submit: Make Payment
+    discourse_donations:
+      title: Spenden
+      amount: Betrag
+      card: Kreditkarte oder Bankkarte
+      success: Bezahlung erfolgreich !
+      submit: Spende bezahlen
