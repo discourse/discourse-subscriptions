@@ -4,7 +4,10 @@ export default Ember.Component.extend({
   result: null,
   donateAmounts: [5, 10],
   amount: null,
-  stripe: Stripe('pk_test_b8RmhzlL8QPizJRqOrKF3JEV'),
+
+  stripe: function() {
+    return Stripe(Discourse.discourse_donations_public_key);
+  }.property('stripe'),
 
   card: function() {
     var elements = this.get('stripe').elements();

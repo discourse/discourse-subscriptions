@@ -3,8 +3,6 @@ plugins:
     default: true
     client: true
   discourse_donations_secret_key:
-    type: text
-    client: true
+    client: false
   discourse_donations_public_key:
-    type: text
     client: true
