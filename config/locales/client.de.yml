@@ -6,3 +6,5 @@ en:
       card: Kreditkarte oder Bankkarte
       success: Bezahlung erfolgreich !
       submit: Spende bezahlen
+      secret_key: Secret Key
+      public_key: Public Key
