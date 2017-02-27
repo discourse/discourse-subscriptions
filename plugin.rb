@@ -9,6 +9,8 @@ gem 'stripe', '2.0.1'
 load File.expand_path('../lib/discourse_donations/engine.rb', __FILE__)
 load File.expand_path('../config/stripe.rb', __FILE__)
 
+enabled_site_setting :discourse_donations_enabled
+
 after_initialize do
   header_script = '<script src="https://js.stripe.com/v3/"></script>'
 
