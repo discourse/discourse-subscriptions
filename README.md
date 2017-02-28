@@ -6,29 +6,14 @@ Accept donations in Discourse! Integrates with [Stripe](https://stripe.com).
 
 ## Configuration
 
-You can either set your environment vars in docker or save them in a yaml.
-
-In your `app.yml`:
-
-```
-  STRIPE_SECRET_KEY: 'sk_test_key'
-  STRIPE_PUBLISHABLE_KEY: 'pk_test_key'
-```
+Visit `/admin/plugins` and configure your private and public keys.
 
 ## TODO
 
-* Remove hard coded key and use settings.
 * Add a plugin outlet for custom user fields.
 * Some tests
 * Handle fails from stripe
 * A button in the user's profile page.
-
-**In your app.yml**
-
-```
-STRIPE_SECRET_KEY: 'my_secret_key'
-STRIPE_PUBLISHABLE_KEY: 'my_publishable_key'
-```
 
 ## Testing
 
