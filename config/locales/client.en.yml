@@ -6,5 +6,3 @@ en:
       card: Credit or debit card
       success: Payment Successful!
       submit: Make Payment
-      secret_key: Secret Key
-      public_key: Public Key
