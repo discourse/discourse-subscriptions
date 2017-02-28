@@ -6,7 +6,7 @@ env:
 
 dist: trusty
 
-cache: bundler
+cache: bundler --path $TRAVIS_BUILD_DIR/discourse/vendor
 
 addons:
   postgresql: 9.5
@@ -29,7 +29,7 @@ before_install:
 
 install:
   - touch config/stripe.yml
-  - git clone https://github.com/choiceaustralia/discourse-payments.git plugins/discourse-payments --depth=1
+  - git clone $TRAVIS_BUILD_DIR plugins/discourse-donations --depth 50 --branch $TRAVIS_BRANCH
 
 before_script:
   - gem install bundler
@@ -37,4 +37,4 @@ before_script:
   - bundle exec rake db:create db:migrate
 
 script:
-  - "bundle exec rake plugin:spec[discourse-payments] && bundle exec rake qunit:test['200000']"
+  - "bundle exec rake plugin:spec[discourse-donations] && bundle exec rake qunit:test['200000']"

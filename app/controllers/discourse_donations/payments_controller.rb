@@ -1,4 +1,4 @@
-module DiscoursePayments
+module DiscourseDonations
   class PaymentsController < ApplicationController
     def index
       render json: {}

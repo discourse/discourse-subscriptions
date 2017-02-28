@@ -1,0 +1,5 @@
+en:
+  site_settings:
+    discourse_donations_enabled: Enable the discourse donations plugin.
+    discourse_donations_secret_key: Stripe Secret Key
+    discourse_donations_public_key: Stripe Public Key

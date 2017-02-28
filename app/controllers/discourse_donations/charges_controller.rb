@@ -1,12 +1,14 @@
 require_dependency 'discourse'
 
-module DiscoursePayments
+module DiscourseDonations
   class ChargesController < ActionController::Base
     include CurrentUser
 
     skip_before_filter :verify_authenticity_token, only: [:create]
 
     def create
+      Stripe.api_key = SiteSetting.discourse_donations_secret_key
+
       customer = Stripe::Customer.create(
        :email => current_user.email,
        :source  => params[:stripeToken]

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-module DiscoursePayments
+module DiscourseDonations
   RSpec.describe ChargesController, type: :controller do
-    routes { DiscoursePayments::Engine.routes }
+    routes { DiscourseDonations::Engine.routes }
   #
     it 'responds with ok' do
       skip 'need to get fixtures'

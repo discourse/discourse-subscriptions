@@ -1,10 +1,17 @@
 import { ajax } from 'discourse/lib/ajax';
+import { getRegister } from 'discourse-common/lib/get-owner';
 
 export default Ember.Component.extend({
+  donateAmounts: [1, 5, 10, 25],
   result: null,
-  paymentAmounts: [5, 10],
   amount: null,
-  stripe: Stripe('pk_test_b8RmhzlL8QPizJRqOrKF3JEV'),
+  stripe: null,
+
+  init() {
+    this._super();
+    var public_key = getRegister(this).lookup('site-settings:main').discourse_donations_public_key
+    this.set('stripe', Stripe(public_key));
+  },
 
   card: function() {
     var elements = this.get('stripe').elements();
