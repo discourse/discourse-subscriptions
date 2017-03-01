@@ -17,9 +17,9 @@ Visit `/admin/plugins` and configure your private and public keys.
 
 ## Testing
 
-To run the rails specs, install the plugin and run `bundle exec rake plugin:spec[discourse-donations]` in the discourse root directory.
-
-To run qunit tests: `MODULE='Acceptance: Discourse Donations' bundle exec rake qunit:test[20000]`.
+* To run the rails specs, install the plugin and run `bundle exec rake plugin:spec[discourse-donations]` in the discourse root directory.
+* To run qunit tests: `MODULE='Acceptance: Discourse Donations' bundle exec rake qunit:test[20000]`.
+* To run Component tests: `MODULE='component:stripe-card' bundle exec rake qunit:test[20000]`.
 
 **Note:**
 
