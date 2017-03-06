@@ -30,3 +30,4 @@ Visit `/admin/plugins` and configure your private and public keys.
 
 * [This fix](https://github.com/discourse/discourse/pull/4719) is required to run qunit test modules.
 * If you're using a zsh shell, then you probably get this error: `zsh: no matches found ...` and you'll need to escape the square brackets with backslashes.
+* [This fix](https://github.com/discourse/discourse/pull/4738) renders the extra nav items consistently.
