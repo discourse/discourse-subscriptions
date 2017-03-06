@@ -4,5 +4,4 @@ en:
       title: Donate
       amount: Amount
       card: Credit or debit card
-      success: Payment Successful!
       submit: Make Payment
