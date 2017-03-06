@@ -28,26 +28,24 @@ export default Ember.Component.extend({
     submitStripeCard() {
       var self = this;
 
-      this.get('stripe').createToken(this.get('card')).then(function(result) {
+      this.get('stripe').createToken(this.get('card')).then(data => {
 
         self.set('result', null);
 
-        if (result.error) {
-          console.log(result.error);
+        if (data.error) {
+          self.set('result', data.error.message);
         }
         else {
           self.set('transactionInProgress', true);
 
           var params = {
-            stripeToken: result.token.id,
+            stripeToken: data.token.id,
             amount: self.get('amount') * 100
           };
 
           ajax('/charges', { data: params, method: 'post' }).then(data => {
             self.set('transactionInProgress', false);
-            self.set('result', (data.status == 'succeeded' ? true : null));
-          }).catch((data) => {
-            console.log('catch', data);
+            self.set('result', data.outcome.seller_message);
           });
         }
       });
