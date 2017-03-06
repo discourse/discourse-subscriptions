@@ -22,6 +22,10 @@
         {{loading-spinner size="small"}}
       {{/if}}
 
+      {{#if error_message}}
+        <span class="error">{{error_message}}</span>
+      {{/if}}
+
       {{#if result}}
         <span>{{i18n 'discourse_donations.success'}}</span>
       {{/if}}

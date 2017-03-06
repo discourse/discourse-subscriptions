@@ -3,6 +3,7 @@ import { getRegister } from 'discourse-common/lib/get-owner';
 
 export default Ember.Component.extend({
   donateAmounts: [1, 5, 10, 25],
+  error_message: null,
   result: null,
   amount: null,
   stripe: null,
@@ -33,7 +34,7 @@ export default Ember.Component.extend({
         self.set('result', null);
 
         if (result.error) {
-          console.log(result.error);
+          self.set('error_message', result.error.message);
         }
         else {
           self.set('transactionInProgress', true);
