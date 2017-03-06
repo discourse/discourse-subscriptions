@@ -6,6 +6,7 @@ export default Ember.Component.extend({
   result: null,
   amount: null,
   stripe: null,
+  transactionInProgress: null,
 
   init() {
     this._super();
@@ -32,17 +33,18 @@ export default Ember.Component.extend({
         self.set('result', null);
 
         if (result.error) {
-          console.log('error yo');
+          console.log(result.error);
         }
         else {
+          self.set('transactionInProgress', true);
+
           var params = {
             stripeToken: result.token.id,
             amount: self.get('amount') * 100
           };
 
-          console.log(params);
-
           ajax('/charges', { data: params, method: 'post' }).then(data => {
+            self.set('transactionInProgress', false);
             self.set('result', (data.status == 'succeeded' ? true : null));
           }).catch((data) => {
             console.log('catch', data);
