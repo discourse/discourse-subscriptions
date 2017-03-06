@@ -14,7 +14,7 @@
 
   <div class="control-group save-button">
     <div class="controls">
-      {{#d-button action="submitStripeCard" class="btn btn-primary btn-payment"}}
+      {{#d-button action="submitStripeCard" disabled=transactionInProgress class="btn btn-primary btn-payment"}}
         {{i18n 'discourse_donations.submit'}}
       {{/d-button}}
 
@@ -22,12 +22,8 @@
         {{loading-spinner size="small"}}
       {{/if}}
 
-      {{#if error_message}}
-        <span class="error">{{error_message}}</span>
-      {{/if}}
-
       {{#if result}}
-        <span>{{i18n 'discourse_donations.success'}}</span>
+        <span>{{result}}</span>
       {{/if}}
     </div>
   </div>
