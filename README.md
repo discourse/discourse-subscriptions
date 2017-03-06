@@ -4,6 +4,11 @@
 
 Accept donations in Discourse! Integrates with [Stripe](https://stripe.com).
 
+## Installation
+
+* Follow the install instructions here: https://meta.discourse.org/t/install-a-plugin/19157
+* Set the private and public keys in the plugin settings.
+
 ## Configuration
 
 Visit `/admin/plugins` and configure your private and public keys.
