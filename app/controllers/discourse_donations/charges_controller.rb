@@ -8,6 +8,7 @@ module DiscourseDonations
 
     def create
       Stripe.api_key = SiteSetting.discourse_donations_secret_key
+      currency = SiteSetting.discourse_donations_currency
 
       customer = Stripe::Customer.create(
        :email => current_user.email,
@@ -18,8 +19,9 @@ module DiscourseDonations
         :customer    => customer.id,
         :amount      => params[:amount],
         :description => 'Consumer Defender',
-        :currency    => 'aud'
+        :currency    => currency
       )
+
       render :json => charge
     end
   end

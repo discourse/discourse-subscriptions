@@ -5,3 +5,5 @@ en:
       amount: Betrag
       card: Kreditkarte oder Bankkarte
       submit: Spende bezahlen
+      currency: Currency
+      hide_zip_code: Hide Zip Code

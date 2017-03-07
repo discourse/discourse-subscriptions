@@ -7,16 +7,19 @@ export default Ember.Component.extend({
   amount: null,
   stripe: null,
   transactionInProgress: null,
+  settings: null,
 
   init() {
     this._super();
-    var public_key = getRegister(this).lookup('site-settings:main').discourse_donations_public_key
-    this.set('stripe', Stripe(public_key));
+    this.set('settings', getRegister(this).lookup('site-settings:main'));
+    this.set('stripe', Stripe(this.get('settings').discourse_donations_public_key));
   },
 
   card: function() {
     var elements = this.get('stripe').elements();
-    return elements.create('card', { hidePostalCode: true });
+    return elements.create('card', {
+      hidePostalCode: this.get('settings').discourse_donations_hide_zip_code
+    });
   }.property('stripe'),
 
   didInsertElement() {

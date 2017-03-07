@@ -11,7 +11,7 @@ Accept donations in Discourse! Integrates with [Stripe](https://stripe.com).
 
 ## Configuration
 
-Visit `/admin/plugins` and configure your private and public keys.
+Visit `/admin/plugins` and configure.
 
 ## TODO
 
