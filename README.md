@@ -11,14 +11,14 @@ Accept donations in Discourse! Integrates with [Stripe](https://stripe.com).
 
 ## Configuration
 
-Visit `/admin/plugins` and configure your private and public keys.
+Visit `/admin/plugins` and configure.
 
 ## TODO
 
 * Add a plugin outlet for custom user fields.
 * Some tests
 * Handle fails from stripe
-* A button in the user's profile page.
+* Add currency and postcode to settings
 
 ## Testing
 
