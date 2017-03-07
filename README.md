@@ -18,7 +18,7 @@ Visit `/admin/plugins` and configure your private and public keys.
 * Add a plugin outlet for custom user fields.
 * Some tests
 * Handle fails from stripe
-* A button in the user's profile page.
+* Add currency and postcode to settings
 
 ## Testing
 
