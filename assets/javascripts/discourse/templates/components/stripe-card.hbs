@@ -1,7 +1,10 @@
 <form id="payment-form" class="form-horizontal">
 
-  <div class="control-group" style="width: 550px;">
-    <label class="control-label" for="card-element">{{i18n 'discourse_donations.amount'}}</label>
+  <div class="control-group">
+    <label class="control-label" for="card-element">
+      {{i18n 'discourse_donations.amount'}}
+      {{settings.discourse_donations_currency}}
+    </label>
     <div class="controls controls-dropdown">
       {{combo-box valueAttribute="value" content=donateAmounts value=amount}}
     </div>
