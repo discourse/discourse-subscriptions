@@ -2,7 +2,14 @@ import { ajax } from 'discourse/lib/ajax';
 import { getRegister } from 'discourse-common/lib/get-owner';
 
 export default Ember.Component.extend({
-  donateAmounts: [1, 5, 10, 25],
+  donateAmounts: [
+    { value: 1, name: '$1.00'},
+    { value: 2, name: '$2.00'},
+    { value: 5, name: '$5.00'},
+    { value: 10, name: '$10.00'},
+    { value: 20, name: '$20.00'},
+    { value: 50, name: '$50.00'}
+  ],
   result: null,
   amount: null,
   stripe: null,
