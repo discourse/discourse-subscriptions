@@ -23,7 +23,7 @@ export default Ember.Component.extend({
   },
 
   card: function() {
-    var elements = this.get('stripe').elements();
+    let elements = this.get('stripe').elements();
     return elements.create('card', {
       hidePostalCode: this.get('settings').discourse_donations_hide_zip_code
     });
@@ -36,7 +36,7 @@ export default Ember.Component.extend({
 
   actions: {
     submitStripeCard() {
-      var self = this;
+      let self = this;
 
       this.get('stripe').createToken(this.get('card')).then(data => {
 
@@ -48,7 +48,7 @@ export default Ember.Component.extend({
         else {
           self.set('transactionInProgress', true);
 
-          var params = {
+          let params = {
             stripeToken: data.token.id,
             amount: self.get('amount') * 100
           };
