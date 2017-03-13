@@ -5,3 +5,5 @@ en:
       amount: Amount
       card: Credit or debit card
       submit: Make Payment
+      messages:
+        success: Thank you for your donation!
