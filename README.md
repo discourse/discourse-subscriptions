@@ -13,13 +13,6 @@ Accept donations in Discourse! Integrates with [Stripe](https://stripe.com).
 
 Visit `/admin/plugins` and configure.
 
-## TODO
-
-* Add a plugin outlet for custom user fields.
-* Some tests
-* Handle fails from stripe
-* Add currency and postcode to settings
-
 ## Testing
 
 * To run the rails specs, install the plugin and run `bundle exec rake plugin:spec[discourse-donations]` in the discourse root directory.
@@ -31,3 +24,8 @@ Visit `/admin/plugins` and configure.
 * [This fix](https://github.com/discourse/discourse/pull/4719) is required to run qunit test modules.
 * If you're using a zsh shell, then you probably get this error: `zsh: no matches found ...` and you'll need to escape the square brackets with backslashes.
 * [This fix](https://github.com/discourse/discourse/pull/4738) renders the extra nav items consistently.
+
+## TODO
+
+* Add a plugin outlet for custom user fields.
+* Handle fails from stripe
