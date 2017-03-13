@@ -2,6 +2,7 @@ en:
   js:
     discourse_donations:
       title: Donate
+      nav_item: Donate
       amount: Amount
       card: Credit or debit card
       submit: Make Payment

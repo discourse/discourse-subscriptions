@@ -2,6 +2,7 @@ en:
   js:
     discourse_donations:
       title: Spenden
+      nav_item: Spenden
       amount: Betrag
       card: Kreditkarte oder Bankkarte
       submit: Spende bezahlen
