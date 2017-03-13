@@ -13,12 +13,9 @@ Accept donations in Discourse! Integrates with [Stripe](https://stripe.com).
 
 Visit `/admin/plugins` and configure.
 
-## TODO
+## Customisations
 
-* Add a plugin outlet for custom user fields.
-* Some tests
-* Handle fails from stripe
-* Add currency and postcode to settings
+Visit `/admin/customize/site_texts` and search for 'discourse_donations'. You'll find a few entries you can customise for your site.
 
 ## Testing
 
@@ -28,6 +25,9 @@ Visit `/admin/plugins` and configure.
 
 **Note:**
 
-* [This fix](https://github.com/discourse/discourse/pull/4719) is required to run qunit test modules.
 * If you're using a zsh shell, then you probably get this error: `zsh: no matches found ...` and you'll need to escape the square brackets with backslashes.
-* [This fix](https://github.com/discourse/discourse/pull/4738) renders the extra nav items consistently.
+
+## TODO
+
+* Add a plugin outlet for custom user fields.
+* Handle fails from stripe
