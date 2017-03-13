@@ -41,6 +41,7 @@ export default Ember.Component.extend({
       this.get('stripe').createToken(this.get('card')).then(data => {
 
         self.set('result', null);
+        self.set('success', false);
 
         if (data.error) {
           self.set('result', data.error.message);
@@ -54,6 +55,7 @@ export default Ember.Component.extend({
           };
 
           ajax('/charges', { data: params, method: 'post' }).then(data => {
+            if(data.status == 'succeeded') { self.set('success', true) };
             self.set('transactionInProgress', false);
             self.set('result', data.outcome.seller_message);
           });
