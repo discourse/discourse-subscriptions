@@ -2,9 +2,9 @@ import { acceptance } from 'helpers/qunit-helpers';
 acceptance('Discourse Donations', { loggedIn: true });
 
 test('Donations Link Exists', () => {
-  visit('/users/eviltrout');
+  visit('/');
 
   andThen(() => {
-    ok(exists('.discourse-donations > a'), 'Link exists on profile page');
+    ok(exists('.list-controls .donate a'), 'Link exists on profile page');
   });
 });
