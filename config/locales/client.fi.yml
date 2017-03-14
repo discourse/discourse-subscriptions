@@ -1,0 +1,7 @@
+fi:
+  js:
+    discourse_donations:
+      title: Lahjoita
+      amount: Määrä
+      card: Credit- vai debit-kortti
+      submit: Maksa
