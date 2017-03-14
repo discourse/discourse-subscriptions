@@ -6,6 +6,9 @@ plugins:
     client: false
   discourse_donations_public_key:
     client: true
+  discourse_donations_description:
+    client: true
+    default: 'Donation'
   discourse_donations_currency:
     client: true
     default: 'USD'

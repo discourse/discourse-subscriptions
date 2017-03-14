@@ -18,7 +18,7 @@ module DiscourseDonations
       charge = Stripe::Charge.create(
         :customer    => customer.id,
         :amount      => params[:amount],
-        :description => 'Consumer Defender',
+        :description => SiteSetting.discourse_donations_description,
         :currency    => currency
       )
 
