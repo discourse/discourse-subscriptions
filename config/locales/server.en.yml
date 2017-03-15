@@ -3,5 +3,5 @@ en:
     discourse_donations_enabled: Enable the discourse donations plugin.
     discourse_donations_secret_key: Stripe Secret Key
     discourse_donations_public_key: Stripe Public Key
-    discourse_donations_currency: Curency Code
+    discourse_donations_currency: Currency Code
     discourse_donations_hide_zip_code: Hide Zip Code
