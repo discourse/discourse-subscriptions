@@ -2,6 +2,9 @@ fi:
   js:
     discourse_donations:
       title: Lahjoita
+      nav_item: Lahjoita
       amount: Määrä
       card: Credit- vai debit-kortti
       submit: Maksa
+      messages:
+        success: Kiitos lahjoituksestasi!
