@@ -1,6 +1,6 @@
 # name: discourse-donations
 # about: Integrating Discourse with Stripe for donations
-# version: 1.9.3
+# version: 1.9.4
 # url: https://github.com/choiceaustralia/discourse-donations
 # authors: Rimian Perkins
 
