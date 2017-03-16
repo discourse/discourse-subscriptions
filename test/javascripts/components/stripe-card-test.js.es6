@@ -18,7 +18,8 @@ window.Stripe = function() {
 
 componentTest('stripe card', {
   template: `{{stripe-card}}`,
+
   test(assert) {
-    assert.ok(true);
+    assert.ok(this.$('input[role=combobox]').length);
   }
 });
