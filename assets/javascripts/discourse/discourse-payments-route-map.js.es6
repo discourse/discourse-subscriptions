@@ -4,3 +4,7 @@ export default {
     this.route('payments');
   }
 };
+
+export default function() {
+  this.route('stripe');
+};
