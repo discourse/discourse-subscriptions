@@ -22,6 +22,29 @@
         {{text-field value=email}}
       </div>
     </div>
+
+    {{#if create_accounts}}
+      <div class="control-group">
+        <label class="control-label" for="card-element">{{i18n 'user.username.title'}}</label>
+        <div class="controls">
+          {{text-field value=username}}
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="card-element">{{i18n 'user.name.title'}}</label>
+        <div class="controls">
+          {{text-field value=name}}
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="card-element">{{i18n 'user.password.title'}}</label>
+        <div class="controls">
+          {{input type="password" value=password}}
+        </div>
+      </div>
+    {{/if}}
   {{/if}}
 
   <div class="control-group save-button">
