@@ -1,10 +1,10 @@
 # name: discourse-donations
 # about: Integrating Discourse with Stripe for donations
-# version: 1.9.5
+# version: 1.9.6
 # url: https://github.com/choiceaustralia/discourse-donations
 # authors: Rimian Perkins
 
-gem 'stripe', '2.0.1'
+gem 'stripe', '2.0.3'
 
 load File.expand_path('../lib/discourse_donations/engine.rb', __FILE__)
 
