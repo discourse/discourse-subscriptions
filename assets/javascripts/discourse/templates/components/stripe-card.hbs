@@ -15,6 +15,15 @@
     <div id="card-element" class="controls"></div>
   </div>
 
+  {{#if anon}}
+    <div class="control-group">
+      <label class="control-label" for="card-element">{{i18n 'user.email.title'}}</label>
+      <div class="controls">
+        {{text-field value=email}}
+      </div>
+    </div>
+  {{/if}}
+
   <div class="control-group save-button">
     <div class="controls">
       {{#d-button action="submitStripeCard" disabled=transactionInProgress class="btn btn-primary btn-payment"}}
@@ -32,6 +41,10 @@
   </div>
 
   {{#if success}}
-    <span>{{i18n 'discourse_donations.messages.success'}}</span>
+    <div class="control-group">
+      <div class="controls">
+        <span>{{i18n 'discourse_donations.messages.success'}}</span>
+      </div>
+    </div>
   {{/if}}
 </form>

@@ -11,7 +11,7 @@ module DiscourseDonations
       currency = SiteSetting.discourse_donations_currency
 
       customer = Stripe::Customer.create(
-       :email => current_user.email,
+       :email => params[:email] || current_user.email,
        :source  => params[:stripeToken]
       )
 

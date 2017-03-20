@@ -6,5 +6,5 @@ export default {
 };
 
 export default function() {
-  this.route('stripe');
+  this.route('dd');
 };
