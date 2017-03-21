@@ -36,7 +36,7 @@ private
         name: options[:name],
         password: options[:password],
         active: true
-      )
+      ).approve(-1, false)
     end
   end
 end
