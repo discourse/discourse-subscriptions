@@ -54,7 +54,10 @@ export default Ember.Component.extend({
           let params = {
             stripeToken: data.token.id,
             amount: self.get('amount') * 100,
-            email: self.get('email')
+            email: self.get('email'),
+            username: self.get('username'),
+            name: self.get('name'),
+            password: self.get('password')
           };
 
           ajax('/charges', { data: params, method: 'post' }).then(data => {

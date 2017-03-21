@@ -10,8 +10,10 @@ module DiscourseDonations
       Stripe.api_key = SiteSetting.discourse_donations_secret_key
       currency = SiteSetting.discourse_donations_currency
 
+      current_user = create_user(params) if current_user.nil?
+
       customer = Stripe::Customer.create(
-       :email => params[:email] || current_user.email,
+       :email => current_user.email,
        :source  => params[:stripeToken]
       )
 
@@ -23,6 +25,17 @@ module DiscourseDonations
       )
 
       render :json => charge
+    end
+
+private
+
+    def create_user(options)
+      User.create(
+        email: options[:email],
+        username: options[:username],
+        name: options[:name],
+        password: options[:password]
+      )
     end
   end
 end
