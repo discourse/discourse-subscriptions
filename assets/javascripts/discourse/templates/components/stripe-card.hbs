@@ -50,7 +50,11 @@
   <div class="control-group save-button">
     <div class="controls">
       {{#d-button action="submitStripeCard" disabled=transactionInProgress class="btn btn-primary btn-payment"}}
-        {{i18n 'discourse_donations.submit'}}
+        {{#if create_accounts}}
+          {{i18n 'discourse_donations.submit_with_create_account'}}
+        {{else}}
+          {{i18n 'discourse_donations.submit'}}
+        {{/if}}
       {{/d-button}}
 
       {{#if transactionInProgress}}

@@ -55,15 +55,30 @@ export default Ember.Component.extend({
             stripeToken: data.token.id,
             amount: self.get('amount') * 100,
             email: self.get('email'),
-            username: self.get('username'),
-            name: self.get('name'),
-            password: self.get('password')
           };
 
           ajax('/charges', { data: params, method: 'post' }).then(data => {
-            if(data.status == 'succeeded') { self.set('success', true) };
-            self.set('transactionInProgress', false);
             self.set('result', data.outcome.seller_message);
+
+            if(!this.get('create_accounts')) {
+              if(data.status == 'succeeded') { self.set('success', true) };
+              self.set('transactionInProgress', false);
+            }
+            else {
+
+              let params = {
+                email: self.get('email'),
+                username: self.get('username'),
+                name: self.get('name'),
+                password: self.get('password')
+              };
+
+              ajax('/users', { data: params, method: 'post' }).then(data => {
+                self.set('success', data.success);
+                self.set('transactionInProgress', false);
+                self.set('result', self.get('result') + data.message);
+              });
+            }
           });
         }
       });

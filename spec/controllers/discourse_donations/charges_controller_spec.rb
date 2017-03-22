@@ -9,19 +9,15 @@ module DiscourseDonations
       SiteSetting.stubs(:discourse_donations_secret_key).returns('secret-key-yo')
     end
 
-    describe 'creating user accounts' do
-      it 'creates a new user account' do
-        controller.expects(:create_user).once
-        post :create, { email: 'foobar@example.com' }
-        expect(response).to have_http_status(200)
-      end
+    it 'responds ok for anonymous users' do
+      post :create, { email: 'foobar@example.com' }
+      expect(response).to have_http_status(200)
+    end
 
-      it 'does not create a new user account' do
-        controller.expects(:create_user).never
-        current_user = log_in(:coding_horror)
-        post :create
-        expect(response).to have_http_status(200)
-      end
+    it 'responds ok for logged in user' do
+      current_user = log_in(:coding_horror)
+      post :create
+      expect(response).to have_http_status(200)
     end
   end
 end

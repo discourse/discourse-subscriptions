@@ -22,21 +22,7 @@ module DiscourseDonations
         :currency    => currency
       )
 
-      create_user(params) if current_user.nil?
-
       render :json => charge
-    end
-
-private
-
-    def create_user(options)
-      User.create(
-        email: options[:email],
-        username: options[:username],
-        name: options[:name],
-        password: options[:password],
-        active: true
-      ).approve(-1, false)
     end
   end
 end
