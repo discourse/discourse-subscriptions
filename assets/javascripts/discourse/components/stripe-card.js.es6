@@ -67,12 +67,14 @@ export default Ember.Component.extend({
             else {
               if(data.status == 'succeeded') {
                 ajax('/users/hp', { method: 'get' }).then(data => {
-                  let params = Ember.assign(data, {
+                  let params = {
                     email: self.get('email'),
                     username: self.get('username'),
                     name: self.get('name'),
-                    password: self.get('password')
-                  });
+                    password: self.get('password'),
+                    password_confirmation: data.value,
+                    challenge: data.challenge.split('').reverse().join(''),
+                  };
 
                   ajax('/users', { data: params, method: 'post' }).then(data => {
                     self.set('success', data.success);
