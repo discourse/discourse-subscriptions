@@ -65,19 +65,22 @@ export default Ember.Component.extend({
               self.set('transactionInProgress', false);
             }
             else {
+              if(data.status == 'succeeded') {
+                ajax('/users/hp', { method: 'get' }).then(data => {
+                  let params = Ember.assign(data, {
+                    email: self.get('email'),
+                    username: self.get('username'),
+                    name: self.get('name'),
+                    password: self.get('password')
+                  });
 
-              let params = {
-                email: self.get('email'),
-                username: self.get('username'),
-                name: self.get('name'),
-                password: self.get('password')
-              };
-
-              ajax('/users', { data: params, method: 'post' }).then(data => {
-                self.set('success', data.success);
-                self.set('transactionInProgress', false);
-                self.set('result', self.get('result') + data.message);
-              });
+                  ajax('/users', { data: params, method: 'post' }).then(data => {
+                    self.set('success', data.success);
+                    self.set('transactionInProgress', false);
+                    self.set('result', self.get('result') + data.message);
+                  });
+                });
+              }
             }
           });
         }
