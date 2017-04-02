@@ -60,18 +60,12 @@
       {{#if transactionInProgress}}
         {{loading-spinner size="small"}}
       {{/if}}
-
       {{#if result}}
-        <span>{{result}}</span>
+        <p>{{{result}}}</p>
+      {{/if}}
+      {{#if success}}
+        <p>{{i18n 'discourse_donations.messages.success'}}</p>
       {{/if}}
     </div>
   </div>
-
-  {{#if success}}
-    <div class="control-group">
-      <div class="controls">
-        <span>{{i18n 'discourse_donations.messages.success'}}</span>
-      </div>
-    </div>
-  {{/if}}
 </form>

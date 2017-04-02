@@ -30,5 +30,5 @@ Visit `/admin/customize/site_texts` and search for 'discourse_donations'. You'll
 ## TODO
 
 * Donate when creating account
-* Add a plugin outlet for custom user fields.
+* Handle custom fields
 * Handle fails from stripe
