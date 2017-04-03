@@ -37,7 +37,7 @@ export default Ember.Component.extend({
   },
 
   setSuccess() {
-    this.set('success', true);
+    this.set('paymentSuccess', true);
   },
 
   endTranscation() {
@@ -59,6 +59,7 @@ export default Ember.Component.extend({
       ajax('/users', { data: params, method: 'post' }).then(data => {
         self.setSuccess();
         self.endTranscation();
+
         self.set('result', self.get('result') + data.message);
       });
     });
@@ -70,8 +71,7 @@ export default Ember.Component.extend({
 
       this.get('stripe').createToken(this.get('card')).then(data => {
 
-        self.set('result', null);
-        self.set('success', false);
+        self.set('result', '');
 
         if (data.error) {
           self.set('result', data.error.message);
@@ -85,19 +85,25 @@ export default Ember.Component.extend({
             email: self.get('email'),
           };
 
-          ajax('/charges', { data: params, method: 'post' }).then(data => {
-            self.set('result', data.outcome.seller_message);
+          if(!self.get('paymentSuccess')) {
+            ajax('/charges', { data: params, method: 'post' }).then(data => {
+              self.set('result', data.outcome.seller_message);
 
-            if(!this.get('create_accounts')) {
-              if(data.status == 'succeeded') { this.setSuccess(false) };
-              self.endTranscation();
-            }
-            else {
-              if(data.status == 'succeeded') {
-                this.createUser();
+              if(!this.get('create_accounts')) {
+                if(data.status == 'succeeded') { this.setSuccess() };
+                self.endTranscation();
               }
-            }
-          });
+              else {
+                if(data.status == 'succeeded') {
+                  this.createUser();
+                }
+              }
+            });
+          }
+          else if (this.get('create_accounts')) {
+            self.set('result', '');
+            self.createUser();
+          }
         }
       });
     }
