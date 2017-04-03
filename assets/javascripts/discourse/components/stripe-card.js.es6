@@ -36,6 +36,34 @@ export default Ember.Component.extend({
     this.get('card').mount('#card-element');
   },
 
+  setSuccess() {
+    this.set('success', true);
+  },
+
+  endTranscation() {
+    this.set('transactionInProgress', false);
+  },
+
+  createUser() {
+    let self = this;
+    ajax('/users/hp', { method: 'get' }).then(data => {
+      let params = {
+        email: self.get('email'),
+        username: self.get('username'),
+        name: self.get('name'),
+        password: self.get('password'),
+        password_confirmation: data.value,
+        challenge: data.challenge.split('').reverse().join(''),
+      };
+
+      ajax('/users', { data: params, method: 'post' }).then(data => {
+        self.setSuccess();
+        self.endTranscation();
+        self.set('result', self.get('result') + data.message);
+      });
+    });
+  },
+
   actions: {
     submitStripeCard() {
       let self = this;
@@ -61,27 +89,12 @@ export default Ember.Component.extend({
             self.set('result', data.outcome.seller_message);
 
             if(!this.get('create_accounts')) {
-              if(data.status == 'succeeded') { self.set('success', true) };
-              self.set('transactionInProgress', false);
+              if(data.status == 'succeeded') { this.setSuccess(false) };
+              self.endTranscation();
             }
             else {
               if(data.status == 'succeeded') {
-                ajax('/users/hp', { method: 'get' }).then(data => {
-                  let params = {
-                    email: self.get('email'),
-                    username: self.get('username'),
-                    name: self.get('name'),
-                    password: self.get('password'),
-                    password_confirmation: data.value,
-                    challenge: data.challenge.split('').reverse().join(''),
-                  };
-
-                  ajax('/users', { data: params, method: 'post' }).then(data => {
-                    self.set('success', data.success);
-                    self.set('transactionInProgress', false);
-                    self.set('result', self.get('result') + data.message);
-                  });
-                });
+                this.createUser();
               }
             }
           });
