@@ -14,6 +14,11 @@ module DiscourseDonations
       expect(response).to have_http_status(200)
     end
 
+    it 'responds ok when the email is empty' do
+      post :create, { }
+      expect(response).to have_http_status(200)
+    end
+
     it 'responds ok for logged in user' do
       current_user = log_in(:coding_horror)
       post :create
