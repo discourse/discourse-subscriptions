@@ -1,0 +1,7 @@
+it:
+  site_settings:
+    discourse_donations_enabled: Abilita il plugin per le donazioni.
+    discourse_donations_secret_key: Stripe Secret Key
+    discourse_donations_public_key: Stripe Public Key
+    discourse_donations_currency: Codice Valuta
+    discourse_donations_hide_zip_code: Nascondi C.A.P.
