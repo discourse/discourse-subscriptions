@@ -22,6 +22,12 @@ module DiscourseDonations
       expect(response).to have_http_status(200)
     end
 
+    it 'expects a username if accounts are being created' do
+      post :create, { email: 'zipitydoodah@example.com', create_account: 'true' }
+      expect(body['message']).to eq('Please enter a username')
+      expect(response).to have_http_status(200)
+    end
+
     it 'responds ok for logged in user' do
       current_user = log_in(:coding_horror)
       post :create
