@@ -7,10 +7,8 @@ module DiscourseDonations
     skip_before_filter :verify_authenticity_token, only: [:create]
 
     def create
-      if email.nil?
-        response = {
-
-        }
+      if email.nil? || email.empty?
+        response = {}
       else
         Stripe.api_key = SiteSetting.discourse_donations_secret_key
         currency = SiteSetting.discourse_donations_currency

@@ -15,7 +15,7 @@ module DiscourseDonations
     end
 
     it 'responds ok when the email is empty' do
-      post :create, { }
+      post :create, { email: '' }
       expect(response).to have_http_status(200)
     end
 
