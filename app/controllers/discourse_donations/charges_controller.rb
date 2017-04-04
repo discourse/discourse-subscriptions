@@ -7,22 +7,34 @@ module DiscourseDonations
     skip_before_filter :verify_authenticity_token, only: [:create]
 
     def create
-      Stripe.api_key = SiteSetting.discourse_donations_secret_key
-      currency = SiteSetting.discourse_donations_currency
+      if email.nil?
+        response = {
 
-      customer = Stripe::Customer.create(
-       :email => params[:email] || current_user.email,
-       :source  => params[:stripeToken]
-      )
+        }
+      else
+        Stripe.api_key = SiteSetting.discourse_donations_secret_key
+        currency = SiteSetting.discourse_donations_currency
 
-      charge = Stripe::Charge.create(
-        :customer    => customer.id,
-        :amount      => params[:amount],
-        :description => SiteSetting.discourse_donations_description,
-        :currency    => currency
-      )
+        customer = Stripe::Customer.create(
+         :email => email,
+         :source  => params[:stripeToken]
+        )
 
-      render :json => charge
+        response = Stripe::Charge.create(
+          :customer    => customer.id,
+          :amount      => params[:amount],
+          :description => SiteSetting.discourse_donations_description,
+          :currency    => currency
+        )
+      end
+
+      render :json => response
+    end
+
+    private
+
+    def email
+      params[:email] || current_user.try(:email)
     end
   end
 end
