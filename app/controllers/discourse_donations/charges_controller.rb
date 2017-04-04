@@ -7,7 +7,7 @@ module DiscourseDonations
     skip_before_filter :verify_authenticity_token, only: [:create]
 
     def create
-      if email.nil?
+      if email.nil? || email.empty?
         response = {'message' => 'Please enter your email address'}
       elsif create_account && params[:username].nil?
         response = {'message' => 'Please enter a username'}

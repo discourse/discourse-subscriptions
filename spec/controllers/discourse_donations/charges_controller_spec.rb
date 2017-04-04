@@ -17,7 +17,13 @@ module DiscourseDonations
     end
 
     it 'responds ok when the email is empty' do
-      post :create, { }
+      post :create, { create_account: 'true', email: '' }
+      expect(body['message']).to eq('Please enter your email address')
+      expect(response).to have_http_status(200)
+    end
+
+    it 'responds ok when the email is empty' do
+      post :create, { create_account: 'false' }
       expect(body['message']).to eq('Please enter your email address')
       expect(response).to have_http_status(200)
     end
