@@ -58,9 +58,8 @@ export default Ember.Component.extend({
 
       ajax('/users', { data: params, method: 'post' }).then(data => {
         self.setSuccess();
-        self.endTranscation();
-
         self.set('result', self.get('result') + data.message);
+        self.endTranscation();
       });
     });
   },
@@ -96,6 +95,9 @@ export default Ember.Component.extend({
               else {
                 if(data.status == 'succeeded') {
                   this.createUser();
+                }
+                else {
+                  self.endTranscation();
                 }
               }
             });
