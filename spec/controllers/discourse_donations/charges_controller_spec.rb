@@ -23,7 +23,7 @@ module DiscourseDonations
     end
 
     it 'responds ok when the email is empty' do
-      post :create, { create_account: 'false' }
+      post :create, { create_account: 'true' }
       expect(body['message']).to eq('Please enter your email address')
       expect(response).to have_http_status(200)
     end
@@ -34,10 +34,10 @@ module DiscourseDonations
       expect(response).to have_http_status(200)
     end
 
-    it 'responds ok for logged in user' do
+    it 'does not expect a username or email if accounts are not being created' do
       current_user = log_in(:coding_horror)
-      post :create
-      expect(body['message']).to eq(body['outcome']['seller_message'])
+      post :create, { create_account: 'false' }
+      expect(body['message']).to eq('Payment complete.')
       expect(response).to have_http_status(200)
     end
   end
