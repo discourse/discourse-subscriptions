@@ -87,7 +87,7 @@ export default Ember.Component.extend({
 
           if(!self.get('paymentSuccess')) {
             ajax('/charges', { data: params, method: 'post' }).then(data => {
-              self.set('result', data.outcome.seller_message);
+              self.set('result', data.message);
 
               if(!this.get('create_accounts')) {
                 if(data.status == 'succeeded') { this.setSuccess() };

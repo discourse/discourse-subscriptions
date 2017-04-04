@@ -8,9 +8,7 @@ module DiscourseDonations
 
     def create
       if email.nil?
-        response = {
-
-        }
+        response = {'message' => 'Please enter your email address'}
       else
         Stripe.api_key = SiteSetting.discourse_donations_secret_key
         currency = SiteSetting.discourse_donations_currency
@@ -26,6 +24,8 @@ module DiscourseDonations
           :description => SiteSetting.discourse_donations_description,
           :currency    => currency
         )
+
+        response['message'] = response['outcome']['seller_message']
       end
 
       render :json => response
