@@ -7,6 +7,8 @@ module DiscourseDonations
 
     before do
       SiteSetting.stubs(:discourse_donations_secret_key).returns('secret-key-yo')
+      SiteSetting.stubs(:discourse_donations_description).returns('charity begins at discourse plugin')
+      SiteSetting.stubs(:discourse_donations_currency).returns('AUD')
     end
 
     it 'responds ok for anonymous users' do
