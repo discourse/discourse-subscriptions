@@ -10,7 +10,7 @@ module DiscourseDonations
     def charge(email, opts)
       customer = ::Stripe::Customer.create(
         email: email,
-        source: opts[:source]
+        source: opts[:stripeToken]
       )
       ::Stripe::Charge.create(
         customer: customer.id,

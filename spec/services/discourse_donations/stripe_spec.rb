@@ -15,7 +15,7 @@ module DiscourseDonations
     end
 
     it 'creates a customer and charges them an amount' do
-      options = { email: email, source: 'stripe-token', amount: '1234', other: 'redundant param' }
+      options = { email: email, stripeToken: 'stripe-token', amount: '1234', other: 'redundant param' }
       ::Stripe::Customer.expects(:create).with(
         email: email,
         source: 'stripe-token'
