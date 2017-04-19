@@ -12,12 +12,17 @@ module DiscourseDonations
         email: email,
         source: opts[:stripeToken]
       )
-      ::Stripe::Charge.create(
+      @charge = ::Stripe::Charge.create(
         customer: customer.id,
         amount: opts[:amount],
         description: @description,
         currency: @currency
       )
+      @charge
+    end
+
+    def successful?
+      @charge[:paid]
     end
   end
 end
