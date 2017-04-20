@@ -25,16 +25,6 @@ module DiscourseDonations
         amount: params[:amount],
         description: stripe_options[:description],
         currency: stripe_options[:currency]
-      )
-      subject.charge(email, params)
-    end
-
-    it 'has a message' do
-      ::Stripe::Charge.expects(:create).with(
-        customer: customer.id,
-        amount: params[:amount],
-        description: stripe_options[:description],
-        currency: stripe_options[:currency]
       ).returns(
         {
           paid: true,
@@ -42,7 +32,13 @@ module DiscourseDonations
         }
       )
       subject.charge(email, params)
-      expect(subject.message).to eq 'yay!'
+    end
+
+    it 'has a message' do
+      ::Stripe::Customer.expects(:create).returns(customer)
+      ::Stripe::Charge.expects(:create).returns({ outcome: { seller_message: 'yay!' } })
+      response = subject.charge(email, params)
+      expect(response[:message]).to eq 'yay!'
     end
 
     describe '.successful?' do
