@@ -15,9 +15,9 @@ plugins:
   discourse_donations_hide_zip_code:
     default: true
     client: true
-  discourse_donations_grant_badge:
+  discourse_donations_reward_badge:
     client: false
     default: 'Donation'
-  discourse_donations_add_to_group:
+  discourse_donations_reward_group:
     client: false
     default: 'Donation'
