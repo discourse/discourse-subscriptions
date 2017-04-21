@@ -8,7 +8,9 @@ module DiscourseDonations
 
     def add_to_group(name)
       group = ::Group.find_by_name(name)
-      group.add(@user) if group.present?
+      return false if group.nil?
+      group.add(@user)
+      group.present?
     end
   end
 end

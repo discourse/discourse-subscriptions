@@ -27,10 +27,26 @@ module DiscourseDonations
       expect(response).to have_http_status(200)
     end
 
-    it 'has no rewards' do
-      current_user = log_in(:coding_horror)
-      post :create
-      expect(JSON.parse(response.body)['rewards']).to eq([])
+    describe 'rewards' do
+      before do
+        SiteSetting.stubs(:discourse_donations_reward_group).returns('Skimby')
+        Fabricate(:group, name: SiteSetting.discourse_donations_reward_group)
+        log_in :coding_horror
+      end
+
+      let(:response_rewards) { JSON.parse(response.body)['rewards'] }
+      let(:stripe) { ::Stripe::Charge }
+
+      it 'has no rewards' do
+        stripe.expects(:create).returns({ bummer: true })
+        post :create
+        expect(response_rewards).to eq({})
+      end
+
+      it 'awards a group' do
+        post :create
+        expect(response_rewards['groups']).to eq([SiteSetting.discourse_donations_reward_group])
+      end
     end
   end
 end
