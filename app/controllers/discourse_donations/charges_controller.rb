@@ -14,9 +14,12 @@ module DiscourseDonations
         response = {}
       end
 
+      response['rewards'] = []
+
       if reward_user?(payment)
         reward = DiscourseDonations::Rewards.new(current_user)
-        reward.add_to_group(SiteSetting.discourse_donations_reward_group) if add_to_group?
+        group_name = SiteSetting.discourse_donations_reward_group
+        reward.add_to_group(group_name) if group_name.present?
       end
 
       render :json => response
@@ -26,10 +29,6 @@ module DiscourseDonations
 
     def reward_user?(payment)
       payment.present? && payment.successful? && current_user.present?
-    end
-
-    def add_to_group?
-      SiteSetting.discourse_donations_reward_group.present?
     end
 
     def secret_key

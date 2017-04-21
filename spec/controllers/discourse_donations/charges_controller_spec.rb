@@ -26,5 +26,11 @@ module DiscourseDonations
       post :create
       expect(response).to have_http_status(200)
     end
+
+    it 'has no rewards' do
+      current_user = log_in(:coding_horror)
+      post :create
+      expect(JSON.parse(response.body)['rewards']).to eq([])
+    end
   end
 end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module DiscourseDonations
   RSpec.describe DiscourseDonations::Rewards do
-    let(:grp) { Fabricate(:group, name: 'w00t') }
+    let(:grp) { Fabricate(:group) }
     let(:user) { Fabricate(:user) }
     subject { described_class.new(user) }
 
