@@ -38,7 +38,7 @@ module DiscourseDonations
       let(:stripe) { ::Stripe::Charge }
 
       it 'has no rewards' do
-        stripe.expects(:create).returns({ bummer: true })
+        stripe.expects(:create).returns({ outcome: { seller_message: 'bummer' } })
         post :create
         expect(response_rewards).to eq({})
       end
