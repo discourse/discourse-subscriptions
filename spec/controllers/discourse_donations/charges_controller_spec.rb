@@ -29,8 +29,8 @@ module DiscourseDonations
 
     describe 'rewards' do
       before do
-        SiteSetting.stubs(:discourse_donations_reward_group).returns('Skimby')
-        Fabricate(:group, name: SiteSetting.discourse_donations_reward_group)
+        SiteSetting.stubs(:discourse_donations_reward_group_name).returns('Skimby')
+        Fabricate(:group, name: SiteSetting.discourse_donations_reward_group_name)
         log_in :coding_horror
       end
 
@@ -45,7 +45,7 @@ module DiscourseDonations
 
       it 'awards a group' do
         post :create
-        expect(response_rewards['groups']).to eq([SiteSetting.discourse_donations_reward_group])
+        expect(response_rewards['groups']).to eq([SiteSetting.discourse_donations_reward_group_name])
       end
     end
   end

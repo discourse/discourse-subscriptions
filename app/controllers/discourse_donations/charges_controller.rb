@@ -18,9 +18,9 @@ module DiscourseDonations
 
       if reward_user?(payment)
         reward = DiscourseDonations::Rewards.new(current_user)
-        group_name = SiteSetting.discourse_donations_reward_group
+        group_name = SiteSetting.discourse_donations_reward_group_name
         if reward.add_to_group(group_name)
-          response['rewards']['groups'] = [SiteSetting.discourse_donations_reward_group]
+          response['rewards']['groups'] = [group_name]
         end
       end
 

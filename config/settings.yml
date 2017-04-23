@@ -18,6 +18,6 @@ plugins:
   discourse_donations_reward_badge:
     client: false
     default: 'Donation'
-  discourse_donations_reward_group:
+  discourse_donations_reward_group_name:
     client: false
     default: 'Donation'
