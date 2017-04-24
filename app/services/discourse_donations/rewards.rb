@@ -7,10 +7,15 @@ module DiscourseDonations
     end
 
     def add_to_group(name)
-      group = ::Group.find_by_name(name)
-      return false if group.nil?
-      group.add(@user)
-      group.present?
+      grp = ::Group.find_by_name(name)
+      return if grp.nil?
+      grp.add(@user)
+    end
+
+    def grant_badge(name)
+      badge = ::Badge.find_by_name(name)
+      return if badge.nil?
+      BadgeGranter.grant(badge, @user)
     end
   end
 end

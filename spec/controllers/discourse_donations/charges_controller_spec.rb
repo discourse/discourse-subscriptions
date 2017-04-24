@@ -29,12 +29,15 @@ module DiscourseDonations
 
     describe 'rewards' do
       let(:group_name) { 'Zasch' }
+      let(:badge_name) { 'Beanie' }
       let(:response_rewards) { JSON.parse(response.body)['rewards'] }
       let(:stripe) { ::Stripe::Charge }
 
       before do
         SiteSetting.stubs(:discourse_donations_reward_group_name).returns(group_name)
+        SiteSetting.stubs(:discourse_donations_reward_badge_name).returns(badge_name)
         Fabricate(:group, name: SiteSetting.discourse_donations_reward_group_name)
+        Fabricate(:badge, name: SiteSetting.discourse_donations_reward_badge_name)
         log_in :coding_horror
       end
 
@@ -46,7 +49,12 @@ module DiscourseDonations
 
       it 'awards a group' do
         post :create
-        expect(response_rewards.first).to eq({'type' => 'group', 'name' => group_name})
+        expect(response_rewards).to include({'type' => 'group', 'name' => group_name})
+      end
+
+      it 'awards a badge' do
+        post :create
+        expect(response_rewards).to include({'type' => 'badge', 'name' => badge_name})
       end
     end
   end

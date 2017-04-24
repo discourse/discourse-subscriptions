@@ -18,9 +18,11 @@ module DiscourseDonations
 
       if reward_user?(payment)
         reward = DiscourseDonations::Rewards.new(current_user)
-        group_name = SiteSetting.discourse_donations_reward_group_name
         if reward.add_to_group(group_name)
           response['rewards'] << { type: :group, name: group_name }
+        end
+        if reward.grant_badge(badge_name)
+          response['rewards'] << { type: :badge, name: badge_name }
         end
       end
 
@@ -31,6 +33,14 @@ module DiscourseDonations
 
     def reward_user?(payment)
       payment.present? && payment.successful? && current_user.present?
+    end
+
+    def group_name
+      SiteSetting.discourse_donations_reward_group_name
+    end
+
+    def badge_name
+      SiteSetting.discourse_donations_reward_badge_name
     end
 
     def secret_key
