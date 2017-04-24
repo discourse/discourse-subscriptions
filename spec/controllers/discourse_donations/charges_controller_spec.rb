@@ -28,24 +28,25 @@ module DiscourseDonations
     end
 
     describe 'rewards' do
+      let(:group_name) { 'Zasch' }
+      let(:response_rewards) { JSON.parse(response.body)['rewards'] }
+      let(:stripe) { ::Stripe::Charge }
+
       before do
-        SiteSetting.stubs(:discourse_donations_reward_group_name).returns('Skimby')
+        SiteSetting.stubs(:discourse_donations_reward_group_name).returns(group_name)
         Fabricate(:group, name: SiteSetting.discourse_donations_reward_group_name)
         log_in :coding_horror
       end
 
-      let(:response_rewards) { JSON.parse(response.body)['rewards'] }
-      let(:stripe) { ::Stripe::Charge }
-
       it 'has no rewards' do
         stripe.expects(:create).returns({ outcome: { seller_message: 'bummer' } })
         post :create
-        expect(response_rewards).to eq({})
+        expect(response_rewards).to be_empty
       end
 
       it 'awards a group' do
         post :create
-        expect(response_rewards['groups']).to eq([SiteSetting.discourse_donations_reward_group_name])
+        expect(response_rewards.first).to eq({'type' => 'group', 'name' => group_name})
       end
     end
   end
