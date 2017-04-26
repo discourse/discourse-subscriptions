@@ -7,29 +7,52 @@ module DiscourseDonations
     skip_before_filter :verify_authenticity_token, only: [:create]
 
     def create
-      if email.nil? || email.empty?
-        response = {}
+      if email.present?
+        payment = DiscourseDonations::Stripe.new(secret_key, stripe_options)
+        response = payment.charge(email, params)
       else
-        Stripe.api_key = SiteSetting.discourse_donations_secret_key
-        currency = SiteSetting.discourse_donations_currency
+        response = {}
+      end
 
-        customer = Stripe::Customer.create(
-         :email => email,
-         :source  => params[:stripeToken]
-        )
+      response['rewards'] = []
 
-        response = Stripe::Charge.create(
-          :customer    => customer.id,
-          :amount      => params[:amount],
-          :description => SiteSetting.discourse_donations_description,
-          :currency    => currency
-        )
+      if reward_user?(payment)
+        reward = DiscourseDonations::Rewards.new(current_user)
+        if reward.add_to_group(group_name)
+          response['rewards'] << { type: :group, name: group_name }
+        end
+        if reward.grant_badge(badge_name)
+          response['rewards'] << { type: :badge, name: badge_name }
+        end
       end
 
       render :json => response
     end
 
     private
+
+    def reward_user?(payment)
+      payment.present? && payment.successful? && current_user.present?
+    end
+
+    def group_name
+      SiteSetting.discourse_donations_reward_group_name
+    end
+
+    def badge_name
+      SiteSetting.discourse_donations_reward_badge_name
+    end
+
+    def secret_key
+      SiteSetting.discourse_donations_secret_key
+    end
+
+    def stripe_options
+      {
+        description: SiteSetting.discourse_donations_description,
+        currency: SiteSetting.discourse_donations_currency
+      }
+    end
 
     def email
       params[:email] || current_user.try(:email)

@@ -4,7 +4,7 @@
 # url: https://github.com/choiceaustralia/discourse-donations
 # authors: Rimian Perkins
 
-gem 'stripe', '2.1.0'
+gem 'stripe', '2.4.0'
 
 load File.expand_path('../lib/discourse_donations/engine.rb', __FILE__)
 
