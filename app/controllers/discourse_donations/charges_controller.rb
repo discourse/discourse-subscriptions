@@ -1,4 +1,5 @@
 require_dependency 'discourse'
+require_relative '../../jobs/award_group'
 
 module DiscourseDonations
   class ChargesController < ActionController::Base
@@ -16,13 +17,17 @@ module DiscourseDonations
 
       response['rewards'] = []
 
-      if reward_user?(payment)
+      if reward_current_user?(payment)
         reward = DiscourseDonations::Rewards.new(current_user)
         if reward.add_to_group(group_name)
           response['rewards'] << { type: :group, name: group_name }
         end
         if reward.grant_badge(badge_name)
           response['rewards'] << { type: :badge, name: badge_name }
+        end
+      else
+        if group_name.present?
+          Jobs.enqueue_in(1.minute, :award_group, email: email)
         end
       end
 
@@ -31,8 +36,8 @@ module DiscourseDonations
 
     private
 
-    def reward_user?(payment)
-      payment.present? && payment.successful?
+    def reward_current_user?(payment)
+      current_user.present? && payment.present? && payment.successful?
     end
 
     def group_name

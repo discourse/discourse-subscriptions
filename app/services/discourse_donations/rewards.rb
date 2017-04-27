@@ -1,5 +1,4 @@
 
-
 module DiscourseDonations
   class Rewards
     attr_reader :user

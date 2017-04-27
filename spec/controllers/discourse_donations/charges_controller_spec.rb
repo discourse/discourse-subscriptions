@@ -40,21 +40,21 @@ module DiscourseDonations
         Fabricate(:badge, name: badge_name)
       end
 
-      shared_examples 'it has no rewards' do
-        it 'rewards are empty' do
-          stripe.expects(:create).returns({ outcome: { seller_message: 'bummer' } })
-          post :create
-          expect(response_rewards).to be_empty
-        end
-      end
 
       describe 'new user' do
         let(:params) { { email: 'new-user@example.com' } }
 
-        it_behaves_like 'it has no rewards'
+        it 'has no rewards' do
+          post :create
+          expect(response_rewards).to be_empty
+        end
 
-        it 'awards a group'
-        it 'awards a badge'
+        it 'enqueues add to group' do
+          Jobs.expects(:enqueue_in).with(1.minute, :award_group, email: params[:email])
+          post :create, params
+        end
+
+        it 'enqueues awarding a badge'
       end
 
       describe 'logged in user' do
@@ -62,7 +62,11 @@ module DiscourseDonations
           log_in :coding_horror
         end
 
-        it_behaves_like 'it has no rewards'
+        it 'has no rewards' do
+          stripe.expects(:create).returns({ outcome: { seller_message: 'bummer' } })
+          post :create
+          expect(response_rewards).to be_empty
+        end
 
         it 'awards a group' do
           post :create
