@@ -32,14 +32,13 @@ module DiscourseDonations
       let(:badge_name) { 'Beanie' }
       let(:response_rewards) { JSON.parse(response.body)['rewards'] }
       let(:stripe) { ::Stripe::Charge }
+      let!(:grp) { Fabricate(:group, name: group_name) }
+      let!(:badge) { Fabricate(:badge, name: badge_name) }
 
       before do
         SiteSetting.stubs(:discourse_donations_reward_group_name).returns(group_name)
         SiteSetting.stubs(:discourse_donations_reward_badge_name).returns(badge_name)
-        Fabricate(:group, name: group_name)
-        Fabricate(:badge, name: badge_name)
       end
-
 
       describe 'new user' do
         let(:params) { { email: 'new-user@example.com' } }
@@ -49,7 +48,7 @@ module DiscourseDonations
           expect(response_rewards).to be_empty
         end
 
-        it 'stores the email in group:add and badge:grant' do
+        it 'stores the email in group:add and badge:grant and adds them' do
           PluginStore.expects(:get).with('discourse-donations', 'group:add').returns([])
           PluginStore.expects(:set).with('discourse-donations', 'group:add', [params[:email]])
           PluginStore.expects(:get).with('discourse-donations', 'badge:grant').returns([])

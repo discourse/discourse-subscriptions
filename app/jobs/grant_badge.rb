@@ -4,6 +4,8 @@ module Jobs
     every 5.minutes
 
     def execute(_args)
+      puts "===================== Running badge grant ========================"
+      puts user_queue
       user_queue.each do |email|
         user = User.find_by_email(email)
         next if user.nil?

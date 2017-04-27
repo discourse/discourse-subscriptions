@@ -4,6 +4,8 @@ module Jobs
     every 1.minutes
 
     def execute(_args)
+      puts "===================== Running add to group ========================"
+      puts user_queue
       user_queue.each do |email|
         user = User.find_by_email(email)
         next if user.nil?
