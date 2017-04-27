@@ -3,14 +3,15 @@
 module Jobs
   class AwardGroup
     def perform(args)
-      puts '======================The Job was performed==========================='
+      puts '====================== The Job was performed ==========================='
     end
 
     def self.perform_in(arg, opts)
-      puts '======================The Job was enqueued==========================='
+      puts '====================== The Job was enqueued ==========================='
     end
 
     def execute(args)
+      puts '====================== The Job was executed ==========================='
       user = User.find_by_email(args[:email])
       if user.present?
         DiscourseDonations::Rewards.new(user).add_to_group(args[:group_name])

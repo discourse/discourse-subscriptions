@@ -26,7 +26,7 @@ module DiscourseDonations
         end
       else
         if group_name.present?
-          Jobs.enqueue_in(1.minute, :award_group, email: email)
+          Jobs.enqueue(:award_group, email: email, group_name: group_name)
         end
       end
 

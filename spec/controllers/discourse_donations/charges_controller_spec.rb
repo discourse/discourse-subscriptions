@@ -50,7 +50,7 @@ module DiscourseDonations
         end
 
         it 'enqueues add to group' do
-          Jobs.expects(:enqueue_in).with(1.minute, :award_group, email: params[:email])
+          Jobs.expects(:enqueue).with(:award_group, email: params[:email], group_name: group_name)
           post :create, params
         end
 
