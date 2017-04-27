@@ -1,5 +1,4 @@
 require_dependency 'discourse'
-require_relative '../../jobs/award_group'
 
 module DiscourseDonations
   class ChargesController < ActionController::Base
