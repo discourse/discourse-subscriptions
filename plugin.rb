@@ -12,6 +12,7 @@ enabled_site_setting :discourse_donations_enabled
 
 after_initialize do
   load File.expand_path('../app/jobs/award_group.rb', __FILE__)
+  load File.expand_path('../app/jobs/grant_badge.rb', __FILE__)
 
   # Must be placed on every page for fraud protection.
   header_script = '<script src="https://js.stripe.com/v3/"></script>'

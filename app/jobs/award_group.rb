@@ -4,7 +4,7 @@ module Jobs
     every 1.minutes
 
     def execute(_args)
-      puts '====================== The Job was executed ==========================='
+      puts '====================== The Award Group Job was executed ==========================='
       user_queue.each do |email|
         user = User.find_by_email(email)
         DiscourseDonations::Rewards.new(user).add_to_group(group_name) if user.present?
