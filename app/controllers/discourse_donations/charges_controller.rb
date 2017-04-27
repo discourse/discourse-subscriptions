@@ -32,7 +32,7 @@ module DiscourseDonations
     private
 
     def reward_user?(payment)
-      payment.present? && payment.successful? && current_user.present?
+      payment.present? && payment.successful?
     end
 
     def group_name
