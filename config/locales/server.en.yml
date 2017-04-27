@@ -6,3 +6,5 @@ en:
     discourse_donations_public_key: Stripe Public Key
     discourse_donations_currency: Currency Code
     discourse_donations_hide_zip_code: Hide Zip Code
+    discourse_donations_reward_badge_name: Grant this badge to user when a payment is successful
+    discourse_donations_reward_group_name: Add the user to this group when a payment is successful

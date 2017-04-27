@@ -1,3 +1,4 @@
+require 'fakeweb'
 
 #TODO register some fixtures
 
