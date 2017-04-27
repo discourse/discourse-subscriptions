@@ -49,13 +49,13 @@ module DiscourseDonations
           expect(response_rewards).to be_empty
         end
 
-        it 'stores the email in group:add' do
+        it 'stores the email in group:add and badge:grant' do
           PluginStore.expects(:get).with('discourse-donations', 'group:add').returns([])
           PluginStore.expects(:set).with('discourse-donations', 'group:add', [params[:email]])
+          PluginStore.expects(:get).with('discourse-donations', 'badge:grant').returns([])
+          PluginStore.expects(:set).with('discourse-donations', 'badge:grant', [params[:email]])
           post :create, params
         end
-
-        it 'enqueues awarding a badge'
       end
 
       describe 'logged in user' do

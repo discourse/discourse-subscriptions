@@ -30,6 +30,10 @@ module DiscourseDonations
             store = PluginStore.get('discourse-donations', 'group:add') || []
             PluginStore.set('discourse-donations', 'group:add', store << email)
           end
+          if badge_name.present?
+            store = PluginStore.get('discourse-donations', 'badge:grant') || []
+            PluginStore.set('discourse-donations', 'badge:grant', store << email)
+          end
         end
       end
 
