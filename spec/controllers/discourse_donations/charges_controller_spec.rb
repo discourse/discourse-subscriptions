@@ -49,9 +49,9 @@ module DiscourseDonations
           expect(response_rewards).to be_empty
         end
 
-        it 'enqueues add to group' do
-          skip 'still working on this'
-          Jobs.expects(:enqueue).with(:award_group, email: params[:email], group_name: group_name)
+        it 'stores the email in group:add' do
+          PluginStore.expects(:get).with('discourse-donations', 'group:add').returns([])
+          PluginStore.expects(:set).with('discourse-donations', 'group:add', [params[:email]])
           post :create, params
         end
 

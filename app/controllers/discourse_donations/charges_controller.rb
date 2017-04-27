@@ -16,17 +16,20 @@ module DiscourseDonations
 
       response['rewards'] = []
 
-      if reward_current_user?(payment)
-        reward = DiscourseDonations::Rewards.new(current_user)
-        if reward.add_to_group(group_name)
-          response['rewards'] << { type: :group, name: group_name }
-        end
-        if reward.grant_badge(badge_name)
-          response['rewards'] << { type: :badge, name: badge_name }
-        end
-      else
-        if group_name.present?
-          # Jobs.enqueue(:award_group, email: email, group_name: group_name)
+      if reward?(payment)
+        if current_user.present?
+          reward = DiscourseDonations::Rewards.new(current_user)
+          if reward.add_to_group(group_name)
+            response['rewards'] << { type: :group, name: group_name }
+          end
+          if reward.grant_badge(badge_name)
+            response['rewards'] << { type: :badge, name: badge_name }
+          end
+        elsif email.present?
+          if group_name.present?
+            store = PluginStore.get('discourse-donations', 'group:add') || []
+            PluginStore.set('discourse-donations', 'group:add', store << email)
+          end
         end
       end
 
@@ -35,8 +38,12 @@ module DiscourseDonations
 
     private
 
-    def reward_current_user?(payment)
-      current_user.present? && payment.present? && payment.successful?
+    def create_account
+      params[:create_account] == 'true'
+    end
+
+    def reward?(payment)
+      payment.present? && payment.successful?
     end
 
     def group_name
