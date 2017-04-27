@@ -9,7 +9,7 @@ RSpec.describe Jobs::AwardGroup, type: :job do
   end
 
   it 'adds the users to the group' do
-    Jobs::AwardGroup.new.execute
+    Jobs::AwardGroup.new.execute(nil)
     aggregate_failures do
       expect(users.first.groups).to include(grp)
       expect(users.last.groups).to include(grp)

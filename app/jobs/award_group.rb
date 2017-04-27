@@ -1,9 +1,9 @@
 
 module Jobs
   class AwardGroup < ::Jobs::Scheduled
-    every 2.minutes
+    every 1.minutes
 
-    def execute
+    def execute(_args)
       puts '====================== The Job was executed ==========================='
       user_queue.each do |email|
         user = User.find_by_email(email)
