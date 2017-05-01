@@ -16,6 +16,7 @@ module DiscourseDonations
     end
 
     def grant_badge(name)
+      return unless SiteSetting.enable_badges
       badge = ::Badge.find_by_name(name)
       return if badge.nil?
       BadgeGranter.grant(badge, user)
