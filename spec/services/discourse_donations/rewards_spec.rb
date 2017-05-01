@@ -25,15 +25,27 @@ module DiscourseDonations
       subject.add_to_group(grp.name)
     end
 
-    it 'grants the user a badge' do
-      badge = Fabricate(:badge)
-      BadgeGranter.expects(:grant).with(badge, user)
-      subject.grant_badge(badge.name)
-    end
+    describe '.grant_badge' do
+      let(:badge) { Fabricate(:badge) }
 
-    it 'does not grant the user a badge' do
-      BadgeGranter.expects(:grant).never
-      expect(subject.grant_badge('does not exist')).to be_falsy
+      before { SiteSetting.stubs(:enable_badges).returns(true) }
+
+      it 'grants the user a badge' do
+        BadgeGranter.expects(:grant).with(badge, user)
+        subject.grant_badge(badge.name)
+      end
+
+      it 'does not grant the user a badge when the badge does not exist' do
+        Badge.stubs(:find_by_name).returns(nil)
+        BadgeGranter.expects(:grant).never
+        expect(subject.grant_badge('does not exist')).to be_falsy
+      end
+
+      it 'does not grant the user a badge when badges are disabled' do
+        SiteSetting.stubs(:enable_badges).returns(false)
+        BadgeGranter.expects(:grant).never
+        subject.grant_badge(badge.name)
+      end
     end
   end
 end
