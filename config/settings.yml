@@ -6,6 +6,9 @@ plugins:
     client: false
   discourse_donations_public_key:
     client: true
+  discourse_donations_enable_create_accounts:
+    client: true
+    default: false
   discourse_donations_description:
     client: true
     default: 'Donation'

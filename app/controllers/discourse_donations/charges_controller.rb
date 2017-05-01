@@ -7,11 +7,13 @@ module DiscourseDonations
     skip_before_filter :verify_authenticity_token, only: [:create]
 
     def create
-      if email.present?
+      if create_account && (email.nil? || email.empty?)
+        response = {'message' => 'Please enter your email address'}
+      elsif create_account && params[:username].nil?
+        response = {'message' => 'Please enter a username'}
+      else
         payment = DiscourseDonations::Stripe.new(secret_key, stripe_options)
         response = payment.charge(email, params)
-      else
-        response = {}
       end
 
       response['rewards'] = []

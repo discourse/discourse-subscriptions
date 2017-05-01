@@ -20,6 +20,7 @@ export default Ember.Component.extend({
     this._super();
     this.set('anon', (Discourse.User.current() == null));
     this.set('settings', getRegister(this).lookup('site-settings:main'));
+    this.set('create_accounts', this.get('anon') && this.get('settings').discourse_donations_enable_create_accounts);
     this.set('stripe', Stripe(this.get('settings').discourse_donations_public_key));
   },
 
@@ -35,14 +36,41 @@ export default Ember.Component.extend({
     this.get('card').mount('#card-element');
   },
 
+  setSuccess() {
+    this.set('paymentSuccess', true);
+  },
+
+  endTranscation() {
+    this.set('transactionInProgress', false);
+  },
+
+  createUser() {
+    let self = this;
+    ajax('/users/hp', { method: 'get' }).then(data => {
+      let params = {
+        email: self.get('email'),
+        username: self.get('username'),
+        name: self.get('name'),
+        password: self.get('password'),
+        password_confirmation: data.value,
+        challenge: data.challenge.split('').reverse().join(''),
+      };
+
+      ajax('/users', { data: params, method: 'post' }).then(data => {
+        self.setSuccess();
+        self.set('result', self.get('result') + data.message);
+        self.endTranscation();
+      });
+    });
+  },
+
   actions: {
     submitStripeCard() {
       let self = this;
 
       this.get('stripe').createToken(this.get('card')).then(data => {
 
-        self.set('result', null);
-        self.set('success', false);
+        self.set('result', '');
 
         if (data.error) {
           self.set('result', data.error.message);
@@ -53,14 +81,33 @@ export default Ember.Component.extend({
           let params = {
             stripeToken: data.token.id,
             amount: self.get('amount') * 100,
-            email: self.get('email')
+            email: self.get('email'),
+            username: self.get('username'),
+            create_account: this.get('create_accounts')
           };
 
-          ajax('/charges', { data: params, method: 'post' }).then(data => {
-            if(data.status == 'succeeded') { self.set('success', true) };
-            self.set('transactionInProgress', false);
-            self.set('result', data.outcome.seller_message);
-          });
+          if(!self.get('paymentSuccess')) {
+            ajax('/charges', { data: params, method: 'post' }).then(data => {
+              self.set('result', data.message);
+
+              if(!this.get('create_accounts')) {
+                if(data.status == 'succeeded') { this.setSuccess() };
+                self.endTranscation();
+              }
+              else {
+                if(data.status == 'succeeded') {
+                  this.createUser();
+                }
+                else {
+                  self.endTranscation();
+                }
+              }
+            });
+          }
+          else if (this.get('create_accounts')) {
+            self.set('result', '');
+            self.createUser();
+          }
         }
       });
     }

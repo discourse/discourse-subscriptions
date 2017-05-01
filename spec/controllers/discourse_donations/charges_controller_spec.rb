@@ -4,6 +4,7 @@ require_relative '../../support/dd_helper'
 module DiscourseDonations
   RSpec.describe ChargesController, type: :controller do
     routes { DiscourseDonations::Engine.routes }
+    let(:body) { JSON.parse(response.body) }
 
     before do
       SiteSetting.stubs(:discourse_donations_secret_key).returns('secret-key-yo')
@@ -13,17 +14,32 @@ module DiscourseDonations
 
     it 'responds ok for anonymous users' do
       post :create, { email: 'foobar@example.com' }
+      expect(body['message']).to eq(body['outcome']['seller_message'])
       expect(response).to have_http_status(200)
     end
 
     it 'responds ok when the email is empty' do
-      post :create, { email: '' }
+      post :create, { create_account: 'true', email: '' }
+      expect(body['message']).to eq('Please enter your email address')
       expect(response).to have_http_status(200)
     end
 
-    it 'responds ok for logged in user' do
+    it 'responds ok when the email is empty' do
+      post :create, { create_account: 'true' }
+      expect(body['message']).to eq('Please enter your email address')
+      expect(response).to have_http_status(200)
+    end
+
+    it 'expects a username if accounts are being created' do
+      post :create, { email: 'zipitydoodah@example.com', create_account: 'true' }
+      expect(body['message']).to eq('Please enter a username')
+      expect(response).to have_http_status(200)
+    end
+
+    it 'does not expect a username or email if accounts are not being created' do
       current_user = log_in(:coding_horror)
-      post :create
+      post :create, { create_account: 'false' }
+      expect(body['message']).to eq('Payment complete.')
       expect(response).to have_http_status(200)
     end
 

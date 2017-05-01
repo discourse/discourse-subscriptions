@@ -6,5 +6,6 @@ en:
       amount: Amount
       card: Credit or debit card
       submit: Make Payment
+      submit_with_create_account: Make Payment and Create Account
       messages:
         success: Thank you for your donation!
