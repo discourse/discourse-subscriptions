@@ -1,6 +1,8 @@
 
 module DiscourseDonations
   class Stripe
+    attr_reader :charge, :currency, :description
+
     def initialize(secret_key, opts)
       ::Stripe.api_key = secret_key
       @description = opts[:description]
@@ -15,8 +17,8 @@ module DiscourseDonations
       @charge = ::Stripe::Charge.create(
         customer: customer.id,
         amount: opts[:amount],
-        description: @description,
-        currency: @currency
+        description: description,
+        currency: currency
       )
       @charge[:message] = @charge[:outcome][:seller_message] if @charge[:outcome]
       @charge
