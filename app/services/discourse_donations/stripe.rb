@@ -20,7 +20,6 @@ module DiscourseDonations
         description: description,
         currency: currency
       )
-      @charge[:message] = @charge[:outcome][:seller_message] if @charge[:outcome]
       @charge
     end
 

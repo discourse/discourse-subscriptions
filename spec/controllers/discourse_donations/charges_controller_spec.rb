@@ -79,7 +79,7 @@ module DiscourseDonations
         end
 
         it 'has no rewards' do
-          stripe.expects(:create).returns({ outcome: { seller_message: 'bummer' } })
+          stripe.expects(:create).returns({ 'outcome' => { 'seller_message' => 'bummer' } })
           post :create
           expect(response_rewards).to be_empty
         end

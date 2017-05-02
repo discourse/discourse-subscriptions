@@ -14,6 +14,7 @@ module DiscourseDonations
       else
         payment = DiscourseDonations::Stripe.new(secret_key, stripe_options)
         response = payment.charge(email, params)
+        response['message'] = response['outcome']['seller_message']
       end
 
       response['rewards'] = []
