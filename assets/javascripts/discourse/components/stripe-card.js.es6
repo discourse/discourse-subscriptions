@@ -58,7 +58,7 @@ export default Ember.Component.extend({
 
       ajax('/users', { data: params, method: 'post' }).then(data => {
         self.setSuccess();
-        self.set('result', self.get('result') + data.message);
+        self.set('result', self.get('result') + data.messages);
         self.endTranscation();
       });
     });
@@ -88,7 +88,7 @@ export default Ember.Component.extend({
 
           if(!self.get('paymentSuccess')) {
             ajax('/charges', { data: params, method: 'post' }).then(data => {
-              self.set('result', data.message);
+              self.set('result', data.messages);
 
               if(!this.get('create_accounts')) {
                 if(data.status == 'succeeded') { this.setSuccess() };
