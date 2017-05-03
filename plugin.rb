@@ -1,6 +1,6 @@
 # name: discourse-donations
 # about: Integrating Discourse with Stripe for donations
-# version: 1.9.1
+# version: 1.9.2
 # url: https://github.com/choiceaustralia/discourse-donations
 # authors: Rimian Perkins
 
@@ -17,7 +17,7 @@ after_initialize do
   # Must be placed on every page for fraud protection.
   header_script = '<script src="https://js.stripe.com/v3/"></script>'
   discourse_donations_theme = Theme.find_or_create_by(name: 'Discourse Donations Header', hidden: false, user_id: -1)
-  discourse_donations_theme.set_field('common', 'head_tag', header_script)
+  discourse_donations_theme.set_field(target: 'common', name: 'head_tag', value: header_script)
   discourse_donations_theme.save
 end
 
