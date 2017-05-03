@@ -60,9 +60,11 @@
       {{#if transactionInProgress}}
         {{loading-spinner size="small"}}
       {{/if}}
-      {{#if result}}
-        <p>{{{result}}}</p>
-      {{/if}}
+
+      {{#each result as |message|}}
+        <p>{{{message}}}</p>
+      {{/each}}
+
       {{#if success}}
         <p>{{i18n 'discourse_donations.messages.success'}}</p>
       {{/if}}

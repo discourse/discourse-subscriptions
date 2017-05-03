@@ -10,7 +10,7 @@ export default Ember.Component.extend({
     { value: 20, name: '$20.00'},
     { value: 50, name: '$50.00'}
   ],
-  result: null,
+  result: [],
   amount: null,
   stripe: null,
   transactionInProgress: null,
@@ -44,6 +44,10 @@ export default Ember.Component.extend({
     this.set('transactionInProgress', false);
   },
 
+  concatMessages(messages) {
+    this.set('result', this.get('result').concat(messages));
+  },
+
   createUser() {
     let self = this;
     ajax('/users/hp', { method: 'get' }).then(data => {
@@ -58,7 +62,7 @@ export default Ember.Component.extend({
 
       ajax('/users', { data: params, method: 'post' }).then(data => {
         self.setSuccess();
-        self.set('result', self.get('result') + data.messages);
+        self.concatMessages(data.messages);
         self.endTranscation();
       });
     });
@@ -70,7 +74,7 @@ export default Ember.Component.extend({
 
       this.get('stripe').createToken(this.get('card')).then(data => {
 
-        self.set('result', '');
+        self.set('result', []);
 
         if (data.error) {
           self.set('result', data.error.message);
@@ -88,7 +92,7 @@ export default Ember.Component.extend({
 
           if(!self.get('paymentSuccess')) {
             ajax('/charges', { data: params, method: 'post' }).then(data => {
-              self.set('result', data.messages);
+              self.concatMessages(data.messages);
 
               if(!this.get('create_accounts')) {
                 if(data.status == 'succeeded') { this.setSuccess() };
@@ -105,7 +109,7 @@ export default Ember.Component.extend({
             });
           }
           else if (this.get('create_accounts')) {
-            self.set('result', '');
+            self.set('result', []);
             self.createUser();
           }
         }
