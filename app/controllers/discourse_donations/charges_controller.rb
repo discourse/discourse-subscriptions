@@ -7,26 +7,30 @@ module DiscourseDonations
     skip_before_filter :verify_authenticity_token, only: [:create]
 
     def create
+      output = { 'messages' => [], 'rewards' => [] }
+
       if create_account && (email.nil? || email.empty?)
-        response = {'messages' => ['Please enter your email address']}
+        output['messages'] << 'Please enter your email address'
       elsif create_account && params[:username].nil?
-        response = {'messages' => ['Please enter a username']}
+        output['messages'] << 'Please enter a username'
       else
         payment = DiscourseDonations::Stripe.new(secret_key, stripe_options)
-        response = payment.charge(email, params)
-        response['messages'] = [response['outcome']['seller_message']]
+        charge = payment.charge(email, params)
+        output['messages'] = [charge['outcome']['seller_message']]
       end
 
-      response['rewards'] = []
+      if payment.nil?
+        render(:json => output) and return
+      end
 
       if reward?(payment)
         if current_user.present?
           reward = DiscourseDonations::Rewards.new(current_user)
           if reward.add_to_group(group_name)
-            response['rewards'] << { type: :group, name: group_name }
+            output['rewards'] << { type: :group, name: group_name }
           end
           if reward.grant_badge(badge_name)
-            response['rewards'] << { type: :badge, name: badge_name }
+            output['rewards'] << { type: :badge, name: badge_name }
           end
         elsif email.present?
           if group_name.present?
@@ -40,7 +44,7 @@ module DiscourseDonations
         end
       end
 
-      render :json => response
+      render :json => output
     end
 
     private

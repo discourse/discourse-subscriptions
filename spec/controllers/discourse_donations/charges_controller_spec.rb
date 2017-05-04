@@ -14,14 +14,13 @@ module DiscourseDonations
 
     it 'responds ok for anonymous users' do
       post :create, { email: 'foobar@example.com' }
-      expect(body['messages']).to include(body['outcome']['seller_message'])
+      expect(body['messages']).to include('Payment complete.')
       expect(response).to have_http_status(200)
     end
 
-    it 'responds ok when the email is empty' do
+    it 'responds with a message when the email is empty' do
       post :create, { create_account: 'true', email: '' }
       expect(body['messages']).to include('Please enter your email address')
-      expect(response).to have_http_status(200)
     end
 
     it 'responds ok when the email is empty' do
@@ -46,7 +45,7 @@ module DiscourseDonations
     describe 'rewards' do
       let(:group_name) { 'Zasch' }
       let(:badge_name) { 'Beanie' }
-      let(:response_rewards) { JSON.parse(response.body)['rewards'] }
+      let(:body) { JSON.parse(response.body) }
       let(:stripe) { ::Stripe::Charge }
       let!(:grp) { Fabricate(:group, name: group_name) }
       let!(:badge) { Fabricate(:badge, name: badge_name) }
@@ -61,7 +60,7 @@ module DiscourseDonations
 
         it 'has no rewards' do
           post :create
-          expect(response_rewards).to be_empty
+          expect(body['rewards']).to be_empty
         end
 
         it 'stores the email in group:add and badge:grant and adds them' do
@@ -81,17 +80,17 @@ module DiscourseDonations
         it 'has no rewards' do
           stripe.expects(:create).returns({ 'outcome' => { 'seller_message' => 'bummer' } })
           post :create
-          expect(response_rewards).to be_empty
+          expect(body['rewards']).to be_empty
         end
 
         it 'awards a group' do
           post :create
-          expect(response_rewards).to include({'type' => 'group', 'name' => group_name})
+          expect(body['rewards']).to include({'type' => 'group', 'name' => group_name})
         end
 
         it 'awards a badge' do
           post :create
-          expect(response_rewards).to include({'type' => 'badge', 'name' => badge_name})
+          expect(body['rewards']).to include({'type' => 'badge', 'name' => badge_name})
         end
       end
     end
