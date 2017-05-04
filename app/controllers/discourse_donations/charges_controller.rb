@@ -10,12 +10,10 @@ module DiscourseDonations
       output = { 'messages' => [], 'rewards' => [] }
 
       if create_account
-        if (email.nil? || email.empty?)
-          output['messages'] << 'Please enter your email address'
+        if !email.present? || params[:username].nil?
+          output['messages'] << I18n.t('login.missing_user_field')
         end
-        if params[:username].nil?
-          output['messages'] << 'Please enter a username'
-        elsif ::User.reserved_username?(params[:username])
+        if params[:username].present? && ::User.reserved_username?(params[:username])
           output['messages'] << I18n.t('login.reserved_username')
         end
       end
