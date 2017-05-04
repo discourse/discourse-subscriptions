@@ -18,17 +18,6 @@ module DiscourseDonations
       expect(response).to have_http_status(200)
     end
 
-    it 'responds with a message when the email is empty' do
-      post :create, { create_account: 'true', email: '' }
-      expect(body['messages']).to include('Please enter your email address')
-    end
-
-    it 'responds ok when the email is empty' do
-      post :create, { create_account: 'true' }
-      expect(body['messages']).to include('Please enter your email address')
-      expect(response).to have_http_status(200)
-    end
-
     it 'expects a username if accounts are being created' do
       post :create, { email: 'zipitydoodah@example.com', create_account: 'true' }
       expect(body['messages']).to include('Please enter a username')
@@ -40,6 +29,24 @@ module DiscourseDonations
       post :create, { create_account: 'false' }
       expect(body['messages']).to include('Payment complete.')
       expect(response).to have_http_status(200)
+    end
+
+    describe 'new user' do
+      it 'has a message when the email is empty' do
+        post :create, { create_account: 'true', email: '' }
+        expect(body['messages']).to include('Please enter your email address')
+      end
+
+      it 'has a message when the email is empty' do
+        post :create, { create_account: 'true' }
+        expect(body['messages']).to include('Please enter your email address')
+      end
+
+      it 'has a message when the username is reserved' do
+        User.expects(:reserved_username?).returns(true)
+        post :create, { username: 'admin', create_account: 'true', email: 'something@example.com' }
+        expect(body['messages']).to include(I18n.t('login.reserved_username'))
+      end
     end
 
     describe 'rewards' do

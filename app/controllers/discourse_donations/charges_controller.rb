@@ -15,6 +15,8 @@ module DiscourseDonations
         end
         if params[:username].nil?
           output['messages'] << 'Please enter a username'
+        elsif ::User.reserved_username?(params[:username])
+          output['messages'] << I18n.t('login.reserved_username')
         end
       end
 
