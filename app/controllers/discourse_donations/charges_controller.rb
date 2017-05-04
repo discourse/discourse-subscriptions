@@ -9,19 +9,22 @@ module DiscourseDonations
     def create
       output = { 'messages' => [], 'rewards' => [] }
 
-      if create_account && (email.nil? || email.empty?)
-        output['messages'] << 'Please enter your email address'
-      elsif create_account && params[:username].nil?
-        output['messages'] << 'Please enter a username'
-      else
-        payment = DiscourseDonations::Stripe.new(secret_key, stripe_options)
-        charge = payment.charge(email, params)
-        output['messages'] = [charge['outcome']['seller_message']]
+      if create_account
+        if (email.nil? || email.empty?)
+          output['messages'] << 'Please enter your email address'
+        end
+        if params[:username].nil?
+          output['messages'] << 'Please enter a username'
+        end
       end
 
-      if payment.nil?
+      if output['messages'].present?
         render(:json => output) and return
       end
+
+      payment = DiscourseDonations::Stripe.new(secret_key, stripe_options)
+      charge = payment.charge(email, params)
+      output['messages'] = [charge['outcome']['seller_message']]
 
       if reward?(payment)
         if current_user.present?
