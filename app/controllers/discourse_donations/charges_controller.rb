@@ -10,10 +10,13 @@ module DiscourseDonations
       output = { 'messages' => [], 'rewards' => [] }
 
       if create_account
-        if !email.present? || params[:username].nil?
+        if !email.present? || !params[:username].present?
           output['messages'] << I18n.t('login.missing_user_field')
         end
-        if params[:username].present? && ::User.reserved_username?(params[:username])
+        if params[:password] && params[:password].length > User.max_password_length
+          output['messages'] << I18n.t('login.password_too_long')
+        end
+        if params[:username] && ::User.reserved_username?(params[:username])
           output['messages'] << I18n.t('login.reserved_username')
         end
       end

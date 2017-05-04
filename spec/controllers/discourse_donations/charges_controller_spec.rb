@@ -12,15 +12,13 @@ module DiscourseDonations
       SiteSetting.stubs(:discourse_donations_currency).returns('AUD')
     end
 
+    def include_message(key)
+      include(I18n.t(key))
+    end
+
     it 'responds ok for anonymous users' do
       post :create, { email: 'foobar@example.com' }
       expect(body['messages']).to include('Payment complete.')
-      expect(response).to have_http_status(200)
-    end
-
-    it 'expects a username if accounts are being created' do
-      post :create, { email: 'zipitydoodah@example.com', create_account: 'true' }
-      expect(body['messages']).to include(I18n.t('login.missing_user_field'))
       expect(response).to have_http_status(200)
     end
 
@@ -32,20 +30,28 @@ module DiscourseDonations
     end
 
     describe 'new user' do
-      it 'has a message when the email is empty' do
-        post :create, { create_account: 'true', email: '' }
-        expect(body['messages']).to include(I18n.t('login.missing_user_field'))
+      let(:params) { { create_account: 'true', email: 'email@example.com', password: 'secret', username: 'mr-pink' } }
+
+      it 'requires an email' do
+        post :create, params.merge(email: '')
+        expect(body['messages']).to include_message('login.missing_user_field')
       end
 
-      it 'has a message when the email is empty' do
-        post :create, { create_account: 'true' }
-        expect(body['messages']).to include(I18n.t('login.missing_user_field'))
+      it 'requires a username' do
+        post :create, params.merge(username: '')
+        expect(body['messages']).to include_message('login.missing_user_field')
       end
 
-      it 'has a message when the username is reserved' do
+      it 'disallows usernames that are reserved' do
         User.expects(:reserved_username?).returns(true)
-        post :create, { username: 'admin', create_account: 'true', email: 'something@example.com' }
-        expect(body['messages']).to include(I18n.t('login.reserved_username'))
+        post :create, params
+        expect(body['messages']).to include_message('login.reserved_username')
+      end
+
+      it 'requires a minimum password length' do
+        User.expects(:max_password_length).returns(params[:password].length - 1)
+        post :create, params
+        expect(body['messages']).to include_message('login.password_too_long')
       end
     end
 
