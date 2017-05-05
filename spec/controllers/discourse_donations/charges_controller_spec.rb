@@ -7,6 +7,8 @@ shared_examples 'failure response' do |message_key|
   it 'has status 200' do expect(response).to have_http_status(200) end
   it 'has an error message' do expect(body['messages']).to include(I18n.t(message_key)) end
   it 'is not successful' do expect(body['success']).to eq false end
+  it 'does not create a payment' do DiscourseDonations::Stripe.expects(:new).never end
+  it 'does not create rewards' do DiscourseDonations::Rewards.expects(:new).never end
 end
 
 module DiscourseDonations
