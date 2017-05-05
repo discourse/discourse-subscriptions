@@ -1,6 +1,14 @@
 require 'rails_helper'
 require_relative '../../support/dd_helper'
 
+shared_examples 'failure response' do |message_key|
+  let(:body) { JSON.parse(response.body) }
+
+  it 'has status 200' do expect(response).to have_http_status(200) end
+  it 'has an error message' do expect(body['messages']).to include(I18n.t(message_key)) end
+  it 'is not successful' do expect(body['success']).to eq false end
+end
+
 module DiscourseDonations
   RSpec.describe ChargesController, type: :controller do
     routes { DiscourseDonations::Engine.routes }
@@ -10,10 +18,6 @@ module DiscourseDonations
       SiteSetting.stubs(:discourse_donations_secret_key).returns('secret-key-yo')
       SiteSetting.stubs(:discourse_donations_description).returns('charity begins at discourse plugin')
       SiteSetting.stubs(:discourse_donations_currency).returns('AUD')
-    end
-
-    def include_message(key)
-      include(I18n.t(key))
     end
 
     it 'responds ok for anonymous users' do
@@ -32,26 +36,32 @@ module DiscourseDonations
     describe 'new user' do
       let(:params) { { create_account: 'true', email: 'email@example.com', password: 'secret', username: 'mr-pink' } }
 
-      it 'requires an email' do
-        post :create, params.merge(email: '')
-        expect(body['messages']).to include_message('login.missing_user_field')
+      describe 'requires an email' do
+        before { post :create, params.merge(email: '') }
+        include_examples 'failure response', 'login.missing_user_field'
       end
 
-      it 'requires a username' do
-        post :create, params.merge(username: '')
-        expect(body['messages']).to include_message('login.missing_user_field')
+      describe 'requires a username' do
+        before { post :create, params.merge(username: '') }
+        include_examples 'failure response', 'login.missing_user_field'
       end
 
-      it 'disallows usernames that are reserved' do
-        User.expects(:reserved_username?).returns(true)
-        post :create, params
-        expect(body['messages']).to include_message('login.reserved_username')
+      describe 'reserved usernames' do
+        before do
+          User.expects(:reserved_username?).returns(true)
+          post :create, params
+        end
+
+        include_examples 'failure response', 'login.reserved_username'
       end
 
-      it 'requires a minimum password length' do
-        User.expects(:max_password_length).returns(params[:password].length - 1)
-        post :create, params
-        expect(body['messages']).to include_message('login.password_too_long')
+      describe 'minimum password length' do
+        before do
+          User.expects(:max_password_length).returns(params[:password].length - 1)
+          post :create, params
+        end
+
+        include_examples 'failure response', 'login.password_too_long'
       end
     end
 

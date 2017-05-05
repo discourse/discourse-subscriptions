@@ -22,7 +22,7 @@ module DiscourseDonations
       end
 
       if output['messages'].present?
-        render(:json => output) and return
+        render(:json => output.merge(success: false)) and return
       end
 
       payment = DiscourseDonations::Stripe.new(secret_key, stripe_options)
