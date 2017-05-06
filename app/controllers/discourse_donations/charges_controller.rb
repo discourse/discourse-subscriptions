@@ -27,7 +27,10 @@ module DiscourseDonations
 
       payment = DiscourseDonations::Stripe.new(secret_key, stripe_options)
       charge = payment.charge(email, params)
-      output['messages'] = [charge['outcome']['seller_message']]
+
+      if charge['paid'] == true
+        output['messages'] << I18n.t('donations.payment.success')
+      end
 
       if reward?(payment)
         if current_user.present?
