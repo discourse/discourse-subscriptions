@@ -1,3 +1,4 @@
+require 'rails_helper'
 
 RSpec.describe Jobs::GrantBadge, type: :job do
   let(:users) { [Fabricate(:user), Fabricate(:user)] }
