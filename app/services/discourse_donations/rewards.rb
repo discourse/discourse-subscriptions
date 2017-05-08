@@ -21,6 +21,8 @@ module DiscourseDonations
       BadgeGranter.grant(badge, user)
     end
 
+    private
+
     def log_group_add(grp)
       system_user = User.find(-1)
       GroupActionLogger.new(system_user, grp).log_add_user_to_group(user)
