@@ -24,14 +24,14 @@ module DiscourseDonations
 
     it 'responds ok for anonymous users' do
       post :create, { email: 'foobar@example.com' }
-      expect(body['messages']).to include('Payment complete.')
+      expect(body['messages']).to include(I18n.t('donations.payment.success'))
       expect(response).to have_http_status(200)
     end
 
     it 'does not expect a username or email if accounts are not being created' do
       current_user = log_in(:coding_horror)
       post :create, { create_account: 'false' }
-      expect(body['messages']).to include('Payment complete.')
+      expect(body['messages']).to include(I18n.t('donations.payment.success'))
       expect(response).to have_http_status(200)
     end
 
