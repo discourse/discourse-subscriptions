@@ -35,8 +35,12 @@ module DiscourseDonations
       expect(response).to have_http_status(200)
     end
 
+    describe 'create accounts'
+
     describe 'new user' do
       let(:params) { { create_account: 'true', email: 'email@example.com', password: 'secret', username: 'mr-pink' } }
+
+      before { SiteSetting.stubs(:discourse_donations_enable_create_accounts).returns(true) }
 
       describe 'requires an email' do
         before { post :create, params.merge(email: '') }
@@ -68,32 +72,33 @@ module DiscourseDonations
     end
 
     describe 'rewards' do
-      let(:group_name) { 'Zasch' }
-      let(:badge_name) { 'Beanie' }
       let(:body) { JSON.parse(response.body) }
       let(:stripe) { ::Stripe::Charge }
-      let!(:grp) { Fabricate(:group, name: group_name) }
-      let!(:badge) { Fabricate(:badge, name: badge_name) }
 
-      before do
-        SiteSetting.stubs(:discourse_donations_reward_group_name).returns(group_name)
-        SiteSetting.stubs(:discourse_donations_reward_badge_name).returns(badge_name)
+      shared_examples 'no rewards' do
+        it 'has no rewards' do
+          post :create, params
+          expect(body['rewards']).to be_empty
+        end
       end
 
       describe 'new user' do
-        let(:params) { { email: 'new-user@example.com' } }
+        let(:params) { { create_account: 'true', email: 'dood@example.com', password: 'secret', name: 'dood', username: 'mr-dood' } }
 
-        it 'has no rewards' do
-          post :create
-          expect(body['rewards']).to be_empty
+        before { SiteSetting.stubs(:discourse_donations_enable_create_accounts).returns(true) }
+
+        include_examples 'no rewards' do
+          before do
+            stripe.stubs(:create).returns({ 'paid' => false })
+          end
         end
 
-        it 'stores the email in group:add and badge:grant and adds them' do
-          PluginStore.expects(:get).with('discourse-donations', 'group:add').returns([])
-          PluginStore.expects(:set).with('discourse-donations', 'group:add', [params[:email]])
-          PluginStore.expects(:get).with('discourse-donations', 'badge:grant').returns([])
-          PluginStore.expects(:set).with('discourse-donations', 'badge:grant', [params[:email]])
-          post :create, params
+        include_examples 'no rewards' do
+          before do
+            stripe.stubs(:create).returns({ 'paid' => true })
+            SiteSetting.stubs(:discourse_donations_reward_group_name).returns(nil)
+            SiteSetting.stubs(:discourse_donations_reward_badge_name).returns(nil)
+          end
         end
       end
 
@@ -102,20 +107,37 @@ module DiscourseDonations
           log_in :coding_horror
         end
 
-        it 'has no rewards' do
-          stripe.expects(:create).returns({ 'outcome' => { 'seller_message' => 'bummer' } })
-          post :create
-          expect(body['rewards']).to be_empty
+        include_examples 'no rewards' do
+          let(:params) { nil }
+
+          before do
+            stripe.stubs(:create).returns({ 'paid' => true })
+            SiteSetting.stubs(:discourse_donations_reward_group_name).returns(nil)
+            SiteSetting.stubs(:discourse_donations_reward_badge_name).returns(nil)
+          end
         end
 
-        it 'awards a group' do
-          post :create
-          expect(body['rewards']).to include({'type' => 'group', 'name' => group_name})
-        end
+        describe 'rewards' do
+          let(:group_name) { 'Zasch' }
+          let(:badge_name) { 'Beanie' }
+          let!(:grp) { Fabricate(:group, name: group_name) }
+          let!(:badge) { Fabricate(:badge, name: badge_name) }
 
-        it 'awards a badge' do
-          post :create
-          expect(body['rewards']).to include({'type' => 'badge', 'name' => badge_name})
+          before do
+            SiteSetting.stubs(:discourse_donations_reward_group_name).returns(group_name)
+            SiteSetting.stubs(:discourse_donations_reward_badge_name).returns(badge_name)
+            stripe.stubs(:create).returns({ 'paid' => true })
+          end
+
+          it 'awards a group' do
+            post :create
+            expect(body['rewards']).to include({'type' => 'group', 'name' => group_name})
+          end
+
+          it 'awards a badge' do
+            post :create
+            expect(body['rewards']).to include({'type' => 'badge', 'name' => badge_name})
+          end
         end
       end
     end

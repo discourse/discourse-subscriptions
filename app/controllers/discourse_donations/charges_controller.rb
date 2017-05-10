@@ -30,26 +30,12 @@ module DiscourseDonations
 
       if charge['paid'] == true
         output['messages'] << I18n.t('donations.payment.success')
-      end
 
-      if reward?(payment)
-        if current_user.present?
-          reward = DiscourseDonations::Rewards.new(current_user)
-          if reward.add_to_group(group_name)
-            output['rewards'] << { type: :group, name: group_name }
-          end
-          if reward.grant_badge(badge_name)
-            output['rewards'] << { type: :badge, name: badge_name }
-          end
-        elsif email.present?
-          if group_name.present?
-            store = PluginStore.get('discourse-donations', 'group:add') || []
-            PluginStore.set('discourse-donations', 'group:add', store << email)
-          end
-          if badge_name.present?
-            store = PluginStore.get('discourse-donations', 'badge:grant') || []
-            PluginStore.set('discourse-donations', 'badge:grant', store << email)
-          end
+        output['rewards'] << { type: :group, name: group_name } if group_name
+        output['rewards'] << { type: :badge, name: badge_name } if badge_name
+
+        if create_account && email.present?
+          # ::Jobs.enqueue(:donation_user, params.merge(rewards: output['rewards']))
         end
       end
 
@@ -59,7 +45,7 @@ module DiscourseDonations
     private
 
     def create_account
-      params[:create_account] == 'true'
+      params[:create_account] == 'true' && SiteSetting.discourse_donations_enable_create_accounts
     end
 
     def reward?(payment)
