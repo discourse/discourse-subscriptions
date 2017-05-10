@@ -9,6 +9,7 @@ shared_examples 'failure response' do |message_key|
   it 'is not successful' do expect(body['success']).to eq false end
   it 'does not create a payment' do DiscourseDonations::Stripe.expects(:new).never end
   it 'does not create rewards' do DiscourseDonations::Rewards.expects(:new).never end
+  it 'does not queue up any jobs' do ::Jobs.expects(:enqueue).never end
 end
 
 module DiscourseDonations
@@ -35,7 +36,36 @@ module DiscourseDonations
       expect(response).to have_http_status(200)
     end
 
-    describe 'create accounts'
+    describe 'create accounts' do
+      describe 'no acccount' do
+        before do
+          SiteSetting.stubs(:discourse_donations_enable_create_accounts).returns(false)
+          ::Jobs.expects(:enqueue).never
+        end
+
+        it 'does not create user accounts' do
+          post :create
+        end
+
+        it 'does not create user accounts if the user is logged in' do
+          log_in :coding_horror
+          post :create, { create_account: 'true' }
+        end
+      end
+
+      describe 'creating an account' do
+        let(:params) { { create_account: 'true', email: 'email@example.com', password: 'secret', username: 'mr-pink' } }
+
+        before do
+          SiteSetting.stubs(:discourse_donations_enable_create_accounts).returns(true)
+          Jobs.expects(:enqueue).once
+        end
+
+        it 'enqueues the user account create' do
+          post :create, params
+        end
+      end
+    end
 
     describe 'new user' do
       let(:params) { { create_account: 'true', email: 'email@example.com', password: 'secret', username: 'mr-pink' } }

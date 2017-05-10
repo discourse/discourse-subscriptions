@@ -35,7 +35,8 @@ module DiscourseDonations
         output['rewards'] << { type: :badge, name: badge_name } if badge_name
 
         if create_account && email.present?
-          # ::Jobs.enqueue(:donation_user, params.merge(rewards: output['rewards']))
+          args = params.slice(:email, :username, :password, :name).merge(rewards: output['rewards'])
+          Jobs.enqueue(:donation_user, args)
         end
       end
 
