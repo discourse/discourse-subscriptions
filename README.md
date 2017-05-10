@@ -6,6 +6,10 @@ Accept donations in Discourse! Integrates with [Stripe](https://stripe.com).
 
 Note: Stripe requires HTTPS.
 
+## Creating new user accounts
+
+This is an experimental feature. A user can create a new account if there is a donation.
+
 ## Installation
 
 * Follow the install instructions here: https://meta.discourse.org/t/install-a-plugin/19157
@@ -30,6 +34,5 @@ Visit `/admin/customize/site_texts` and search for 'discourse_donations'. You'll
 
 ## TODO
 
-* Donate when creating account
 * Handle custom fields
 * Handle fails from stripe

@@ -48,26 +48,6 @@ export default Ember.Component.extend({
     this.set('result', this.get('result').concat(messages));
   },
 
-  createUser() {
-    let self = this;
-    ajax('/users/hp', { method: 'get' }).then(data => {
-      let params = {
-        email: self.get('email'),
-        username: self.get('username'),
-        name: self.get('name'),
-        password: self.get('password'),
-        password_confirmation: data.value,
-        challenge: data.challenge.split('').reverse().join(''),
-      };
-
-      ajax('/users', { data: params, method: 'post' }).then(data => {
-        self.setSuccess();
-        self.concatMessages(data.messages);
-        self.endTranscation();
-      });
-    });
-  },
-
   actions: {
     submitStripeCard() {
       let self = this;
@@ -93,24 +73,8 @@ export default Ember.Component.extend({
           if(!self.get('paymentSuccess')) {
             ajax('/charges', { data: params, method: 'post' }).then(data => {
               self.concatMessages(data.messages);
-
-              if(!this.get('create_accounts')) {
-                if(data.status == 'succeeded') { this.setSuccess() };
-                self.endTranscation();
-              }
-              else {
-                if(data.status == 'succeeded') {
-                  this.createUser();
-                }
-                else {
-                  self.endTranscation();
-                }
-              }
+              self.endTranscation();
             });
-          }
-          else if (this.get('create_accounts')) {
-            self.set('result', []);
-            self.createUser();
           }
         }
       });
