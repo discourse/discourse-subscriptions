@@ -17,40 +17,49 @@ RSpec.describe Jobs::DonationUser, type: :job do
   end
 
   describe 'rewards' do
-    let(:user) { Fabricate(:user) }
-    let(:badge) { Fabricate(:badge) }
-    let(:grp) { Fabricate(:group) }
-
-    before do
-      User.expects(:create!).returns(user)
+    describe 'create user with rewards' do
+      it 'creates a User object without rewards' do
+        User.expects(:create!).with(args)
+        subject.execute(args.merge(rewards: [], otherthing: nil))
+      end
     end
 
-    it 'grants the user a badge' do
-      subject.execute(args.merge(rewards: [{ type: 'badge', name: badge.name }]))
-      aggregate_failures do
-        expect(user.badges).to include(badge)
+    describe 'User rewards' do
+      let(:user) { Fabricate(:user) }
+      let(:badge) { Fabricate(:badge) }
+      let(:grp) { Fabricate(:group) }
+
+      before do
+        User.stubs(:create!).returns(user)
+      end
+
+      it 'grants the user a badge' do
+        subject.execute(args.merge(rewards: [{ type: 'badge', name: badge.name }]))
+        aggregate_failures do
+          expect(user.badges).to include(badge)
+          expect(user.groups).to be_empty
+        end
+      end
+
+      it 'adds the user to the group' do
+        subject.execute(args.merge(rewards: [{ type: 'group', name: grp.name }]))
+        aggregate_failures do
+          expect(user.badges).to be_empty
+          expect(user.groups).to include(grp)
+        end
+      end
+
+      it 'has no collisions in badges' do
+        Fabricate(:badge, name: 'weiner_schitzel')
+        subject.execute(args.merge(rewards: [{ type: 'group', name: 'weiner_schitzel' }]))
+        expect(user.badges).to be_empty
+      end
+
+      it 'has no collisions in groups' do
+        Fabricate(:group, name: 'dude_ranch')
+        subject.execute(args.merge(rewards: [{ type: 'badge', name: 'dude_ranch' }]))
         expect(user.groups).to be_empty
       end
-    end
-
-    it 'adds the user to the group' do
-      subject.execute(args.merge(rewards: [{ type: 'group', name: grp.name }]))
-      aggregate_failures do
-        expect(user.badges).to be_empty
-        expect(user.groups).to include(grp)
-      end
-    end
-
-    it 'has no collisions in badges' do
-      Fabricate(:badge, name: 'weiner_schitzel')
-      subject.execute(args.merge(rewards: [{ type: 'group', name: 'weiner_schitzel' }]))
-      expect(user.badges).to be_empty
-    end
-
-    it 'has no collisions in groups' do
-      Fabricate(:group, name: 'dude_ranch')
-      subject.execute(args.merge(rewards: [{ type: 'badge', name: 'dude_ranch' }]))
-      expect(user.groups).to be_empty
     end
   end
 end

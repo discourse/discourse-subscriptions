@@ -2,7 +2,7 @@
 module Jobs
   class DonationUser < ::Jobs::Base
     def execute(args)
-      user = User.create!(args)
+      user = User.create!(args.slice(:username, :password, :name, :email))
       rewards = DiscourseDonations::Rewards.new(user)
       args[:rewards].to_a.each do |reward|
         rewards.grant_badge(reward[:name]) if reward[:type] == 'badge'
