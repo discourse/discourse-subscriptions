@@ -58,7 +58,7 @@ module DiscourseDonations
 
         before do
           SiteSetting.stubs(:discourse_donations_enable_create_accounts).returns(true)
-          Jobs.expects(:enqueue).once
+          Jobs.expects(:enqueue).with(:donation_user, anything)
         end
 
         it 'enqueues the user account create' do
