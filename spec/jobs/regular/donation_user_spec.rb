@@ -16,10 +16,37 @@ RSpec.describe Jobs::DonationUser, type: :job do
     end
   end
 
+  describe 'sending the signup email' do
+    let(:user) { User.find_by_email(args[:email]) }
+
+    it 'has an email token' do
+      subject.execute(args)
+      expect(user.email_tokens).not_to be_empty
+    end
+
+    it 'enqueues the signup email' do
+      User.expects(:create!).returns(Fabricate(:user, args))
+      Jobs.expects(:enqueue).with(
+        :critical_user_email,
+        type: :signup, user_id: user.id, email_token: user.email_tokens.first.token
+      )
+      subject.execute(args)
+    end
+  end
+
   describe 'rewards' do
     describe 'create user with rewards' do
+      let(:user) { Fabricate(:user) }
+
+      it 'does not create the rewards if the user does not persist' do
+        User.expects(:create!).returns(user)
+        user.expects(:persisted?).returns(false)
+        DiscourseDonations::Rewards.expects(:new).never
+        subject.execute(args)
+      end
+
       it 'creates a User object without rewards' do
-        User.expects(:create!).with(args)
+        User.expects(:create!).with(args).returns(user)
         subject.execute(args.merge(rewards: [], otherthing: nil))
       end
     end
