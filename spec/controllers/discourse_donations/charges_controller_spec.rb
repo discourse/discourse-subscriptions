@@ -23,6 +23,11 @@ module DiscourseDonations
       SiteSetting.stubs(:discourse_donations_currency).returns('AUD')
     end
 
+    it 'whitelists the params' do
+      params = { email: 'email@example.com', password: 'secret', username: 'mr-pink', name: 'kirsten' }
+      should permit(:name, :username, :email, :password).for(:create, params: params)
+    end
+
     it 'responds ok for anonymous users' do
       post :create, { email: 'foobar@example.com' }
       expect(body['messages']).to include(I18n.t('donations.payment.success'))
