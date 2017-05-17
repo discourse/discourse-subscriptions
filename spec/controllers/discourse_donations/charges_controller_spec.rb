@@ -31,7 +31,7 @@ module DiscourseDonations
 
     it 'does not expect a username or email if accounts are not being created' do
       current_user = log_in(:coding_horror)
-      post :create, { create_account: 'false' }
+      post :create
       expect(body['messages']).to include(I18n.t('donations.payment.success'))
       expect(response).to have_http_status(200)
     end
@@ -49,12 +49,12 @@ module DiscourseDonations
 
         it 'does not create user accounts if the user is logged in' do
           log_in :coding_horror
-          post :create, { create_account: 'true' }
+          post :create
         end
       end
 
       describe 'creating an account' do
-        let(:params) { { create_account: 'true', email: 'email@example.com', password: 'secret', username: 'mr-pink' } }
+        let(:params) { { email: 'email@example.com', password: 'secret', username: 'mr-pink' } }
 
         before do
           SiteSetting.stubs(:discourse_donations_enable_create_accounts).returns(true)
@@ -68,7 +68,7 @@ module DiscourseDonations
     end
 
     describe 'new user' do
-      let(:params) { { create_account: 'true', email: 'email@example.com', password: 'secret', username: 'mr-pink' } }
+      let(:params) { { email: 'email@example.com', password: 'secret', username: 'mr-pink' } }
 
       before { SiteSetting.stubs(:discourse_donations_enable_create_accounts).returns(true) }
 
@@ -113,7 +113,7 @@ module DiscourseDonations
       end
 
       describe 'new user' do
-        let(:params) { { create_account: 'true', email: 'dood@example.com', password: 'secret', name: 'dood', username: 'mr-dood' } }
+        let(:params) { { email: 'dood@example.com', password: 'secret', name: 'dood', username: 'mr-dood' } }
 
         before { SiteSetting.stubs(:discourse_donations_enable_create_accounts).returns(true) }
 
