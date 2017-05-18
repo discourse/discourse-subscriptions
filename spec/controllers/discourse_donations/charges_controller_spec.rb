@@ -42,24 +42,26 @@ module DiscourseDonations
     end
 
     describe 'create accounts' do
-      describe 'no acccount' do
+      describe 'create acccount disabled' do
+        let(:params) { { amount: 100, stripeToken: 'rrurrrurrrrr-rrruurrrr' } }
+
         before do
           SiteSetting.stubs(:discourse_donations_enable_create_accounts).returns(false)
           ::Jobs.expects(:enqueue).never
         end
 
         it 'does not create user accounts' do
-          post :create
+          post :create, params
         end
 
         it 'does not create user accounts if the user is logged in' do
           log_in :coding_horror
-          post :create
+          post :create, params
         end
       end
 
-      describe 'creating an account' do
-        let(:params) { { email: 'email@example.com', password: 'secret', username: 'mr-pink' } }
+      describe 'creating an account enabled' do
+        let(:params) { { email: 'email@example.com', password: 'secret', username: 'mr-pink', name: 'kirsten', amount: 100, stripeToken: 'rrurrrurrrrr' } }
 
         before do
           SiteSetting.stubs(:discourse_donations_enable_create_accounts).returns(true)
