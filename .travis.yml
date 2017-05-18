@@ -18,7 +18,7 @@ addons:
     - jhead
 
 rvm:
-  - 2.3.1
+  - 2.3.3
 
 services:
   - redis-server
@@ -37,4 +37,6 @@ before_script:
   - bundle exec rake db:create db:migrate
 
 script:
-  - "bundle exec rake plugin:spec[discourse-donations] && bundle exec rake qunit:test['200000']"
+  - "bundle exec rake plugin:spec[discourse-donations]"
+  - "MODULE='Acceptance: Discourse Donations' bundle exec rake qunit:test[20000]"
+  - "MODULE='component:stripe-card' bundle exec rake qunit:test[20000]"
