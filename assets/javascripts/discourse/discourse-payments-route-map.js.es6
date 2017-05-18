@@ -1,3 +1,3 @@
 export default function() {
-  this.route('dd');
+  this.route('donate');
 };
