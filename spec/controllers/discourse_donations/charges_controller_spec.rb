@@ -36,7 +36,7 @@ module DiscourseDonations
 
     it 'does not expect a username or email if accounts are not being created' do
       current_user = log_in(:coding_horror)
-      post :create
+      post :create, { create_account: 'false' }
       expect(body['messages']).to include(I18n.t('donations.payment.success'))
       expect(response).to have_http_status(200)
     end
@@ -58,10 +58,15 @@ module DiscourseDonations
           log_in :coding_horror
           post :create, params
         end
+
+        it 'does not create user accounts when settings are disabled and params are not' do
+          log_in :coding_horror
+          post :create, params.merge(create_account: true, email: 'email@example.com', password: 'secret', username: 'mr-brown', name: 'hacker-guy')
+        end
       end
 
       describe 'creating an account enabled' do
-        let(:params) { { email: 'email@example.com', password: 'secret', username: 'mr-pink', name: 'kirsten', amount: 100, stripeToken: 'rrurrrurrrrr' } }
+        let(:params) { { create_account: 'true', email: 'email@example.com', password: 'secret', username: 'mr-pink', amount: 100, stripeToken: 'rrurrrurrrrr-rrruurrrr' } }
 
         before do
           SiteSetting.stubs(:discourse_donations_enable_create_accounts).returns(true)
@@ -75,7 +80,7 @@ module DiscourseDonations
     end
 
     describe 'new user' do
-      let(:params) { { email: 'email@example.com', password: 'secret', username: 'mr-pink' } }
+      let(:params) { { create_account: 'true', email: 'email@example.com', password: 'secret', username: 'mr-pink', amount: 100, stripeToken: 'rrurrrurrrrr-rrruurrrr' } }
 
       before { SiteSetting.stubs(:discourse_donations_enable_create_accounts).returns(true) }
 
@@ -120,7 +125,7 @@ module DiscourseDonations
       end
 
       describe 'new user' do
-        let(:params) { { email: 'dood@example.com', password: 'secret', name: 'dood', username: 'mr-dood' } }
+        let(:params) { { create_account: 'true', email: 'dood@example.com', password: 'secret', name: 'dood', username: 'mr-dood' } }
 
         before { SiteSetting.stubs(:discourse_donations_enable_create_accounts).returns(true) }
 

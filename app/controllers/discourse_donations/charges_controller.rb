@@ -48,7 +48,7 @@ module DiscourseDonations
     private
 
     def create_account
-      SiteSetting.discourse_donations_enable_create_accounts
+      params[:create_account] == 'true' && SiteSetting.discourse_donations_enable_create_accounts
     end
 
     def reward?(payment)
