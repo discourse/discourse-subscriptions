@@ -4,10 +4,9 @@
 
 Accept donations in Discourse! Integrates with [Stripe](https://stripe.com).
 
-Note: Stripe requires HTTPS.
-
 ## Installation
 
+* Be sure your site is enforcing https.
 * Follow the install instructions here: https://meta.discourse.org/t/install-a-plugin/19157
 * Add your Stripe public and private keys in settings and set the currency to your local value.
 * Check that the custom header is enabled in admin > customize > themes.
