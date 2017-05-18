@@ -9,7 +9,12 @@ Note: Stripe requires HTTPS.
 ## Installation
 
 * Follow the install instructions here: https://meta.discourse.org/t/install-a-plugin/19157
-* There's an issue upgrading to 1.8.0.beta11 with themes. You might be required to disable the plugin to do upgrades.
+* Add your Stripe public and private keys in settings and set the currency to your local value.
+* Check that the custom header is enabled in admin > customize > themes.
+* Enable the plugin and wait for people to donate money.
+
+Note: There's an issue upgrading to 1.8.0.beta11 with themes. You might be required to disable the plugin to do upgrades.
+
 
 ## Configuration
 
