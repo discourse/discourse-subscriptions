@@ -4,10 +4,6 @@
 
 Accept donations in Discourse! Integrates with [Stripe](https://stripe.com).
 
-## Creating new user accounts
-
-**This is an experimental feature.** A user can create a new account if they makes a successful donation. Enable this in settings. When a user is not logged in, they will be asked to enter details for a new user account. This feature doesn't support mandatory custom user fields yet.
-
 ## Installation
 
 * Be sure your site is enforcing https.
@@ -19,9 +15,9 @@ Accept donations in Discourse! Integrates with [Stripe](https://stripe.com).
 Note: There's an issue upgrading to 1.8.0.beta11 with themes. You might be required to disable the plugin to do upgrades.
 
 
-## Configuration
+## Creating new user accounts
 
-Visit `/admin/plugins` and configure.
+**This is an experimental feature.** A user can create a new account if they makes a successful donation. Enable this in settings. When a user is not logged in, they will be asked to enter details for a new user account. This feature doesn't support mandatory custom user fields yet.
 
 ## Customisations
 
@@ -41,3 +37,4 @@ Visit `/admin/customize/site_texts` and search for 'discourse_donations'. You'll
 
 * Handle custom fields
 * Handle fails from stripe
+* Acceptance test in RSpec not qunit. 
