@@ -6,7 +6,7 @@ Accept donations in Discourse! Integrates with [Stripe](https://stripe.com).
 
 ## Creating new user accounts
 
-**This is an experimental feature.** A user can create a new account if they makes a successful donation.
+**This is an experimental feature.** A user can create a new account if they makes a successful donation. Enable this in settings. When a user is not logged in, they will be asked to enter details for a new user account. This feature doesn't support mandatory custom user fields yet.
 
 ## Installation
 
