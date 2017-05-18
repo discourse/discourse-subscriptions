@@ -66,8 +66,7 @@ export default Ember.Component.extend({
             stripeToken: data.token.id,
             amount: self.get('amount') * 100,
             email: self.get('email'),
-            username: self.get('username'),
-            create_account: this.get('create_accounts')
+            username: self.get('username')
           };
 
           if(!self.get('paymentSuccess')) {
