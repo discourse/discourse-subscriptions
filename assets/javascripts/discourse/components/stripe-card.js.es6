@@ -1,7 +1,13 @@
 import { ajax } from 'discourse/lib/ajax';
 import { getRegister } from 'discourse-common/lib/get-owner';
 
+const { computed: { alias }, observer } = Ember
+
 export default Ember.Component.extend({
+
+  routing: Ember.inject.service('-routing'),
+  params: alias('routing.router.currentState.routerJsState.fullQueryParams'),
+
   donateAmounts: [
     { value: 1, name: '$1.00'},
     { value: 2, name: '$2.00'},
@@ -15,6 +21,10 @@ export default Ember.Component.extend({
   stripe: null,
   transactionInProgress: null,
   settings: null,
+
+  consumerDefenderWithMembership: function() {
+    return this.get('params.plan') == 'consumer-defender-with-membership';
+  }.property('params'),
 
   init() {
     this._super();
@@ -64,11 +74,17 @@ export default Ember.Component.extend({
 
           let params = {
             stripeToken: data.token.id,
-            amount: self.get('amount') * 100,
             email: self.get('email'),
             username: self.get('username'),
             create_account: self.get('create_accounts')
           };
+
+          if(this.get('params.plan')) {
+            params.plan = this.get('params.plan');
+          }
+          else {
+            params.amount: self.get('amount') * 100,
+          }
 
           if(!self.get('paymentSuccess')) {
             ajax('/charges', { data: params, method: 'post' }).then(data => {

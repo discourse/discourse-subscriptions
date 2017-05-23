@@ -7,7 +7,7 @@ module DiscourseDonations
     skip_before_filter :verify_authenticity_token, only: [:create]
 
     def create
-      params.permit(:name, :username, :email, :password, :stripeToken, :amount)
+      params.permit(:name, :username, :email, :password, :stripeToken, :amount, :plan)
 
       output = { 'messages' => [], 'rewards' => [] }
 
@@ -28,7 +28,12 @@ module DiscourseDonations
       end
 
       payment = DiscourseDonations::Stripe.new(secret_key, stripe_options)
-      charge = payment.charge(email, params)
+
+      if params['amount'].present?
+        charge = payment.charge(email, params)
+      else
+        charge = payment.subscribe(email, params)
+      end
 
       if charge['paid'] == true
         output['messages'] << I18n.t('donations.payment.success')
