@@ -35,7 +35,7 @@ module DiscourseDonations
         charge = payment.subscribe(email, params)
       end
 
-      if charge['paid'] == true
+      if (params['amount'].present? && charge['paid'] == true) || charge['status'] == 'active'
         output['messages'] << I18n.t('donations.payment.success')
 
         output['rewards'] << { type: :group, name: group_name } if group_name
