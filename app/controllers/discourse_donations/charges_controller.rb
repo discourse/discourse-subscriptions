@@ -7,7 +7,7 @@ module DiscourseDonations
     skip_before_filter :verify_authenticity_token, only: [:create]
 
     def create
-      params.permit(:name, :username, :email, :password, :stripeToken, :amount, :plan)
+      params.permit(:name, :username, :email, :password, :stripeToken, :amount, :plan, :create_account)
 
       output = { 'messages' => [], 'rewards' => [] }
 
