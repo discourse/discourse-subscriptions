@@ -23,6 +23,18 @@ module DiscourseDonations
       @charge
     end
 
+    def subscribe(email, opts)
+      customer = ::Stripe::Customer.create(
+        email: email,
+        source: opts[:stripeToken]
+      )
+      @subscription = ::Stripe::Subscription.create(
+        customer: customer.id,
+        plan: opts[:plan]
+      )
+      @subscription
+    end
+
     def successful?
       @charge[:paid]
     end
