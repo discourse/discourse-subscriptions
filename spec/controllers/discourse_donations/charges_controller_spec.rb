@@ -24,8 +24,8 @@ module DiscourseDonations
     end
 
     it 'whitelists the params' do
-      params = { email: 'email@example.com', password: 'secret', username: 'mr-pink', name: 'kirsten', amount: 100, stripeToken: 'rrurrrurrrrr' }
-      should permit(:name, :username, :email, :password).for(:create, params: params)
+      params = { create_account: 'true', email: 'email@example.com', password: 'secret', username: 'mr-pink', name: 'kirsten', amount: 100, stripeToken: 'rrurrrurrrrr' }
+      should permit(:name, :username, :email, :password, :create_account).for(:create, params: params)
     end
 
     it 'responds ok for anonymous users' do
