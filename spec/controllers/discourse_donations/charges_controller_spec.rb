@@ -29,19 +29,19 @@ module DiscourseDonations
     end
 
     it 'responds ok for anonymous users' do
-      post :create, { email: 'foobar@example.com' }
+      post :create, { email: 'foobar@example.com', amount: 1000 }
       expect(body['messages']).to include(I18n.t('donations.payment.success'))
       expect(response).to have_http_status(200)
     end
 
     it 'does not expect a username or email if accounts are not being created' do
       current_user = log_in(:coding_horror)
-      post :create, { create_account: 'false' }
+      post :create, { create_account: 'false', amount: 1200 }
       expect(body['messages']).to include(I18n.t('donations.payment.success'))
       expect(response).to have_http_status(200)
     end
 
-    describe 'create accounts' do
+    describe 'create accounts setting' do
       describe 'create acccount disabled' do
         let(:params) { { amount: 100, stripeToken: 'rrurrrurrrrr-rrruurrrr' } }
 
@@ -113,6 +113,16 @@ module DiscourseDonations
       end
     end
 
+    describe 'subscriptions and charges' do
+      let(:params) { { create_account: 'true', email: 'dood@example.com', password: 'secret', name: 'dood', username: 'mr-dood' } }
+
+      it 'creates a subscription' do
+        skip 'not done yet'
+        DiscourseDonations::Stripe.expects(:subscribe).returns('') #.with(params[:email], plan: 'quarterly-description')
+        post :create, params.merge(plan: 'quarterly-description')
+      end
+    end
+
     describe 'rewards' do
       let(:body) { JSON.parse(response.body) }
       let(:stripe) { ::Stripe::Charge }
@@ -125,7 +135,7 @@ module DiscourseDonations
       end
 
       describe 'new user' do
-        let(:params) { { create_account: 'true', email: 'dood@example.com', password: 'secret', name: 'dood', username: 'mr-dood' } }
+        let(:params) { { amount: 5000, create_account: 'true', email: 'dood@example.com', password: 'secret', name: 'dood', username: 'mr-dood' } }
 
         before { SiteSetting.stubs(:discourse_donations_enable_create_accounts).returns(true) }
 
@@ -150,7 +160,7 @@ module DiscourseDonations
         end
 
         include_examples 'no rewards' do
-          let(:params) { nil }
+          let(:params) { { amount: 4500 } }
 
           before do
             stripe.stubs(:create).returns({ 'paid' => true })
@@ -164,6 +174,7 @@ module DiscourseDonations
           let(:badge_name) { 'Beanie' }
           let!(:grp) { Fabricate(:group, name: group_name) }
           let!(:badge) { Fabricate(:badge, name: badge_name) }
+          let(:params) { { amount: 4500 } }
 
           before do
             SiteSetting.stubs(:discourse_donations_reward_group_name).returns(group_name)
@@ -172,12 +183,12 @@ module DiscourseDonations
           end
 
           it 'awards a group' do
-            post :create
+            post :create, params
             expect(body['rewards']).to include({'type' => 'group', 'name' => group_name})
           end
 
           it 'awards a badge' do
-            post :create
+            post :create, params
             expect(body['rewards']).to include({'type' => 'badge', 'name' => badge_name})
           end
         end
