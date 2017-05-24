@@ -83,7 +83,7 @@ export default Ember.Component.extend({
             params.plan = this.get('params.plan');
           }
           else {
-            params.amount = self.get('amount') * 100;
+            params.amount = self.get('amount');
           }
 
           if(!self.get('paymentSuccess')) {
