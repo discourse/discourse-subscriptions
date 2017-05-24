@@ -93,7 +93,9 @@
       {{/each}}
 
       {{#if success}}
-        <p>{{i18n 'discourse_donations.messages.success'}}</p>
+        {{#if create_accounts}}
+          <p>Please <strong>check your email</strong> to get your log in link.</p>
+        {{/if}}
       {{/if}}
     </div>
   </div>

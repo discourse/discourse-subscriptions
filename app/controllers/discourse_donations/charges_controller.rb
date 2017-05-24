@@ -47,6 +47,8 @@ module DiscourseDonations
       end
 
       if charge['paid'] == true || charge['status'] == 'active'
+        output['success'] = true
+
         output['messages'] << I18n.t('donations.payment.success')
 
         output['rewards'] << { type: :group, name: group_name } if group_name
