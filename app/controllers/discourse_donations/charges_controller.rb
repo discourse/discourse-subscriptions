@@ -28,7 +28,19 @@ module DiscourseDonations
       end
 
       payment = DiscourseDonations::Stripe.new(secret_key, stripe_options)
-      charge = payment.charge(email, params)
+
+      begin
+        charge = payment.charge(email, params)
+      rescue ::Stripe::CardError => e
+        err = e.json_body[:error]
+
+        output['messages'] << "There was an error (#{err[:type]})."
+        #output['messages'] << "Error code: #{err[:code]}" if err[:code]
+        #output['messages'] << "Decline code: #{err[:decline_code]}" if err[:decline_code]
+        output['messages'] << "Message: #{err[:message]}" if err[:message]
+
+        render(:json => output) and return
+      end
 
       if charge['paid'] == true
         output['messages'] << I18n.t('donations.payment.success')

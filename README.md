@@ -36,5 +36,4 @@ Visit `/admin/customize/site_texts` and search for 'discourse_donations'. You'll
 ## TODO
 
 * Handle custom fields
-* Handle fails from stripe
 * Acceptance test in RSpec not qunit. 
