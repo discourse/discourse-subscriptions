@@ -59,4 +59,4 @@ Card numbers in **bold** have beed tested.
 * **4000 0000 0000 0127**	Charge is declined with an incorrect_cvc code.
 * **4000 0000 0000 0069**	Charge is declined with an expired_card code.
 * **4000 0000 0000 0119**	Charge is declined with a processing_error code.
-* **4242 4242 4242 4241**	Charge is declined with an incorrect_number code as the card number fails the Luhn check.
+* 4242 4242 4242 4241	Charge is declined with an incorrect_number code as the card number fails the Luhn check.
