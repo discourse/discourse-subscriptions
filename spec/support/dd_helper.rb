@@ -2,6 +2,75 @@ require 'fakeweb'
 
 #TODO register some fixtures
 
+FakeWeb.register_uri(:post, 'https://api.stripe.com/v1/subscriptions',
+  :body => '{
+  "id": "sub_AiD01tPjRSDFYu",
+  "object": "subscription",
+  "application_fee_percent": null,
+  "cancel_at_period_end": false,
+  "canceled_at": null,
+  "created": 1495582751,
+  "current_period_end": 1503531551,
+  "current_period_start": 1495582751,
+  "customer": "cus_AiD0rheP5e5fWO",
+  "discount": null,
+  "ended_at": null,
+  "items": {
+    "object": "list",
+    "data": [
+      {
+        "id": "si_1AMmapEfVxQsvRbHOwo0LqL7",
+        "object": "subscription_item",
+        "created": 1495582752,
+        "plan": {
+          "id": "membership",
+          "object": "plan",
+          "amount": 2500,
+          "created": 1495503265,
+          "currency": "aud",
+          "interval": "month",
+          "interval_count": 3,
+          "livemode": false,
+          "metadata": {
+          },
+          "name": "Membership",
+          "statement_descriptor": null,
+          "trial_period_days": null
+        },
+        "quantity": 1
+      }
+    ],
+    "has_more": false,
+    "total_count": 1,
+    "url": "/v1/subscription_items?subscription=sub_AiD01tPjRFFBYu"
+  },
+  "livemode": false,
+  "metadata": {
+  },
+  "plan": {
+    "id": "membership",
+    "object": "plan",
+    "amount": 2500,
+    "created": 1495503265,
+    "currency": "aud",
+    "interval": "month",
+    "interval_count": 3,
+    "livemode": false,
+    "metadata": {
+    },
+    "name": "Membership",
+    "statement_descriptor": null,
+    "trial_period_days": null
+  },
+  "quantity": 1,
+  "start": 1495582751,
+  "status": "active",
+  "tax_percent": null,
+  "trial_end": null,
+  "trial_start": null
+}'
+)
+
 FakeWeb.register_uri(:post, 'https://api.stripe.com/v1/customers',
   :body => '{
   "id": "cus_AJqrL4OU1sffPl",
