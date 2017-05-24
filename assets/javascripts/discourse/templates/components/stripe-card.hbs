@@ -76,13 +76,15 @@
 
   <div class="control-group save-button">
     <div class="controls">
-      {{#d-button action="submitStripeCard" disabled=transactionInProgress class="btn btn-primary btn-payment"}}
-        {{#if create_accounts}}
-          {{i18n 'discourse_donations.submit_with_create_account'}}
-        {{else}}
-          {{i18n 'discourse_donations.submit'}}
-        {{/if}}
-      {{/d-button}}
+      {{#unless paymentSuccess}}
+        {{#d-button action="submitStripeCard" disabled=transactionInProgress class="btn btn-primary btn-payment"}}
+          {{#if create_accounts}}
+            {{i18n 'discourse_donations.submit_with_create_account'}}
+          {{else}}
+            {{i18n 'discourse_donations.submit'}}
+          {{/if}}
+        {{/d-button}}
+      {{/unless}}
 
       {{#if transactionInProgress}}
         {{loading-spinner size="small"}}
