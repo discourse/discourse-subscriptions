@@ -30,7 +30,7 @@ module DiscourseDonations
       payment = DiscourseDonations::Stripe.new(secret_key, stripe_options)
 
       if params['amount'].present?
-        charge = payment.subscribe(email, { plan: params[:amount] })
+        charge = payment.subscribe(email, params.merge(plan: params[:amount]))
       else
         charge = payment.subscribe(email, params)
       end

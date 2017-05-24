@@ -8,4 +8,4 @@ en:
       submit: Make Payment
       submit_with_create_account: Make Payment and Create Account
       messages:
-        success: Thank you, your payment has been successful.<br>Please <strong>check your email</strong> to get your log in link.
+        success: Thank you, your payment has been successful.
