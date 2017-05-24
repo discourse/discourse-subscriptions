@@ -29,10 +29,21 @@ module DiscourseDonations
 
       payment = DiscourseDonations::Stripe.new(secret_key, stripe_options)
 
-      if params['amount'].present?
-        charge = payment.subscribe(email, params.merge(plan: params[:amount]))
-      else
-        charge = payment.subscribe(email, params)
+      begin
+        if params['amount'].present?
+          charge = payment.subscribe(email, params.merge(plan: params[:amount]))
+        else
+          charge = payment.subscribe(email, params)
+        end
+      rescue ::Stripe::CardError => e
+        err = e.json_body[:error]
+
+        output['messages'] << "Error type: #{err[:type]}"
+        output['messages'] << "Error code: #{err[:code]}" if err[:code]
+        output['messages'] << "Decline code: #{err[:decline_code]}" if err[:decline_code]
+        output['messages'] << "Message: #{err[:message]}" if err[:message]
+
+        render(:json => output) and return
       end
 
       if charge['paid'] == true || charge['status'] == 'active'

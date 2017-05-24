@@ -23,7 +23,7 @@ Note: There's an issue upgrading to 1.8.0.beta11 with themes. You might be requi
 
 Visit `/admin/customize/site_texts` and search for 'discourse_donations'. You'll find a few entries you can customise for your site.
 
-## Testing
+## Test Suite
 
 * To run the rails specs, install the plugin and run `bundle exec rake plugin:spec[discourse-donations]` in the discourse root directory.
 * To run qunit tests: `MODULE='Acceptance: Discourse Donations' bundle exec rake qunit:test[20000]`.
@@ -35,6 +35,13 @@ Visit `/admin/customize/site_texts` and search for 'discourse_donations'. You'll
 
 ## TODO
 
+* Test card fails
 * Handle custom fields
-* Handle fails from stripe
-* Acceptance test in RSpec not qunit. 
+* Acceptance test in RSpec not qunit.
+
+## Tested Credit Card Numbers
+
+These numbers can be used in test mode to simulate a transaction. For more information see the [Stripe docs](https://stripe.com/docs/testing).
+
+* Payment successful: 5555 5555 5555 4444
+* Card declined: 4000 0000 0000 0002
