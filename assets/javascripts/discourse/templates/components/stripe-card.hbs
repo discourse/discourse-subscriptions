@@ -1,17 +1,5 @@
 <form id="payment-form" class="form-horizontal">
 
-  <!--
-  <div class="control-group">
-    <label class="control-label" for="card-element">
-      {{i18n 'discourse_donations.amount'}}
-      {{settings.discourse_donations_currency}}
-    </label>
-    <div class="controls controls-dropdown">
-      {{combo-box valueAttribute="value" content=donateAmounts value=amount}}
-    </div>
-  </div>
-  -->
-
     {{#if consumerDefenderWithMembership}}
 
     <h3>[$25/quarter] Consumer Defender + CHOICE Membership</h3>
@@ -23,6 +11,27 @@
       <li>All the benefits of CHOICE membership</li>
       <li>CHOICE Members Only area</li>
     </ul>
+
+    {{else}}
+
+    <h3>[Pay what you want/quarter] Consumer Defender only</h3>
+
+    <ul>
+      <li>Choice.community Access</li>
+      <li>Defender Badge (while supplies last)</li>
+      <li>Priority Expert Advice</li>
+    </ul>
+
+
+    <div class="control-group">
+      <label class="control-label" for="card-element">
+        {{i18n 'discourse_donations.amount'}}
+        {{settings.discourse_donations_currency}}
+      </label>
+      <div class="controls controls-dropdown">
+        {{combo-box valueAttribute="value" content=donateAmounts value=amount}}
+      </div>
+    </div>
 
     {{/if}}
 

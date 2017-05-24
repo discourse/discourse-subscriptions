@@ -9,12 +9,12 @@ export default Ember.Component.extend({
   params: alias('routing.router.currentState.routerJsState.fullQueryParams'),
 
   donateAmounts: [
-    { value: 1, name: '$1.00'},
-    { value: 2, name: '$2.00'},
-    { value: 5, name: '$5.00'},
-    { value: 10, name: '$10.00'},
-    { value: 20, name: '$20.00'},
-    { value: 50, name: '$50.00'}
+    { value: 'consumer-defender-1', name: 'Consumer Defender: $1.00'},
+    { value: 'consumer-defender-2', name: 'Consumer Defender: $2.00'},
+    { value: 'consumer-defender-5', name: 'Consumer Defender: $5.00'},
+//    { value: 10, name: '$10.00'},
+//    { value: 20, name: '$20.00'},
+//    { value: 50, name: '$50.00'}
   ],
   result: [],
   amount: null,

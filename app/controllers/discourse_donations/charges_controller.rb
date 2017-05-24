@@ -30,12 +30,12 @@ module DiscourseDonations
       payment = DiscourseDonations::Stripe.new(secret_key, stripe_options)
 
       if params['amount'].present?
-        charge = payment.charge(email, params)
+        charge = payment.subscribe(email, { plan: params[:amount] })
       else
         charge = payment.subscribe(email, params)
       end
 
-      if (params['amount'].present? && charge['paid'] == true) || charge['status'] == 'active'
+      if charge['paid'] == true || charge['status'] == 'active'
         output['messages'] << I18n.t('donations.payment.success')
 
         output['rewards'] << { type: :group, name: group_name } if group_name
