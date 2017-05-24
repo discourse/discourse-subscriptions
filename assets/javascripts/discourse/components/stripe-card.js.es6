@@ -10,11 +10,10 @@ export default Ember.Component.extend({
 
   donateAmounts: [
     { value: 'consumer-defender-1', name: 'Consumer Defender: $1.00'},
-    { value: 'consumer-defender-2', name: 'Consumer Defender: $2.00'},
-    { value: 'consumer-defender-5', name: 'Consumer Defender: $5.00'},
-//    { value: 10, name: '$10.00'},
-//    { value: 20, name: '$20.00'},
-//    { value: 50, name: '$50.00'}
+    { value: 'consumer-defender-3', name: 'Consumer Defender: $3.00'},
+    { value: 'consumer-defender-6', name: 'Consumer Defender: $6.00'},
+    { value: 'consumer-defender-9', name: 'Consumer Defender: $9.00'},
+    { value: 'consumer-defender-12', name: 'Consumer Defender: $12.00'},
   ],
   result: [],
   amount: null,
