@@ -37,3 +37,7 @@ Visit `/admin/customize/site_texts` and search for 'discourse_donations'. You'll
 
 * Handle custom fields
 * Acceptance test in RSpec not qunit. 
+
+## Warranty
+
+This software comes with no warranty of any kind.
