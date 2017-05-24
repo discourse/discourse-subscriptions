@@ -38,9 +38,9 @@ module DiscourseDonations
       rescue ::Stripe::CardError => e
         err = e.json_body[:error]
 
-        output['messages'] << "Error type: #{err[:type]}"
-        output['messages'] << "Error code: #{err[:code]}" if err[:code]
-        output['messages'] << "Decline code: #{err[:decline_code]}" if err[:decline_code]
+        output['messages'] << "There was an error (#{err[:type]})."
+        #output['messages'] << "Error code: #{err[:code]}" if err[:code]
+        #output['messages'] << "Decline code: #{err[:decline_code]}" if err[:decline_code]
         output['messages'] << "Message: #{err[:message]}" if err[:message]
 
         render(:json => output) and return
