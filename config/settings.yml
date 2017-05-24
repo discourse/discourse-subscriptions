@@ -24,3 +24,6 @@ plugins:
   discourse_donations_reward_group_name:
     client: false
     default: 'Donation'
+  discourse_donations_show_extra_nav_item:
+    client: true
+    default: true

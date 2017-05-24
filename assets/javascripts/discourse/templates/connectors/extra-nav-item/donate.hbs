@@ -1,3 +1,5 @@
-<a href="/donate">
-  {{i18n 'discourse_donations.nav_item'}}
-</a>
+{{#if settings.discourse_donations_show_extra_nav_item}}
+  <a href="/donate">
+    {{i18n 'discourse_donations.nav_item'}}
+  </a>
+{{/if}}
