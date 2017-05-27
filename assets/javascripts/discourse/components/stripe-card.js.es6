@@ -61,15 +61,17 @@ export default Ember.Component.extend({
     submitStripeCard() {
       let self = this;
 
+      self.set('transactionInProgress', true);
+
       this.get('stripe').createToken(this.get('card')).then(data => {
 
         self.set('result', []);
 
         if (data.error) {
           self.set('result', data.error.message);
+          self.set('transactionInProgress', false);
         }
         else {
-          self.set('transactionInProgress', true);
 
           let params = {
             stripeToken: data.token.id,
