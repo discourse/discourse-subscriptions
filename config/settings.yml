@@ -3,8 +3,10 @@ plugins:
     default: false
     client: true
   discourse_donations_secret_key:
+    default: 'YOUR STRIPE API SECRET'
     client: false
   discourse_donations_public_key:
+    default: 'YOUR STRIPE API KEY'
     client: true
   discourse_donations_enable_create_accounts:
     client: true
@@ -12,6 +14,9 @@ plugins:
   discourse_donations_description:
     client: true
     default: 'Donation'
+  discourse_donations_shop_name:
+    client: true
+    default: 'Shop Name'
   discourse_donations_currency:
     client: true
     default: 'USD'

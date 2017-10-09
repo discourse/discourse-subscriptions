@@ -53,6 +53,33 @@ Card numbers in **bold** have beed tested.
 * **4000 0000 0000 0119**	Charge is declined with a processing_error code.
 * 4242 4242 4242 4241	Charge is declined with an incorrect_number code as the card number fails the Luhn check.
 
+## Markup
+
+Stripe checkout forms to be added to forum posts using markup:
+
+#### Example
+
+    [stripe-checkout amount=999 image=/img/someImage.png]
+        Widget
+    [/stripe-checkout]
+    
+
+Which renders as:
+
+    <form action="" method="POST">
+        <script 
+            src="https://checkout.stripe.com/checkout.js" 
+            class="stripe-button"
+            data-key="pk_test_6pRXXX"
+            data-amount="999"
+            data-name="Your Shop"
+            data-description="Widget"
+            data-image="/img/someImage.png"
+            data-locale="auto">
+        </script>
+    </form>
+
+
 ## Warranty
 
 This software comes with no warranty of any kind.

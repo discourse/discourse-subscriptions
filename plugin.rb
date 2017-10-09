@@ -8,6 +8,8 @@ gem 'stripe', '2.8.0'
 
 load File.expand_path('../lib/discourse_donations/engine.rb', __FILE__)
 
+register_asset "stylesheets/discourse-donations.css"
+
 enabled_site_setting :discourse_donations_enabled
 
 after_initialize do

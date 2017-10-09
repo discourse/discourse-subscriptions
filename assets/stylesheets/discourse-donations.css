@@ -1,0 +1,7 @@
+div.stripe-errors {
+    border: 1px solid #c33;
+    border-radius: 5px;
+    color: #600;
+    background-color: #fdd;
+    padding: 5px 10px;
+}
