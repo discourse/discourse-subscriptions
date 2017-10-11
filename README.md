@@ -79,6 +79,7 @@ Which renders as:
         </script>
     </form>
 
+Site settings can be used to configure the various fields
 
 ## Warranty
 
