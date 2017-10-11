@@ -8,7 +8,7 @@ function validationErrors(tagInfo, content) {
     let errors = [];
     if (!Discourse.SiteSettings['discourse_donations_public_key']) { errors.push("missing key (site setting)"); }
     if (!Discourse.SiteSettings['discourse_donations_currency']) { errors.push("missing currency (site setting)"); }
-    if (!Discourse.SiteSettings['stripe_name']) { errors.push("missing name (site setting)"); }
+    if (!Discourse.SiteSettings['discourse_donations_shop_name']) { errors.push("missing name (site setting)"); }
     if (!Discourse.SiteSettings['discourse_donations_hide_zip_code']) { errors.push("missing hide zip code (site setting)"); }
     if (!tagInfo.attrs['amount']) { errors.push("missing amount"); }
     if (!content) { errors.push("missing description"); }
