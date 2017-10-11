@@ -4,21 +4,22 @@ module DiscourseDonations
   class ChargesController < ActionController::Base
     include CurrentUser
 
-    skip_before_filter :verify_authenticity_token, only: [:create]
+    protect_from_forgery prepend: true
+    protect_from_forgery with: :exception
+
+    skip_before_action :verify_authenticity_token, only: [:create]
 
     def create
-      params.permit(:name, :username, :email, :password, :stripeToken, :amount, :create_account)
-
       output = { 'messages' => [], 'rewards' => [] }
 
       if create_account
-        if !email.present? || !params[:username].present?
+        if !email.present? || !user_params[:username].present?
           output['messages'] << I18n.t('login.missing_user_field')
         end
-        if params[:password] && params[:password].length > User.max_password_length
+        if user_params[:password] && user_params[:password].length > User.max_password_length
           output['messages'] << I18n.t('login.password_too_long')
         end
-        if params[:username] && ::User.reserved_username?(params[:username])
+        if user_params[:username] && ::User.reserved_username?(user_params[:username])
           output['messages'] << I18n.t('login.reserved_username')
         end
       end
@@ -30,7 +31,7 @@ module DiscourseDonations
       payment = DiscourseDonations::Stripe.new(secret_key, stripe_options)
 
       begin
-        charge = payment.charge(email, params)
+        charge = payment.charge(email, opts: user_params)
       rescue ::Stripe::CardError => e
         err = e.json_body[:error]
 
@@ -49,7 +50,7 @@ module DiscourseDonations
         output['rewards'] << { type: :badge, name: badge_name } if badge_name
 
         if create_account && email.present?
-          args = params.slice(:email, :username, :password, :name).merge(rewards: output['rewards'])
+          args = user_params.to_h.slice(:email, :username, :password, :name).merge(rewards: output['rewards'])
           Jobs.enqueue(:donation_user, args)
         end
       end
@@ -60,7 +61,7 @@ module DiscourseDonations
     private
 
     def create_account
-      params[:create_account] == 'true' && SiteSetting.discourse_donations_enable_create_accounts
+      user_params[:create_account] == 'true' && SiteSetting.discourse_donations_enable_create_accounts
     end
 
     def reward?(payment)
@@ -86,8 +87,12 @@ module DiscourseDonations
       }
     end
 
+    def user_params
+      params.permit(:name, :username, :email, :password, :stripeToken, :amount, :create_account)
+    end
+
     def email
-      params[:email] || current_user.try(:email)
+      user_params[:email] || current_user.try(:email)
     end
   end
 end
