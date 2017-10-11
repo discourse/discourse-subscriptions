@@ -59,9 +59,9 @@ Stripe checkout forms to be added to forum posts using markup:
 
 #### Example
 
-    [stripe-checkout amount=999 image=/img/someImage.png]
+    [stripe amount=999 image=/img/someImage.png]
         Widget
-    [/stripe-checkout]
+    [/stripe]
     
 
 Which renders as:
