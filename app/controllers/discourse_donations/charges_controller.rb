@@ -4,13 +4,13 @@ module DiscourseDonations
   class ChargesController < ActionController::Base
     include CurrentUser
 
-    protect_from_forgery prepend: true
-    protect_from_forgery with: :exception
-
     skip_before_action :verify_authenticity_token, only: [:create]
 
     def create
       output = { 'messages' => [], 'rewards' => [] }
+
+      debug(params)
+      debug(user_params)
 
       if create_account
         if !email.present? || !user_params[:username].present?
@@ -36,8 +36,8 @@ module DiscourseDonations
         err = e.json_body[:error]
 
         output['messages'] << "There was an error (#{err[:type]})."
-        #output['messages'] << "Error code: #{err[:code]}" if err[:code]
-        #output['messages'] << "Decline code: #{err[:decline_code]}" if err[:decline_code]
+        output['messages'] << "Error code: #{err[:code]}" if err[:code]
+        output['messages'] << "Decline code: #{err[:decline_code]}" if err[:decline_code]
         output['messages'] << "Message: #{err[:message]}" if err[:message]
 
         render(:json => output) and return
