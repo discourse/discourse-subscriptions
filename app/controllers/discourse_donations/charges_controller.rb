@@ -9,8 +9,8 @@ module DiscourseDonations
     def create
       output = { 'messages' => [], 'rewards' => [] }
 
-      Rails.logger.debug params.inspect
-      Rails.logger.debug user_params.inspect
+      debug(params)
+      debug(user_params)
 
       if create_account
         if !email.present? || !user_params[:username].present?
