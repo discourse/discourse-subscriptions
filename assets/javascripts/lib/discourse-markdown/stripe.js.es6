@@ -33,6 +33,9 @@ function insertCheckout(state, tagInfo, content, siteSettings) {
     let token = state.push('stripe-checkout-form-open', 'form', 1);
     token.attrs = [['method', 'POST'], ['action', '/charges']];
 
+    token = state.push('stripe-checkout-form-amount', 'input', 0);
+    token.attrs = [['type', 'hidden'], ['name', 'amount'], ['value', tagInfo.attrs['amount']]];
+
     token = state.push('stripe-checkout-script-open', 'script', 0);
     token.attrs = [
         ['src', 'https://checkout.stripe.com/checkout.js'],
@@ -67,6 +70,9 @@ export function setup(helper) {
             'div[class]',
             'form[method]',
             'form[action]',
+            'input[type]',
+            'input[name]',
+            'input[value]',
             'script[class]',
             'script[src]',
             'script[data-key]',

@@ -36,8 +36,8 @@ module DiscourseDonations
         err = e.json_body[:error]
 
         output['messages'] << "There was an error (#{err[:type]})."
-        #output['messages'] << "Error code: #{err[:code]}" if err[:code]
-        #output['messages'] << "Decline code: #{err[:decline_code]}" if err[:decline_code]
+        output['messages'] << "Error code: #{err[:code]}" if err[:code]
+        output['messages'] << "Decline code: #{err[:decline_code]}" if err[:decline_code]
         output['messages'] << "Message: #{err[:message]}" if err[:message]
 
         render(:json => output) and return
