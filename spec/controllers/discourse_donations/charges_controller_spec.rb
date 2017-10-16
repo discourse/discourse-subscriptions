@@ -18,6 +18,7 @@ module DiscourseDonations
     let(:body) { JSON.parse(response.body) }
 
     before do
+      SiteSetting.stubs(:disable_discourse_narrative_bot_welcome_post).returns(true)
       SiteSetting.stubs(:discourse_donations_secret_key).returns('secret-key-yo')
       SiteSetting.stubs(:discourse_donations_description).returns('charity begins at discourse plugin')
       SiteSetting.stubs(:discourse_donations_currency).returns('AUD')
