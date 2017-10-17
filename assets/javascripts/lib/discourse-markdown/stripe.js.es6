@@ -31,7 +31,7 @@ function displayErrors(state, errors) {
 
 function insertCheckout(state, tagInfo, content, siteSettings) {
     let token = state.push('stripe-checkout-form-open', 'form', 1);
-    token.attrs = [['method', 'POST'], ['action', '/charges']];
+    token.attrs = [['method', 'POST'], ['action', '/checkout']];
 
     token = state.push('stripe-checkout-form-amount', 'input', 0);
     token.attrs = [['type', 'hidden'], ['name', 'amount'], ['value', tagInfo.attrs['amount']]];
