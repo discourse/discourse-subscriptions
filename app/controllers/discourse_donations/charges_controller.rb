@@ -9,6 +9,32 @@ module DiscourseDonations
 
     skip_before_action :verify_authenticity_token, only: [:create]
 
+    def checkout
+      output = { 'messages' => [], 'rewards' => [] }
+      payment = DiscourseDonations::Stripe.new(secret_key, stripe_options)
+      begin
+        payment.checkoutCharge(user_params[:amount], user_params[:stripe_options])
+      rescue ::Stripe::CardError => e
+        err = e.json_body[:error]
+
+        output['messages'] << "There was an error (#{err[:type]})."
+        output['messages'] << "Error code: #{err[:code]}" if err[:code]
+        output['messages'] << "Decline code: #{err[:decline_code]}" if err[:decline_code]
+        output['messages'] << "Message: #{err[:message]}" if err[:message]
+
+        render(:json => output) and return
+      end
+
+      if charge['paid'] == true
+        output['messages'] << I18n.t('donations.payment.success')
+
+        output['rewards'] << { type: :group, name: group_name } if group_name
+        output['rewards'] << { type: :badge, name: badge_name } if badge_name
+      end
+
+      render :json => output
+    end
+
     def create
       output = { 'messages' => [], 'rewards' => [] }
 

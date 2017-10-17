@@ -9,6 +9,16 @@ module DiscourseDonations
       @currency = opts[:currency]
     end
 
+    def checkoutCharge(amount, token)
+      @charge = Stripe::Charge.create(
+        :amount => amount,
+        :currency => opts[:currency],
+        :description => @description,
+        :source => token,
+      )
+      @charge
+    end
+
     def charge(email, opts)
       customer = ::Stripe::Customer.create(
         email: email,
