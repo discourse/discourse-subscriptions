@@ -1,7 +1,7 @@
 require_dependency 'discourse'
 
 module DiscourseDonations
-  class ChargesController < ActionController::Base
+  class CheckoutController < ActionController::Base
     include CurrentUser
 
     protect_from_forgery prepend: true
@@ -14,27 +14,12 @@ module DiscourseDonations
       Rails.logger.debug user_params.inspect
 
       output = { 'messages' => [], 'rewards' => [] }
-
-      if create_account
-        if !email.present? || !user_params[:username].present?
-          output['messages'] << I18n.t('login.missing_user_field')
-        end
-        if user_params[:password] && user_params[:password].length > User.max_password_length
-          output['messages'] << I18n.t('login.password_too_long')
-        end
-        if user_params[:username] && ::User.reserved_username?(user_params[:username])
-          output['messages'] << I18n.t('login.reserved_username')
-        end
-      end
-
-      if output['messages'].present?
-        render(:json => output.merge(success: false)) and return
-      end
-
       payment = DiscourseDonations::Stripe.new(secret_key, stripe_options)
 
       begin
-        charge = payment.charge(email, opts: user_params)
+        charge = payment.checkoutCharge(user_params[:stripeEmail],
+                                        user_params[:stripeToken],
+                                        user_params[:amount])
       rescue ::Stripe::CardError => e
         err = e.json_body[:error]
 
@@ -46,16 +31,10 @@ module DiscourseDonations
         render(:json => output) and return
       end
 
-      if charge['paid'] == true
+      if charge['paid']
         output['messages'] << I18n.t('donations.payment.success')
-
         output['rewards'] << { type: :group, name: group_name } if group_name
         output['rewards'] << { type: :badge, name: badge_name } if badge_name
-
-        if create_account && email.present?
-          args = user_params.to_h.slice(:email, :username, :password, :name).merge(rewards: output['rewards'])
-          Jobs.enqueue(:donation_user, args)
-        end
       end
 
       render :json => output
@@ -63,9 +42,6 @@ module DiscourseDonations
 
     private
 
-    def create_account
-      user_params[:create_account] == 'true' && SiteSetting.discourse_donations_enable_create_accounts
-    end
 
     def reward?(payment)
       payment.present? && payment.successful?
@@ -83,19 +59,34 @@ module DiscourseDonations
       SiteSetting.discourse_donations_secret_key
     end
 
+    def user_params
+      params.permit(:amount,
+                    :stripeToken,
+                    :stripeTokenType,
+                    :stripeEmail,
+                    :stripeBillingName,
+                    :stripeBillingAddressLine1,
+                    :stripeBillingAddressZip,
+                    :stripeBillingAddressState,
+                    :stripeBillingAddressCity,
+                    :stripeBillingAddressCountry,
+                    :stripeBillingAddressCountryCode,
+                    :stripeShippingName,
+                    :stripeShippingAddressLine1,
+                    :stripeShippingAddressZip,
+                    :stripeShippingAddressState,
+                    :stripeShippingAddressCity,
+                    :stripeShippingAddressCountry,
+                    :stripeShippingAddressCountryCode
+
+      )
+    end
+
     def stripe_options
       {
-        description: SiteSetting.discourse_donations_description,
-        currency: SiteSetting.discourse_donations_currency
+          description: SiteSetting.discourse_donations_description,
+          currency: SiteSetting.discourse_donations_currency
       }
-    end
-
-    def user_params
-      params.permit(:name, :username, :email, :password, :stripeToken, :amount, :create_account)
-    end
-
-    def email
-      user_params[:email] || current_user.try(:email)
     end
   end
 end
