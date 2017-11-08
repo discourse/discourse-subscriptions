@@ -1,11 +1,7 @@
 require_dependency 'discourse'
 
 module DiscourseDonations
-  class CheckoutController < ActionController::Base
-    include CurrentUser
-
-    protect_from_forgery prepend: true
-    protect_from_forgery with: :exception
+  class CheckoutController < ApplicationController
 
     skip_before_action :verify_authenticity_token, only: [:create]
 
