@@ -12,6 +12,10 @@ register_asset "stylesheets/discourse-donations.css"
 
 enabled_site_setting :discourse_donations_enabled
 
+register_html_builder('server:before-head-close') do
+  "<script src='https://js.stripe.com/v3/'></script>"
+end
+
 after_initialize do
   load File.expand_path('../app/jobs/jobs.rb', __FILE__)
 end
