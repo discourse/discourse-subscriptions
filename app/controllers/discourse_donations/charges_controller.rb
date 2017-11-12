@@ -4,6 +4,7 @@ module DiscourseDonations
   class ChargesController < ApplicationController
 
     skip_before_action :verify_authenticity_token, only: [:create]
+    skip_before_action :check_xhr
 
     def create
       Rails.logger.debug params.inspect
