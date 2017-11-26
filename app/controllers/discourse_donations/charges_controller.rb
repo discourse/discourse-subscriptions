@@ -7,8 +7,7 @@ module DiscourseDonations
     skip_before_action :check_xhr
 
     def create
-      Rails.logger.debug params.inspect
-      Rails.logger.debug user_params.inspect
+      Rails.logger.info user_params.inspect
 
       output = { 'messages' => [], 'rewards' => [] }
 
@@ -28,10 +27,12 @@ module DiscourseDonations
         render(:json => output.merge(success: false)) and return
       end
 
+      Rails.logger.debug "Creating a Stripe payment"
       payment = DiscourseDonations::Stripe.new(secret_key, stripe_options)
 
       begin
-        charge = payment.charge(email, opts: user_params)
+        Rails.logger.debug "Creating a Stripe charge for #{user_params[:amount]}"
+        charge = payment.charge(email, user_params[:stripeToken], user_params[:amount])
       rescue ::Stripe::CardError => e
         err = e.json_body[:error]
 

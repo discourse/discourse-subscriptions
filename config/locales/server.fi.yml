@@ -1,7 +1,0 @@
-fi:
-  site_settings:
-    discourse_donations_enabled: Ota käyttöön lahjoituslisäosa.
-    discourse_donations_secret_key: Stripen Secret Key -salausavain
-    discourse_donations_public_key: Stripen Public Key -tunnistusavain
-    discourse_donations_currency: Valuuttakoodi
-    discourse_donations_hide_zip_code: Piilota postinumero

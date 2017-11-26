@@ -16,12 +16,12 @@ plugins:
     default: 'Donation'
   discourse_donations_shop_name:
     client: true
-    default: 'Shop Name'
+    default: 'Your shop name'
   discourse_donations_currency:
     client: true
     default: 'USD'
-  discourse_donations_hide_zip_code:
-    default: true
+  discourse_donations_zip_code:
+    default: false
     client: true
   discourse_donations_billing_address:
     default: true

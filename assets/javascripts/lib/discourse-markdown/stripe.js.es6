@@ -3,7 +3,7 @@ function validationErrors(tagInfo, content, siteSettings) {
     if (!siteSettings.discourse_donations_public_key) { errors.push("missing key (site setting)"); }
     if (!siteSettings.discourse_donations_currency) { errors.push("missing currency (site setting)"); }
     if (!siteSettings.discourse_donations_shop_name) { errors.push("missing name (site setting)"); }
-    if (!siteSettings.discourse_donations_hide_zip_code) { errors.push("missing zip code toggle (site setting)"); }
+    if (!siteSettings.discourse_donations_zip_code) { errors.push("missing zip code toggle (site setting)"); }
     if (!siteSettings.discourse_donations_billing_address) { errors.push("missing billing address toggle (site setting)"); }
     if (!tagInfo.attrs['amount']) { errors.push("missing amount"); }
     if (!content) { errors.push("missing description"); }
@@ -47,7 +47,7 @@ function insertCheckout(state, tagInfo, content, siteSettings) {
         ['data-description', content],
         ['data-image', tagInfo.attrs['image'] || ''],
         ['data-locale', 'auto'],
-        ['data-zip-code', !siteSettings.discourse_donations_hide_zip_code],
+        ['data-zip-code', siteSettings.discourse_donations_zip_code],
         ['data-billing-address', siteSettings.discourse_donations_billing_address],
         ['data-currency', siteSettings.discourse_donations_currency]
     ];
