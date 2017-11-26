@@ -49,7 +49,7 @@ module DiscourseDonations
             outcome: { seller_message: 'yay!' }
           }
         )
-        subject.charge(email, params)
+        subject.charge(email, params[:stripeToken], params[:amount])
       end
     end
 
@@ -63,13 +63,13 @@ module DiscourseDonations
 
       it 'is successful' do
         ::Stripe::Charge.expects(:create).with(charge_options).returns({paid: true})
-        subject.charge(email, params)
+        subject.charge(email, params[:stripeToken], params[:amount])
         expect(subject).to be_successful
       end
 
       it 'is not successful' do
         ::Stripe::Charge.expects(:create).with(charge_options).returns({paid: false})
-        subject.charge(email, params)
+        subject.charge(email, params[:stripeToken], params[:amount])
         expect(subject).not_to be_successful
       end
     end
