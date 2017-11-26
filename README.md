@@ -11,6 +11,17 @@ Accept donations from visitors to your [Discourse](https://www.discourse.org/) f
 * Add your Stripe public and private keys in settings and set the currency to your local value.
 * Enable the plugin and wait for people to donate money.
 
+## Usage
+
+1. Click **Donate**:
+![Menu Link](doc/menulink.png)
+
+1. Enter card details:
+![Enter card details](doc/pre-payment.png)
+
+1. Click **Make Payment**:
+![Enter card details](doc/post-payment.png)
+
 ## Creating new user accounts
 
 **This is an experimental feature.** A user can create a new account if they makes a successful donation. Enable this in settings. When a user is not logged in, they will be asked to enter details for a new user account. This feature doesn't support mandatory custom user fields yet.
