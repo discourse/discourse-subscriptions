@@ -48,7 +48,6 @@ function insertCheckout(state, tagInfo, content) {
     ];
 
     state.push('stripe-checkout-form-close', 'form', -1);
-    state.push('test', 'div-test', 0);
 }
 
 function setupMarkdownIt(helper, siteSettings) {
