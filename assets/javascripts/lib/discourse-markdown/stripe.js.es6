@@ -16,7 +16,7 @@ function replaceWithStripeOrError(siteSettings) {
         if (errors.length) {
             displayErrors(state, errors);
         } else {
-            insertCheckout(state, tagInfo, content, siteSettings);
+            insertCheckout(state, tagInfo, content);
         }
         return true;
     };
@@ -30,29 +30,22 @@ function displayErrors(state, errors) {
     state.push('div-close', 'div', -1);
 }
 
-function insertCheckout(state, tagInfo, content, siteSettings) {
+function insertCheckout(state, tagInfo, content) {
     let token = state.push('stripe-checkout-form-open', 'form', 1);
-    token.attrs = [['method', 'POST'], ['action', '/checkout']];
-
-    token = state.push('stripe-checkout-form-amount', 'input', 0);
-    token.attrs = [['type', 'hidden'], ['name', 'amount'], ['value', tagInfo.attrs['amount']]];
-
-    token = state.push('stripe-checkout-script-open', 'script', 0);
     token.attrs = [
-        ['src', 'https://checkout.stripe.com/checkout.js'],
-        ['class', 'stripe-button'],
-        ['data-key', siteSettings.discourse_donations_public_key],
-        ['data-amount', tagInfo.attrs['amount']],
-        ['data-name', siteSettings.discourse_donations_shop_name],
-        ['data-description', content],
-        ['data-image', tagInfo.attrs['image'] || ''],
-        ['data-locale', 'auto'],
-        ['data-zip-code', siteSettings.discourse_donations_zip_code],
-        ['data-billing-address', siteSettings.discourse_donations_billing_address],
-        ['data-currency', siteSettings.discourse_donations_currency]
+      ['method', 'POST'],
+      ['action', '/checkout'],
+      ['content', content],
+      ['image', tagInfo.attrs['image']],
+      ['class', 'stripe-checkout']
     ];
 
-    state.push('stripe-checkout-script-close', 'script', -1);
+    token = state.push('stripe-checkout-form-amount', 'input', 0);
+    token.attrs = [
+      ['type', 'hidden'],
+      ['name', 'amount'],
+      ['value', tagInfo.attrs['amount']]
+    ];
 
     state.push('stripe-checkout-form-close', 'form', -1);
 }
@@ -72,6 +65,9 @@ export function setup(helper) {
             'div[class]',
             'form[method]',
             'form[action]',
+            'form[class]',
+            'form[content]',
+            'form[image]',
             'input[type]',
             'input[name]',
             'input[value]',
