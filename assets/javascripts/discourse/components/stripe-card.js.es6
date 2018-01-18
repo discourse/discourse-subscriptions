@@ -18,7 +18,7 @@ export default Ember.Component.extend({
 
   init() {
     this._super();
-    this.set('anon', (Discourse.User.current() == null));
+    this.set('anon', (!Discourse.User.current()));
     this.set('settings', getRegister(this).lookup('site-settings:main'));
     this.set('create_accounts', this.get('anon') && this.get('settings').discourse_donations_enable_create_accounts);
     this.set('stripe', Stripe(this.get('settings').discourse_donations_public_key));

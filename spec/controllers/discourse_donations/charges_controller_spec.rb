@@ -34,14 +34,14 @@ module DiscourseDonations
 
     it 'responds ok for anonymous users' do
       post :create, params: { email: 'foobar@example.com' }
-      expect(body['messages']).to include(I18n.t('donations.payment.success'))
+      expect(body['messages'][0]).to end_with(I18n.t('donations.payment.success'))
       expect(response).to have_http_status(200)
     end
 
     it 'does not expect a username or email if accounts are not being created' do
       current_user = log_in(:coding_horror)
       post :create, params: { create_account: 'false' }
-      expect(body['messages']).to include(I18n.t('donations.payment.success'))
+      expect(body['messages'][0]).to end_with(I18n.t('donations.payment.success'))
       expect(response).to have_http_status(200)
     end
 
@@ -129,7 +129,7 @@ module DiscourseDonations
       end
 
       describe 'new user' do
-        let(:params) { { create_account: 'true', email: 'dood@example.com', password: 'secret', name: 'dood', username: 'mr-dood' } }
+        let(:params) { { create_account: 'true', email: 'dood@example.com', password: 'secretsecret', name: 'dood', username: 'mr-dood' } }
 
         before { SiteSetting.stubs(:discourse_donations_enable_create_accounts).returns(true) }
 

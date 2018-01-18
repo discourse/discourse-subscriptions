@@ -28,7 +28,7 @@ module DiscourseDonations
       end
 
       if charge['paid']
-        output['messages'] << I18n.t('donations.payment.success')
+        output['messages'] << I18n.l(Time.now(), format: :long) + ': ' + I18n.t('donations.payment.success')
         output['rewards'] << { type: :group, name: group_name } if group_name
         output['rewards'] << { type: :badge, name: badge_name } if badge_name
       end
@@ -57,6 +57,7 @@ module DiscourseDonations
 
     def user_params
       params.permit(:amount,
+                    :email,
                     :stripeToken,
                     :stripeTokenType,
                     :stripeEmail,

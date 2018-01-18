@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Jobs::DonationUser, type: :job do
-  let(:args) { { email: 'captain-sensible@example.com', username: 'wot', name: 'captain', password: 'wot' } }
+  let(:args) { { email: 'captain-sensible@example.com', username: 'wot', name: 'captain', password: 'secret121321' } }
 
   before do
     SiteSetting.stubs(:enable_badges).returns(true)
