@@ -35,3 +35,12 @@ plugins:
   discourse_donations_page_description:
     client: true
     default: ''
+  discourse_donations_enable_transaction_fee:
+    client: true
+    default: false
+  discourse_donations_transaction_fee_fixed:
+    client: true
+    default: 0.3
+  discourse_donations_transaction_fee_percent:
+    client: true
+    default: 0.029

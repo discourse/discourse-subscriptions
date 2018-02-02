@@ -1,5 +1,6 @@
 import { ajax } from 'discourse/lib/ajax';
 import { getRegister } from 'discourse-common/lib/get-owner';
+import { default as computed } from 'ember-addons/ember-computed-decorators';
 
 export default Ember.Component.extend({
   donateAmounts: [
@@ -15,6 +16,7 @@ export default Ember.Component.extend({
   stripe: null,
   transactionInProgress: null,
   settings: null,
+  showTransactionFeeDescription: false,
 
   init() {
     this._super();
@@ -24,12 +26,27 @@ export default Ember.Component.extend({
     this.set('stripe', Stripe(this.get('settings').discourse_donations_public_key));
   },
 
-  card: function() {
-    let elements = this.get('stripe').elements();
+  @computed('stripe')
+  card(stripe) {
+    let elements = stripe.elements();
     return elements.create('card', {
       hidePostalCode: !this.get('settings').discourse_donations_zip_code
     });
-  }.property('stripe'),
+  },
+
+  @computed('amount')
+  transactionFee(amount) {
+    const fixed = Discourse.SiteSettings.discourse_donations_transaction_fee_fixed;
+    const percent = Discourse.SiteSettings.discourse_donations_transaction_fee_percent;
+    const fee = ((amount + fixed)  /  (1 - percent)) - amount;
+    return Math.round(fee * 100) / 100;
+  },
+
+  @computed('amount', 'transactionFee', 'includeTransactionFee')
+  totalAmount(amount, fee, include) {
+    if (include) return amount + fee;
+    return amount;
+  },
 
   didInsertElement() {
     this._super();
@@ -49,24 +66,25 @@ export default Ember.Component.extend({
   },
 
   actions: {
+    toggleTransactionFeeDescription() {
+      this.toggleProperty('showTransactionFeeDescription');
+    },
+
     submitStripeCard() {
       let self = this;
-
       self.set('transactionInProgress', true);
-
       this.get('stripe').createToken(this.get('card')).then(data => {
-
         self.set('result', []);
 
         if (data.error) {
           self.set('result', data.error.message);
           self.endTranscation();
-        }
-        else {
+        } else {
+          const transactionFeeEnabled = Discourse.SiteSettings.discourse_donations_enable_transaction_fee;
+          const amount = transactionFeeEnabled ? this.get('totalAmount') : this.get('amount');
           let params = {
             stripeToken: data.token.id,
-            amount: self.get('amount') * 100,
-            user_id: self.get('currentUser.id'),
+            amount: amount * 100,
             email: self.get('email'),
             username: self.get('username'),
             create_account: self.get('create_accounts')

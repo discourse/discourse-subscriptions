@@ -12,6 +12,9 @@ en:
     discourse_donations_reward_badge_name: "Grant this badge to user when a payment is successful"
     discourse_donations_reward_group_name: "Add the user to this group when a payment is successful"
     discourse_donations_page_description: "Text to be added to /donate page. Markdown is supported."
+    discourse_donations_enable_transaction_fee: "Give the user the option of including the Stripe transaction fee in their donation."
+    discourse_donations_transaction_fee_fixed: "Fixed part of Stripe transaction fee (changes per region). See <a href='https://stripe.com/pricing'>Stripe's pricing for your region</a> and <a href='https://support.stripe.com/questions/can-i-charge-my-stripe-fees-to-my-customers'>Stripe's explaination of passing fees onto customers</a>."
+    discourse_donations_transaction_fee_percent: "Percent part of Stripe transaction fee (changes per region). See <a href='https://stripe.com/pricing'>Stripe's pricing for your region</a> and <a href='https://support.stripe.com/questions/can-i-charge-my-stripe-fees-to-my-customers'>Stripe's explaination of passing fees onto customers</a>."
 
   js:
     discourse_donations:
@@ -21,5 +24,9 @@ en:
       card: Credit or debit card
       submit: Make Payment
       submit_with_create_account: Make Payment and Create Account
+      transaction_fee:
+        label: "Include transaction fee of {{currency}} {{transactionFee}}"
+        description: "When you make a donation we get charged a transaciton fee. If you would like to help us out with this fee, check this box and it will be included in your donation."
+        total: "Total"
       messages:
         success: Thank you for your donation!
