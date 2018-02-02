@@ -1,0 +1,37 @@
+div.stripe-errors {
+  border: 1px solid #c33;
+  border-radius: 5px;
+  color: #600;
+  background-color: #fdd;
+  padding: 5px 10px;
+}
+
+.donations-page-description {
+  max-width: 700px;
+  font-size: 1.1em;
+  line-height: 24px;
+}
+
+.donations-page-payment {
+  padding-top: 60px;
+}
+
+.transaction-fee-description {
+  position: relative;
+  display: inline-block;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.transaction-fee-description-modal {
+  display: block;
+  position: absolute;
+  top: -30px;
+  left: 20px;
+  background-color: $secondary;
+  border: 1px solid $primary-low;
+  padding: 10px;
+  box-shadow: 0 2px 2px rgba(0,0,0,0.4);
+  width: 400px;
+  z-index: 1;
+}

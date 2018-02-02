@@ -10,6 +10,32 @@
     </div>
   </div>
 
+  {{#if siteSettings.discourse_donations_enable_transaction_fee}}
+    <div class="control-group">
+      <div class="controls">
+        {{input type="checkbox" checked=includeTransactionFee}}
+        {{i18n 'discourse_donations.transaction_fee.label' transactionFee=transactionFee currency=settings.discourse_donations_currency}}
+        <div class='transaction-fee-description' {{action 'toggleTransactionFeeDescription'}}>
+          {{d-icon 'info-circle'}}
+          {{#if showTransactionFeeDescription}}
+            <div class="transaction-fee-description-modal">
+              {{i18n 'discourse_donations.transaction_fee.description'}}
+            </div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class='control-label'>
+        {{i18n 'discourse_donations.transaction_fee.total'}}
+      </label>
+      <div class="controls">
+        {{settings.discourse_donations_currency}}
+        {{totalAmount}}
+      </div>
+    </div>
+  {{/if}}
+
   <div class="control-group" style="width: 550px;">
     <label class="control-label" for="card-element">{{i18n 'discourse_donations.card'}}</label>
     <div id="card-element" class="controls"></div>
