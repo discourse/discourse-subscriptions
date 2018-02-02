@@ -32,3 +32,6 @@ plugins:
   discourse_donations_reward_group_name:
     client: false
     default: 'Donation'
+  discourse_donations_page_description:
+    client: true
+    default: ''
