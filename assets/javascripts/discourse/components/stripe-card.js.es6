@@ -63,18 +63,18 @@ export default Ember.Component.extend({
           self.endTranscation();
         }
         else {
-
           let params = {
             stripeToken: data.token.id,
             amount: self.get('amount') * 100,
+            user_id: self.get('currentUser.id'),
             email: self.get('email'),
             username: self.get('username'),
             create_account: self.get('create_accounts')
           };
 
           if(!self.get('paymentSuccess')) {
-            ajax('/charges', { data: params, method: 'post' }).then(data => {
-              self.concatMessages(data.messages);
+            ajax('/charges', { data: params, method: 'post' }).then(d => {
+              self.concatMessages(d.messages);
               self.endTranscation();
             });
           }
