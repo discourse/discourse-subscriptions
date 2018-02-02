@@ -15,6 +15,10 @@ en:
     discourse_donations_enable_transaction_fee: "Give the user the option of including the Stripe transaction fee in their donation."
     discourse_donations_transaction_fee_fixed: "Fixed part of Stripe transaction fee (changes per region). See <a href='https://stripe.com/pricing'>Stripe's pricing for your region</a> and <a href='https://support.stripe.com/questions/can-i-charge-my-stripe-fees-to-my-customers'>Stripe's explaination of passing fees onto customers</a>."
     discourse_donations_transaction_fee_percent: "Percent part of Stripe transaction fee (changes per region). See <a href='https://stripe.com/pricing'>Stripe's pricing for your region</a> and <a href='https://support.stripe.com/questions/can-i-charge-my-stripe-fees-to-my-customers'>Stripe's explaination of passing fees onto customers</a>."
+    discourse_donations_amounts: "Donation amounts available to user"
+    discourse_donations_custom_amount: "Allow custom donation amount"
+    errors:
+      discourse_donations_amount_must_be_number: "Amounts must be numbers"
 
   js:
     discourse_donations:
