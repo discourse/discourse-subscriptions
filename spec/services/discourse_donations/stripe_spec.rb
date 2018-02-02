@@ -44,12 +44,10 @@ module DiscourseDonations
           description: stripe_options[:description],
           currency: stripe_options[:currency]
         ).returns(
-          {
-            paid: true,
-            outcome: { seller_message: 'yay!' }
-          }
+          paid: true,
+          outcome: { seller_message: 'yay!' }
         )
-        subject.charge(email, params[:stripeToken], params[:amount])
+        subject.charge(nil, email, params[:stripeToken], params[:amount])
       end
     end
 
@@ -62,14 +60,14 @@ module DiscourseDonations
       end
 
       it 'is successful' do
-        ::Stripe::Charge.expects(:create).with(charge_options).returns({paid: true})
-        subject.charge(email, params[:stripeToken], params[:amount])
+        ::Stripe::Charge.expects(:create).with(charge_options).returns(paid: true)
+        subject.charge(nil, email, params[:stripeToken], params[:amount])
         expect(subject).to be_successful
       end
 
       it 'is not successful' do
-        ::Stripe::Charge.expects(:create).with(charge_options).returns({paid: false})
-        subject.charge(email, params[:stripeToken], params[:amount])
+        ::Stripe::Charge.expects(:create).with(charge_options).returns(paid: false)
+        subject.charge(nil, email, params[:stripeToken], params[:amount])
         expect(subject).not_to be_successful
       end
     end

@@ -24,7 +24,7 @@ module DiscourseDonations
       end
 
       if output['messages'].present?
-        render(:json => output.merge(success: false)) and return
+        render(json: output.merge(success: false)) && (return)
       end
 
       Rails.logger.debug "Creating a Stripe payment"
@@ -32,7 +32,15 @@ module DiscourseDonations
 
       begin
         Rails.logger.debug "Creating a Stripe charge for #{user_params[:amount]}"
-        charge = payment.charge(email, user_params[:stripeToken], user_params[:amount])
+        charge_params = [user_params[:stripeToken], user_params[:amount]]
+
+        if user
+          charge_params.unshift(user, user.email)
+        else
+          charge_params.unshift(nil, email)
+        end
+
+        charge = payment.charge(*charge_params)
       rescue ::Stripe::CardError => e
         err = e.json_body[:error]
 
@@ -41,7 +49,7 @@ module DiscourseDonations
         output['messages'] << "Decline code: #{err[:decline_code]}" if err[:decline_code]
         output['messages'] << "Message: #{err[:message]}" if err[:message]
 
-        render(:json => output) and return
+        render(json: output) && (return)
       end
 
       if charge['paid'] == true
@@ -56,7 +64,7 @@ module DiscourseDonations
         end
       end
 
-      render :json => output
+      render json: output
     end
 
     private
@@ -89,11 +97,19 @@ module DiscourseDonations
     end
 
     def user_params
-      params.permit(:name, :username, :email, :password, :stripeToken, :amount, :create_account)
+      params.permit(:user_id, :name, :username, :email, :password, :stripeToken, :amount, :create_account)
     end
 
     def email
-      user_params[:email] || current_user.try(:email)
+      user_params[:email] || user.try(:email)
+    end
+
+    def user
+      if user_params[:user_id]
+        User.find(user_params[:user_id])
+      else
+        current_user
+      end
     end
   end
 end

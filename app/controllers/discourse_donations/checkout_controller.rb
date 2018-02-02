@@ -11,11 +11,10 @@ module DiscourseDonations
 
       output = { 'messages' => [], 'rewards' => [] }
       payment = DiscourseDonations::Stripe.new(secret_key, stripe_options)
+      user = current_user || nil
 
       begin
-        charge = payment.checkoutCharge(user_params[:stripeEmail],
-                                        user_params[:stripeToken],
-                                        user_params[:amount])
+        charge = payment.checkoutCharge(user, user_params[:stripeEmail], user_params[:stripeToken], user_params[:amount])
       rescue ::Stripe::CardError => e
         err = e.json_body[:error]
 
@@ -24,7 +23,7 @@ module DiscourseDonations
         output['messages'] << "Decline code: #{err[:decline_code]}" if err[:decline_code]
         output['messages'] << "Message: #{err[:message]}" if err[:message]
 
-        render(:json => output) and return
+        render(json: output) && (return)
       end
 
       if charge['paid']
@@ -33,11 +32,10 @@ module DiscourseDonations
         output['rewards'] << { type: :badge, name: badge_name } if badge_name
       end
 
-      render :json => output
+      render json: output
     end
 
     private
-
 
     def reward?(payment)
       payment.present? && payment.successful?
@@ -61,6 +59,7 @@ module DiscourseDonations
                     :stripeToken,
                     :stripeTokenType,
                     :stripeEmail,
+                    :stripeCustomerId,
                     :stripeBillingName,
                     :stripeBillingAddressLine1,
                     :stripeBillingAddressZip,
@@ -75,7 +74,6 @@ module DiscourseDonations
                     :stripeShippingAddressCity,
                     :stripeShippingAddressCountry,
                     :stripeShippingAddressCountryCode
-
       )
     end
 
