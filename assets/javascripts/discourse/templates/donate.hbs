@@ -1,4 +1,7 @@
-<h1>{{i18n 'discourse_donations.title'}}</h1>
-<div style="padding-top: 60px;">
+<h1>{{i18n 'discourse_donations.title' site_name=siteSettings.title}}</h1>
+<div class="donations-page-description">
+  {{cook-text siteSettings.discourse_donations_page_description}}
+</div>
+<div class="donations-page-payment">
   {{stripe-card}}
 </div>
