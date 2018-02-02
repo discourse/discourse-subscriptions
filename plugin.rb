@@ -18,6 +18,16 @@ end
 
 after_initialize do
   load File.expand_path('../app/jobs/jobs.rb', __FILE__)
+
+  class ::User
+    def stripe_customer_id
+      if custom_fields['stripe_customer_id']
+        custom_fields['stripe_customer_id']
+      else
+        nil
+      end
+    end
+  end
 end
 
 Discourse::Application.routes.prepend do

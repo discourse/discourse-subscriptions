@@ -91,8 +91,8 @@ export default Ember.Component.extend({
           };
 
           if(!self.get('paymentSuccess')) {
-            ajax('/charges', { data: params, method: 'post' }).then(data => {
-              self.concatMessages(data.messages);
+            ajax('/charges', { data: params, method: 'post' }).then(d => {
+              self.concatMessages(d.messages);
               self.endTranscation();
             });
           }
