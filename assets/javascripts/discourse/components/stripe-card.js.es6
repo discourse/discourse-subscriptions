@@ -3,14 +3,6 @@ import { getRegister } from 'discourse-common/lib/get-owner';
 import { default as computed } from 'ember-addons/ember-computed-decorators';
 
 export default Ember.Component.extend({
-  donateAmounts: [
-    { value: 1, name: '1.00'},
-    { value: 2, name: '2.00'},
-    { value: 5, name: '5.00'},
-    { value: 10, name: '10.00'},
-    { value: 20, name: '20.00'},
-    { value: 50, name: '50.00'}
-  ],
   result: [],
   amount: 1,
   stripe: null,
@@ -24,6 +16,21 @@ export default Ember.Component.extend({
     this.set('settings', getRegister(this).lookup('site-settings:main'));
     this.set('create_accounts', this.get('anon') && this.get('settings').discourse_donations_enable_create_accounts);
     this.set('stripe', Stripe(this.get('settings').discourse_donations_public_key));
+  },
+
+  @computed
+  donateAmounts() {
+    const setting = Discourse.SiteSettings.discourse_donations_amounts.split('|');
+    if (setting.length) {
+      return setting.map((amount) => {
+        return {
+          value: parseInt(amount, 10),
+          name: `${amount}.00`
+        };
+      });
+    } else {
+      return [];
+    }
   },
 
   @computed('stripe')

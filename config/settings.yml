@@ -44,3 +44,9 @@ plugins:
   discourse_donations_transaction_fee_percent:
     client: true
     default: 0.029
+  discourse_donations_amounts:
+    client: true
+    type: list
+    default: '1|2|5|10|20|50'
+    regex: "^[0-9\\|]+$"
+    regex_error: "site_settings.errors.discourse_donations_amount_must_be_number"
