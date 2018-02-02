@@ -11,7 +11,7 @@ export default Ember.Component.extend({
     { value: 50, name: '50.00'}
   ],
   result: [],
-  amount: null,
+  amount: 1,
   stripe: null,
   transactionInProgress: null,
   settings: null,
