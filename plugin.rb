@@ -22,7 +22,7 @@ after_initialize do
   class ::User
     def stripe_customer_id
       if custom_fields['stripe_customer_id']
-        custom_fields['stripe_customer_id']
+        custom_fields['stripe_customer_id'].to_s
       else
         nil
       end

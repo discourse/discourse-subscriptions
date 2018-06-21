@@ -50,3 +50,12 @@ plugins:
     default: '1|2|5|10|20|50'
     regex: "^[0-9\\|]+$"
     regex_error: "site_settings.errors.discourse_donations_amount_must_be_number"
+  discourse_donations_types:
+    client: true
+    type: list
+    default: 'monthly|once'
+    choices:
+      - yearly
+      - monthly
+      - weekly
+      - once

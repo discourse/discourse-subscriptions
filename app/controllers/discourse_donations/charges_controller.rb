@@ -1,10 +1,11 @@
 require_dependency 'discourse'
 
 module DiscourseDonations
-  class ChargesController < ApplicationController
+  class ChargesController < ::ApplicationController
 
     skip_before_action :verify_authenticity_token, only: [:create]
     skip_before_action :check_xhr
+    before_action :set_user_and_email, only: [:create]
 
     def create
       Rails.logger.info user_params.inspect
@@ -12,7 +13,7 @@ module DiscourseDonations
       output = { 'messages' => [], 'rewards' => [] }
 
       if create_account
-        if !email.present? || !user_params[:username].present?
+        if !@email.present? || !user_params[:username].present?
           output['messages'] << I18n.t('login.missing_user_field')
         end
         if user_params[:password] && user_params[:password].length > User.max_password_length
@@ -32,15 +33,19 @@ module DiscourseDonations
 
       begin
         Rails.logger.debug "Creating a Stripe charge for #{user_params[:amount]}"
-        charge_params = [user_params[:stripeToken], user_params[:amount]]
+        opts = {
+          email: @email,
+          token: user_params[:stripeToken],
+          amount: user_params[:amount]
+        }
 
-        if user
-          charge_params.unshift(user, user.email)
+        if user_params[:type] === 'once'
+          charge = payment.charge(@user, opts)
         else
-          charge_params.unshift(nil, email)
+          opts[:type] = user_params[:type]
+          charge = payment.subscribe(@user, opts)
         end
 
-        charge = payment.charge(*charge_params)
       rescue ::Stripe::CardError => e
         err = e.json_body[:error]
 
@@ -58,7 +63,7 @@ module DiscourseDonations
         output['rewards'] << { type: :group, name: group_name } if group_name
         output['rewards'] << { type: :badge, name: badge_name } if badge_name
 
-        if create_account && email.present?
+        if create_account && @email.present?
           args = user_params.to_h.slice(:email, :username, :password, :name).merge(rewards: output['rewards'])
           Jobs.enqueue(:donation_user, args)
         end
@@ -97,19 +102,27 @@ module DiscourseDonations
     end
 
     def user_params
-      params.permit(:user_id, :name, :username, :email, :password, :stripeToken, :amount, :create_account)
+      params.permit(:user_id, :name, :username, :email, :password, :stripeToken, :type, :amount, :create_account)
     end
 
     def email
-      user_params[:email] || user.try(:email)
     end
 
-    def user
-      if user_params[:user_id]
-        User.find(user_params[:user_id])
-      else
-        current_user
+    def set_user_and_email
+      user = current_user
+
+      if user_params[:user_id].present?
+        user = User.find(user_params[:user_id])
       end
+
+      if user_params[:email].present?
+        email = user_params[:email]
+      else
+        email = user.try(:email)
+      end
+
+      @user = user
+      @email = email
     end
   end
 end

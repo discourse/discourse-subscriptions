@@ -16,6 +16,39 @@ export default Ember.Component.extend({
     this.set('settings', getRegister(this).lookup('site-settings:main'));
     this.set('create_accounts', this.get('anon') && this.get('settings').discourse_donations_enable_create_accounts);
     this.set('stripe', Stripe(this.get('settings').discourse_donations_public_key));
+
+    const types = Discourse.SiteSettings.discourse_donations_types.split('|') || [];
+    this.set('types', types);
+    this.set('type', types[0]);
+  },
+
+  @computed('types')
+  donationTypes(types) {
+    return types.map((type) => {
+      return {
+        id: type,
+        name: I18n.t(`discourse_donations.types.${type}`)
+      }
+    })
+  },
+
+  @computed('type')
+  period(type) {
+    let anchor;
+
+    if (type === 'weekly') {
+      anchor = moment().format('dddd');
+    }
+
+    if (type === 'monthly') {
+      anchor = moment().format('Do');
+    }
+
+    if (type === 'yearly') {
+      anchor = moment().format('MMMM D');
+    }
+
+    return I18n.t(`discourse_donations.period.${type}`, { anchor });
   },
 
   @computed
@@ -91,6 +124,7 @@ export default Ember.Component.extend({
           const amount = transactionFeeEnabled ? this.get('totalAmount') : this.get('amount');
           let params = {
             stripeToken: data.token.id,
+            type: self.get('type'),
             amount: amount * 100,
             email: self.get('email'),
             username: self.get('username'),

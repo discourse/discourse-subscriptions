@@ -1,6 +1,15 @@
 <form id="payment-form" class="form-horizontal">
 
   <div class="control-group">
+    <label class="control-label">
+      {{i18n 'discourse_donations.type'}}
+    </label>
+    <div class="controls controls-dropdown">
+      {{combo-box content=donationTypes value=type}}
+    </div>
+  </div>
+
+  <div class="control-group">
     <label class="control-label" for="card-element">
       {{i18n 'discourse_donations.amount'}}
       {{settings.discourse_donations_currency}}
@@ -14,7 +23,7 @@
     <div class="control-group">
       <div class="controls">
         {{input type="checkbox" checked=includeTransactionFee}}
-        {{i18n 'discourse_donations.transaction_fee.label' transactionFee=transactionFee currency=settings.discourse_donations_currency}}
+        <span>{{i18n 'discourse_donations.transaction_fee.label' transactionFee=transactionFee currency=settings.discourse_donations_currency}}</span>
         <div class='transaction-fee-description' {{action 'toggleTransactionFeeDescription'}}>
           {{d-icon 'info-circle'}}
           {{#if showTransactionFeeDescription}}
@@ -32,6 +41,7 @@
       <div class="controls">
         {{settings.discourse_donations_currency}}
         {{totalAmount}}
+        {{period}}
       </div>
     </div>
   {{/if}}

@@ -17,6 +17,7 @@ en:
     discourse_donations_transaction_fee_percent: "Percent part of Stripe transaction fee (changes per region). See <a href='https://stripe.com/pricing'>Stripe's pricing for your region</a> and <a href='https://support.stripe.com/questions/can-i-charge-my-stripe-fees-to-my-customers'>Stripe's explaination of passing fees onto customers</a>."
     discourse_donations_amounts: "Donation amounts available to user"
     discourse_donations_custom_amount: "Allow custom donation amount"
+    discourse_donations_types: "Donation types. First listed will be the default."
     errors:
       discourse_donations_amount_must_be_number: "Amounts must be numbers"
 
@@ -25,7 +26,7 @@ en:
       title: Donate
       nav_item: Donate
       amount: Amount
-      card: Credit or debit card
+      card: Card
       submit: Make Payment
       submit_with_create_account: Make Payment and Create Account
       transaction_fee:
@@ -34,3 +35,14 @@ en:
         total: "Total"
       messages:
         success: Thank you for your donation!
+      type: "Type"
+      types:
+        once: "Once"
+        weekly: "Weekly"
+        monthly: "Monthly"
+        yearly: "Yearly"
+      period:
+        once: "once."
+        weekly: "every week on {{anchor}}."
+        monthly: "on the {{anchor}} of every month."
+        yearly: "every year on {{anchor}}."
