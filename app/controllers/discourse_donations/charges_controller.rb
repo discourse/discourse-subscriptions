@@ -40,10 +40,10 @@ module DiscourseDonations
         }
 
         if user_params[:type] === 'once'
-          charge = payment.charge(@user, opts)
+          result = payment.charge(@user, opts)
         else
           opts[:type] = user_params[:type]
-          charge = payment.subscribe(@user, opts)
+          result = payment.subscribe(@user, opts)
         end
 
       rescue ::Stripe::CardError => e
@@ -57,7 +57,7 @@ module DiscourseDonations
         render(json: output) && (return)
       end
 
-      if charge['paid'] == true
+      if result['paid'] == true || result['status'] === 'active'
         output['messages'] << I18n.l(Time.now(), format: :long) + ': ' + I18n.t('donations.payment.success')
 
         output['rewards'] << { type: :group, name: group_name } if group_name

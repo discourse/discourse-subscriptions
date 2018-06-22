@@ -4,7 +4,6 @@ import { default as computed } from 'ember-addons/ember-computed-decorators';
 
 export default Ember.Component.extend({
   result: [],
-  amount: 1,
   stripe: null,
   transactionInProgress: null,
   settings: null,
@@ -18,8 +17,13 @@ export default Ember.Component.extend({
     this.set('stripe', Stripe(this.get('settings').discourse_donations_public_key));
 
     const types = Discourse.SiteSettings.discourse_donations_types.split('|') || [];
-    this.set('types', types);
-    this.set('type', types[0]);
+    const amounts = this.get('donateAmounts');
+
+    this.setProperties({
+      types,
+      type: types[0],
+      amount: amounts[0].value
+    });
   },
 
   @computed('types')
@@ -91,6 +95,20 @@ export default Ember.Component.extend({
   didInsertElement() {
     this._super();
     this.get('card').mount('#card-element');
+    Ember.$(document).on('click', Ember.run.bind(this, this.documentClick));
+  },
+
+  willDestroyElement() {
+    Ember.$(document).off('click', Ember.run.bind(this, this.documentClick));
+  },
+
+  documentClick(e) {
+    let $element = this.$('.transaction-fee-description');
+    let $target = $(e.target);
+    if ($target.closest($element).length < 1 &&
+        this._state !== 'destroying') {
+      this.set('showTransactionFeeDescription', false);
+    }
   },
 
   setSuccess() {
