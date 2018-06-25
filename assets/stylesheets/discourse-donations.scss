@@ -28,7 +28,7 @@ div.stripe-errors {
       margin: 0;
     }
 
-    .stripe-error {
+    .error, .stripe-error {
       margin-top: 5px;
       color: $danger;
     }
@@ -56,17 +56,22 @@ div.stripe-errors {
 }
 
 .body-page .donations-page-donations {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 
   .donation-list {
-    ul {
-      margin-left: 0;
-      list-style: none;
+    .subscription-list, .charge-list {
+      margin-bottom: 10px;
+      display: inline-block;
 
-      li.underline {
-        border-bottom: 1px solid $primary-medium;
-        display: inline-block;
+      > ul {
+        margin: 10px 0;
+        list-style: none;
       }
+    }
+
+    .underline {
+      border-bottom: 1px solid $primary-medium;
+      display: inline-block;
     }
   }
 }

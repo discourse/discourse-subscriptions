@@ -2,6 +2,7 @@ import { ajax } from 'discourse/lib/ajax';
 import { getRegister } from 'discourse-common/lib/get-owner';
 import { formatAnchor, zeroDecimalCurrencies } from '../lib/donation-utilities';
 import { default as computed } from 'ember-addons/ember-computed-decorators';
+import { emailValid } from "discourse/lib/utilities";
 
 export default Ember.Component.extend({
   result: [],
@@ -94,9 +95,19 @@ export default Ember.Component.extend({
     return amount;
   },
 
-  @computed('currentUser', 'email')
-  userReady(currentUser, email) {
-    return currentUser || email;
+  @computed('email')
+  emailValid(email) {
+    return emailValid(email);
+  },
+
+  @computed('email', 'emailValid')
+  showEmailError(email, emailValid) {
+    return email && email.length > 3 && !emailValid;
+  },
+
+  @computed('currentUser', 'emailValid')
+  userReady(currentUser, emailValid) {
+    return currentUser || emailValid;
   },
 
   @computed('userReady', 'stripeReady')

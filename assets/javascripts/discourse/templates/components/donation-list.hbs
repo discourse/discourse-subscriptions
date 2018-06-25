@@ -1,23 +1,29 @@
-{{#if hasCharges}}
-  <h4>{{i18n 'discourse_donations.donations.charges'}}</h4>
-  <ul>
-    {{#each charges as |charge|}}
-      <li>{{donation-charge charge}}</li>
-    {{/each}}
-  </ul>
+{{#if hasSubscriptions}}
+  <div class="subscription-list">
+    <div class="underline">{{i18n 'discourse_donations.donations.subscriptions'}}</div>
+    <ul>
+      {{#each subscriptions as |s|}}
+        <li>{{donation-subscription s.subscription}}</li>
+
+        {{#if s.invoices}}
+          <ul>
+            {{#each s.invoices as |invoice|}}
+              <li>{{donation-invoice invoice}}</li>
+            {{/each}}
+          </ul>
+        {{/if}}
+      {{/each}}
+    </ul>
+  </div>
 {{/if}}
 
-{{#if hasSubscriptions}}
-  <h4>{{i18n 'discourse_donations.donations.subscriptions'}}</h4>
-  <ul>
-    {{#each subscriptions as |s|}}
-      <li class="underline">{{donation-subscription s.subscription}}</li>
-
-      {{#if s.invoices}}
-        {{#each s.invoices as |invoice|}}
-          <li>{{donation-invoice invoice}}</li>
-        {{/each}}
-      {{/if}}
-    {{/each}}
-  </ul>
+{{#if hasCharges}}
+  <div class="charge-list">
+    <div class='underline'>{{i18n 'discourse_donations.donations.charges'}}</div>
+    <ul>
+      {{#each charges as |charge|}}
+        <li>{{donation-charge charge}}</li>
+      {{/each}}
+    </ul>
+  </div>
 {{/if}}

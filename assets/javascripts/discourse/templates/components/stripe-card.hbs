@@ -50,7 +50,7 @@
     <div class="controls">
       <div id="card-element"></div>
       {{#if stripeError}}
-        <div class="instructions stripe-error">{{stripeError}}</div>
+        <div class="stripe-error">{{stripeError}}</div>
       {{/if}}
     </div>
   </div>
@@ -60,7 +60,11 @@
       <label class="control-label" for="card-element">{{i18n 'user.email.title'}}</label>
       <div class="controls">
         {{text-field value=email}}
-        <div class="instructions">{{i18n 'discourse_donations.email_instructions'}}</div>
+        {{#if showEmailError}}
+          <div class="error">{{i18n 'user.email.invalid'}}</div>
+        {{else}}
+          <div class="instructions">{{i18n 'discourse_donations.email_instructions'}}</div>
+        {{/if}}
       </div>
     </div>
 
