@@ -1,5 +1,4 @@
 <form id="payment-form" class="form-horizontal">
-
   <div class="control-group">
     <label class="control-label">
       {{i18n 'discourse_donations.type'}}
@@ -48,14 +47,20 @@
 
   <div class="control-group" style="width: 550px;">
     <label class="control-label" for="card-element">{{i18n 'discourse_donations.card'}}</label>
-    <div id="card-element" class="controls"></div>
+    <div class="controls">
+      <div id="card-element"></div>
+      {{#if stripeError}}
+        <div class="instructions stripe-error">{{stripeError}}</div>
+      {{/if}}
+    </div>
   </div>
 
-  {{#if anon}}
+  {{#unless currentUser}}
     <div class="control-group">
       <label class="control-label" for="card-element">{{i18n 'user.email.title'}}</label>
       <div class="controls">
         {{text-field value=email}}
+        <div class="instructions">{{i18n 'discourse_donations.email_instructions'}}</div>
       </div>
     </div>
 
@@ -81,11 +86,11 @@
         </div>
       </div>
     {{/if}}
-  {{/if}}
+  {{/unless}}
 
   <div class="control-group save-button">
     <div class="controls">
-      {{#d-button action="submitStripeCard" disabled=transactionInProgress class="btn btn-primary btn-payment"}}
+      {{#d-button action="submitStripeCard" disabled=disableSubmit class="btn btn-primary btn-payment"}}
         {{#if create_accounts}}
           {{i18n 'discourse_donations.submit_with_create_account'}}
         {{else}}

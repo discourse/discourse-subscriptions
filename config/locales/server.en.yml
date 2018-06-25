@@ -1,4 +1,7 @@
 en:
   donations:
+    recurring: "%{site_title} recurring donation"
     payment:
-      success: 'Thank you. Your donation has been successful'
+      success: 'Thank you, your donation has been successful.'
+      receipt_sent: 'A receipt has been sent to %{email}.'
+      invoice_sent: 'An invoice has been sent to %{email}.'

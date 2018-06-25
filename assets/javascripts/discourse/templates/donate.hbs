@@ -1,7 +1,24 @@
-<h1>{{i18n 'discourse_donations.title' site_name=siteSettings.title}}</h1>
+<h3>{{i18n 'discourse_donations.title' site_name=siteSettings.title}}</h3>
+
 <div class="donations-page-description">
   {{cook-text siteSettings.discourse_donations_page_description}}
 </div>
+
 <div class="donations-page-payment">
-  {{stripe-card}}
+  {{stripe-card charges=charges subscriptions=subscriptions}}
 </div>
+
+{{#if currentUser}}
+  <div class="donations-page-donations">
+    <h3>{{i18n 'discourse_donations.donations.title'}}</h3>
+    {{#if loadingDonations}}
+      {{loading-spinner size='small'}}
+    {{else}}
+      {{#if hasDonations}}
+        {{donation-list charges=charges subscriptions=subscriptions}}
+      {{else}}
+        {{i18n 'discourse_donations.donations.none'}}
+      {{/if}}
+    {{/if}}
+  </div>
+{{/if}}

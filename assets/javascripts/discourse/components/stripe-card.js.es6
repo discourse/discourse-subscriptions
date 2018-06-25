@@ -1,5 +1,6 @@
 import { ajax } from 'discourse/lib/ajax';
 import { getRegister } from 'discourse-common/lib/get-owner';
+import { formatAnchor, zeroDecimalCurrencies } from '../lib/donation-utilities';
 import { default as computed } from 'ember-addons/ember-computed-decorators';
 
 export default Ember.Component.extend({
@@ -11,12 +12,13 @@ export default Ember.Component.extend({
 
   init() {
     this._super();
-    this.set('anon', (!Discourse.User.current()));
-    this.set('settings', getRegister(this).lookup('site-settings:main'));
-    this.set('create_accounts', this.get('anon') && this.get('settings').discourse_donations_enable_create_accounts);
-    this.set('stripe', Stripe(this.get('settings').discourse_donations_public_key));
+    const user = this.get('currentUser');
+    const settings = Discourse.SiteSettings;
 
-    const types = Discourse.SiteSettings.discourse_donations_types.split('|') || [];
+    this.set('create_accounts', !user && settings.discourse_donations_enable_create_accounts);
+    this.set('stripe', Stripe(settings.discourse_donations_public_key));
+
+    const types = settings.discourse_donations_types.split('|') || [];
     const amounts = this.get('donateAmounts');
 
     this.setProperties({
@@ -38,21 +40,7 @@ export default Ember.Component.extend({
 
   @computed('type')
   period(type) {
-    let anchor;
-
-    if (type === 'weekly') {
-      anchor = moment().format('dddd');
-    }
-
-    if (type === 'monthly') {
-      anchor = moment().format('Do');
-    }
-
-    if (type === 'yearly') {
-      anchor = moment().format('MMMM D');
-    }
-
-    return I18n.t(`discourse_donations.period.${type}`, { anchor });
+    return I18n.t(`discourse_donations.period.${type}`, { anchor: formatAnchor(type) });
   },
 
   @computed
@@ -73,9 +61,23 @@ export default Ember.Component.extend({
   @computed('stripe')
   card(stripe) {
     let elements = stripe.elements();
-    return elements.create('card', {
-      hidePostalCode: !this.get('settings').discourse_donations_zip_code
+    let card = elements.create('card', {
+      hidePostalCode: !Discourse.SiteSettings.discourse_donations_zip_code
     });
+
+    card.addEventListener('change', (event) => {
+      if (event.error) {
+        this.set('stripeError', event.error.message);
+      } else {
+        this.set('stripeError', '');
+      }
+
+      if (event.elementType === 'card' && event.complete) {
+        this.set('stripeReady', true);
+      }
+    });
+
+    return card;
   },
 
   @computed('amount')
@@ -90,6 +92,21 @@ export default Ember.Component.extend({
   totalAmount(amount, fee, include) {
     if (include) return amount + fee;
     return amount;
+  },
+
+  @computed('currentUser', 'email')
+  userReady(currentUser, email) {
+    return currentUser || email;
+  },
+
+  @computed('userReady', 'stripeReady')
+  formIncomplete(userReady, stripeReady) {
+    return !userReady || !stripeReady;
+  },
+
+  @computed('transactionInProgress', 'formIncomplete')
+  disableSubmit(transactionInProgress, formIncomplete) {
+    return transactionInProgress || formIncomplete;
   },
 
   didInsertElement() {
@@ -130,27 +147,52 @@ export default Ember.Component.extend({
 
     submitStripeCard() {
       let self = this;
-      self.set('transactionInProgress', true);
+      this.set('transactionInProgress', true);
+
       this.get('stripe').createToken(this.get('card')).then(data => {
         self.set('result', []);
 
         if (data.error) {
-          self.set('result', data.error.message);
+          this.setProperties({
+            stripeError: data.error.message,
+            stripeReady: false
+          });
           self.endTranscation();
         } else {
-          const transactionFeeEnabled = Discourse.SiteSettings.discourse_donations_enable_transaction_fee;
-          const amount = transactionFeeEnabled ? this.get('totalAmount') : this.get('amount');
+          const settings = Discourse.SiteSettings;
+
+          const transactionFeeEnabled = settings.discourse_donations_enable_transaction_fee;
+          let amount = transactionFeeEnabled ? this.get('totalAmount') : this.get('amount');
+
+          if (zeroDecimalCurrencies.indexOf(setting.discourse_donations_currency) === -1) {
+            amount = amount * 100;
+          }
+
           let params = {
             stripeToken: data.token.id,
             type: self.get('type'),
-            amount: amount * 100,
+            amount,
             email: self.get('email'),
             username: self.get('username'),
             create_account: self.get('create_accounts')
           };
 
           if(!self.get('paymentSuccess')) {
-            ajax('/charges', { data: params, method: 'post' }).then(d => {
+            ajax('/donate/charges', { data: params, method: 'post' }).then(d => {
+              let donation = d.donation;
+
+              if (donation) {
+                if (donation.object === 'subscription') {
+                  let subscriptions = this.get('subscriptions') || [];
+                  subscriptions.push(donation);
+                  this.set('subscriptions', subscriptions);
+                } else if (donation.object === 'charge') {
+                  let charges = this.get('charges') || [];
+                  charges.push(donation);
+                  this.set('charges', charges);
+                }
+              }
+
               self.concatMessages(d.messages);
               self.endTranscation();
             });

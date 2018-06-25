@@ -1,11 +1,18 @@
-require_dependency 'discourse'
-
 module DiscourseDonations
   class ChargesController < ::ApplicationController
-
     skip_before_action :verify_authenticity_token, only: [:create]
-    skip_before_action :check_xhr
-    before_action :set_user_and_email, only: [:create]
+    before_action :set_user, only: [:index, :create]
+    before_action :set_email, only: [:create]
+
+    def index
+      if @user && @user.stripe_customer_id
+        result = DiscourseDonations::Stripe.new(secret_key, stripe_options).list(@user)
+      else
+        result = {}
+      end
+
+      render json: success_json.merge(result)
+    end
 
     def create
       Rails.logger.info user_params.inspect
@@ -30,6 +37,7 @@ module DiscourseDonations
 
       Rails.logger.debug "Creating a Stripe payment"
       payment = DiscourseDonations::Stripe.new(secret_key, stripe_options)
+      result = {}
 
       begin
         Rails.logger.debug "Creating a Stripe charge for #{user_params[:amount]}"
@@ -40,14 +48,16 @@ module DiscourseDonations
         }
 
         if user_params[:type] === 'once'
-          result = payment.charge(@user, opts)
+          result[:payment] = payment.charge(@user, opts)
         else
           opts[:type] = user_params[:type]
-          result = payment.subscribe(@user, opts)
+          result[:subscription] = payment.subscribe(@user, opts)
         end
 
       rescue ::Stripe::CardError => e
         err = e.json_body[:error]
+
+        puts "HERE IS THE ERROR: #{e.inspect}"
 
         output['messages'] << "There was an error (#{err[:type]})."
         output['messages'] << "Error code: #{err[:code]}" if err[:code]
@@ -57,8 +67,21 @@ module DiscourseDonations
         render(json: output) && (return)
       end
 
-      if result['paid'] == true || result['status'] === 'active'
-        output['messages'] << I18n.l(Time.now(), format: :long) + ': ' + I18n.t('donations.payment.success')
+      if (result[:charge] && result[:charge]['paid'] == true) ||
+         (result[:subscription] && result[:subscription]['status'] === 'active')
+
+        output['messages'] << I18n.t('donations.payment.success')
+
+        if result[:charge]
+          output['messages'] << " #{I18n.t('donations.payment.receipt_sent', email: @email)}"
+        end
+
+        if result[:subscription]
+          output['messages'] << " #{I18n.t('donations.payment.invoice_sent', email: @email)}"
+        end
+
+        output['charge'] = result[:charge] if result[:charge]
+        output['subscription'] = result[:subscription] if result[:subscription]
 
         output['rewards'] << { type: :group, name: group_name } if group_name
         output['rewards'] << { type: :badge, name: badge_name } if badge_name
@@ -105,23 +128,23 @@ module DiscourseDonations
       params.permit(:user_id, :name, :username, :email, :password, :stripeToken, :type, :amount, :create_account)
     end
 
-    def email
-    end
-
-    def set_user_and_email
+    def set_user
       user = current_user
 
       if user_params[:user_id].present?
         user = User.find(user_params[:user_id])
       end
 
+      @user = user
+    end
+
+    def set_email
       if user_params[:email].present?
         email = user_params[:email]
       else
-        email = user.try(:email)
+        email = @user.try(:email)
       end
 
-      @user = user
       @email = email
     end
   end

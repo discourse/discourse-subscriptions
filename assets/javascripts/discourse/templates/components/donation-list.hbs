@@ -1,0 +1,23 @@
+{{#if hasCharges}}
+  <h4>{{i18n 'discourse_donations.donations.charges'}}</h4>
+  <ul>
+    {{#each charges as |charge|}}
+      <li>{{donation-charge charge}}</li>
+    {{/each}}
+  </ul>
+{{/if}}
+
+{{#if hasSubscriptions}}
+  <h4>{{i18n 'discourse_donations.donations.subscriptions'}}</h4>
+  <ul>
+    {{#each subscriptions as |s|}}
+      <li class="underline">{{donation-subscription s.subscription}}</li>
+
+      {{#if s.invoices}}
+        {{#each s.invoices as |invoice|}}
+          <li>{{donation-invoice invoice}}</li>
+        {{/each}}
+      {{/if}}
+    {{/each}}
+  </ul>
+{{/if}}

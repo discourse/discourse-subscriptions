@@ -23,12 +23,16 @@ en:
 
   js:
     discourse_donations:
-      title: Donate
       nav_item: Donate
+      title: "Make a Donation"
       amount: Amount
       card: Card
       submit: Make Payment
       submit_with_create_account: Make Payment and Create Account
+      invoice: "Invoice"
+      invoice_prefix: "You gave"
+      receipt: "Receipt sent to {{email}}."
+      email_instructions: "Required to send you a receipt. Not used for marketing."
       transaction_fee:
         label: "Include transaction fee of {{currency}} {{transactionFee}}"
         description: "When you make a donation we get charged a transaction fee. If you would like to help us out with this fee, check this box and it will be included in your donation."
@@ -38,11 +42,16 @@ en:
       type: "Type"
       types:
         once: "Once"
-        weekly: "Weekly"
-        monthly: "Monthly"
-        yearly: "Yearly"
+        week: "Weekly"
+        month: "Monthly"
+        year: "Yearly"
       period:
-        once: "once."
-        weekly: "every week on {{anchor}}."
-        monthly: "on the {{anchor}} of every month."
-        yearly: "every year on {{anchor}}."
+        once: "on {{anchor}}"
+        week: "every week on {{anchor}}"
+        month: "on the {{anchor}} of every month"
+        year: "every year on {{anchor}}"
+      donations:
+        title: "Your Donations"
+        charges: "Once Off"
+        subscriptions: "Recurring"
+        none: "You haven't made a donation yet."

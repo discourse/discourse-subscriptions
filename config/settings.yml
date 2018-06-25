@@ -53,9 +53,9 @@ plugins:
   discourse_donations_types:
     client: true
     type: list
-    default: 'monthly|once'
+    default: 'month|once'
     choices:
-      - yearly
-      - monthly
-      - weekly
+      - year
+      - month
+      - week
       - once
