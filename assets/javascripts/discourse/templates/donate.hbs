@@ -8,17 +8,29 @@
   {{stripe-card charges=charges subscriptions=subscriptions}}
 </div>
 
-{{#if currentUser}}
-  <div class="donations-page-donations">
-    <h3>{{i18n 'discourse_donations.donations.title'}}</h3>
-    {{#if loadingDonations}}
-      {{loading-spinner size='small'}}
-    {{else}}
+<div class="donations-page-donations">
+  <h3>{{i18n 'discourse_donations.donations.title'}}</h3>
+  {{#if loadingDonations}}
+    <span>{{i18n 'discourse_donations.donations.loading'}}</span>
+    {{loading-spinner size='small'}}
+  {{else}}
+    {{#if currentUser}}
       {{#if hasDonations}}
-        {{donation-list charges=charges subscriptions=subscriptions}}
+        {{donation-list charges=charges subscriptions=subscriptions customer=customer}}
       {{else}}
         {{i18n 'discourse_donations.donations.none'}}
       {{/if}}
+    {{else}}
+      {{#if hasDonations}}
+        {{donation-list charges=charges subscriptions=subscriptions customer=customer}}
+      {{else}}
+        {{#if hasEmailResult}}
+          {{i18n 'discourse_donations.donations.none_email' email=email}}
+        {{else}}
+          {{input value=email placeholder=(i18n 'email')}}
+          {{d-button action='loadDonations' label='discourse_donations.donations.load' disabled=loadDonationsDisabled}}
+        {{/if}}
+      {{/if}}
     {{/if}}
-  </div>
-{{/if}}
+  {{/if}}
+</div>

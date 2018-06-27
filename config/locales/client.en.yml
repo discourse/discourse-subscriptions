@@ -27,11 +27,17 @@ en:
       title: "Make a Donation"
       amount: Amount
       card: Card
-      submit: Make Payment
+      submit: Donate
       submit_with_create_account: Make Payment and Create Account
-      invoice: "Invoice"
+      invoice: "invoice"
       invoice_prefix: "You gave"
       receipt: "Receipt sent to {{email}}."
+      subscription:
+        cancel:
+          title: "Cancel Recurring Donation"
+          description: >
+            Are you sure you want to cancel your recurring donation to {{site}}
+            of {{currency}} {{amount}} {{period}}?
       email_instructions: "Required to send you a receipt. Not used for marketing."
       transaction_fee:
         label: "Include transaction fee of {{currency}} {{transactionFee}}"
@@ -52,6 +58,9 @@ en:
         year: "every year on {{anchor}}"
       donations:
         title: "Your Donations"
+        load: "Load Donations"
+        loading: "Loading donations"
         charges: "Once Off"
         subscriptions: "Recurring"
         none: "You haven't made a donation yet."
+        none_email: "There are no donations for {{email}}."

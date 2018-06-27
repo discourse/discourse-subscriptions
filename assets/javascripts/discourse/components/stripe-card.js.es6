@@ -175,7 +175,7 @@ export default Ember.Component.extend({
           const transactionFeeEnabled = settings.discourse_donations_enable_transaction_fee;
           let amount = transactionFeeEnabled ? this.get('totalAmount') : this.get('amount');
 
-          if (zeroDecimalCurrencies.indexOf(setting.discourse_donations_currency) === -1) {
+          if (zeroDecimalCurrencies.indexOf(settings.discourse_donations_currency) === -1) {
             amount = amount * 100;
           }
 
@@ -189,22 +189,26 @@ export default Ember.Component.extend({
           };
 
           if(!self.get('paymentSuccess')) {
-            ajax('/donate/charges', { data: params, method: 'post' }).then(d => {
-              let donation = d.donation;
-
-              if (donation) {
-                if (donation.object === 'subscription') {
-                  let subscriptions = this.get('subscriptions') || [];
-                  subscriptions.push(donation);
-                  this.set('subscriptions', subscriptions);
-                } else if (donation.object === 'charge') {
-                  let charges = this.get('charges') || [];
-                  charges.push(donation);
-                  this.set('charges', charges);
-                }
+            ajax('/donate/charges', {
+              data: params,
+              method: 'post'
+            }).then(result => {              
+              if (result.subscription) {
+                let subscription = $.extend({}, result.subscription, {
+                  new: true
+                });
+                this.get('subscriptions').unshiftObject(subscription);
               }
 
-              self.concatMessages(d.messages);
+              if (result.charge) {
+                let charge = $.extend({}, result.charge, {
+                  new: true
+                });
+                this.get('charges').unshiftObject(charge);
+              }
+
+              self.concatMessages(result.messages);
+
               self.endTranscation();
             });
           }

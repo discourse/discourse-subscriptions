@@ -61,17 +61,50 @@ div.stripe-errors {
   .donation-list {
     .subscription-list, .charge-list {
       margin-bottom: 10px;
-      display: inline-block;
 
       > ul {
         margin: 10px 0;
         list-style: none;
+
+        .spinner {
+          height: 5px;
+          width: 5px;
+        }
       }
     }
 
     .underline {
       border-bottom: 1px solid $primary-medium;
       display: inline-block;
+    }
+  }
+}
+
+.donation-row {
+  span {
+    line-height: 25px;
+  }
+
+  &.canceled {
+    text-decoration: line-through;
+  }
+
+  &.updating {
+    color: $primary-low;
+  }
+
+  .new-flag {
+    color: $tertiary;
+    margin-left: 5px;
+
+    .fa {
+      line-height: 16px;
+      font-size: 8px;
+    }
+
+    > * {
+      display: inline-block;
+      vertical-align: middle;
     }
   }
 }

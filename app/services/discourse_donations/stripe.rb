@@ -9,7 +9,13 @@ module DiscourseDonations
     end
 
     def checkoutCharge(user = nil, email, token, amount)
-      customer = customer(user, email, token)
+      customer = customer(user,
+        email: email,
+        source: token,
+        create: true
+      )
+
+      return if !customer
 
       charge = ::Stripe::Charge.create(
         customer: customer.id,
@@ -22,7 +28,13 @@ module DiscourseDonations
     end
 
     def charge(user = nil, opts)
-      customer = customer(user, opts[:email], opts[:token])
+      customer = customer(user,
+        email: opts[:email],
+        source: opts[:token],
+        create: true
+      )
+
+      return if !customer
 
       @charge = ::Stripe::Charge.create(
         customer: customer.id,
@@ -36,28 +48,40 @@ module DiscourseDonations
     end
 
     def subscribe(user = nil, opts)
-      customer = customer(user, opts[:email], opts[:token])
+      customer = customer(user,
+        email: opts[:email],
+        source: opts[:token],
+        create: true
+      )
+
+      return if !customer
+
+      type = opts[:type]
+      amount = opts[:amount]
 
       plans = ::Stripe::Plan.list
-      type = opts[:type]
-      plan_id = create_plan_id(type)
+      plan_id = create_plan_id(type, amount)
 
       unless plans.data && plans.data.any? { |p| p['id'] === plan_id }
-        result = create_plan(type, opts[:amount])
+        result = create_plan(type, amount)
+
         plan_id = result['id']
       end
 
-      @subscription = ::Stripe::Subscription.create(
+      ::Stripe::Subscription.create(
         customer: customer.id,
-        items: [{ plan: plan_id }]
+        items: [{
+          plan: plan_id
+        }]
       )
-
-      @subscription
     end
 
-    def list(user)
-      customer = customer(user)
-      result = {}
+    def list(user, opts = {})
+      customer = customer(user, opts)
+
+      return if !customer
+
+      result = { customer: customer }
 
       raw_invoices = ::Stripe::Invoice.list(customer: customer.id)
       raw_invoices = raw_invoices.is_a?(Object) ? raw_invoices['data'] : []
@@ -66,7 +90,8 @@ module DiscourseDonations
       raw_charges = raw_charges.is_a?(Object) ? raw_charges['data'] : []
 
       if raw_invoices.any?
-        raw_subscriptions = ::Stripe::Subscription.list(customer: customer.id)['data']
+        raw_subscriptions = ::Stripe::Subscription.list(customer: customer.id, status: 'all')
+        raw_subscriptions = raw_subscriptions.is_a?(Object) ? raw_subscriptions['data'] : []
 
         if raw_subscriptions.any?
           subscriptions = []
@@ -97,22 +122,82 @@ module DiscourseDonations
       result
     end
 
-    def customer(user, email = nil, source = nil)
-      if user && user.stripe_customer_id
-        ::Stripe::Customer.retrieve(user.stripe_customer_id)
+    def invoices_for_subscription(user, opts)
+      customer = customer(user,
+        email: opts[:email]
+      )
+
+      invoices = []
+
+      if customer
+        result = ::Stripe::Invoice.list(
+          customer: customer.id,
+          subscription: opts[:subscription_id]
+        )
+
+        invoices = result['data'] if result['data']
+      end
+
+      invoices
+    end
+
+    def cancel_subscription(subscription_id)
+      if subscription = ::Stripe::Subscription.retrieve(subscription_id)
+        result = subscription.delete
+
+        if result['status'] === 'canceled'
+          { success: true, subscription: subscription }
+        else
+          { success: false, message: I18n.t('donations.subscription.error.not_cancelled') }
+        end
       else
+        { success: false, message: I18n.t('donations.subscription.error.not_found') }
+      end
+    end
+
+    def customer(user, opts = {})
+      customer = nil
+
+      if user && user.stripe_customer_id
+        begin
+          customer = ::Stripe::Customer.retrieve(user.stripe_customer_id)
+        rescue ::Stripe::StripeError => e
+          user.custom_fields['stripe_customer_id'] = nil
+          user.save_custom_fields(true)
+          customer = nil
+        end
+      end
+
+      if !customer && opts[:email]
+        begin
+          customers = ::Stripe::Customer.list(email: opts[:email])
+
+          if customers && customers['data']
+            customer = customers['data'].first if customers['data'].any?
+          end
+
+          if customer && user
+            user.custom_fields['stripe_customer_id'] = customer.id
+            user.save_custom_fields(true)
+          end
+        rescue ::Stripe::StripeError => e
+          customer = nil
+        end
+      end
+
+      if !customer && opts[:create]
         customer = ::Stripe::Customer.create(
-          email: email,
-          source: source
+          email: opts[:email],
+          source: opts[:source]
         )
 
         if user
           user.custom_fields['stripe_customer_id'] = customer.id
           user.save_custom_fields(true)
         end
-
-        customer
       end
+
+      customer
     end
 
     def successful?
@@ -120,7 +205,7 @@ module DiscourseDonations
     end
 
     def create_plan(type, amount)
-      id = create_plan_id(type)
+      id = create_plan_id(type, amount)
       nickname = id.gsub(/_/, ' ').titleize
 
       products = ::Stripe::Product.list(type: 'service')
@@ -151,15 +236,15 @@ module DiscourseDonations
     end
 
     def product_id
-      @product_id ||= "#{SiteSetting.title}_recurring_donation"
+      @product_id ||= "#{SiteSetting.title}_recurring_donation".freeze
     end
 
     def product_name
-      @product_name ||= I18n.t('discourse_donations.recurring', site_title: SiteSetting.title)
+      @product_name ||= I18n.t('donations.recurring', site_title: SiteSetting.title)
     end
 
-    def create_plan_id(type)
-      "discourse_donation_recurring_#{type}"
+    def create_plan_id(type, amount)
+      "discourse_donation_recurring_#{type}_#{amount}".freeze
     end
   end
 end

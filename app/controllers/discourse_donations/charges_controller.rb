@@ -1,14 +1,20 @@
 module DiscourseDonations
   class ChargesController < ::ApplicationController
     skip_before_action :verify_authenticity_token, only: [:create]
+
+    before_action :ensure_logged_in, only: [:cancel_subscription]
     before_action :set_user, only: [:index, :create]
-    before_action :set_email, only: [:create]
+    before_action :set_email, only: [:index, :create, :cancel_subscription]
 
     def index
-      if @user && @user.stripe_customer_id
-        result = DiscourseDonations::Stripe.new(secret_key, stripe_options).list(@user)
-      else
-        result = {}
+      result = {}
+
+      if current_user
+        stripe = DiscourseDonations::Stripe.new(secret_key, stripe_options)
+
+        list_result = stripe.list(current_user, email: current_user.email)
+
+        result = list_result if list_result.present?
       end
 
       render json: success_json.merge(result)
@@ -36,7 +42,7 @@ module DiscourseDonations
       end
 
       Rails.logger.debug "Creating a Stripe payment"
-      payment = DiscourseDonations::Stripe.new(secret_key, stripe_options)
+      stripe = DiscourseDonations::Stripe.new(secret_key, stripe_options)
       result = {}
 
       begin
@@ -48,16 +54,26 @@ module DiscourseDonations
         }
 
         if user_params[:type] === 'once'
-          result[:payment] = payment.charge(@user, opts)
+          result[:charge] = stripe.charge(@user, opts)
         else
           opts[:type] = user_params[:type]
-          result[:subscription] = payment.subscribe(@user, opts)
+
+          subscription = stripe.subscribe(@user, opts)
+
+          if subscription && subscription['id']
+            invoices = stripe.invoices_for_subscription(@user,
+              email: opts[:email],
+              subscription_id: subscription['id']
+            )
+          end
+
+          result[:subscription] = {}
+          result[:subscription][:subscription] = subscription if subscription
+          result[:subscription][:invoices] = invoices if invoices
         end
 
       rescue ::Stripe::CardError => e
         err = e.json_body[:error]
-
-        puts "HERE IS THE ERROR: #{e.inspect}"
 
         output['messages'] << "There was an error (#{err[:type]})."
         output['messages'] << "Error code: #{err[:code]}" if err[:code]
@@ -68,16 +84,14 @@ module DiscourseDonations
       end
 
       if (result[:charge] && result[:charge]['paid'] == true) ||
-         (result[:subscription] && result[:subscription]['status'] === 'active')
+         (result[:subscription] && result[:subscription][:subscription] &&
+          result[:subscription][:subscription]['status'] === 'active')
 
         output['messages'] << I18n.t('donations.payment.success')
 
-        if result[:charge]
+        if (result[:charge] && result[:charge]['receipt_number']) ||
+           (result[:subscription] && result[:subscription][:invoices].first['receipt_number'])
           output['messages'] << " #{I18n.t('donations.payment.receipt_sent', email: @email)}"
-        end
-
-        if result[:subscription]
-          output['messages'] << " #{I18n.t('donations.payment.invoice_sent', email: @email)}"
         end
 
         output['charge'] = result[:charge] if result[:charge]
@@ -93,6 +107,20 @@ module DiscourseDonations
       end
 
       render json: output
+    end
+
+    def cancel_subscription
+      params.require(:subscription_id)
+
+      stripe = DiscourseDonations::Stripe.new(secret_key, stripe_options)
+
+      result = stripe.cancel_subscription(params[:subscription_id])
+
+      if result[:success]
+        render json: success_json.merge(subscription: result[:subscription])
+      else
+        render json: failed_json.merge(message: result[:message])
+      end
     end
 
     private
@@ -132,16 +160,20 @@ module DiscourseDonations
       user = current_user
 
       if user_params[:user_id].present?
-        user = User.find(user_params[:user_id])
+        if record = User.find_by(user_params[:user_id])
+          user = record
+        end
       end
 
       @user = user
     end
 
     def set_email
+      email = nil
+
       if user_params[:email].present?
         email = user_params[:email]
-      else
+      elsif @user
         email = @user.try(:email)
       end
 
