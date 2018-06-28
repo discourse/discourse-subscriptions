@@ -11,7 +11,7 @@
   <div class="control-group">
     <label class="control-label" for="card-element">
       {{i18n 'discourse_donations.amount'}}
-      {{settings.discourse_donations_currency}}
+      {{siteSettings.discourse_donations_currency}}
     </label>
     <div class="controls controls-dropdown">
       {{combo-box valueAttribute="value" content=donateAmounts value=amount}}
@@ -22,7 +22,7 @@
     <div class="control-group">
       <div class="controls">
         {{input type="checkbox" checked=includeTransactionFee}}
-        <span>{{i18n 'discourse_donations.transaction_fee.label' transactionFee=transactionFee currency=settings.discourse_donations_currency}}</span>
+        <span>{{i18n 'discourse_donations.transaction_fee.label' transactionFee=transactionFee currency=siteSettings.discourse_donations_currency}}</span>
         <div class='transaction-fee-description' {{action 'toggleTransactionFeeDescription'}}>
           {{d-icon 'info-circle'}}
           {{#if showTransactionFeeDescription}}
@@ -39,7 +39,7 @@
         {{i18n 'discourse_donations.transaction_fee.total'}}
       </label>
       <div class="controls">
-        {{settings.discourse_donations_currency}}
+        {{siteSettings.discourse_donations_currency}}
         {{totalAmount}}
         {{period}}
       </div>

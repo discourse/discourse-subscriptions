@@ -1,5 +1,4 @@
 import { ajax } from 'discourse/lib/ajax';
-import { getRegister } from 'discourse-common/lib/get-owner';
 import { formatAnchor, zeroDecimalCurrencies } from '../lib/donation-utilities';
 import { default as computed } from 'ember-addons/ember-computed-decorators';
 import { emailValid } from "discourse/lib/utilities";
@@ -10,6 +9,7 @@ export default Ember.Component.extend({
   transactionInProgress: null,
   settings: null,
   showTransactionFeeDescription: false,
+  includeTransactionFee: true,
 
   init() {
     this._super();
@@ -35,8 +35,8 @@ export default Ember.Component.extend({
       return {
         id: type,
         name: I18n.t(`discourse_donations.types.${type}`)
-      }
-    })
+      };
+    });
   },
 
   @computed('type')
@@ -192,7 +192,7 @@ export default Ember.Component.extend({
             ajax('/donate/charges', {
               data: params,
               method: 'post'
-            }).then(result => {              
+            }).then(result => {
               if (result.subscription) {
                 let subscription = $.extend({}, result.subscription, {
                   new: true
