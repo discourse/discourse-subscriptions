@@ -1,0 +1,28 @@
+{{#if hasSubscriptions}}
+  <div class="subscription-list">
+    <div class="underline">{{i18n 'discourse_donations.donations.subscriptions'}}</div>
+    <ul>
+      {{#each subscriptions as |s|}}
+        <li>{{donation-row subscription=s.subscription customer=customer new=s.new}}</li>
+        {{#if s.invoices}}
+          <ul>
+            {{#each s.invoices as |invoice|}}
+              <li>{{donation-row invoice=invoice customer=customer new=s.new}}</li>
+            {{/each}}
+          </ul>
+        {{/if}}
+      {{/each}}
+    </ul>
+  </div>
+{{/if}}
+
+{{#if hasCharges}}
+  <div class="charge-list">
+    <div class='underline'>{{i18n 'discourse_donations.donations.charges'}}</div>
+    <ul>
+      {{#each charges as |charge|}}
+        <li>{{donation-row charge=charge customer=customer new=charge.new}}</li>
+      {{/each}}
+    </ul>
+  </div>
+{{/if}}

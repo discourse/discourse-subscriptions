@@ -15,22 +15,52 @@ en:
     discourse_donations_enable_transaction_fee: "Give the user the option of including the Stripe transaction fee in their donation."
     discourse_donations_transaction_fee_fixed: "Fixed part of Stripe transaction fee (changes per region). See <a href='https://stripe.com/pricing'>Stripe's pricing for your region</a> and <a href='https://support.stripe.com/questions/can-i-charge-my-stripe-fees-to-my-customers'>Stripe's explaination of passing fees onto customers</a>."
     discourse_donations_transaction_fee_percent: "Percent part of Stripe transaction fee (changes per region). See <a href='https://stripe.com/pricing'>Stripe's pricing for your region</a> and <a href='https://support.stripe.com/questions/can-i-charge-my-stripe-fees-to-my-customers'>Stripe's explaination of passing fees onto customers</a>."
-    discourse_donations_amounts: "Donation amounts available to user"
+    discourse_donations_amounts: "Donation amounts available to user. First listed will be the default."
     discourse_donations_custom_amount: "Allow custom donation amount"
+    discourse_donations_types: "Donation types. First listed will be the default."
     errors:
       discourse_donations_amount_must_be_number: "Amounts must be numbers"
 
   js:
     discourse_donations:
-      title: Donate
       nav_item: Donate
+      title: "Make a Donation"
       amount: Amount
-      card: Credit or debit card
-      submit: Make Payment
+      card: Card
+      submit: Donate
       submit_with_create_account: Make Payment and Create Account
+      invoice: "invoice"
+      invoice_prefix: "You gave"
+      receipt: "Receipt sent to {{email}}."
+      subscription:
+        cancel:
+          title: "Cancel Recurring Donation"
+          description: >
+            Are you sure you want to cancel your recurring donation to {{site}}
+            of {{currency}} {{amount}} {{period}}?
+      email_instructions: "Required to send you a receipt. Not used for marketing."
       transaction_fee:
         label: "Include transaction fee of {{currency}} {{transactionFee}}"
-        description: "When you make a donation we get charged a transaciton fee. If you would like to help us out with this fee, check this box and it will be included in your donation."
+        description: "When you make a donation we get charged a transaction fee. If you would like to help us out with this fee, check this box and it will be included in your donation."
         total: "Total"
       messages:
         success: Thank you for your donation!
+      type: "Type"
+      types:
+        once: "Once"
+        week: "Weekly"
+        month: "Monthly"
+        year: "Yearly"
+      period:
+        once: "on {{anchor}}"
+        week: "every week on {{anchor}}"
+        month: "on the {{anchor}} of every month"
+        year: "every year on {{anchor}}"
+      donations:
+        title: "Your Donations"
+        load: "Load Donations"
+        loading: "Loading donations"
+        charges: "Once Off"
+        subscriptions: "Recurring"
+        none: "You haven't made a donation yet."
+        none_email: "There are no donations for {{email}}."

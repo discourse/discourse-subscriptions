@@ -1,6 +1,8 @@
 DiscourseDonations::Engine.routes.draw do
-  resources :charges, only: [:create]
+  get '/' => 'charges#index'
+
+  resources :charges, only: [:index, :create]
+  put '/charges/cancel-subscription' => 'charges#cancel_subscription'
+
   resources :checkout, only: [:create]
-  get 'users/:username/payments' => 'payments#show'
-  get 'donate' => 'payments#show'
 end
