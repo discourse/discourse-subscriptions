@@ -36,6 +36,10 @@ after_initialize do
   end
 
   class ::Category
+    def donations_cause
+      SiteSetting.discourse_donations_causes_categories.split('|').include? self.id.to_s
+    end
+
     def donations_total
       if custom_fields['donations_total']
         custom_fields['donations_total']
@@ -82,6 +86,7 @@ after_initialize do
   end
 
   if SiteSetting.discourse_donations_cause_category
+    add_to_serializer(:basic_category, :donations_cause) { object.donations_cause }
     add_to_serializer(:basic_category, :donations_total) { object.donations_total }
     add_to_serializer(:basic_category, :donations_month) { object.donations_month }
     add_to_serializer(:basic_category, :donations_backers) {
