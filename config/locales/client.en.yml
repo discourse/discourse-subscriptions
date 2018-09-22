@@ -18,6 +18,10 @@ en:
     discourse_donations_amounts: "Donation amounts available to user. First listed will be the default."
     discourse_donations_custom_amount: "Allow custom donation amount"
     discourse_donations_types: "Donation types. First listed will be the default."
+    discourse_donations_causes: "Custom causes a user can donate to."
+    discourse_donations_causes_categories: "Categories of cause a user can donate do."
+    discourse_donations_cause_category: "Category causes enabled."
+    discourse_donations_cause_required: "Require user to select a cause when donating."
     errors:
       discourse_donations_amount_must_be_number: "Amounts must be numbers"
 
@@ -32,6 +36,20 @@ en:
       invoice: "invoice"
       invoice_prefix: "You gave"
       receipt: "Receipt sent to {{email}}."
+      cause:
+        label: "Cause"
+        placeholder: "Select a cause"
+        category:
+          total: "Total"
+          month: "Month"
+        backers:
+          label: "Backers"
+        github:
+          label: "Repository"
+          setting_label: "Github"
+          setting_placeholder: "repoistory url"
+        maintainers:
+          label: "Maintainers"
       subscription:
         cancel:
           title: "Cancel Recurring Donation"

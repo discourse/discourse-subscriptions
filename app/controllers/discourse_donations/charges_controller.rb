@@ -48,6 +48,7 @@ module DiscourseDonations
       begin
         Rails.logger.debug "Creating a Stripe charge for #{user_params[:amount]}"
         opts = {
+          cause: user_params[:cause],
           email: @email,
           token: user_params[:stripeToken],
           amount: user_params[:amount]
@@ -153,7 +154,7 @@ module DiscourseDonations
     end
 
     def user_params
-      params.permit(:user_id, :name, :username, :email, :password, :stripeToken, :type, :amount, :create_account)
+      params.permit(:user_id, :name, :username, :email, :password, :stripeToken, :cause, :type, :amount, :create_account)
     end
 
     def set_user

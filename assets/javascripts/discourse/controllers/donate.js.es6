@@ -2,6 +2,7 @@ import { default as computed } from 'ember-addons/ember-computed-decorators';
 import { popupAjaxError } from 'discourse/lib/ajax-error';
 import { ajax } from 'discourse/lib/ajax';
 import { getOwner } from 'discourse-common/lib/get-owner';
+import { emailValid } from "discourse/lib/utilities";
 
 export default Ember.Controller.extend({
   loadingDonations: false,
@@ -41,8 +42,8 @@ export default Ember.Controller.extend({
 
         Ember.run.later(() => {
           this.set('hasEmailResult', false);
-        }, 6000)
-      })
+        }, 6000);
+      });
     },
 
     showLogin() {
@@ -50,4 +51,4 @@ export default Ember.Controller.extend({
       controller.send('showLogin');
     }
   }
-})
+});

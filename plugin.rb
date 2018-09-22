@@ -34,4 +34,64 @@ after_initialize do
       end
     end
   end
+
+  class ::Category
+    def donations_total
+      if custom_fields['donations_total']
+        custom_fields['donations_total']
+      else
+        0
+      end
+    end
+
+    def donations_month
+      if custom_fields['donations_month']
+        custom_fields['donations_month']
+      else
+        0
+      end
+    end
+
+    def donations_backers
+      if custom_fields['donations_backers']
+        [*custom_fields['donations_backers']].map do |user_id|
+          User.find_by(id: user_id.to_i)
+        end
+      else
+        []
+      end
+    end
+
+    def donations_maintainers
+      if custom_fields['donations_maintainers']
+        custom_fields['donations_maintainers'].split(',').map do |username|
+          User.find_by(username: username)
+        end
+      else
+        []
+      end
+    end
+
+    def donations_github
+      if custom_fields['donations_github']
+        custom_fields['donations_github']
+      else
+        ''
+      end
+    end
+  end
+
+  if SiteSetting.discourse_donations_cause_category
+    add_to_serializer(:basic_category, :donations_total) { object.donations_total }
+    add_to_serializer(:basic_category, :donations_month) { object.donations_month }
+    add_to_serializer(:basic_category, :donations_backers) {
+      ActiveModel::ArraySerializer.new(object.donations_backers, each_serializer: BasicUserSerializer).as_json
+    }
+    add_to_serializer(:basic_category, :donations_maintainers) {
+      ActiveModel::ArraySerializer.new(object.donations_maintainers, each_serializer: BasicUserSerializer).as_json
+    }
+    add_to_serializer(:basic_category, :donations_github) { object.donations_github }
+  end
+
+  DiscourseEvent.trigger(:donations_ready)
 end

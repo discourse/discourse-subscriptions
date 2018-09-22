@@ -9,4 +9,4 @@ export default Ember.Controller.extend({
       this.send('closeModal');
     }
   }
-})
+});

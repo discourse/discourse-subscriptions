@@ -108,3 +108,70 @@ div.stripe-errors {
     }
   }
 }
+
+.donations-category-header {
+  padding-top: 60px;
+  text-align: center;
+
+  .donations-category-contents {
+    width: 500px;
+    margin: 0 auto;
+    padding: 40px 40px 10px;
+    text-align: center;
+
+    i {
+      margin-right: .25em;
+      font-size: 1.5em;
+    }
+
+    h1 {
+      text-transform: capitalize;
+      display: inline;
+    }
+  }
+
+  .donations-category-metadata {
+    width: 500px;
+    margin: 0 auto;
+    padding-bottom: 30px;
+    display: flex;
+    justify-content: space-around;
+    font-size: 1.2rem;
+
+    .donations-total span:first-of-type, .donations-month span:first-of-type {
+      margin-right: 5px;
+    }
+
+    .donations-github a {
+      color: inherit;
+    }
+  }
+
+  .donations-category-users {
+    width: 500px;
+    margin: 0 auto;
+    font-size: 1.2rem;
+    padding-top: 10px;
+    padding-bottom: 40px;
+    display: flex;
+    align-items: center;
+
+    .donations-backers, .donations-maintainers {
+      flex: 1 1 auto;
+    }
+
+    .backer-avatar, .maintainer-avatar {
+      margin: 0 5px;
+    }
+
+    .donations-backers-title, .donations-maintainers-title {
+      padding-bottom: 10px;
+    }
+  }
+}
+
+.donations-category {
+  #main-outlet {
+    padding-top: 20px;
+  }
+}

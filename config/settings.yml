@@ -3,20 +3,20 @@ plugins:
     default: false
     client: true
   discourse_donations_secret_key:
-    default: 'YOUR STRIPE API SECRET'
+    default: ''
     client: false
   discourse_donations_public_key:
-    default: 'YOUR STRIPE API KEY'
+    default: ''
     client: true
   discourse_donations_enable_create_accounts:
     client: true
     default: false
   discourse_donations_description:
     client: true
-    default: 'Donation'
+    default: ''
   discourse_donations_shop_name:
     client: true
-    default: 'Your shop name'
+    default: ''
   discourse_donations_currency:
     client: true
     default: 'USD'
@@ -53,9 +53,23 @@ plugins:
   discourse_donations_types:
     client: true
     type: list
-    default: 'month|once'
+    default: 'once|month'
     choices:
       - year
       - month
       - week
       - once
+  discourse_donations_causes:
+    client: true
+    type: list
+    default: ''
+  discourse_donations_causes_categories:
+    client: true
+    type: category_list
+    default: ''
+  discourse_donations_cause_category:
+    client: true
+    default: false
+  discourse_donations_cause_required:
+    client: true
+    default: false

@@ -1,0 +1,11 @@
+{{#if siteSettings.discourse_donations_cause_category}}
+  <section class='field'>
+    <label>{{i18n 'discourse_donations.cause.github.setting_label'}}</label>
+    {{text-field value=category.custom_fields.donations_github placeholderKey="discourse_donations.cause.github.setting_placeholder"}}
+  </section>
+
+  <section class='field'>
+    <label>{{i18n 'discourse_donations.cause.maintainers.label'}}</label>
+    {{user-selector usernames=category.custom_fields.donations_maintainers}}
+  </section>
+{{/if}}

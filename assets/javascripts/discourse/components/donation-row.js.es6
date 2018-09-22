@@ -1,7 +1,7 @@
 import { ajax } from 'discourse/lib/ajax';
 import { popupAjaxError } from 'discourse/lib/ajax-error';
 import { formatAnchor, formatAmount } from '../lib/donation-utilities';
-import { default as computed, observes, on } from 'ember-addons/ember-computed-decorators';
+import { default as computed } from 'ember-addons/ember-computed-decorators';
 import showModal from "discourse/lib/show-modal";
 
 export default Ember.Component.extend({
@@ -60,7 +60,7 @@ export default Ember.Component.extend({
   period(anchor, interval) {
     return I18n.t(`discourse_donations.period.${interval}`, {
       anchor: formatAnchor(interval, moment.unix(anchor))
-    })
+    });
   },
 
   cancelSubscription() {
@@ -93,4 +93,4 @@ export default Ember.Component.extend({
       });
     }
   }
-})
+});
