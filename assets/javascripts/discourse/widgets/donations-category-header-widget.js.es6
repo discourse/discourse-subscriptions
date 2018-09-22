@@ -13,12 +13,13 @@ createWidget('category-header-widget', {
   tagName: 'span',
 
   html(args) {
-    if (args.currentPath.toLowerCase().indexOf('category') === -1) return;
 
     const controller = this.register.lookup('controller:navigation/category');
     const category = controller.get("category");
 
-    if (category && category.donations_cause) {
+    if (args.currentPath.toLowerCase().indexOf('category') > -1 &&
+        category &&
+        category.donations_cause) {
       $("body").addClass("donations-category");
 
       let contents = [
