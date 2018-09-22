@@ -15,10 +15,8 @@ createWidget('category-header-widget', {
   html(args) {
     if (args.currentPath.toLowerCase().indexOf('category') === -1) return;
 
-    let category;
-
-    const controller = this.container.lookup('controller:navigation/category');
-    category = controller.get("category");
+    const controller = this.register.lookup('controller:navigation/category');
+    const category = controller.get("category");
 
     if (category && category.donations_cause) {
       $("body").addClass("donations-category");
@@ -27,31 +25,48 @@ createWidget('category-header-widget', {
         h('div.donations-category-contents', [
           h('h1', category.name),
           h('div.category-title-description', h('p', category.description_text))
-        ]),
-        h('div.donations-category-metadata', [
-          donationDisplay(category.donations_total || 0, 'total'),
-          donationDisplay(category.donations_month || 0, 'month'),
+        ])
+      ];
+
+      let metadata = [
+        donationDisplay(category.donations_total || 0, 'total'),
+        donationDisplay(category.donations_month || 0, 'month')
+      ];
+
+      if (category.donations_github) {
+        metadata.push(
           h('div.donations-github', this.attach('link', {
             icon: 'github',
             label: 'discourse_donations.cause.github.label',
             href: category.donations_github
-          })),
+          }))
+        );
+      }
+
+      if (category.donations_meta) {
+        metadata.push(
           h('div.donations-meta', this.attach('link', {
             href: category.donations_meta,
             contents: () => {
               return [
-                h('img.meta-icon', { attributes: { src: 'https://discourse-meta.s3.dualstack.us-west-1.amazonaws.com/original/3X/b/1/b19ba793155a785bbd9707bc0cabbd3a987fa126.png?v=6' }}),
+                h('img.meta-icon', {
+                  attributes: {
+                    src: 'https://discourse-meta.s3.dualstack.us-west-1.amazonaws.com/original/3X/b/1/b19ba793155a785bbd9707bc0cabbd3a987fa126.png?v=6'
+                  }
+                }),
                 h('span', I18n.t('discourse_donations.cause.meta.label'))
               ];
             }
           }))
-        ])
-      ];
+        );
+      }
 
-      let userContents = [];
+      contents.push(h('div.donations-category-metadata', metadata));
+
+      let users = [];
 
       if (category.donations_backers.length) {
-        userContents.push(h('div.donations-backers', [
+        users.push(h('div.donations-backers', [
           h('div.donations-backers-title', I18n.t('discourse_donations.cause.backers.label')),
           category.donations_backers.map(user => {
             return avatarFor('medium', {
@@ -66,7 +81,7 @@ createWidget('category-header-widget', {
       };
 
       if (category.donations_maintainers.length) {
-        userContents.push(h('div.donations-maintainers', [
+        users.push(h('div.donations-maintainers', [
           h('div.donations-maintainers-title', I18n.t('discourse_donations.cause.maintainers.label')),
           category.donations_maintainers.map(user => {
             if (user) {
@@ -84,8 +99,8 @@ createWidget('category-header-widget', {
         ]));
       }
 
-      if (userContents.length) {
-        contents.push(h('div.donations-category-users', userContents));
+      if (users.length) {
+        contents.push(h('div.donations-category-users', users));
       }
 
       return h('div.donations-category-header', {
