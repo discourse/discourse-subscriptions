@@ -83,6 +83,14 @@ after_initialize do
         ''
       end
     end
+
+    def donations_meta
+      if custom_fields['donations_meta']
+        custom_fields['donations_meta']
+      else
+        ''
+      end
+    end
   end
 
   if SiteSetting.discourse_donations_cause_category
@@ -96,6 +104,7 @@ after_initialize do
       ActiveModel::ArraySerializer.new(object.donations_maintainers, each_serializer: BasicUserSerializer).as_json
     }
     add_to_serializer(:basic_category, :donations_github) { object.donations_github }
+    add_to_serializer(:basic_category, :donations_meta) { object.donations_meta }
   end
 
   DiscourseEvent.trigger(:donations_ready)

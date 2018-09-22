@@ -5,6 +5,11 @@
   </section>
 
   <section class='field'>
+    <label>{{i18n 'discourse_donations.cause.meta.setting_label'}}</label>
+    {{text-field value=category.custom_fields.donations_meta placeholderKey="discourse_donations.cause.meta.setting_placeholder"}}
+  </section>
+
+  <section class='field'>
     <label>{{i18n 'discourse_donations.cause.maintainers.label'}}</label>
     {{user-selector usernames=category.custom_fields.donations_maintainers}}
   </section>

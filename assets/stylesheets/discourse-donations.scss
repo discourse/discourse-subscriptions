@@ -142,8 +142,20 @@ div.stripe-errors {
       margin-right: 5px;
     }
 
-    .donations-github a {
+    .donations-github a, .donations-meta a {
       color: inherit;
+    }
+
+    .donations-meta {
+      .widget-link {
+        display: flex;
+        align-items: center;
+      }
+      img {
+        width: 17px;
+        height: 17px;
+        margin-right: 4px;
+      }
     }
   }
 

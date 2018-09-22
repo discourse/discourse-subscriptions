@@ -33,6 +33,15 @@ createWidget('category-header-widget', {
             icon: 'github',
             label: 'discourse_donations.cause.github.label',
             href: category.donations_github
+          })),
+          h('div.donations-meta', this.attach('link', {
+            href: category.donations_meta,
+            contents: () => {
+              return [
+                h('img.meta-icon', { attributes: { src: 'https://discourse-meta.s3.dualstack.us-west-1.amazonaws.com/original/3X/b/1/b19ba793155a785bbd9707bc0cabbd3a987fa126.png?v=6' }}),
+                h('span', I18n.t('discourse_donations.cause.meta.label'))
+              ];
+            }
           }))
         ])
       ];

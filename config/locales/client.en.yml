@@ -48,6 +48,10 @@ en:
           label: "Repository"
           setting_label: "Github"
           setting_placeholder: "repoistory url"
+        meta:
+          label: "Discussion"
+          setting_label: "Meta"
+          setting_placeholder: "topic url"
         maintainers:
           label: "Maintainers"
       subscription:
