@@ -12,13 +12,15 @@ function donationDisplay(amount, type) {
 createWidget('category-header-widget', {
   tagName: 'span',
 
-  html() {
+  html(args) {
+    if (args.currentPath.toLowerCase().indexOf('category') === -1) return;
+
     let category;
 
     const controller = this.container.lookup('controller:navigation/category');
     category = controller.get("category");
 
-    if(category && category.donations_cause) {
+    if (category && category.donations_cause) {
       $("body").addClass("donations-category");
 
       let contents = [
