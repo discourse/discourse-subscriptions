@@ -22,6 +22,7 @@ en:
     discourse_donations_causes_categories: "Categories of cause a user can donate do."
     discourse_donations_cause_category: "Category causes enabled."
     discourse_donations_cause_required: "Require user to select a cause when donating."
+    discourse_donations_cause_month: "Show monthly total of donations to each cause."
     errors:
       discourse_donations_amount_must_be_number: "Amounts must be numbers"
 

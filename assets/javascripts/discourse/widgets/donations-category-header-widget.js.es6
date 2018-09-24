@@ -30,9 +30,12 @@ createWidget('category-header-widget', {
       ];
 
       let metadata = [
-        donationDisplay(category.donations_total || 0, 'total'),
-        donationDisplay(category.donations_month || 0, 'month')
+        donationDisplay(category.donations_total || 0, 'total')
       ];
+
+      if (Discourse.SiteSettings.discourse_donations_cause_month) {
+        metadata.push(donationDisplay(category.donations_month || 0, 'month'));
+      }
 
       if (category.donations_github) {
         metadata.push(

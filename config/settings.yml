@@ -73,3 +73,6 @@ plugins:
   discourse_donations_cause_required:
     client: true
     default: false
+  discourse_donations_cause_month:
+    client: true
+    default: false

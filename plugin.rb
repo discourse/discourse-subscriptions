@@ -97,6 +97,7 @@ after_initialize do
     add_to_serializer(:basic_category, :donations_cause) { object.donations_cause }
     add_to_serializer(:basic_category, :donations_total) { object.donations_total }
     add_to_serializer(:basic_category, :donations_month) { object.donations_month }
+    add_to_serializer(:basic_category, :include_donations_month?) { SiteSetting.discourse_donations_cause_month }
     add_to_serializer(:basic_category, :donations_backers) {
       ActiveModel::ArraySerializer.new(object.donations_backers, each_serializer: BasicUserSerializer).as_json
     }

@@ -105,6 +105,10 @@ module DiscourseDonations
           args = user_params.to_h.slice(:email, :username, :password, :name).merge(rewards: output['rewards'])
           Jobs.enqueue(:donation_user, args)
         end
+
+        if SiteSetting.discourse_donations_cause_category
+          Jobs.enqueue(:update_category_donation_statistics)
+        end
       end
 
       render json: output

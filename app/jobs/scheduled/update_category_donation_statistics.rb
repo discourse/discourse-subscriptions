@@ -1,6 +1,6 @@
 module Jobs
   class UpdateCategoryDonationStatistics < ::Jobs::Scheduled
-    every 1.hour
+    every 1.day
 
     def execute(args)
       return unless SiteSetting.discourse_donations_cause_category
