@@ -55,6 +55,9 @@ en:
           setting_placeholder: "topic url"
         maintainers:
           label: "Maintainers"
+          setting_label: "Maintainers label"
+        amounts:
+          setting_label: "Show donation amounts"
       subscription:
         cancel:
           title: "Cancel Recurring Donation"

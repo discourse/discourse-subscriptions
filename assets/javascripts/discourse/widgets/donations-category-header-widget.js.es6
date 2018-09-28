@@ -29,12 +29,14 @@ createWidget('category-header-widget', {
         ])
       ];
 
-      let metadata = [
-        donationDisplay(category.donations_total || 0, 'total')
-      ];
+      let metadata = [];
 
-      if (Discourse.SiteSettings.discourse_donations_cause_month) {
-        metadata.push(donationDisplay(category.donations_month || 0, 'month'));
+      if (category.donations_show_amounts) {
+        metadata.push(donationDisplay(category.donations_total || 0, 'total'));
+
+        if (Discourse.SiteSettings.discourse_donations_cause_month) {
+          metadata.push(donationDisplay(category.donations_month || 0, 'month'));
+        }
       }
 
       if (category.donations_github) {
@@ -85,8 +87,11 @@ createWidget('category-header-widget', {
       };
 
       if (category.donations_maintainers.length) {
+        let maintainersLabel = category.donations_maintainers_label ||
+          I18n.t('discourse_donations.cause.maintainers.label');
+
         users.push(h('div.donations-maintainers', [
-          h('div.donations-maintainers-title', I18n.t('discourse_donations.cause.maintainers.label')),
+          h('div.donations-maintainers-title', maintainersLabel),
           category.donations_maintainers.map(user => {
             if (user) {
               return avatarFor('medium', {

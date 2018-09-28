@@ -1,5 +1,10 @@
 {{#if siteSettings.discourse_donations_cause_category}}
   <section class='field'>
+    <label>{{i18n 'discourse_donations.cause.amounts.setting_label'}}</label>
+    {{input type="checkbox" checked=category.custom_fields.donations_show_amounts}}
+  </section>
+
+  <section class='field'>
     <label>{{i18n 'discourse_donations.cause.github.setting_label'}}</label>
     {{text-field value=category.custom_fields.donations_github placeholderKey="discourse_donations.cause.github.setting_placeholder"}}
   </section>
@@ -12,5 +17,10 @@
   <section class='field'>
     <label>{{i18n 'discourse_donations.cause.maintainers.label'}}</label>
     {{user-selector usernames=category.custom_fields.donations_maintainers}}
+  </section>
+
+  <section class='field'>
+    <label>{{i18n 'discourse_donations.cause.maintainers.setting_label'}}</label>
+    {{input value=category.custom_fields.donations_maintainers_label}}
   </section>
 {{/if}}
