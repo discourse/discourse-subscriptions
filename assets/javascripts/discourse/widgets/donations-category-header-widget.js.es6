@@ -65,9 +65,9 @@ createWidget('category-header-widget', {
             }
           }))
         );
-      }
 
-      contents.push(h('div.donations-category-metadata', metadata));
+        contents.push(h('div.donations-category-metadata', metadata));
+      }
 
       let users = [];
 
