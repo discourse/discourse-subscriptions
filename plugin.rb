@@ -54,7 +54,7 @@ after_initialize do
       if custom_fields['donations_show_amounts'] != nil
         custom_fields['donations_show_amounts']
       else
-        true
+        false
       end
     end
 
