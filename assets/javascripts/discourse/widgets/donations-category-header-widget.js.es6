@@ -1,6 +1,7 @@
 import { createWidget } from 'discourse/widgets/widget';
 import { h } from 'virtual-dom';
 import { avatarFor }  from 'discourse/widgets/post';
+import { userPath } from "discourse/lib/url";
 
 function donationDisplay(amount, type) {
   return h(`div.donations-${type}`, [
@@ -77,13 +78,17 @@ createWidget('category-header-widget', {
         users.push(h('div.donations-backers', [
           h('div.donations-backers-title', I18n.t('discourse_donations.cause.backers.label')),
           category.donations_backers.map(user => {
-            return avatarFor('medium', {
-              template: user.avatar_template,
-              username: user.username,
-              name: user.name,
-              url: user.usernameUrl,
-              className: "backer-avatar"
-            });
+            if (user) {
+              return avatarFor('medium', {
+                template: user.avatar_template,
+                username: user.username,
+                name: user.name,
+                url: userPath(user.username),
+                className: "backer-avatar"
+              });
+            } else {
+              return;
+            }
           })
         ]));
       };
@@ -100,7 +105,7 @@ createWidget('category-header-widget', {
                 template: user.avatar_template,
                 username: user.username,
                 name: user.name,
-                url: user.usernameUrl,
+                url: userPath(user.username),
                 className: "maintainer-avatar"
               });
             } else {
