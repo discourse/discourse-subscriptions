@@ -31,7 +31,7 @@ createWidget('category-header-widget', {
 
       let metadata = [];
 
-      if (category.donations_show_amounts) {
+      if (category.donations_total !== undefined) {
         metadata.push(donationDisplay(category.donations_total || 0, 'total'));
 
         if (Discourse.SiteSettings.discourse_donations_cause_month) {
@@ -65,7 +65,9 @@ createWidget('category-header-widget', {
             }
           }))
         );
+      }
 
+      if (metadata.length) {
         contents.push(h('div.donations-category-metadata', metadata));
       }
 

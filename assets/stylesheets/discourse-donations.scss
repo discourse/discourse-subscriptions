@@ -116,7 +116,7 @@ div.stripe-errors {
   .donations-category-contents {
     width: 500px;
     margin: 0 auto;
-    padding: 40px 40px 10px;
+    padding: 30px 40px 10px;
     text-align: center;
 
     i {
@@ -128,12 +128,21 @@ div.stripe-errors {
       text-transform: capitalize;
       display: inline;
     }
+
+    .category-title-description {
+      font-size: 1.2rem;
+      padding: 10px 0;
+
+      p {
+        margin: 0;
+      }
+    }
   }
 
   .donations-category-metadata {
     width: 500px;
     margin: 0 auto;
-    padding-bottom: 30px;
+    padding-bottom: 20px;
     display: flex;
     justify-content: space-around;
     font-size: 1.2rem;
@@ -163,7 +172,7 @@ div.stripe-errors {
     width: 500px;
     margin: 0 auto;
     font-size: 1.2rem;
-    padding-bottom: 40px;
+    padding-bottom: 30px;
     display: flex;
     align-items: center;
 
