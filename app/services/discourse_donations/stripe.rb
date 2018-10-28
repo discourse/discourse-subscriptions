@@ -36,16 +36,21 @@ module DiscourseDonations
 
       return if !customer
 
+      metadata = {
+        discourse_cause: opts[:cause]
+      }
+
+      if (user)
+        metedata[:discourse_user_id] = user.id
+      end
+
       @charge = ::Stripe::Charge.create(
         customer: customer.id,
         amount: opts[:amount],
         description: @description,
         currency: @currency,
         receipt_email: customer.email,
-        metadata: {
-          discourse_cause: opts[:cause],
-          discourse_user_id: user.id
-        }
+        metadata: metadata
       )
 
       @charge
