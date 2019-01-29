@@ -14,6 +14,10 @@ register_html_builder('server:before-head-close') do
   "<script src='https://js.stripe.com/v3/'></script>"
 end
 
+extend_content_security_policy(
+  script_src: ['https://js.stripe.com/v3/']
+)
+
 after_initialize do
   load File.expand_path('../lib/discourse_donations/engine.rb', __FILE__)
   load File.expand_path('../config/routes.rb', __FILE__)
