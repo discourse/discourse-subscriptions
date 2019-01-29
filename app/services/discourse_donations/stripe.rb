@@ -41,7 +41,7 @@ module DiscourseDonations
       }
 
       if (user)
-        metedata[:discourse_user_id] = user.id
+        metadata[:discourse_user_id] = user.id
       end
 
       @charge = ::Stripe::Charge.create(
