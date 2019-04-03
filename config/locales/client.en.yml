@@ -58,6 +58,10 @@ en:
           setting_label: "Maintainers label"
         amounts:
           setting_label: "Show donation amounts"
+        release_latest:
+          label: "Latest Release Supported"
+        release_oldest:
+          label: "Oldest Release Supported"
       subscription:
         cancel:
           title: "Cancel Recurring Donation"

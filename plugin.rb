@@ -113,6 +113,22 @@ after_initialize do
         nil
       end
     end
+
+    def donations_release_latest
+      if custom_fields['donations_release_latest']
+        custom_fields['donations_release_latest']
+      else
+        nil
+      end
+    end
+
+    def donations_release_oldest
+      if custom_fields['donations_release_oldest']
+        custom_fields['donations_release_oldest']
+      else
+        nil
+      end
+    end
   end
 
   [
@@ -124,7 +140,9 @@ after_initialize do
     'donations_maintainers',
     'donations_maintainers_label',
     'donations_github',
-    'donations_meta'
+    'donations_meta',
+    'donations_release_latest',
+    'donations_release_oldest'
   ].each do |key|
     Site.preloaded_category_custom_fields << key if Site.respond_to? :preloaded_category_custom_fields
   end
@@ -145,6 +163,8 @@ after_initialize do
   add_to_serializer(:basic_category, :include_donations_maintainers_label?) { object.donations_maintainers_label.present? }
   add_to_serializer(:basic_category, :donations_github) { object.donations_github }
   add_to_serializer(:basic_category, :donations_meta) { object.donations_meta }
+  add_to_serializer(:basic_category, :donations_release_latest) { object.donations_release_latest }
+  add_to_serializer(:basic_category, :donations_release_oldest) { object.donations_release_oldest }
 
   DiscourseEvent.trigger(:donations_ready)
 end

@@ -140,7 +140,7 @@ div.stripe-errors {
   }
 
   .donations-category-metadata {
-    width: 500px;
+    max-width: 700px;
     margin: 0 auto;
     padding-bottom: 20px;
     display: flex;
@@ -164,6 +164,15 @@ div.stripe-errors {
         width: 17px;
         height: 17px;
         margin-right: 4px;
+      }
+    }
+
+    .donations-release-latest, .donations-release-oldest {
+      display: flex;
+      align-items: center;
+
+      span:first-of-type {
+        margin-right: 8px;
       }
     }
   }
