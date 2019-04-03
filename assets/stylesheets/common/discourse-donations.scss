@@ -114,7 +114,7 @@ div.stripe-errors {
   text-align: center;
 
   .donations-category-contents {
-    width: 500px;
+    max-width: 500px;
     margin: 0 auto;
     padding: 30px 40px 10px;
     text-align: center;
@@ -172,13 +172,13 @@ div.stripe-errors {
       align-items: center;
 
       span:first-of-type {
-        margin-right: 8px;
+        margin-right: 10px;
       }
     }
   }
 
   .donations-category-users {
-    width: 500px;
+    max-width: 500px;
     margin: 0 auto;
     font-size: 1.2rem;
     padding-bottom: 30px;

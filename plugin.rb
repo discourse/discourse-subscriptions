@@ -6,7 +6,8 @@
 
 gem 'stripe', '2.8.0'
 
-register_asset "stylesheets/discourse-donations.scss"
+register_asset "stylesheets/common/discourse-donations.scss"
+register_asset "stylesheets/mobile/discourse-donations.scss"
 
 enabled_site_setting :discourse_donations_enabled
 
