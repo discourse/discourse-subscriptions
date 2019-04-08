@@ -74,7 +74,7 @@ createWidget('category-header-widget', {
         let label = releaseArray[releaseArray.length - 1];
         metadata.push(
           h('div.donations-release-oldest', [
-            h('span', '>'),
+            h('span', '>='),
             this.attach('link', {
               href: category.donations_release_oldest,
               icon: 'tag',
@@ -93,7 +93,7 @@ createWidget('category-header-widget', {
         let label = releaseArray[releaseArray.length - 1];
         metadata.push(
           h('div.donations-release-latest', [
-            h('span', '<'),
+            h('span', '<='),
             this.attach('link', {
               href: category.donations_release_latest,
               icon: 'tag',
