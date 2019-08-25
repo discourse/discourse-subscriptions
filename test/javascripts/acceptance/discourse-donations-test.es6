@@ -1,10 +1,11 @@
 import { acceptance } from 'helpers/qunit-helpers';
-acceptance('Discourse Donations', { loggedIn: true });
 
-test('Donations Link Exists', () => {
+acceptance('Discourse Donations', {
+  loggedIn: true,
+  settings: {},
+});
+
+test('test runs without a crash', (assert) => {
   visit('/');
-
-  andThen(() => {
-    ok(exists('.list-controls .donate a'), 'Link exists on profile page');
-  });
+  assert.ok(true, 'test runs');
 });
