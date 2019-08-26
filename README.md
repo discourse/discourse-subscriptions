@@ -1,6 +1,6 @@
 # Discourse Donations
 
-[![Build Status](https://travis-ci.org/chrisbeach/discourse-donations.svg?branch=master)](https://travis-ci.org/choiceaustralia/discourse-donations)
+[![Build Status](https://travis-ci.org/rimian/discourse-donations.svg?branch=master)](https://travis-ci.org/rimian/discourse-donations)
 
 Accept donations from visitors to your [Discourse](https://www.discourse.org/) forum. Integrates with [Stripe](https://stripe.com).
 
