@@ -2,10 +2,14 @@ import { acceptance } from 'helpers/qunit-helpers';
 
 acceptance('Discourse Donations', {
   loggedIn: true,
-  settings: {},
+  settings: {
+    discourse_donations_enabled: true,
+    discourse_donations_types: '',
+    discourse_donations_amounts: '1',
+  },
 });
 
-test('test runs without a crash', (assert) => {
-  visit('/');
-  assert.ok(true, 'test runs');
+QUnit.test("donate page has a form on it", async assert => {
+  await visit("/donate");
+  assert.ok(exists(".donations-page-donations"));
 });
