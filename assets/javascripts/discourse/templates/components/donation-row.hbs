@@ -2,11 +2,11 @@
   <span>{{i18n 'discourse_donations.invoice_prefix'}}</span>
 {{/if}}
 
-<span>{{currency}}</span>
+<span class="donation-row-currency">{{currency}}</span>
 
-<span>{{amount}}</span>
+<span class="donation-row-amount">{{amount}}</span>
 
-<span>{{period}}</span>
+<span class="donation-row-period">{{period}}</span>
 
 {{#if invoice}}
   <a href='{{data.invoiceLink}}' target='_blank'>({{i18n 'discourse_donations.invoice'}})</a>
@@ -14,15 +14,17 @@
 
 {{#if currentUser}}
   {{#if subscription}}
-    {{#if updating}}
-      {{loading-spinner size='small'}}
-    {{else}}
-      {{#unless canceled}}
-        <a {{action 'cancelSubscription'}}>
-          {{i18n 'cancel'}}
-        </a>
-      {{/unless}}
-    {{/if}}
+    <span class="donation-row-subscription">
+      {{#if updating}}
+        {{loading-spinner size='small'}}
+      {{else}}
+        {{#unless canceled}}
+          <a {{action 'cancelSubscription'}}>
+            {{i18n 'cancel'}}
+          </a>
+        {{/unless}}
+      {{/if}}
+    </span>
   {{/if}}
 {{/if}}
 
