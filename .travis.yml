@@ -9,7 +9,7 @@ dist: trusty
 cache: bundler --path $TRAVIS_BUILD_DIR/discourse/vendor
 
 addons:
-  postgresql: 9.5
+  postgresql: 11.5
   apt:
     packages:
     - gifsicle
@@ -18,7 +18,7 @@ addons:
     - jhead
 
 rvm:
-  - 2.4.0
+  - 2.6.2
 
 services:
   - redis-server
