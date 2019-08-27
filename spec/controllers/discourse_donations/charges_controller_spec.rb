@@ -109,7 +109,7 @@ module DiscourseDonations
         end
 
         it 'enqueues the user account create' do
-          post :create, params: params
+          post :create, params: params, format: :json
         end
       end
     end
@@ -120,19 +120,19 @@ module DiscourseDonations
       before { SiteSetting.stubs(:discourse_donations_enable_create_accounts).returns(true) }
 
       describe 'requires an email' do
-        before { post :create, params: params.merge(email: '') }
+        before { post :create, params: params.merge(email: ''), format: :json }
         include_examples 'failure response', 'login.missing_user_field'
       end
 
       describe 'requires a username' do
-        before { post :create, params: params.merge(username: '') }
+        before { post :create, params: params.merge(username: ''), format: :json }
         include_examples 'failure response', 'login.missing_user_field'
       end
 
       describe 'reserved usernames' do
         before do
           User.expects(:reserved_username?).returns(true)
-          post :create, params: params
+          post :create, params: params, format: :json
         end
 
         include_examples 'failure response', 'login.reserved_username'
@@ -141,7 +141,7 @@ module DiscourseDonations
       describe 'minimum password length' do
         before do
           User.expects(:max_password_length).returns(params[:password].length - 1)
-          post :create, params: params
+          post :create, params: params, format: :json
         end
 
         include_examples 'failure response', 'login.password_too_long'
@@ -207,12 +207,12 @@ module DiscourseDonations
           end
 
           it 'awards a group' do
-            post :create
+            post :create, format: :json
             expect(body['rewards']).to include({ 'type' => 'group', 'name' => group_name })
           end
 
           it 'awards a badge' do
-            post :create
+            post :create, format: :json
             expect(body['rewards']).to include({ 'type' => 'badge', 'name' => badge_name })
           end
         end
