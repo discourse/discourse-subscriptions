@@ -39,7 +39,6 @@ Accept donations from visitors to your [Discourse](https://www.discourse.org/) f
 ## TODO
 
 * Handle custom fields
-* Acceptance test in RSpec not qunit.
 
 ## Tested Credit Card Numbers
 
