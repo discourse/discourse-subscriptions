@@ -1,15 +1,15 @@
-import { ajax } from 'discourse/lib/ajax';
-import { popupAjaxError } from 'discourse/lib/ajax-error';
-import { formatAnchor, formatAmount } from '../lib/donation-utilities';
-import { default as computed } from 'ember-addons/ember-computed-decorators';
+import { ajax } from "discourse/lib/ajax";
+import { popupAjaxError } from "discourse/lib/ajax-error";
+import { formatAnchor, formatAmount } from "../lib/donation-utilities";
+import { default as computed } from "ember-addons/ember-computed-decorators";
 import showModal from "discourse/lib/show-modal";
 
 export default Ember.Component.extend({
-  classNameBindings: [':donation-row', 'canceled', 'updating'],
-  includePrefix: Ember.computed.or('invoice', 'charge'),
-  canceled: Ember.computed.equal('subscription.status', 'canceled'),
+  classNameBindings: [":donation-row", "canceled", "updating"],
+  includePrefix: Ember.computed.or("invoice", "charge"),
+  canceled: Ember.computed.equal("subscription.status", "canceled"),
 
-  @computed('subscription', 'invoice', 'charge', 'customer')
+  @computed("subscription", "invoice", "charge", "customer")
   data(subscription, invoice, charge, customer) {
     if (subscription) {
       return $.extend({}, subscription.plan, {
@@ -41,22 +41,22 @@ export default Ember.Component.extend({
     }
   },
 
-  @computed('data.currency')
+  @computed("data.currency")
   currency(currency) {
     return currency ? currency.toUpperCase() : null;
   },
 
-  @computed('data.amount', 'currency')
+  @computed("data.amount", "currency")
   amount(amount, currency) {
     return formatAmount(amount, currency);
   },
 
-  @computed('data.interval')
+  @computed("data.interval")
   interval(interval) {
-    return interval || 'once';
+    return interval || "once";
   },
 
-  @computed('data.anchor', 'interval')
+  @computed("data.anchor", "interval")
   period(anchor, interval) {
     return I18n.t(`discourse_donations.period.${interval}`, {
       anchor: formatAnchor(interval, moment.unix(anchor))
@@ -64,30 +64,33 @@ export default Ember.Component.extend({
   },
 
   cancelSubscription() {
-    const subscriptionId = this.get('subscription.id');
-    this.set('updating', true);
+    const subscriptionId = this.get("subscription.id");
+    this.set("updating", true);
 
-    ajax('/donate/charges/cancel-subscription', {
+    ajax("/donate/charges/cancel-subscription", {
       data: {
         subscription_id: subscriptionId
       },
-      method: 'put'
-    }).then(result => {
-      if (result.success) {
-        this.set('subscription', result.subscription);
-      }
-    }).catch(popupAjaxError).finally(() => {
-      this.set('updating', false);
-    });
+      method: "put"
+    })
+      .then(result => {
+        if (result.success) {
+          this.set("subscription", result.subscription);
+        }
+      })
+      .catch(popupAjaxError)
+      .finally(() => {
+        this.set("updating", false);
+      });
   },
 
   actions: {
     cancelSubscription() {
-      showModal('cancel-subscription', {
+      showModal("cancel-subscription", {
         model: {
-          currency: this.get('currency'),
-          amount: this.get('amount'),
-          period: this.get('period'),
+          currency: this.get("currency"),
+          amount: this.get("amount"),
+          period: this.get("period"),
           confirm: () => this.cancelSubscription()
         }
       });

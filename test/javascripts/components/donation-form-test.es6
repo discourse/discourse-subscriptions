@@ -1,8 +1,8 @@
-import componentTest from 'helpers/component-test';
+import componentTest from "helpers/component-test";
 
-moduleForComponent('donation-form', { integration: true });
+moduleForComponent("donation-form", { integration: true });
 
-componentTest('donation form', {
+componentTest("donation form", {
   template: `{{donation-form}}`,
 
   test(assert) {
