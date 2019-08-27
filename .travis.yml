@@ -1,42 +1,12 @@
-language: ruby
-
-env:
-  global:
-    - DISCOURSE_HOSTNAME=www.example.com
-
-dist: trusty
-
-cache: bundler --path $TRAVIS_BUILD_DIR/discourse/vendor
-
-addons:
-  postgresql: 9.6
-  apt:
-    packages:
-    - gifsicle
-    - jpegoptim
-    - optipng
-    - jhead
-
-rvm:
-  - 2.6.3
-
+# We want to use the KVM-based system, so require sudo
+sudo: required
 services:
-  - redis-server
+  - docker
 
 before_install:
-  - git clone https://github.com/discourse/discourse.git discourse
-  - cd discourse
+  - git clone --depth=1 https://github.com/discourse/discourse-plugin-ci
 
-install:
-  - touch config/stripe.yml
-  - git clone $TRAVIS_BUILD_DIR plugins/discourse-donations --depth 50 --branch $TRAVIS_BRANCH
-
-before_script:
-  - gem install bundler
-  - bundle install
-  - bundle exec rake db:create db:migrate
+install: true # Prevent travis doing bundle install
 
 script:
-  - "bundle exec rake plugin:spec[discourse-donations]"
-  - "MODULE='Acceptance: Discourse Donations' bundle exec rake qunit:test[20000]"
-  - "MODULE='component:stripe-card' bundle exec rake qunit:test[20000]"
+  - discourse-plugin-ci/script.sh
