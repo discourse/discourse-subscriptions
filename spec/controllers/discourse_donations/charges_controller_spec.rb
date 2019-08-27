@@ -35,42 +35,14 @@ module DiscourseDonations
     it 'responds ok for anonymous users' do
       controller.expects(:current_user).at_least(1).returns(user)
 
-      customer = Fabricate(:customer)
+      customer = Fabricate(:stripe_customer).to_json
 
-      stub_request(:get, /v1\/customers/).to_return(status: 200, body: customer.to_json)
+      stub_request(:get, /v1\/customers/).to_return(status: 200, body: customer)
 
-      plans = {
-      "object": "list",
-      "url": "/v1/plans",
-      "has_more": false,
-      "data": [
-          {
-            "id": "plan_EeE4ns3bvb34ZP",
-            "object": "plan",
-            "active": true,
-            "aggregate_usage": "null",
-            "amount": 3000,
-            "amount_decimal": "3000",
-            "billing_scheme": "per_unit",
-            "created": 1551862832,
-            "currency": "usd",
-            "interval": "month",
-            "interval_count": 1,
-            "livemode": false,
-            "metadata": {},
-            "nickname": "Pro Plan",
-            "product": "prod_BT942zL7VcClrn",
-            "tiers": "null",
-            "tiers_mode": "null",
-            "transform_usage": "null",
-            "trial_period_days": "null",
-            "usage_type": "licensed"
-          },
-        ]
-      }
+      plans = Fabricate(:stripe_plans).to_json
 
-      stub_request(:get, "https://api.stripe.com/v1/plans").to_return(status: 200, body: plans.to_json)
-      stub_request(:post, "https://api.stripe.com/v1/plans").to_return(status: 200, body: plans.to_json)
+      stub_request(:get, "https://api.stripe.com/v1/plans").to_return(status: 200, body: plans)
+      stub_request(:post, "https://api.stripe.com/v1/plans").to_return(status: 200, body: plans)
 
       products = {
         "object": "list",
@@ -103,7 +75,7 @@ module DiscourseDonations
 
       stub_request(:get, "https://api.stripe.com/v1/products?type=service").to_return(status: 200, body: products.to_json)
       stub_request(:post, "https://api.stripe.com/v1/products").to_return(status: 200, body: products.to_json)
-      stub_request(:post, "https://api.stripe.com/v1/customers").to_return(status: 200, body: customer.to_json)
+      stub_request(:post, "https://api.stripe.com/v1/customers").to_return(status: 200, body: customer)
 
       subscription = {
         "id": "sub_8epEF0PuRhmltU",

@@ -1,10 +1,5 @@
 
-
-class Customer
-  attr_accessor :to_json
-end
-
-Fabricator(:customer) do
+Fabricator(:stripe_customer, from: "DiscourseDonations::StripeResponse") do
   response = {
     "id": "cus_FhHJDzf0OxYtb8",
     "object": "customer",
