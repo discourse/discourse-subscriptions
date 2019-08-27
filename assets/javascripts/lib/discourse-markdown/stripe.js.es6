@@ -85,8 +85,6 @@ export function setup(helper) {
         ]);
         if (helper.markdownIt) {
             setupMarkdownIt(helper, siteSettings);
-        } else {
-            console.log("Please upgrade Discourse to a later version in order to use this plugin");
         }
     });
 }

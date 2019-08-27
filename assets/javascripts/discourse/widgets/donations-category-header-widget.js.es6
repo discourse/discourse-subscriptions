@@ -2,7 +2,6 @@ import { createWidget } from 'discourse/widgets/widget';
 import { h } from 'virtual-dom';
 import { avatarFor }  from 'discourse/widgets/post';
 import { userPath } from "discourse/lib/url";
-import { iconNode } from "discourse-common/lib/icon-library";
 
 function donationDisplay(amount, type) {
   return h(`div.donations-${type}`, [
@@ -85,7 +84,7 @@ createWidget('category-header-widget', {
               }
             })
           ])
-        )
+        );
       }
 
       if (category.donations_release_latest) {
@@ -104,7 +103,7 @@ createWidget('category-header-widget', {
               }
             })
           ])
-        )
+        );
       }
 
       if (metadata.length) {
