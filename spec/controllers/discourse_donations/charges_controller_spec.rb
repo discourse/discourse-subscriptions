@@ -15,7 +15,7 @@ module DiscourseDonations
   RSpec.describe ChargesController, type: :controller do
     routes { DiscourseDonations::Engine.routes }
     let(:body) { JSON.parse(response.body) }
-    let(:current_user) { log_in(:coding_horror) }
+    let(:current_user) { Fabricate(:user) }
     # Workaround for rails-5 issue. See https://github.com/thoughtbot/shoulda-matchers/issues/1018#issuecomment-315876453
     # let(:allowed_params) { { create_account: 'true', email: 'email@example.com', password: 'secret', username: 'mr-pink', name: 'kirsten', amount: 100, stripeToken: 'rrurrrurrrrr' } }
 
@@ -56,6 +56,8 @@ module DiscourseDonations
     end
 
     it 'responds ok for anonymous users' do
+      controller.expects(:current_user).at_least(1).returns(current_user)
+
       post :create, params: { email: 'foobar@example.com' }, format: :json
 
       aggregate_failures do
@@ -86,6 +88,8 @@ module DiscourseDonations
         end
 
         it 'does not create user accounts' do
+          controller.expects(:current_user).at_least(1).returns(current_user)
+
           post :create, params: params, format: :json
         end
 
@@ -109,6 +113,8 @@ module DiscourseDonations
         end
 
         it 'enqueues the user account create' do
+          controller.expects(:current_user).at_least(1).returns(current_user)
+
           post :create, params: params, format: :json
         end
       end
