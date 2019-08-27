@@ -25,7 +25,6 @@ module DiscourseDonations
           source: nil
         ).returns(customer)
 
-
         ::Stripe::Customer.expects(:list)
 
         subject.subscribe(params)

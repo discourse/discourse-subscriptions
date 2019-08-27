@@ -44,267 +44,27 @@ module DiscourseDonations
       stub_request(:get, "https://api.stripe.com/v1/plans").to_return(status: 200, body: plans)
       stub_request(:post, "https://api.stripe.com/v1/plans").to_return(status: 200, body: plans)
 
-      products = {
-        "object": "list",
-        "url": "/v1/products",
-        "has_more": false,
-        "data": [
-          {
-            "id": "prod_FhGJ7clA2xMxGI",
-            "object": "product",
-            "active": true,
-            "attributes": [],
-            "caption": "null",
-            "created": 1566862775,
-            "deactivate_on": [],
-            "description": "null",
-            "images": [],
-            "livemode": false,
-            "metadata": {},
-            "name": "Sapphire Personal",
-            "package_dimensions": "null",
-            "shippable": "null",
-            "statement_descriptor": "null",
-            "type": "service",
-            "unit_label": "null",
-            "updated": 1566862775,
-            "url": "null"
-          },
-        ]
-      }
+      products = Fabricate(:stripe_products).to_json
 
-      stub_request(:get, "https://api.stripe.com/v1/products?type=service").to_return(status: 200, body: products.to_json)
-      stub_request(:post, "https://api.stripe.com/v1/products").to_return(status: 200, body: products.to_json)
+      stub_request(:get, "https://api.stripe.com/v1/products?type=service").to_return(status: 200, body: products)
+      stub_request(:post, "https://api.stripe.com/v1/products").to_return(status: 200, body: products)
       stub_request(:post, "https://api.stripe.com/v1/customers").to_return(status: 200, body: customer)
 
-      subscription = {
-        "id": "sub_8epEF0PuRhmltU",
-        "object": "subscription",
-        "application_fee_percent": "null",
-        "billing": "charge_automatically",
-        "billing_cycle_anchor": 1466202990,
-        "billing_thresholds": "null",
-        "cancel_at": "null",
-        "cancel_at_period_end": false,
-        "canceled_at": 1517528245,
-        "collection_method": "charge_automatically",
-        "created": 1466202990,
-        "current_period_end": 1518906990,
-        "current_period_start": 1516228590,
-        "customer": "cus_FhHJDzf0OxYtb8",
-        "days_until_due": "null",
-        "default_payment_method": "null",
-        "default_source": "null",
-        "default_tax_rates": [],
-        "discount": "null",
-        "ended_at": 1517528245,
-        "items": {
-          "object": "list",
-          "data": [
-            {
-              "id": "si_18NVZi2eZvKYlo2CUtBNGL9x",
-              "object": "subscription_item",
-              "billing_thresholds": "null",
-              "created": 1466202990,
-              "metadata": {},
-              "plan": {
-                "id": "ivory-freelance-040",
-                "object": "plan",
-                "active": true,
-                "aggregate_usage": "null",
-                "amount": 999,
-                "amount_decimal": "999",
-                "billing_scheme": "per_unit",
-                "created": 1466202980,
-                "currency": "usd",
-                "interval": "month",
-                "interval_count": 1,
-                "livemode": false,
-                "metadata": {},
-                "nickname": "null",
-                "product": "prod_BUthVRQ7KdFfa7",
-                "tiers": "null",
-                "tiers_mode": "null",
-                "transform_usage": "null",
-                "trial_period_days": "null",
-                "usage_type": "licensed"
-              },
-              "quantity": 1,
-              "subscription": "sub_8epEF0PuRhmltU",
-              "tax_rates": []
-            }
-          ],
-          "has_more": false,
-          "total_count": 1,
-          "url": "/v1/subscription_items?subscription=sub_8epEF0PuRhmltU"
-        },
-        "latest_invoice": "null",
-        "livemode": false,
-        "metadata": {},
-        "pending_setup_intent": "null",
-        "plan": {
-          "id": "ivory-freelance-040",
-          "object": "plan",
-          "active": true,
-          "aggregate_usage": "null",
-          "amount": 999,
-          "amount_decimal": "999",
-          "billing_scheme": "per_unit",
-          "created": 1466202980,
-          "currency": "usd",
-          "interval": "month",
-          "interval_count": 1,
-          "livemode": false,
-          "metadata": {},
-          "nickname": "null",
-          "product": "prod_BUthVRQ7KdFfa7",
-          "tiers": "null",
-          "tiers_mode": "null",
-          "transform_usage": "null",
-          "trial_period_days": "null",
-          "usage_type": "licensed"
-        },
-        "quantity": 1,
-        "schedule": "null",
-        "start": 1466202990,
-        "start_date": 1466202990,
-        "status": "active",
-        "tax_percent": "null",
-        "trial_end": "null",
-        "trial_start": "null"
-      }
+      subscription = Fabricate(:stripe_subscription).to_json
 
-      stub_request(:post, "https://api.stripe.com/v1/subscriptions").to_return(status: 200, body: subscription.to_json)
+      stub_request(:post, "https://api.stripe.com/v1/subscriptions").to_return(status: 200, body: subscription)
 
-      invoices = {
-        "object": "list",
-        "url": "/v1/invoices",
-        "has_more": false,
-        "data": [
-          {
-            "id": "in_1Cc9wc2eZvKYlo2ClBzJbDQz",
-            "object": "invoice",
-            "account_country": "US",
-            "account_name": "Stripe.com",
-            "amount_due": 20,
-            "amount_paid": 0,
-            "amount_remaining": 20,
-            "application_fee_amount": "null",
-            "attempt_count": 0,
-            "attempted": false,
-            "auto_advance": false,
-            "billing": "send_invoice",
-            "billing_reason": "subscription_update",
-            "charge": "null",
-            "collection_method": "send_invoice",
-            "created": 1528800106,
-            "currency": "usd",
-            "custom_fields": "null",
-            "customer": "cus_FhHJDzf0OxYtb8",
-            "customer_address": "null",
-            "customer_email": "ziad+123@elysian.team",
-            "customer_name": "null",
-            "customer_phone": "null",
-            "customer_shipping": "null",
-            "customer_tax_exempt": "none",
-            "customer_tax_ids": [],
-            "default_payment_method": "null",
-            "default_source": "null",
-            "default_tax_rates": [],
-            "description": "null",
-            "discount": "null",
-            "due_date": 1529059306,
-            "ending_balance": "null",
-            "footer": "null",
-            "hosted_invoice_url": "null",
-            "invoice_pdf": "null",
-            "lines": {
-              "data": [
-                {
-                  "id": "sli_42e8bf79bec714",
-                  "object": "line_item",
-                  "amount": 999,
-                  "currency": "usd",
-                  "description": "1 × Ivory Freelance (at $9.99 / month)",
-                  "discountable": true,
-                  "livemode": false,
-                  "metadata": {},
-                  "period": {
-                    "end": 1521326190,
-                    "start": 1518906990
-                  },
-                  "plan": {
-                    "id": "ivory-freelance-040",
-                    "object": "plan",
-                    "active": true,
-                    "aggregate_usage": "null",
-                    "amount": 999,
-                    "amount_decimal": "999",
-                    "billing_scheme": "per_unit",
-                    "created": 1466202980,
-                    "currency": "usd",
-                    "interval": "month",
-                    "interval_count": 1,
-                    "livemode": false,
-                    "metadata": {},
-                    "nickname": "null",
-                    "product": "prod_BUthVRQ7KdFfa7",
-                    "tiers": "null",
-                    "tiers_mode": "null",
-                    "transform_usage": "null",
-                    "trial_period_days": "null",
-                    "usage_type": "licensed"
-                  },
-                  "proration": false,
-                  "quantity": 1,
-                  "subscription": "sub_8epEF0PuRhmltU",
-                  "subscription_item": "si_18NVZi2eZvKYlo2CUtBNGL9x",
-                  "tax_amounts": [],
-                  "tax_rates": [],
-                  "type": "subscription"
-                }
-              ],
-              "has_more": false,
-              "object": "list",
-              "url": "/v1/invoices/in_1Cc9wc2eZvKYlo2ClBzJbDQz/lines"
-            },
-            "livemode": false,
-            "metadata": {},
-            "next_payment_attempt": "null",
-            "number": "8B36FE9-0005",
-            "paid": false,
-            "payment_intent": "null",
-            "period_end": 1528800106,
-            "period_start": 1528800106,
-            "post_payment_credit_notes_amount": 0,
-            "pre_payment_credit_notes_amount": 0,
-            "receipt_number": "null",
-            "starting_balance": 10,
-            "statement_descriptor": "null",
-            "status": "draft",
-            "status_transitions": {
-              "finalized_at": "null",
-              "marked_uncollectible_at": "null",
-              "paid_at": "null",
-              "voided_at": "null"
-            },
-            "subscription": "sub_D2ECXpuEnnXkWU",
-            "subtotal": 10,
-            "tax": "null",
-            "tax_percent": "null",
-            "total": 10,
-            "total_tax_amounts": [],
-            "webhooks_delivered_at": 1528800106
-          },
-        ]
-      }
+      invoices = Fabricate(:stripe_invoices).to_json
 
       stub_request(:get, "https://api.stripe.com/v1/invoices?customer=cus_FhHJDzf0OxYtb8&subscription=sub_8epEF0PuRhmltU")
-        .to_return(status: 200, body: invoices.to_json)
+        .to_return(status: 200, body: invoices)
 
       post :create, params: { email: 'foobar@example.com' }, format: :json
-      expect(body['messages'][0]).to end_with(I18n.t('donations.payment.success'))
-      expect(response).to have_http_status(200)
+
+      aggregate_failures do
+        expect(response).to have_http_status(200)
+        expect(body['messages'][0]).to end_with(I18n.t('donations.payment.success'))
+      end
     end
 
     it 'does not expect a username or email if accounts are not being created' do

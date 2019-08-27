@@ -9,7 +9,7 @@ RSpec.describe Jobs::DonationUser, type: :job do
 
   it 'creates a new user with no rewards' do
     aggregate_failures do
-      expect{ subject.execute(args) }.to change{ User.count }.by(1)
+      expect { subject.execute(args) }.to change { User.count }.by(1)
       user = User.find_by_email(args[:email])
       expect(user.badges).to be_empty
       expect(user.groups).to be_empty
