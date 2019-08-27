@@ -15,25 +15,15 @@ module DiscourseDonations
   RSpec.describe ChargesController, type: :controller do
     routes { DiscourseDonations::Engine.routes }
     let(:body) { JSON.parse(response.body) }
-    fab!(:user) { Fabricate(:user, name: 'Lynette') }
+    let(:current_user) { log_in(:coding_horror) }
+    # Workaround for rails-5 issue. See https://github.com/thoughtbot/shoulda-matchers/issues/1018#issuecomment-315876453
+    let(:allowed_params) { { create_account: 'true', email: 'email@example.com', password: 'secret', username: 'mr-pink', name: 'kirsten', amount: 100, stripeToken: 'rrurrrurrrrr' } }
 
     before do
       SiteSetting.stubs(:disable_discourse_narrative_bot_welcome_post).returns(true)
       SiteSetting.stubs(:discourse_donations_secret_key).returns('secret-key-yo')
       SiteSetting.stubs(:discourse_donations_description).returns('charity begins at discourse plugin')
       SiteSetting.stubs(:discourse_donations_currency).returns('AUD')
-    end
-
-    # Workaround for rails-5 issue. See https://github.com/thoughtbot/shoulda-matchers/issues/1018#issuecomment-315876453
-    let(:allowed_params) { { create_account: 'true', email: 'email@example.com', password: 'secret', username: 'mr-pink', name: 'kirsten', amount: 100, stripeToken: 'rrurrrurrrrr' } }
-
-    it 'whitelists the params' do
-      should permit(:name, :username, :email, :password, :create_account).
-        for(:create, params: { params: allowed_params })
-    end
-
-    it 'responds ok for anonymous users' do
-      controller.expects(:current_user).at_least(1).returns(user)
 
       customer = Fabricate(:stripe_customer).to_json
 
@@ -58,7 +48,14 @@ module DiscourseDonations
 
       stub_request(:get, "https://api.stripe.com/v1/invoices?customer=cus_FhHJDzf0OxYtb8&subscription=sub_8epEF0PuRhmltU")
         .to_return(status: 200, body: invoices)
+    end
 
+    it 'whitelists the params' do
+      should permit(:name, :username, :email, :password, :create_account).
+        for(:create, params: { params: allowed_params })
+    end
+
+    it 'responds ok for anonymous users' do
       post :create, params: { email: 'foobar@example.com' }, format: :json
 
       aggregate_failures do
@@ -68,10 +65,15 @@ module DiscourseDonations
     end
 
     it 'does not expect a username or email if accounts are not being created' do
-      current_user = log_in(:coding_horror)
-      post :create, params: { create_account: 'false' }, format: :json
-      expect(body['messages'][0]).to end_with(I18n.t('donations.payment.success'))
-      expect(response).to have_http_status(200)
+      charge = Fabricate(:stripe_charge).to_json
+      stub_request(:post, "https://api.stripe.com/v1/charges").to_return(status: 200, body: charge)
+
+      post :create, params: { create_account: 'false', type: 'once' }, format: :json
+
+      aggregate_failures do
+        expect(response).to have_http_status(200)
+        expect(body['messages'][0]).to end_with(I18n.t('donations.payment.success'))
+      end
     end
 
     describe 'create accounts' do
