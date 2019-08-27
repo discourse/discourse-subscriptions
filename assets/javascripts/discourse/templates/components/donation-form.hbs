@@ -1,2 +1,10 @@
-
-hello world
+<form id="payment-form" class="form-horizontal">
+  <div class="control-group discourse-donations-cause">
+    <label class="control-label">
+      {{i18n 'discourse_donations.cause.label'}}
+    </label>
+    <div class="controls controls-dropdown">
+      {{combo-box content=causes value=cause none='discourse_donations.cause.placeholder'}}
+    </div>
+  </div>
+</form>
