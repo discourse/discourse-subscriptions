@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 # name: discourse-donations
-# about: Integrates Stripe into Discourse to allow forum visitors to make donations
-# version: 1.11.3
+# about: Integrates Stripe into Discourse to allow visitors to make donations
+# version: 1.12.0
 # url: https://github.com/rimian/discourse-donations
 # authors: Rimian Perkins, Chris Beach, Angus McLeod
 
-gem 'stripe', '2.8.0'
+gem 'stripe', '2.12.0'
 
 register_asset "stylesheets/common/discourse-donations.scss"
 register_asset "stylesheets/mobile/discourse-donations.scss"
