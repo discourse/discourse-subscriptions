@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 # This is for building http responses with Fabricate
 # Usage: Fabricate(:customer).to_json

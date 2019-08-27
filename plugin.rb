@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # name: discourse-donations
 # about: Integrates Stripe into Discourse to allow forum visitors to make donations
 # version: 1.11.3

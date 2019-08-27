@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DiscourseDonations
   class Stripe
     attr_reader :charge, :currency, :description

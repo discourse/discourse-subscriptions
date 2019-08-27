@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'fakeweb'
 
 #TODO register some fixtures
 
 FakeWeb.register_uri(:post, 'https://api.stripe.com/v1/customers',
-  :body => '{
+  body: '{
   "id": "cus_AJqrL4OU1sffPl",
   "object": "customer",
   "account_balance": 0,
@@ -52,11 +54,11 @@ FakeWeb.register_uri(:post, 'https://api.stripe.com/v1/customers',
   "url": "/v1/customers/cus_AJqrL4OU1sffPl/sources"
   }
   }',
-  :status => ['200', 'OK']
+  status: ['200', 'OK']
 )
 
 FakeWeb.register_uri(:post, 'https://api.stripe.com/v1/charges',
-  :body => '{
+  body: '{
   "id": "ch_19zDAFEfVxQsvRbHtAwsCvV0",
   "object": "charge",
   "amount": 100,
@@ -133,5 +135,5 @@ FakeWeb.register_uri(:post, 'https://api.stripe.com/v1/charges',
   "status": "succeeded",
   "transfer_group": null
   }',
-  :status => ['200', 'OK']
+  status: ['200', 'OK']
 )

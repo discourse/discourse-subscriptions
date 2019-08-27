@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 require_relative './fabricators/charge_fabricator.rb'
 require_relative './fabricators/customer_fabricator.rb'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 require_relative '../../support/dd_helper'
 
@@ -61,7 +63,7 @@ module DiscourseDonations
           description: stripe_options[:description],
           currency: stripe_options[:currency],
           receipt_email: customer.email,
-          :metadata => { :discourse_cause => nil }
+          metadata: { discourse_cause: nil }
         }
       end
 
@@ -72,7 +74,7 @@ module DiscourseDonations
       it 'is successful' do
         ::Stripe::Charge.expects(:create).with(charge_options).returns(paid: true)
 
-        ::Stripe::Customer.expects(:list).returns({ data: [] })
+        ::Stripe::Customer.expects(:list).returns(data: [])
 
         subject.charge(nil, params)
         expect(subject).to be_successful
@@ -80,7 +82,7 @@ module DiscourseDonations
 
       it 'is not successful' do
         ::Stripe::Charge.expects(:create).with(charge_options).returns(paid: false)
-        ::Stripe::Customer.expects(:list).returns({ data: [] })
+        ::Stripe::Customer.expects(:list).returns(data: [])
         subject.charge(nil, params)
         expect(subject).not_to be_successful
       end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 DiscourseDonations::Engine.routes.draw do
   get '/' => 'charges#index'
 

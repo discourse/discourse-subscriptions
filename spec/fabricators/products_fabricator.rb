@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 Fabricator(:stripe_products, from: "DiscourseDonations::StripeResponse") do
   response = {
