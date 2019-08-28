@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/rimian/discourse-donations.svg?branch=master)](https://travis-ci.org/rimian/discourse-donations)
 
-Accept donations from visitors to your [Discourse](https://www.discourse.org/) forum. Integrates with [Stripe](https://stripe.com).
+Accept donations from visitors to your [Discourse](https://www.discourse.org/) application. Integrates with [Stripe](https://stripe.com).
 
 ## Installation
 
@@ -44,7 +44,7 @@ Card numbers in **bold** have been tested.
 * **4000 0000 0000 0028**	Charge succeeds but the address_line1_check verification fails.
 * **4000 0000 0000 0036**	The address_zip_check verification fails. If your account is blocking payments that fail postal code validation, the charge is declined.
 * **4000 0000 0000 0044**	Charge succeeds but the address_zip_check and address_line1_check verifications are both unavailable.
-* **4000 0000 0000 0101**   If a CVC number is provided, the cvc_check fails. If your account is blocking payments that fail CVC code validation, the charge is declined.
+* **4000 0000 0000 0101** If a CVC number is provided, the cvc_check fails. If your account is blocking payments that fail CVC code validation, the charge is declined.
 * **4000 0000 0000 0341**	Attaching this card to a Customer object succeeds, but attempts to charge the customer fail.
 * **4000 0000 0000 9235**	Charge succeeds with a risk_level of elevated and placed into review.
 * **4000 0000 0000 0002**	Charge is declined with a card_declined code.
@@ -52,7 +52,7 @@ Card numbers in **bold** have been tested.
 * **4000 0000 0000 0127**	Charge is declined with an incorrect_cvc code.
 * **4000 0000 0000 0069**	Charge is declined with an expired_card code.
 * **4000 0000 0000 0119**	Charge is declined with a processing_error code.
-* 4242 4242 4242 4241	Charge is declined with an incorrect_number code as the card number fails the Luhn check.
+* **4242 4242 4242 4241**	Charge is declined with an incorrect_number code as the card number fails the Luhn check.
 
 ## Warranty
 

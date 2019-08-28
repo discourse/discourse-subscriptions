@@ -108,8 +108,9 @@ export default Ember.Component.extend({
 
     const style = {
       base: {
+        color,
         iconColor: color,
-        "::placeholder": { color: color }
+        "::placeholder": { color }
       }
     };
 
@@ -187,8 +188,8 @@ export default Ember.Component.extend({
   },
 
   documentClick(e) {
-    let $element = this.$(".transaction-fee-description");
-    let $target = $(e.target);
+    let $element = jQuery(".transaction-fee-description");
+    let $target = jQuery(e.target);
     if ($target.closest($element).length < 1 && this._state !== "destroying") {
       this.set("showTransactionFeeDescription", false);
     }
