@@ -2,7 +2,6 @@ import { ajax } from "discourse/lib/ajax";
 import { formatAnchor, zeroDecimalCurrencies } from "../lib/donation-utilities";
 import { default as computed } from "ember-addons/ember-computed-decorators";
 import { emailValid as emailValidHelper } from "discourse/lib/utilities";
-import { currentThemeId } from "discourse/lib/theme-selector";
 
 export default Ember.Component.extend({
   result: [],

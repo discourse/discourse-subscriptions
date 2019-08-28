@@ -2,7 +2,7 @@
 
 # name: discourse-donations
 # about: Integrates Stripe into Discourse to allow visitors to make donations
-# version: 1.12.0
+# version: 1.12.1
 # url: https://github.com/rimian/discourse-donations
 # authors: Rimian Perkins, Chris Beach, Angus McLeod
 
