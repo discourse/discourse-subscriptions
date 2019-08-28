@@ -265,6 +265,7 @@ export default Ember.Component.extend({
                 self.concatMessages(result.messages);
 
                 self.endTranscation();
+                self.onCompleteTransation();
               });
             }
           }

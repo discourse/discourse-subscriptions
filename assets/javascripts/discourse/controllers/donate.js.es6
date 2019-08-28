@@ -22,6 +22,10 @@ export default Ember.Controller.extend({
   },
 
   actions: {
+    stripeTransationCompleteCtr() {
+      console.log('done!');
+    },
+
     loadDonations() {
       let email = this.get("email");
 

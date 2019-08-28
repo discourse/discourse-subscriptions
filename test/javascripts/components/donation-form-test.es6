@@ -5,10 +5,12 @@ moduleForComponent("donation-form", { integration: true });
 componentTest("donation form has content", {
   template: `{{donation-form}}`,
 
+  beforeEach() {
+    this.registry.register('component:stripe-card', Ember.Component.extend({ tagName: 'dummy-component-tag' }));
+  },
+
   async test(assert) {
-    assert.ok(find('#payment-form').length, 'The form renders');
-    assert.equal(find('.discourse-donations-cause .selected-name')
-      .text()
-      .trim(), 'Select a cause', 'It has the combo box');
+    assert.ok(find('#payment-form').length, "The form renders");
+    assert.ok(find('dummy-component-tag').length, "The stripe component renders");
   }
 });

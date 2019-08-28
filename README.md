@@ -28,17 +28,9 @@ Accept donations from visitors to your [Discourse](https://www.discourse.org/) f
 
 ## Testing
 
-* To run the rails specs, install the plugin and run `bundle exec rake plugin:spec[discourse-donations]` in the discourse root directory.
-* To run qunit tests: `MODULE='Acceptance: Discourse Donations' bundle exec rake qunit:test[20000]`.
-* To run Component tests: `MODULE='component:stripe-card' bundle exec rake qunit:test[20000]`.
+These commands should run:
 
-**Note:**
-
-* If you're using a zsh shell, then you probably get this error: `zsh: no matches found ...` and you'll need to escape the square brackets with backslashes.
-
-## TODO
-
-* Handle custom fields
+* ```yarn prettier --list-different 'assets/**/*.scss' '**/*.es6'```
 
 ## Tested Credit Card Numbers
 
