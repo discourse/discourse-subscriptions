@@ -6,7 +6,7 @@
 # url: https://github.com/rimian/discourse-donations
 # authors: Rimian Perkins, Chris Beach, Angus McLeod
 
-gem 'stripe', '2.12.0'
+gem 'stripe', '5.1.0'
 
 register_asset "stylesheets/common/discourse-donations.scss"
 register_asset "stylesheets/mobile/discourse-donations.scss"
