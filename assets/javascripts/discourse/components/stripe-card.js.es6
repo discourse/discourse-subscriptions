@@ -2,6 +2,7 @@ import { ajax } from "discourse/lib/ajax";
 import { formatAnchor, zeroDecimalCurrencies } from "../lib/donation-utilities";
 import { default as computed } from "ember-addons/ember-computed-decorators";
 import { emailValid as emailValidHelper } from "discourse/lib/utilities";
+import { currentThemeId } from "discourse/lib/theme-selector";
 
 export default Ember.Component.extend({
   result: [],
@@ -12,15 +13,16 @@ export default Ember.Component.extend({
   includeTransactionFee: true,
 
   init() {
-    this._super();
+    this._super(...arguments);
+
     const user = this.get("currentUser");
     const settings = Discourse.SiteSettings;
 
-    this.set(
-      "create_accounts",
-      !user && settings.discourse_donations_enable_create_accounts
-    );
-    this.set("stripe", Stripe(settings.discourse_donations_public_key));
+    this.setProperties({
+      "create_accounts": !user && settings.discourse_donations_enable_create_accounts,
+      "stripe": Stripe(settings.discourse_donations_public_key),
+      "color": jQuery("body").css("color"),
+    });
 
     const types = settings.discourse_donations_types.split("|") || [];
     const amounts = this.get("donateAmounts");
@@ -100,10 +102,18 @@ export default Ember.Component.extend({
 
   @computed("stripe")
   card(stripe) {
-    let elements = stripe.elements();
-    let card = elements.create("card", {
-      hidePostalCode: !Discourse.SiteSettings.discourse_donations_zip_code
-    });
+    const color = this.get("color");
+    const hidePostalCode = !Discourse.SiteSettings.discourse_donations_zip_code;
+    const elements = stripe.elements();
+
+    const style = {
+      base: {
+        iconColor: color,
+        '::placeholder': { color: color },
+      },
+    };
+
+    const card = elements.create("card", { style, hidePostalCode });
 
     card.addEventListener("change", event => {
       if (event.error) {
