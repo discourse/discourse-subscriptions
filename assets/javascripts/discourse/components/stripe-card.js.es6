@@ -18,9 +18,10 @@ export default Ember.Component.extend({
     const settings = Discourse.SiteSettings;
 
     this.setProperties({
-      "create_accounts": !user && settings.discourse_donations_enable_create_accounts,
-      "stripe": Stripe(settings.discourse_donations_public_key),
-      "color": jQuery("body").css("color"),
+      create_accounts:
+        !user && settings.discourse_donations_enable_create_accounts,
+      stripe: Stripe(settings.discourse_donations_public_key),
+      color: jQuery("body").css("color")
     });
 
     const types = settings.discourse_donations_types.split("|") || [];
@@ -108,8 +109,8 @@ export default Ember.Component.extend({
     const style = {
       base: {
         iconColor: color,
-        '::placeholder': { color: color },
-      },
+        "::placeholder": { color: color }
+      }
     };
 
     const card = elements.create("card", { style, hidePostalCode });

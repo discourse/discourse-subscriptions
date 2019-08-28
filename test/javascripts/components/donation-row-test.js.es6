@@ -8,7 +8,11 @@ componentTest("donation-row", {
   test(assert) {
     assert.equal(find(".donation-row-currency").text(), "3", "It has currency");
     assert.equal(find(".donation-row-amount").text(), "21", "It has an amount");
-    assert.equal(find(".donation-row-period").text(), "monthly", "It has a period");
+    assert.equal(
+      find(".donation-row-period").text(),
+      "monthly",
+      "It has a period"
+    );
   }
 });
 
@@ -21,6 +25,9 @@ componentTest("donation-row cancels subscription", {
   },
 
   async test(assert) {
-    assert.ok(find(".donation-row-subscription").length, "It has a subscription");
+    assert.ok(
+      find(".donation-row-subscription").length,
+      "It has a subscription"
+    );
   }
 });

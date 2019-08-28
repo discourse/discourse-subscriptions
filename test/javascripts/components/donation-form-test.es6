@@ -6,11 +6,17 @@ componentTest("donation form has content", {
   template: `{{donation-form}}`,
 
   beforeEach() {
-    this.registry.register('component:stripe-card', Ember.Component.extend({ tagName: 'dummy-component-tag' }));
+    this.registry.register(
+      "component:stripe-card",
+      Ember.Component.extend({ tagName: "dummy-component-tag" })
+    );
   },
 
   async test(assert) {
-    assert.ok(find('#payment-form').length, "The form renders");
-    assert.ok(find('dummy-component-tag').length, "The stripe component renders");
+    assert.ok(find("#payment-form").length, "The form renders");
+    assert.ok(
+      find("dummy-component-tag").length,
+      "The stripe component renders"
+    );
   }
 });
