@@ -179,11 +179,11 @@ export default Ember.Component.extend({
   didInsertElement() {
     this._super();
     this.get("card").mount("#card-element");
-    Ember.$(document).on("click", Ember.run.bind(this, this.documentClick));
+    jQuery(document).on("click", Ember.run.bind(this, this.documentClick));
   },
 
   willDestroyElement() {
-    Ember.$(document).off("click", Ember.run.bind(this, this.documentClick));
+    jQuery(document).off("click", Ember.run.bind(this, this.documentClick));
   },
 
   documentClick(e) {
