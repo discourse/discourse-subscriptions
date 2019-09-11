@@ -1,0 +1,26 @@
+en:
+  site_settings:
+    discourse_patrons_enabled: "Enable the Discourse Donations plugin."
+    discourse_patrons_secret_key: "Stripe Secret Key"
+    discourse_patrons_public_key: "Stripe Public Key"
+    discourse_patrons_description: "Description shown in Stripe Checkout form"
+    discourse_patrons_currency: "Currency Code"
+    discourse_patrons_zip_code: "Show Zip Code"
+    discourse_patrons_billing_address: "Collect billing address"
+    discourse_patrons_reward_badge_name: "Grant this badge to user when a payment is successful"
+    discourse_patrons_reward_group_name: "Add the user to this group when a payment is successful"
+    discourse_patrons_page_description: "Text to be added to /donate page. Markdown is supported."
+    errors:
+      discourse_patrons_amount_must_be_number: "Amounts must be numbers"
+
+  js:
+    discourse_patrons:
+      nav_item: Payment
+      title: "Make a Payment"
+      amount: Amount
+      card: Card
+      submit: Make payment
+      confirm: Confirm payment
+      invoice: "invoice"
+      invoice_prefix: "You gave"
+      receipt: "Receipt sent to {{email}}."
