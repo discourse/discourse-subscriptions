@@ -6,10 +6,16 @@ module DiscoursePatrons
   RSpec.describe PatronsController, type: :controller do
     routes { DiscoursePatrons::Engine.routes }
 
-    it 'responds ok for anonymous users' do
-      post :create, params: {}, format: :json
+    describe 'index' do
+      it 'responds ok' do
+        get :index, format: :json
+        expect(response).to have_http_status(200)
+      end
+    end
 
-      aggregate_failures do
+    describe 'create' do
+      it 'responds ok' do
+        post :create, params: { }, format: :json
         expect(response).to have_http_status(200)
       end
     end

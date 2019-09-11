@@ -1,5 +1,8 @@
 # name: Discourse Patrons
+# about: Integrates Stripe into Discourse to allow visitors to make donations
 # version: 1.0.0
+# url: https://github.com/rimian/discourse-patron
+# authors: Rimian Perkins
 
 enabled_site_setting :discourse_patrons_enabled
 
