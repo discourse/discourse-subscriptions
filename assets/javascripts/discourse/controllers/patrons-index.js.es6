@@ -9,6 +9,10 @@ export default Ember.Controller.extend({
       }).catch(() => {
         return { error: "An error occured while submitting the form." };
       });
+    },
+
+    paymentSuccessHandler() {
+      DiscourseURL.redirectTo("patrons/thanks");
     }
   }
 });
