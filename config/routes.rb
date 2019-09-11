@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-DiscoursePatrons::Engine.routes.draw do
-  get '/' => 'patrons#index'
-  get '/:id' => 'patrons#show'
+Discourse::Application.routes.append do
+  get '/patrons' => 'patrons#index'
 end
