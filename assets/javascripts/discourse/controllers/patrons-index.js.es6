@@ -3,7 +3,7 @@ import { ajax } from "discourse/lib/ajax";
 export default Ember.Controller.extend({
   actions: {
     stripePaymentHandler(paymentMethodId, amount) {
-      return ajax("/patrons", {
+      return ajax("/patrons/patrons", {
         data: { paymentMethodId, amount },
         method: "post"
       }).catch(() => {
