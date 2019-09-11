@@ -13,30 +13,31 @@ export default Ember.Component.extend({
 
     this.setProperties({
       confirmation: false,
-      currency: settings.discourse_donations_currency,
+      currency: settings.discourse_donations_currency
     });
   },
 
   actions: {
     closeModal() {
-      this.set('paymentError', false);
-      this.set('confirmation', false);
+      this.set("paymentError", false);
+      this.set("confirmation", false);
     },
 
     handleConfirmStripeCard(paymentMethod) {
-      this.set('confirmation', paymentMethod);
+      this.set("confirmation", paymentMethod);
     },
 
     confirmStripeCard() {
       const paymentMethodId = this.confirmation.id;
-      this.stripePaymentHandler(paymentMethodId, this.amount).then((paymentIntent) => {
-        if (paymentIntent.error) {
-          this.set('paymentError', paymentIntent.error);
+      this.stripePaymentHandler(paymentMethodId, this.amount).then(
+        paymentIntent => {
+          if (paymentIntent.error) {
+            this.set("paymentError", paymentIntent.error);
+          } else {
+            // console.log('ok done');
+          }
         }
-        else {
-          // console.log('ok done');
-        }
-      });
-    },
-  },
+      );
+    }
+  }
 });

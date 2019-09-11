@@ -9,7 +9,7 @@ componentTest("Discourse Patrons stripe card success", {
     window.Stripe = () => {
       return {
         createPaymentMethod() {
-          return new Ember.RSVP.Promise((resolve) => {
+          return new Ember.RSVP.Promise(resolve => {
             resolve({});
           });
         },
@@ -19,11 +19,11 @@ componentTest("Discourse Patrons stripe card success", {
               return {
                 on() {},
                 card() {},
-                mount() {},
+                mount() {}
               };
-            },
+            }
           };
-        },
+        }
       };
     };
   },
@@ -36,5 +36,5 @@ componentTest("Discourse Patrons stripe card success", {
     });
 
     await click(".btn-payment");
-  },
+  }
 });

@@ -7,8 +7,8 @@ export default Ember.Controller.extend({
         data: { paymentMethodId, amount },
         method: "post"
       }).catch(() => {
-        return { error: 'An error occured while submitting the form.' };
+        return { error: "An error occured while submitting the form." };
       });
-    },
-  },
+    }
+  }
 });
