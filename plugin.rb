@@ -8,7 +8,7 @@
 
 enabled_site_setting :discourse_patrons_enabled
 
-gem 'stripe', '5.1.0'
+gem 'stripe', '5.1.1'
 
 register_html_builder('server:before-head-close') do
   "<script src='https://js.stripe.com/v3/'></script>"
