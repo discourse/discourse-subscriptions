@@ -1,4 +1,4 @@
-# frozen_string_literal: true.
+# frozen_string_literal: true
 
 # name: Discourse Patrons
 # about: Integrates Stripe into Discourse to allow visitors to make payments

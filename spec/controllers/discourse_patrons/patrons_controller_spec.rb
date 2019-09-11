@@ -14,7 +14,13 @@ module DiscoursePatrons
     end
 
     describe 'create' do
+      before do
+        SiteSetting.stubs(:discourse_patrons_currency).returns('AUD')
+        SiteSetting.stubs(:discourse_patrons_secret_key).returns('xyz-678')
+      end
+
       it 'responds ok' do
+        ::Stripe::PaymentIntent.expects(:create)
         post :create, params: {}, format: :json
         expect(response).to have_http_status(200)
       end
