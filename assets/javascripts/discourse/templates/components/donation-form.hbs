@@ -1,0 +1,57 @@
+
+{{#if confirmation}}
+  {{#d-modal closeModal=(action "closeModal") modalStyle="inline-modal" title=(i18n "discourse_donations.confirm")}}
+    {{#d-modal-body}}
+      <table class="discourse-donations-confirmation">
+        <tr>
+          <td>Amount</td>
+          <td class="discourse-donations-amount">{{amount}}</td>
+        </tr>
+        <tr>
+          <td>Card</td>
+          <td class="discourse-donations-last4">.... .... .... {{last4}}</td>
+        </tr>
+      </table>
+
+    {{/d-modal-body}}
+
+    <div class='modal-footer'>
+      {{#d-button action="confirmStripeCard" class="btn btn-primary btn-payment"}}
+        {{i18n 'discourse_donations.submit'}} {{amount}}
+      {{/d-button}}
+    </div>
+
+  {{/d-modal}}
+
+  {{#if paymentError}}
+    <div class="popup-tip bad">
+      {{paymentError}}
+    </div>
+  {{/if}}
+
+{{else}}
+  <div class="discourse-donations-section-columns">
+    <div class="section-column">
+      <h3>Your information</h3>
+
+      <div class="user-controls">
+        <div class="display-row">
+          <div class="field">Payment Amount</div>
+          <div class="value">
+            {{input value=amount}}<br>
+            Enter {{currency}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section-column">
+      <div style>
+        {{stripe-card
+          amount=amount
+          currency=currency
+          handleConfirmStripeCard=(action "handleConfirmStripeCard")
+        }}
+      </div>
+    </div>
+  </div>
+{{/if}}

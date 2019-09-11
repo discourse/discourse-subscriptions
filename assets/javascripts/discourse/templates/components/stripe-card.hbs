@@ -1,0 +1,16 @@
+
+<h3>Credit card information</h3>
+
+<div id="card-element"></div>
+
+<div id="card-action">
+  {{#d-button action="submitStripeCard" class="btn btn-primary btn-payment"}}
+    {{i18n 'discourse_donations.confirm'}}<br>{{amount}}
+  {{/d-button}}
+
+  {{#if cardError}}
+    <div class="popup-tip bad">
+      {{cardError}}
+    </div>
+  {{/if}}
+</div>
