@@ -15,7 +15,7 @@ module DiscoursePatrons
 
     describe 'create' do
       it 'responds ok' do
-        post :create, params: { }, format: :json
+        post :create, params: {}, format: :json
         expect(response).to have_http_status(200)
       end
     end
