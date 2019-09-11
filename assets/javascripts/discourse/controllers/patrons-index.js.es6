@@ -1,3 +1,4 @@
+import DiscourseURL from "discourse/lib/url";
 import { ajax } from "discourse/lib/ajax";
 
 export default Ember.Controller.extend({
