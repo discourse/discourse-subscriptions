@@ -1,2 +1,12 @@
 
-index
+<h3>{{i18n 'discourse_donations.title' site_name=siteSettings.title}}</h3>
+
+<div class="donations-page-description">
+  {{cook-text siteSettings.discourse_donations_page_description}}
+</div>
+
+<div class="donations-page-payment">
+  {{donation-form
+    stripePaymentHandler=(action "stripePaymentHandler")
+  }}
+</div>
