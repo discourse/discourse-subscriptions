@@ -34,7 +34,7 @@ export default Ember.Component.extend({
           this.set('paymentError', paymentIntent.error);
         }
         else {
-          console.log('ok done');
+          // console.log('ok done');
         }
       });
     },

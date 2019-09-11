@@ -31,7 +31,7 @@ componentTest("Discourse Patrons stripe card success", {
   async test(assert) {
     assert.expect(1);
 
-    this.set("onSubmit", (arg) => {
+    this.set("onSubmit", () => {
       assert.ok(true, "payment method created");
     });
 
