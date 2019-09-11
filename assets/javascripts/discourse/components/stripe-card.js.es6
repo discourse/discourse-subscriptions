@@ -45,6 +45,7 @@ export default Ember.Component.extend({
   actions: {
     submitStripeCard() {
       this.stripe.createPaymentMethod('card', this.card).then((result) => {
+
         if (result.error) {
           this.set('cardError', result.error.message);
         }

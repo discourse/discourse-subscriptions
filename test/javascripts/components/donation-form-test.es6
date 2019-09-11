@@ -13,7 +13,7 @@ componentTest("Discourse Patrons donation form has content", {
   },
 
   async test(assert) {
-    assert.ok(find("#payment-form").length, "The form renders");
+    assert.ok(find(".discourse-patrons-section-columns").length, "The card section renders");
     assert.ok(
       find("dummy-component-tag").length,
       "The stripe component renders"
