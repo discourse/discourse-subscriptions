@@ -1,12 +1,12 @@
 plugins:
   discourse_patrons_enabled:
     default: false
-  discourse_patrons_secret_key:
-    default: ''
-    client: false
   discourse_patrons_public_key:
     default: ''
     client: true
+  discourse_patrons_secret_key:
+    default: ''
+    client: false
   discourse_patrons_description:
     client: true
     default: ''
