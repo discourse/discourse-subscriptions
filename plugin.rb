@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# name: Discourse Patrons
+# name: discourse-patrons
 # about: Integrates Stripe into Discourse to allow visitors to make payments
 # version: 1.0.0
 # url: https://github.com/rimian/discourse-patrons
