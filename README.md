@@ -21,6 +21,10 @@ Visit `/patrons`
 
 ## Testing
 
+Test with these credit card numbers:
+
+* 4111 1111 1111 1111
+
 ## Warranty
 
 This software comes without warranties or conditions of any kind.

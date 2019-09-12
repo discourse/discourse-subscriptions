@@ -7,7 +7,10 @@ plugins:
   discourse_patrons_secret_key:
     default: ''
     client: false
-  discourse_patrons_description:
+  discourse_patrons_payment_page:
+    client: true
+    default: ''
+  discourse_patrons_success_page:
     client: true
     default: ''
   discourse_patrons_amounts:
