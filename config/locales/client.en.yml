@@ -24,3 +24,6 @@ en:
       invoice: "invoice"
       invoice_prefix: "You gave"
       receipt: "Receipt sent to {{email}}."
+      confirmation:
+        amount: Amount $
+        last4: Card number

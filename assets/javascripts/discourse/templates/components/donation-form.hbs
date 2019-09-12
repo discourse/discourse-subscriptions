@@ -2,14 +2,14 @@
 {{#if confirmation}}
   {{#d-modal closeModal=(action "closeModal") modalStyle="inline-modal" title=(i18n "discourse_patrons.confirm")}}
     {{#d-modal-body}}
-      <table class="discourse-donations-confirmation">
+      <table class="discourse-patrons-confirmation">
         <tr>
-          <td>Amount</td>
+          <td>{{i18n 'discourse_patrons.confirmation.amount'}}</td>
           <td class="discourse-donations-amount">{{amount}}</td>
         </tr>
         <tr>
-          <td>Card</td>
-          <td class="discourse-donations-last4">.... .... .... {{last4}}</td>
+          <td>{{i18n 'discourse_patrons.confirmation.last4'}}</td>
+          <td class="discourse-patrons-last4">.... .... .... {{last4}}</td>
         </tr>
       </table>
 
