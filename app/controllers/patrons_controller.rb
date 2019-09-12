@@ -15,7 +15,7 @@ module DiscoursePatrons
       begin
 
         response = ::Stripe::PaymentIntent.create(
-          amount: params[:amount],
+          amount: param_currency_to_number,
           currency: SiteSetting.discourse_patrons_currency,
           payment_method_types: ['card'],
           payment_method: params[:paymentMethodId],
@@ -29,6 +29,12 @@ module DiscoursePatrons
       end
 
       render json: response
+    end
+
+    private
+
+    def param_currency_to_number
+      params[:amount].to_s.sub('.', '').to_i
     end
   end
 end

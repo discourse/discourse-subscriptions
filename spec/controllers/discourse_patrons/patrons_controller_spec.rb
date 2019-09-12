@@ -24,6 +24,18 @@ module DiscoursePatrons
         post :create, params: {}, format: :json
         expect(response).to have_http_status(200)
       end
+
+      it 'has the correct amount' do
+        ::Stripe::PaymentIntent.expects(:create).with(has_entry(:amount, 2000))
+        post :create, params: { amount: '20.00' }, format: :json
+        expect(response).to have_http_status(200)
+      end
+
+      it 'has no amount' do
+        ::Stripe::PaymentIntent.expects(:create).with(has_entry(:amount, 0))
+        post :create, params: {}, format: :json
+        expect(response).to have_http_status(200)
+      end
     end
   end
 end
