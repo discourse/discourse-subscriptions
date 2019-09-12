@@ -17,7 +17,7 @@
 
     <div class='modal-footer'>
       {{#d-button action="confirmStripeCard" class="btn btn-primary btn-payment btn-discourse-patrons"}}
-        {{i18n 'discourse_patrons.submit'}} {{amount}}
+        {{i18n 'discourse_patrons.buttons.confirm_payment'}}{{amount}}
       {{/d-button}}
     </div>
 
@@ -32,7 +32,7 @@
 {{else}}
   <div class="discourse-patrons-section-columns">
     <div class="section-column">
-      <h3>{{i18n 'discourse_patrons.your_information'}}</h3>
+      <h3>{{i18n 'discourse_patrons.payment.your_information'}}</h3>
 
       <div class="user-controls discource-patrons-fields">
         <div class="display-row">
@@ -63,7 +63,7 @@
 
     </div>
     <div class="section-column">
-      <h3>{{i18n 'discourse_patrons.payment_information'}}</h3>
+      <h3>{{i18n 'discourse_patrons.payment.payment_information'}}</h3>
 
       <div class="user-controls discource-patrons-fields">
         <div class="display-row">
