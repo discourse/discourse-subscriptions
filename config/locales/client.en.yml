@@ -24,6 +24,7 @@ en:
       billing:
         name: Full name
         email: Email
+        phone: Phone Number
       confirmation:
         amount: Amount $
         last4: Card number
