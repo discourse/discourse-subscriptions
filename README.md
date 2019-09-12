@@ -13,6 +13,12 @@ This is a newer version of https://github.com/rimian/discourse-donations. Many t
 * Add your Stripe public and private keys in settings and set the currency to your local value.
 * Enable the plugin and wait for people to donate money.
 
+## Usage
+
+Enable the plugin and enter your Stripe API keys in the settings. You can also configure amounts and the default currency.
+
+Visit `/patrons`
+
 ## Testing
 
 ## Warranty

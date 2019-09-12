@@ -36,6 +36,12 @@ module DiscoursePatrons
         post :create, params: {}, format: :json
         expect(response).to have_http_status(200)
       end
+
+      it 'has curency' do
+        ::Stripe::PaymentIntent.expects(:create).with(has_entry(:currency, 'AUD'))
+        post :create, params: {}, format: :json
+        expect(response).to have_http_status(200)
+      end
     end
   end
 end
