@@ -2,15 +2,15 @@ export default Ember.Helper.helper(function(params) {
   let currencySign;
 
   switch (Discourse.SiteSettings.discourse_patrons_currency) {
-    case 'EUR':
+    case "EUR":
       currencySign = "€";
       break;
-    case 'GBP':
+    case "GBP":
       currencySign = "£";
       break;
     default:
       currencySign = "$";
   }
 
-  return [currencySign, params[0]].join('');
+  return [currencySign, params[0]].join("");
 });
