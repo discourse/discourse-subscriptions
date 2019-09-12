@@ -27,9 +27,9 @@ en:
         email: Email
         phone: Phone Number
       confirmation:
-        amount: Amount $
+        amount: Amount
         last4: Card number
       buttons:
-        make_payment: Make payment $
-        confirm_payment: Confirm payment $
+        make_payment: Make payment
+        confirm_payment: Confirm payment
         success: Go back

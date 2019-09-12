@@ -44,5 +44,7 @@ Many thanks to Chris Beach and Angus McLeod who helped on the previous version o
 * Format the currency
 * Check against other themes
 * Add billing info to confirm dialog
+* Confirm dialog heading
 * Validate the model properly. Not in the stripe component
 * Show the transaction on the thank you page.
+* Work out where to put the helper tests. Name collision!

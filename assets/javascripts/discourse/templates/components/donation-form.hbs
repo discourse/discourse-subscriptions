@@ -5,7 +5,7 @@
       <table class="discourse-patrons-confirmation">
         <tr>
           <td>{{i18n 'discourse_patrons.confirmation.amount'}}</td>
-          <td class="discourse-donations-amount">{{amount}}</td>
+          <td class="discourse-donations-amount">{{format-curency amount}}</td>
         </tr>
         <tr>
           <td>{{i18n 'discourse_patrons.confirmation.last4'}}</td>
@@ -17,7 +17,7 @@
 
     <div class='modal-footer'>
       {{#d-button action="confirmStripeCard" class="btn btn-primary btn-payment btn-discourse-patrons"}}
-        {{i18n 'discourse_patrons.buttons.confirm_payment'}}{{amount}}
+        {{i18n 'discourse_patrons.buttons.confirm_payment'}} {{format-curency amount}}
       {{/d-button}}
     </div>
 
