@@ -10,17 +10,16 @@ en:
     discourse_patrons_success_page: "Text to be added to success page. Markdown is supported."
     discourse_patrons_reward_badge_name: "Grant this badge to user when a payment is successful"
     errors:
-      discourse_patrons_amount_must_be_currency: "Currency amounts must be currencies (eg 1.50)"
+      discourse_patrons_amount_must_be_currency: "Currency amounts must be currencies without dollar symbol (eg 1.50)"
   js:
     discourse_patrons:
       nav_item: Payment
-      title: "Make a Payment"
-      amount: Amount $
-      card: Card
-      your_information: Your information
-      payment_information: Credit card information
-      submit: Make payment $
-      confirm: Confirm payment $
+      heading:
+        payment: Make a Payment
+        success: Thank you!
+      payment:
+        your_information: Your information
+        payment_information: Payment information
       billing:
         name: Full name
         email: Email
@@ -29,4 +28,6 @@ en:
         amount: Amount $
         last4: Card number
       buttons:
+        make_payment: Make payment $
+        confirm_payment: Confirm payment $
         success: Go back

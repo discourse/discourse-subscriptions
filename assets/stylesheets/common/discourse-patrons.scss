@@ -32,6 +32,11 @@
   }
 }
 
+#stripe-elements {
+  border: 1px $primary-low-mid solid;
+  padding: 10px;
+}
+
 #card-element {
   padding: 20px 0;
 }
@@ -59,4 +64,9 @@
   td {
     padding: 10px;
   }
+}
+
+.btn-discourse-patrons {
+  white-space: nowrap;
+  border: 1px blue solid;
 }

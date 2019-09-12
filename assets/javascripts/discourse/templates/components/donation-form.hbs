@@ -16,7 +16,7 @@
     {{/d-modal-body}}
 
     <div class='modal-footer'>
-      {{#d-button action="confirmStripeCard" class="btn btn-primary btn-payment"}}
+      {{#d-button action="confirmStripeCard" class="btn btn-primary btn-payment btn-discourse-patrons"}}
         {{i18n 'discourse_patrons.submit'}} {{amount}}
       {{/d-button}}
     </div>
@@ -37,15 +37,6 @@
       <div class="user-controls discource-patrons-fields">
         <div class="display-row">
           <div class="field">
-            {{i18n 'discourse_patrons.amount'}}
-            {{siteSettings.discourse_patrons_currency}}
-          </div>
-          <div class="value">
-            {{combo-box valueAttribute="value" content=amounts value=amount}}
-          </div>
-        </div>
-        <div class="display-row">
-          <div class="field">
             {{i18n 'discourse_patrons.billing.name'}}
           </div>
           <div class="value">
@@ -57,7 +48,7 @@
             {{i18n 'discourse_patrons.billing.email'}}
           </div>
           <div class="value">
-            {{input value=billing.email}}
+            {{input type="email" value=billing.email}}
           </div>
         </div>
         <div class="display-row">
@@ -72,14 +63,26 @@
 
     </div>
     <div class="section-column">
-      <div style>
-        {{stripe-card
-          amount=amount
-          currency=currency
-          billing=billing
-          handleConfirmStripeCard=(action "handleConfirmStripeCard")
-        }}
+      <h3>{{i18n 'discourse_patrons.payment_information'}}</h3>
+
+      <div class="user-controls discource-patrons-fields">
+        <div class="display-row">
+          <div class="field">
+            {{i18n 'discourse_patrons.amount'}}
+            {{siteSettings.discourse_patrons_currency}}
+          </div>
+          <div class="value">
+            {{combo-box valueAttribute="value" content=amounts value=amount}}
+          </div>
+        </div>
       </div>
+
+      {{stripe-card
+        amount=amount
+        currency=currency
+        billing=billing
+        handleConfirmStripeCard=(action "handleConfirmStripeCard")
+      }}
     </div>
   </div>
 {{/if}}
