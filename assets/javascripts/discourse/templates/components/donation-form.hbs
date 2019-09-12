@@ -1,6 +1,6 @@
 
 {{#if confirmation}}
-  {{#d-modal closeModal=(action "closeModal") modalStyle="inline-modal" title=(i18n "discourse_donations.confirm")}}
+  {{#d-modal closeModal=(action "closeModal") modalStyle="inline-modal" title=(i18n "discourse_patrons.confirm")}}
     {{#d-modal-body}}
       <table class="discourse-donations-confirmation">
         <tr>
@@ -17,7 +17,7 @@
 
     <div class='modal-footer'>
       {{#d-button action="confirmStripeCard" class="btn btn-primary btn-payment"}}
-        {{i18n 'discourse_donations.submit'}} {{amount}}
+        {{i18n 'discourse_patrons.submit'}} {{amount}}
       {{/d-button}}
     </div>
 
@@ -32,14 +32,16 @@
 {{else}}
   <div class="discourse-patrons-section-columns">
     <div class="section-column">
-      <h3>Your information</h3>
+      <h3>{{i18n 'discourse_patrons.your_information'}}</h3>
 
       <div class="user-controls">
         <div class="display-row">
-          <div class="field">Payment Amount</div>
+          <div class="field">
+            {{i18n 'discourse_patrons.amount'}}
+            {{siteSettings.discourse_patrons_currency}}
+          </div>
           <div class="value">
-            {{input value=amount}}<br>
-            Enter {{currency}}
+            {{combo-box valueAttribute="value" content=amounts value=amount}}
           </div>
         </div>
       </div>

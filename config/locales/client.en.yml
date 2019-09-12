@@ -1,6 +1,6 @@
 en:
   site_settings:
-    discourse_patrons_enabled: "Enable the Discourse Donations plugin."
+    discourse_patrons_enabled: "Enable the Discourse Patrons plugin."
     discourse_patrons_secret_key: "Stripe Secret Key"
     discourse_patrons_public_key: "Stripe Public Key"
     discourse_patrons_description: "Description shown in Stripe Checkout form"
@@ -9,9 +9,9 @@ en:
     discourse_patrons_billing_address: "Collect billing address"
     discourse_patrons_reward_badge_name: "Grant this badge to user when a payment is successful"
     discourse_patrons_reward_group_name: "Add the user to this group when a payment is successful"
-    discourse_patrons_page_description: "Text to be added to /donate page. Markdown is supported."
+    discourse_patrons_page_description: "Text to be added to /patrons page. Markdown is supported."
     errors:
-      discourse_patrons_amount_must_be_number: "Amounts must be numbers"
+      discourse_patrons_amount_must_be_currency: "Currency amounts must be currencies (eg 1.50)"
 
   js:
     discourse_patrons:

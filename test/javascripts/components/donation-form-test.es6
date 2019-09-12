@@ -10,6 +10,7 @@ componentTest("Discourse Patrons donation form has content", {
       "component:stripe-card",
       Ember.Component.extend({ tagName: "dummy-component-tag" })
     );
+    Discourse.SiteSettings.discourse_patrons_amounts = "1.00|2.01";
   },
 
   async test(assert) {
@@ -29,6 +30,7 @@ componentTest("donation form has a confirmation", {
 
   beforeEach() {
     this.registry.register("component:stripe-card", Ember.Component.extend());
+    Discourse.SiteSettings.discourse_patrons_amounts = "1.00|2.01";
   },
 
   async test(assert) {

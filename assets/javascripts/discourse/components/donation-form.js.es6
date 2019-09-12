@@ -10,10 +10,13 @@ export default Ember.Component.extend({
     this._super(...arguments);
 
     const settings = Discourse.SiteSettings;
+    const amounts = Discourse.SiteSettings.discourse_patrons_amounts.split('|');
 
     this.setProperties({
       confirmation: false,
-      currency: settings.discourse_donations_currency
+      currency: settings.discourse_donations_currency,
+      amounts,
+      amount: amounts[0]
     });
   },
 
