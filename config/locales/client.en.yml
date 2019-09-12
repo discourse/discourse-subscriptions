@@ -18,6 +18,7 @@ en:
         payment: Make a Payment
         success: Thank you!
       payment:
+        optional: Optional
         your_information: Your information
         payment_information: Payment information
       amount: Amount

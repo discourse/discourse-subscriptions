@@ -32,6 +32,11 @@
   }
 }
 
+.desc {
+  color: dark-light-choose($primary-medium, $secondary-medium);
+  font-size: 0.8em;
+}
+
 #stripe-elements {
   border: 1px $primary-low-mid solid;
   padding: 10px;
@@ -46,9 +51,18 @@
   padding: 20px;
   border: 1px $primary-low-mid solid;
   background-color: $primary-low;
+
+  .discourse-patrons-billing {
+    .ember-text-field {
+      margin-bottom: 0;
+    }
+    .field {
+      margin-bottom: 10px;
+    }
+  }
 }
 
-.discource-patrons-fields {
+.discourse-patrons-fields {
   .field {
     width: 25%;
   }

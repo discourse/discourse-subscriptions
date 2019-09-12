@@ -32,3 +32,17 @@ This software comes without warranties or conditions of any kind.
 ## Credits
 
 Many thanks to Chris Beach and Angus McLeod who helped on the previous version of this plugin.
+
+## Known issues
+
+* CSS is mucked up in Safari and probably Firefox too.
+* The phone number isn't sent to Stripe
+
+## TODOs
+
+* Add a description/message
+* Format the currency
+* Check against other themes
+* Add billing info to confirm dialog
+* Validate the model properly. Not in the stripe component
+* Show the transaction on the thank you page.

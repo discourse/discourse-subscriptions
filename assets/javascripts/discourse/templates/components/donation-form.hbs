@@ -34,13 +34,14 @@
     <div class="section-column">
       <h3>{{i18n 'discourse_patrons.payment.your_information'}}</h3>
 
-      <div class="user-controls discource-patrons-fields">
+      <div class="user-controls discourse-patrons-fields discourse-patrons-billing">
         <div class="display-row">
           <div class="field">
             {{i18n 'discourse_patrons.billing.name'}}
           </div>
           <div class="value">
             {{input value=billing.name}}
+            <div class="desc">{{i18n 'discourse_patrons.payment.optional'}}</div>
           </div>
         </div>
         <div class="display-row">
@@ -49,6 +50,7 @@
           </div>
           <div class="value">
             {{input type="email" value=billing.email}}
+            <div class="desc">{{i18n 'discourse_patrons.payment.optional'}}</div>
           </div>
         </div>
         <div class="display-row">
@@ -57,6 +59,7 @@
           </div>
           <div class="value">
             {{input value=billing.phone}}
+            <div class="desc">{{i18n 'discourse_patrons.payment.optional'}}</div>
           </div>
         </div>
       </div>
@@ -65,7 +68,7 @@
     <div class="section-column">
       <h3>{{i18n 'discourse_patrons.payment.payment_information'}}</h3>
 
-      <div class="user-controls discource-patrons-fields">
+      <div class="user-controls discourse-patrons-fields">
         <div class="display-row">
           <div class="field">
             {{i18n 'discourse_patrons.amount'}}
