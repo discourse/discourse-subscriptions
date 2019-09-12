@@ -42,20 +42,20 @@ export default Ember.Component.extend({
   },
 
   validateBilling() {
-    const billing = this.get('billing');
-    const deleteEmpty = (key) => {
-      if(Ember.isEmpty(billing.get(key))) {
+    const billing = this.get("billing");
+    const deleteEmpty = key => {
+      if (Ember.isEmpty(billing.get(key))) {
         billing.set(key, undefined);
       }
-    }
-    ['name', 'phone', 'email'].forEach((key) => deleteEmpty(key));
+    };
+    ["name", "phone", "email"].forEach(key => deleteEmpty(key));
   },
 
   actions: {
     submitStripeCard() {
       this.validateBilling();
 
-      const paymentOptions = { billing_details: this.get('billing') };
+      const paymentOptions = { billing_details: this.get("billing") };
 
       this.stripe.createPaymentMethod("card", this.card, paymentOptions).then(
         result => {
