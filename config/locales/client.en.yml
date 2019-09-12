@@ -8,7 +8,6 @@ en:
     discourse_patrons_billing_address: "Collect billing address"
     discourse_patrons_payment_page: "Text to be added to enter payments page. Markdown is supported."
     discourse_patrons_success_page: "Text to be added to success page. Markdown is supported."
-    discourse_patrons_reward_badge_name: "Grant this badge to user when a payment is successful"
     errors:
       discourse_patrons_amount_must_be_currency: "Currency amounts must be currencies without dollar symbol (eg 1.50)"
   js:
@@ -21,6 +20,7 @@ en:
         optional: Optional
         your_information: Your information
         payment_information: Payment information
+        payment_confirmation: Confirm information
       amount: Amount
       billing:
         name: Full name
