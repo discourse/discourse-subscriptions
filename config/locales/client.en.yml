@@ -19,6 +19,8 @@ en:
       title: "Make a Payment"
       amount: Amount
       card: Card
+      your_information: Your information
+      payment_information: Credit card information
       submit: Make payment
       confirm: Confirm payment
       invoice: "invoice"
