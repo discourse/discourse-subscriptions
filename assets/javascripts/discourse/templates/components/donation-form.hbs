@@ -44,13 +44,40 @@
             {{combo-box valueAttribute="value" content=amounts value=amount}}
           </div>
         </div>
+
+        <div class="display-row">
+          <div class="field">
+            {{i18n 'discourse_patrons.billing.name'}}
+          </div>
+          <div class="value">
+            {{input value=billing.name}}
+          </div>
+        </div>
+        <div class="display-row">
+          <div class="field">
+            {{i18n 'discourse_patrons.billing.email'}}
+          </div>
+          <div class="value">
+            {{input value=billing.email}}
+          </div>
+        </div>
+        <div class="display-row">
+          <div class="field">
+            {{i18n 'discourse_patrons.billing.phone'}}
+          </div>
+          <div class="value">
+            {{input value=billing.phone}}
+          </div>
+        </div>
       </div>
+
     </div>
     <div class="section-column">
       <div style>
         {{stripe-card
           amount=amount
           currency=currency
+          billing=billing
           handleConfirmStripeCard=(action "handleConfirmStripeCard")
         }}
       </div>

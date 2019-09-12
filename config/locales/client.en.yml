@@ -21,9 +21,11 @@ en:
       payment_information: Credit card information
       submit: Make payment $
       confirm: Confirm payment $
-      invoice: "invoice"
-      invoice_prefix: "You gave"
-      receipt: "Receipt sent to {{email}}."
+      billing:
+        name: Full name
+        email: Email
       confirmation:
         amount: Amount $
         last4: Card number
+      buttons:
+        success: Go back

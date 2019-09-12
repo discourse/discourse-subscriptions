@@ -4,7 +4,7 @@
 
 Accept payments from visitors to your [Discourse](https://www.discourse.org/) application. Integrates with [Stripe](https://stripe.com).
 
-This is a newer version of https://github.com/rimian/discourse-donations. Many thanks to Chris Beach and Angus McLeod who helped on that project.
+This is a newer version of https://github.com/rimian/discourse-donations.
 
 ## Installation
 
@@ -28,3 +28,7 @@ Test with these credit card numbers:
 ## Warranty
 
 This software comes without warranties or conditions of any kind.
+
+## Credits
+
+Many thanks to Chris Beach and Angus McLeod who helped on the previous version of this plugin.

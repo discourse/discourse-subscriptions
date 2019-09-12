@@ -7,6 +7,7 @@
 
 <div class="donations-page-payment">
   {{donation-form
+    billing=model
     paymentSuccessHandler=(action "paymentSuccessHandler")
     stripePaymentHandler=(action "stripePaymentHandler")
   }}
