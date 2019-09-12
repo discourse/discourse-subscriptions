@@ -36,11 +36,11 @@ componentTest("donation form has a confirmation", {
   async test(assert) {
     this.set("confirmation", { card: { last4: "4242" } });
 
-    const confirmExists = find(".discourse-donations-confirmation").length;
+    const confirmExists = find(".discourse-patrons-confirmation").length;
 
     assert.ok(confirmExists, "The confirmation form renders");
 
-    const last4 = find(".discourse-donations-last4")
+    const last4 = find(".discourse-patrons-last4")
       .text()
       .trim();
 
