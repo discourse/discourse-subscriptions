@@ -47,11 +47,14 @@
   padding: 20px 0;
 }
 
+.discourse-patrons-payment-details {
+  border: 1px $primary-low-mid solid;
+  background-color: $primary-low;
+}
+
 .discourse-patrons-section-columns {
   margin: 20px;
   padding: 20px;
-  border: 1px $primary-low-mid solid;
-  background-color: $primary-low;
 
   .discourse-patrons-billing {
     .ember-text-field {

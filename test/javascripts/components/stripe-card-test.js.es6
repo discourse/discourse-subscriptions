@@ -3,7 +3,7 @@ import componentTest from "helpers/component-test";
 moduleForComponent("stripe-card", { integration: true });
 
 componentTest("Discourse Patrons stripe card success", {
-  template: `{{stripe-card handleConfirmStripeCard=onSubmit}}`,
+  template: `{{stripe-card handleConfirmStripeCard=onSubmit billing=billing}}`,
 
   beforeEach() {
     window.Stripe = () => {
@@ -26,6 +26,15 @@ componentTest("Discourse Patrons stripe card success", {
         }
       };
     };
+
+    this.set(
+      "billing",
+      Ember.Object.create({
+        name: "",
+        email: "",
+        phone: ""
+      })
+    );
   },
 
   async test(assert) {
