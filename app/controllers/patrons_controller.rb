@@ -19,6 +19,7 @@ module DiscoursePatrons
           currency: SiteSetting.discourse_patrons_currency,
           payment_method_types: ['card'],
           payment_method: params[:paymentMethodId],
+          description: SiteSetting.discourse_patrons_payment_description,
           confirm: true,
         )
 

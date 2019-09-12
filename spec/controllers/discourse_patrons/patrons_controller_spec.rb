@@ -42,6 +42,13 @@ module DiscoursePatrons
         post :create, params: {}, format: :json
         expect(response).to have_http_status(200)
       end
+
+      it 'has a description' do
+        SiteSetting.stubs(:discourse_patrons_payment_description).returns('hello-world')
+        ::Stripe::PaymentIntent.expects(:create).with(has_entry(:description, 'hello-world'))
+        post :create, params: {}, format: :json
+        expect(response).to have_http_status(200)
+      end
     end
   end
 end

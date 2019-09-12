@@ -13,6 +13,9 @@ plugins:
   discourse_patrons_success_page:
     client: true
     default: ''
+  discourse_patrons_payment_description:
+    client: true
+    default: ''
   discourse_patrons_amounts:
     client: true
     type: list

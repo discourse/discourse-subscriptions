@@ -8,6 +8,7 @@ en:
     discourse_patrons_billing_address: "Collect billing address"
     discourse_patrons_payment_page: "Text to be added to enter payments page. Markdown is supported."
     discourse_patrons_success_page: "Text to be added to success page. Markdown is supported."
+    discourse_patrons_payment_description: "This is sent to Stripe and shows in the payment information"
     errors:
       discourse_patrons_amount_must_be_currency: "Currency amounts must be currencies without dollar symbol (eg 1.50)"
   js:
