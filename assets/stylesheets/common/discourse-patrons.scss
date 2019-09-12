@@ -76,11 +76,16 @@
   margin: 20px 0;
 }
 
+.discourse-patrons-confirmation-billing {
+  margin-right: 40px;
+}
+
 .discourse-patrons-confirmation {
   width: 100%;
 
   td {
     padding: 10px;
+    white-space: nowrap;
   }
 }
 

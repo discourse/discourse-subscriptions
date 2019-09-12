@@ -41,6 +41,7 @@ Many thanks to Chris Beach and Angus McLeod who helped on the previous version o
 ## TODOs
 
 * Add a description/message
+* Confirm dialog CSS isn't the best.
 * Check against other themes (works ok with light and dark)
 * Validate the model properly. Not in the stripe component
 * Show the transaction on the thank you page.
