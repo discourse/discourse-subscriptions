@@ -23,7 +23,7 @@ module DiscoursePatrons
 
       it 'has no current user email' do
         get :index, format: :json
-        expect(JSON.parse(response.body)['email']).to be_nil
+        expect(JSON.parse(response.body)['email']).to be_empty
       end
     end
 

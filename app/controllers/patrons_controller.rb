@@ -5,7 +5,7 @@ module DiscoursePatrons
     skip_before_action :verify_authenticity_token, only: [:create]
 
     def index
-      result = {}
+      result = { email: '' }
 
       if current_user
         result[:email] = current_user.email
