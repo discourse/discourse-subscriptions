@@ -62,7 +62,10 @@ export default Ember.Component.extend({
           if (result.error) {
             this.set("cardError", result.error.message);
           } else {
-            this.handleConfirmStripeCard(result.paymentMethod);
+            this.handleConfirmStripeCard(
+              result.paymentMethod,
+              this.get("billing.email")
+            );
           }
         },
         () => {

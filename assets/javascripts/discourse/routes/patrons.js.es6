@@ -10,11 +10,13 @@ export default Discourse.Route.extend({
 
     return ajax("/patrons/patrons", {
       method: "get"
-    }).then((result) => {
-      user.set('email', result.email);
-      return user;
-    }).catch(() => {
-      return user;
-    });
+    })
+      .then(result => {
+        user.set("email", result.email);
+        return user;
+      })
+      .catch(() => {
+        return user;
+      });
   }
 });

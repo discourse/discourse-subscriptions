@@ -3,9 +3,9 @@ import { ajax } from "discourse/lib/ajax";
 
 export default Ember.Controller.extend({
   actions: {
-    stripePaymentHandler(paymentMethodId, amount) {
+    stripePaymentHandler(data) {
       return ajax("/patrons/patrons", {
-        data: { paymentMethodId, amount },
+        data,
         method: "post"
       }).catch(() => {
         return { error: "An error occured while submitting the form." };
