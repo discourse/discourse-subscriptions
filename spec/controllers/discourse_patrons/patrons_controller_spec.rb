@@ -28,57 +28,67 @@ module DiscoursePatrons
     end
 
     describe 'create' do
+      let(:payment) do
+        {
+          id: 'xyz-1234',
+          charges: { url: '/v1/charges?payment_intent=xyz-1234' },
+          amount: 9000,
+          receipt_email: 'hello@example.com'
+        }
+      end
+
       before do
         SiteSetting.stubs(:discourse_patrons_currency).returns('AUD')
         SiteSetting.stubs(:discourse_patrons_secret_key).returns('xyz-678')
       end
 
       it 'responds ok' do
-        ::Stripe::PaymentIntent.expects(:create)
-        post :create, params: {}, format: :json
+        ::Stripe::PaymentIntent.expects(:create).returns(payment)
+        post :create, params: { receipt_email: 'hello@example.com', amount: '20.00' }, format: :json
         expect(response).to have_http_status(200)
       end
 
-      xit 'creates a payment' do
-        ::Stripe::PaymentIntent.expects(:create)
+      it 'creates a payment' do
+        ::Stripe::PaymentIntent.expects(:create).returns(payment)
+
         expect {
           post :create, params: { receipt_email: 'hello@example.com', amount: '20.00' }, format: :json
         }.to change { Payment.count }
       end
 
       it 'has the correct amount' do
-        ::Stripe::PaymentIntent.expects(:create).with(has_entry(:amount, 2000))
+        ::Stripe::PaymentIntent.expects(:create).with(has_entry(:amount, 2000)).returns(payment)
         post :create, params: { amount: '20.00' }, format: :json
         expect(response).to have_http_status(200)
       end
 
       it 'has no amount' do
-        ::Stripe::PaymentIntent.expects(:create).with(has_entry(:amount, 0))
+        ::Stripe::PaymentIntent.expects(:create).with(has_entry(:amount, 0)).returns(payment)
         post :create, params: {}, format: :json
         expect(response).to have_http_status(200)
       end
 
       it 'has curency' do
-        ::Stripe::PaymentIntent.expects(:create).with(has_entry(:currency, 'AUD'))
+        ::Stripe::PaymentIntent.expects(:create).with(has_entry(:currency, 'AUD')).returns(payment)
         post :create, params: {}, format: :json
         expect(response).to have_http_status(200)
       end
 
       it 'has a receipt email' do
-        ::Stripe::PaymentIntent.expects(:create).with(has_entry(:receipt_email, 'hello@example.com'))
+        ::Stripe::PaymentIntent.expects(:create).with(has_entry(:receipt_email, 'hello@example.com')).returns(payment)
         post :create, params: { receipt_email: 'hello@example.com' }, format: :json
         expect(response).to have_http_status(200)
       end
 
       it 'has a payment method' do
-        ::Stripe::PaymentIntent.expects(:create).with(has_entry(:payment_method, 'xyz-1234'))
+        ::Stripe::PaymentIntent.expects(:create).with(has_entry(:payment_method, 'xyz-1234')).returns(payment)
         post :create, params: { payment_method_id: 'xyz-1234' }, format: :json
         expect(response).to have_http_status(200)
       end
 
       it 'has a description' do
         SiteSetting.stubs(:discourse_patrons_payment_description).returns('hello-world')
-        ::Stripe::PaymentIntent.expects(:create).with(has_entry(:description, 'hello-world'))
+        ::Stripe::PaymentIntent.expects(:create).with(has_entry(:description, 'hello-world')).returns(payment)
         post :create, params: {}, format: :json
         expect(response).to have_http_status(200)
       end

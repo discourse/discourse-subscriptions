@@ -29,6 +29,13 @@ module DiscoursePatrons
           confirm: true,
         )
 
+        Payment.create(
+          payment_intent_id: response[:id],
+          receipt_email: response[:receipt_email],
+          url: response[:charges][:url],
+          amount: response[:amount]
+        )
+
       rescue ::Stripe::InvalidRequestError => e
         response = { error: e }
       rescue ::Stripe::CardError => e
