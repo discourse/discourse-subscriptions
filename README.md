@@ -31,7 +31,7 @@ This software comes without warranties or conditions of any kind.
 
 ## Credits
 
-Many thanks to Chris Beach and Angus McLeod who helped on the previous version of this plugin.
+Many thanks to Chris Beach and Angus McLeod who helped on the [previous version](https://github.com/chrisbeach/discourse-donations) of this plugin.
 
 ## Known issues
 
