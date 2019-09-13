@@ -26,6 +26,7 @@ en:
       billing:
         name: Full name
         email: Email
+        email_info: A receipt is sent to this email address
         phone: Phone Number
       confirmation:
         amount: Amount
