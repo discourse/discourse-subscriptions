@@ -1,11 +1,16 @@
 # frozen_string_literal: true
 
 module DiscoursePatrons
-  class PatronsController < ApplicationController
+  class PatronsController < ::ApplicationController
     skip_before_action :verify_authenticity_token, only: [:create]
 
     def index
       result = {}
+
+      if current_user
+        result[:email] = current_user.email
+      end
+
       render json: result
     end
 

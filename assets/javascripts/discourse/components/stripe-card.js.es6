@@ -48,7 +48,7 @@ export default Ember.Component.extend({
         billing.set(key, undefined);
       }
     };
-    ["name", "phone", "email"].forEach(key => deleteEmpty(key));
+    ["name", "phone"].forEach(key => deleteEmpty(key));
   },
 
   actions: {

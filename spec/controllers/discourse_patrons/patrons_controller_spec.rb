@@ -11,6 +11,20 @@ module DiscoursePatrons
         get :index, format: :json
         expect(response).to have_http_status(200)
       end
+
+      it 'has a current user email' do
+        user = Fabricate(:user, email: 'hello@example.com')
+        controller.expects(:current_user).at_least(1).returns(user)
+
+        get :index, format: :json
+
+        expect(JSON.parse(response.body)['email']).to eq 'hello@example.com'
+      end
+
+      it 'has no current user email' do
+        get :index, format: :json
+        expect(JSON.parse(response.body)['email']).to be_nil
+      end
     end
 
     describe 'create' do
