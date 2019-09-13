@@ -2,7 +2,7 @@
 
 # name: discourse-patrons
 # about: Integrates Stripe into Discourse to allow visitors to make payments
-# version: 1.0.0
+# version: 1.1.0
 # url: https://github.com/rimian/discourse-patrons
 # authors: Rimian Perkins
 
@@ -25,9 +25,13 @@ after_initialize do
   ::Stripe.api_version = "2019-08-14"
   ::Stripe.set_app_info('Discourse Patrons', version: '1.0.0', url: 'https://github.com/rimian/discourse-patrons')
 
-  load File.expand_path('../lib/discourse_patrons/engine.rb', __FILE__)
-  load File.expand_path('../config/routes.rb', __FILE__)
-  load File.expand_path('../app/controllers/patrons_controller.rb', __FILE__)
+  [
+    "../lib/discourse_patrons/engine",
+    "../config/routes",
+    "../app/controllers/patrons_controller",
+    "../app/models/payment",
+  ].each { |path| require File.expand_path(path, __FILE__) }
+
 
   Discourse::Application.routes.append do
     mount ::DiscoursePatrons::Engine, at: 'patrons'

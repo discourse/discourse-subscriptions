@@ -38,15 +38,13 @@ export default Ember.Component.extend({
         receiptEmail: this.receiptEmail
       };
 
-      this.stripePaymentHandler(data).then(
-        paymentIntent => {
-          if (paymentIntent.error) {
-            this.set("paymentError", paymentIntent.error);
-          } else {
-            this.paymentSuccessHandler();
-          }
+      this.stripePaymentHandler(data).then(paymentIntent => {
+        if (paymentIntent.error) {
+          this.set("paymentError", paymentIntent.error);
+        } else {
+          this.paymentSuccessHandler();
         }
-      );
+      });
     }
   }
 });
