@@ -32,7 +32,6 @@ after_initialize do
     "../app/models/payment",
   ].each { |path| require File.expand_path(path, __FILE__) }
 
-
   Discourse::Application.routes.append do
     mount ::DiscoursePatrons::Engine, at: 'patrons'
   end

@@ -33,9 +33,9 @@ export default Ember.Component.extend({
 
     confirmStripeCard() {
       const data = {
-        paymentMethodId: this.confirmation.id,
+        payment_method_id: this.confirmation.id,
         amount: this.amount,
-        receiptEmail: this.receiptEmail
+        receipt_email: this.receiptEmail
       };
 
       this.stripePaymentHandler(data).then(paymentIntent => {

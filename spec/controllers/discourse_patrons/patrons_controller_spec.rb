@@ -39,6 +39,13 @@ module DiscoursePatrons
         expect(response).to have_http_status(200)
       end
 
+      xit 'creates a payment' do
+        ::Stripe::PaymentIntent.expects(:create)
+        expect {
+          post :create, params: { receipt_email: 'hello@example.com', amount: '20.00' }, format: :json
+        }.to change { Payment.count }
+      end
+
       it 'has the correct amount' do
         ::Stripe::PaymentIntent.expects(:create).with(has_entry(:amount, 2000))
         post :create, params: { amount: '20.00' }, format: :json
@@ -59,7 +66,13 @@ module DiscoursePatrons
 
       it 'has a receipt email' do
         ::Stripe::PaymentIntent.expects(:create).with(has_entry(:receipt_email, 'hello@example.com'))
-        post :create, params: { receiptEmail: 'hello@example.com' }, format: :json
+        post :create, params: { receipt_email: 'hello@example.com' }, format: :json
+        expect(response).to have_http_status(200)
+      end
+
+      it 'has a payment method' do
+        ::Stripe::PaymentIntent.expects(:create).with(has_entry(:payment_method, 'xyz-1234'))
+        post :create, params: { payment_method_id: 'xyz-1234' }, format: :json
         expect(response).to have_http_status(200)
       end
 

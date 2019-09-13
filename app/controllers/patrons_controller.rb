@@ -23,9 +23,9 @@ module DiscoursePatrons
           amount: param_currency_to_number,
           currency: SiteSetting.discourse_patrons_currency,
           payment_method_types: ['card'],
-          payment_method: params[:paymentMethodId],
+          payment_method: params[:payment_method_id],
           description: SiteSetting.discourse_patrons_payment_description,
-          receipt_email: params[:receiptEmail],
+          receipt_email: params[:receipt_email],
           confirm: true,
         )
 
