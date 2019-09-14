@@ -9,18 +9,12 @@
 {{#if model}}
   <table>
     <tr>
-      <td>Payment ID</td>
+      <td>{{i18n 'discourse_patrons.payment_intent_id'}}</td>
       <td>{{model.id}}</td>
     </tr>
     <tr>
-      <td>Amount</td>
+      <td>{{i18n 'discourse_patrons.amount'}}</td>
       <td>{{model.amount}}</td>
     </tr>
   </table>
 {{/if}}
-
-<hr>
-
-{{#d-button action="goBack" class="btn btn-primary"}}
-  {{i18n 'discourse_patrons.buttons.success'}}
-{{/d-button}}

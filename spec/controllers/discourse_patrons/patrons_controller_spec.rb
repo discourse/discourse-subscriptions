@@ -28,15 +28,50 @@ module DiscoursePatrons
     end
 
     describe 'show' do
+      let!(:admin) { Fabricate(:admin) }
+      let!(:user) { Fabricate(:user) }
+      let(:payment_intent) { { customer: user.id } }
+
+      before do
+        controller.stubs(:current_user).returns(user)
+        ::Stripe::PaymentIntent.stubs(:retrieve).returns(payment_intent)
+      end
+
       it 'responds ok' do
-        ::Stripe::PaymentIntent.expects(:retrieve)
         get :show, params: { pid: '123' }, format: :json
         expect(response).to have_http_status(200)
       end
 
       it 'requests the payment intent' do
-        ::Stripe::PaymentIntent.expects(:retrieve).with('abc-1234')
+        ::Stripe::PaymentIntent.expects(:retrieve).with('abc-1234').returns(payment_intent)
         get :show, params: { pid: 'abc-1234' }, format: :json
+      end
+
+      it 'allows admin to see receipts' do
+        controller.expects(:current_user).returns(admin)
+        ::Stripe::PaymentIntent.expects(:retrieve).returns(customer: user.id)
+        get :show, params: { pid: '123' }, format: :json
+        expect(response).to have_http_status(200)
+      end
+
+      it 'does not allow another the user to see receipts' do
+        ::Stripe::PaymentIntent.expects(:retrieve).returns(customer: 9999)
+        get :show, params: { pid: '123' }, format: :json
+
+        aggregate_failures do
+          expect(response).to have_http_status(200)
+          expect(JSON.parse(response.body)).to eq({ "error" => "Not found" })
+        end
+      end
+
+      it 'does not allow anon user to see receipts' do
+        controller.stubs(:current_user).returns(nil)
+        get :show, params: { pid: '123' }, format: :json
+
+        aggregate_failures do
+          expect(response).to have_http_status(200)
+          expect(JSON.parse(response.body)).to eq({ "error" => "Not found" })
+        end
       end
     end
 

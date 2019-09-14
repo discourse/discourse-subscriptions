@@ -25,6 +25,7 @@ en:
         payment_information: Payment information
         payment_confirmation: Confirm information
       amount: Amount
+      payment_intent_id: Payment ID
       billing:
         name: Full name
         email: Email

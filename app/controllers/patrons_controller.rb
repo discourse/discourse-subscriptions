@@ -16,7 +16,13 @@ module DiscoursePatrons
     end
 
     def show
-      result = Stripe::PaymentIntent.retrieve(params[:pid])
+      payment_intent = Stripe::PaymentIntent.retrieve(params[:pid])
+
+      if current_user && (current_user.admin || payment_intent[:customer] == current_user.id)
+        result = payment_intent
+      else
+        result = { error: 'Not found' }
+      end
 
       render json: result
     end
