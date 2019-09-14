@@ -33,13 +33,15 @@ module DiscoursePatrons
           id: 'xyz-1234',
           charges: { url: '/v1/charges?payment_intent=xyz-1234' },
           amount: 9000,
-          receipt_email: 'hello@example.com'
+          receipt_email: 'hello@example.com',
+          currency: 'aud'
         }
       end
 
       before do
         SiteSetting.stubs(:discourse_patrons_currency).returns('AUD')
         SiteSetting.stubs(:discourse_patrons_secret_key).returns('xyz-678')
+        controller.stubs(:current_user).returns(Fabricate(:user))
       end
 
       it 'responds ok' do
@@ -54,6 +56,13 @@ module DiscoursePatrons
         expect {
           post :create, params: { receipt_email: 'hello@example.com', amount: '20.00' }, format: :json
         }.to change { Payment.count }
+      end
+
+      it 'has no user' do
+        controller.stubs(:current_user).returns(nil)
+        ::Stripe::PaymentIntent.expects(:create).returns(payment)
+        post :create, format: :json
+        expect(response).to have_http_status(200)
       end
 
       it 'has the correct amount' do

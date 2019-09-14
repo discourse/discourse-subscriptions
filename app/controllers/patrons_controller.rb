@@ -30,10 +30,12 @@ module DiscoursePatrons
         )
 
         Payment.create(
+          user_id: user_id,
           payment_intent_id: response[:id],
           receipt_email: response[:receipt_email],
           url: response[:charges][:url],
-          amount: response[:amount]
+          amount: response[:amount],
+          currency: response[:currency]
         )
 
       rescue ::Stripe::InvalidRequestError => e
@@ -49,6 +51,12 @@ module DiscoursePatrons
 
     def param_currency_to_number
       params[:amount].to_s.sub('.', '').to_i
+    end
+
+    def user_id
+      if current_user
+        current_user.id
+      end
     end
   end
 end
