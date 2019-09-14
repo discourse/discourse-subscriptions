@@ -42,7 +42,7 @@ export default Ember.Component.extend({
         if (paymentIntent.error) {
           this.set("paymentError", paymentIntent.error);
         } else {
-          this.paymentSuccessHandler();
+          this.paymentSuccessHandler(paymentIntent.id);
         }
       });
     }
