@@ -6,6 +6,21 @@
   {{cook-text siteSettings.discourse_patrons_success_page}}
 </p>
 
+{{#if model}}
+  <table>
+    <tr>
+      <td>Payment ID</td>
+      <td>{{model.id}}</td>
+    </tr>
+    <tr>
+      <td>Amount</td>
+      <td>{{model.amount}}</td>
+    </tr>
+  </table>
+{{/if}}
+
+<hr>
+
 {{#d-button action="goBack" class="btn btn-primary"}}
   {{i18n 'discourse_patrons.buttons.success'}}
 {{/d-button}}

@@ -29,8 +29,14 @@ module DiscoursePatrons
 
     describe 'show' do
       it 'responds ok' do
+        ::Stripe::PaymentIntent.expects(:retrieve)
         get :show, params: { pid: '123' }, format: :json
         expect(response).to have_http_status(200)
+      end
+
+      it 'requests the payment intent' do
+        ::Stripe::PaymentIntent.expects(:retrieve).with('abc-1234')
+        get :show, params: { pid: 'abc-1234' }, format: :json
       end
     end
 

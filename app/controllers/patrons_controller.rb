@@ -3,6 +3,7 @@
 module DiscoursePatrons
   class PatronsController < ::ApplicationController
     skip_before_action :verify_authenticity_token, only: [:create]
+    before_action :set_api_key
 
     def index
       result = { email: '' }
@@ -15,14 +16,12 @@ module DiscoursePatrons
     end
 
     def show
-      result = { }
+      result = Stripe::PaymentIntent.retrieve(params[:pid])
 
       render json: result
     end
 
     def create
-      ::Stripe.api_key = SiteSetting.discourse_patrons_secret_key
-
       begin
 
         response = ::Stripe::PaymentIntent.create(
@@ -54,6 +53,10 @@ module DiscoursePatrons
     end
 
     private
+
+    def set_api_key
+      ::Stripe.api_key = SiteSetting.discourse_patrons_secret_key
+    end
 
     def param_currency_to_number
       params[:amount].to_s.sub('.', '').to_i

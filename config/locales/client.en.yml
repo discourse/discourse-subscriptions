@@ -40,6 +40,6 @@ en:
         table:
           head:
             user: User
-            payment_intent: Payment Intent
+            payment_intent: Payment ID
             receipt_email: Receipt Email
             amount: Amount
