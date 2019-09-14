@@ -27,6 +27,13 @@ module DiscoursePatrons
       end
     end
 
+    describe 'show' do
+      it 'responds ok' do
+        get :show, params: { pid: '123' }, format: :json
+        expect(response).to have_http_status(200)
+      end
+    end
+
     describe 'create' do
       let(:payment) do
         {

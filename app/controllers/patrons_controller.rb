@@ -14,6 +14,10 @@ module DiscoursePatrons
       render json: result
     end
 
+    def show
+      head 200
+    end
+
     def create
       ::Stripe.api_key = SiteSetting.discourse_patrons_secret_key
 
