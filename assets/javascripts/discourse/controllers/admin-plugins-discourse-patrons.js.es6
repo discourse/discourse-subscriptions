@@ -1,2 +1,1 @@
-export default Ember.Controller.extend({
-});
+export default Ember.Controller.extend({});

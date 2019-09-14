@@ -8,6 +8,7 @@ class PaymentSerializer < ApplicationSerializer
               :amount,
               :amount_currency,
               :username
+              :user_id
 
   def created_at_age
     Time.now - object.created_at
