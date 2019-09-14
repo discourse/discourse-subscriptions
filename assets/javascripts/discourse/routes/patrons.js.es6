@@ -8,7 +8,7 @@ export default Discourse.Route.extend({
       phone: ""
     });
 
-    return ajax("/patrons/patrons", {
+    return ajax("/patrons", {
       method: "get"
     })
       .then(result => {
