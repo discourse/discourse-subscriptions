@@ -39,8 +39,7 @@ en:
       admin:
         table:
           head:
-            url: User
-            payment_intent_id: Payment Intent Id
+            user: User
+            payment_intent: Payment Intent
             receipt_email: Receipt Email
-            url: URL
             amount: Amount

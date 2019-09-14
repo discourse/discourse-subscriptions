@@ -5,11 +5,6 @@ export default Discourse.Route.extend({
     return ajax("/patrons/admin", {
       method: "get"
     })
-      .then(results => {
-
-        console.log(12, results);
-
-        return results;
-      });
+      .then(results => results);
   }
 });
