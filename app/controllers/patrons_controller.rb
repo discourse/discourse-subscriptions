@@ -15,7 +15,9 @@ module DiscoursePatrons
     end
 
     def show
-      head 200
+      result = { }
+
+      render json: result
     end
 
     def create
