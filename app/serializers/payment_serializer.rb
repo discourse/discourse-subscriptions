@@ -7,7 +7,7 @@ class PaymentSerializer < ApplicationSerializer
               :created_at_age,
               :amount,
               :amount_currency,
-              :username
+              :username,
               :user_id
 
   def created_at_age
