@@ -1,0 +1,23 @@
+
+<h3>{{i18n 'discourse_patrons.title' site_name=siteSettings.title}}</h3>
+
+<table class="table discourse_patrons_admin">
+  <thead>
+    <tr>
+      <th>{{i18n 'discourse_patrons.admin.table.head.user'}}</th>
+      <th>{{i18n 'discourse_patrons.admin.table.head.payment_intent_id'}}</th>
+      <th>{{i18n 'discourse_patrons.admin.table.head.receipt_email'}}</th>
+      <th>{{i18n 'discourse_patrons.admin.table.head.url'}}</th>
+      <th class="amount">{{i18n 'discourse_patrons.admin.table.head.amount'}}</th>
+    </tr>
+  </thead>
+  {{#each model as |payment|}}
+    <tr>
+      <td>{{payment.user_id}}</td>
+      <td>{{payment.payment_intent_id}}</td>
+      <td>{{payment.receipt_email}}</td>
+      <td>{{payment.url}}</td>
+      <td class="amount">{{payment.amount}}</td>
+    </tr>
+  {{/each}}
+</table>

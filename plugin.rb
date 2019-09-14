@@ -2,7 +2,7 @@
 
 # name: discourse-patrons
 # about: Integrates Stripe into Discourse to allow visitors to make payments
-# version: 1.1.0
+# version: 1.2.0
 # url: https://github.com/rimian/discourse-patrons
 # authors: Rimian Perkins
 
@@ -21,6 +21,12 @@ extend_content_security_policy(
   script_src: ['https://js.stripe.com/v3/']
 )
 
+add_admin_route 'discourse_patrons.title', 'discourse-patrons'
+
+Discourse::Application.routes.append do
+  get '/admin/plugins/discourse-patrons' => 'admin/plugins#index'
+end
+
 after_initialize do
   ::Stripe.api_version = "2019-08-14"
   ::Stripe.set_app_info('Discourse Patrons', version: '1.0.0', url: 'https://github.com/rimian/discourse-patrons')
@@ -28,8 +34,10 @@ after_initialize do
   [
     "../lib/discourse_patrons/engine",
     "../config/routes",
+    "../app/controllers/admin_controller",
     "../app/controllers/patrons_controller",
     "../app/models/payment",
+    "../app/serializers/payment_serializer",
   ].each { |path| require File.expand_path(path, __FILE__) }
 
   Discourse::Application.routes.append do

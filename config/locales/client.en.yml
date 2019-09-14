@@ -13,6 +13,7 @@ en:
       discourse_patrons_amount_must_be_currency: "Currency amounts must be currencies without dollar symbol (eg 1.50)"
   js:
     discourse_patrons:
+      title: Discourse Patrons
       nav_item: Payment
       heading:
         payment: Make a Payment
@@ -35,3 +36,11 @@ en:
         make_payment: Make payment
         confirm_payment: Confirm payment
         success: Go back
+      admin:
+        table:
+          head:
+            url: User
+            payment_intent_id: Payment Intent Id
+            receipt_email: Receipt Email
+            url: URL
+            amount: Amount
