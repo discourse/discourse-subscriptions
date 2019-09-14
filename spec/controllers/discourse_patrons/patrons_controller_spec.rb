@@ -41,20 +41,23 @@ module DiscoursePatrons
     end
 
     describe 'create' do
+      let!(:current_user) { Fabricate(:user) }
+
       let(:payment) do
         {
           id: 'xyz-1234',
           charges: { url: '/v1/charges?payment_intent=xyz-1234' },
           amount: 9000,
           receipt_email: 'hello@example.com',
-          currency: 'aud'
+          currency: 'aud',
+          customer: current_user.id
         }
       end
 
       before do
         SiteSetting.stubs(:discourse_patrons_currency).returns('AUD')
         SiteSetting.stubs(:discourse_patrons_secret_key).returns('xyz-678')
-        controller.stubs(:current_user).returns(Fabricate(:user))
+        controller.stubs(:current_user).returns(current_user)
       end
 
       it 'responds ok' do
@@ -92,6 +95,12 @@ module DiscoursePatrons
 
       it 'has curency' do
         ::Stripe::PaymentIntent.expects(:create).with(has_entry(:currency, 'AUD')).returns(payment)
+        post :create, params: {}, format: :json
+        expect(response).to have_http_status(200)
+      end
+
+      it 'has the customer id' do
+        ::Stripe::PaymentIntent.expects(:create).with(has_entry(:customer, current_user.id)).returns(payment)
         post :create, params: {}, format: :json
         expect(response).to have_http_status(200)
       end

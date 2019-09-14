@@ -32,10 +32,11 @@ module DiscoursePatrons
           description: SiteSetting.discourse_patrons_payment_description,
           receipt_email: params[:receipt_email],
           confirm: true,
+          customer: user_id
         )
 
         Payment.create(
-          user_id: user_id,
+          user_id: response[:customer],
           payment_intent_id: response[:id],
           receipt_email: response[:receipt_email],
           url: response[:charges][:url],
