@@ -135,7 +135,7 @@ module DiscoursePatrons
       end
 
       it 'has the user id' do
-        ::Stripe::PaymentIntent.expects(:create).with(has_entry(:metadata, { user_id: current_user.id })).returns(payment)
+        ::Stripe::PaymentIntent.expects(:create).with(has_entry(:metadata, user_id: current_user.id)).returns(payment)
         post :create, params: {}, format: :json
         expect(response).to have_http_status(200)
       end
