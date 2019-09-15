@@ -1,14 +1,14 @@
 export default Ember.Controller.extend({
-  queryParams: ["order", "ascending"],
+  queryParams: ["order", "descending"],
   order: null,
-  ascending: true,
+  descending: true,
 
   actions: {
     loadMore() {},
 
     orderPayments(order) {
       if (order === this.get("order")) {
-        this.toggleProperty("ascending");
+        this.toggleProperty("descending");
       }
 
       this.set("order", order);

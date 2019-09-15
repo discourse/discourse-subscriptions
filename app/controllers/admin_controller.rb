@@ -14,12 +14,12 @@ module DiscoursePatrons
       if %w(created_at amount).include?(params[:order])
         { params[:order] => ascending }
       else
-        { created_at: :asc }
+        { created_at: :desc }
       end
     end
 
     def ascending
-      if params[:ascending] == 'false'
+      if params[:descending] == 'false'
         :desc
       else
         :asc

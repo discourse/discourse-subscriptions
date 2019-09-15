@@ -42,7 +42,7 @@ module DiscoursePatrons
         )
 
         Payment.create(
-          user_id: response[:customer],
+          user_id: response[:metadata][:user_id],
           payment_intent_id: response[:id],
           receipt_email: response[:receipt_email],
           url: response[:charges][:url],

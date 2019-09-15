@@ -5,7 +5,7 @@ export default Discourse.Route.extend({
     order: {
       refreshModel: true
     },
-    ascending: {
+    descending: {
       refreshModel: true
     }
   },
@@ -15,7 +15,7 @@ export default Discourse.Route.extend({
       method: "get",
       data: {
         order: params.order,
-        ascending: params.ascending
+        descending: params.descending
       }
     }).then(results => results);
   }
