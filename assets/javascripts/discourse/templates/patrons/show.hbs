@@ -1,12 +1,11 @@
 
+{{#unless model.error}}
+  <h3>{{i18n 'discourse_patrons.heading.success' site_name=siteSettings.title}}</h3>
 
-<h3>{{i18n 'discourse_patrons.heading.success' site_name=siteSettings.title}}</h3>
+  <p>
+    {{cook-text siteSettings.discourse_patrons_success_page}}
+  </p>
 
-<p>
-  {{cook-text siteSettings.discourse_patrons_success_page}}
-</p>
-
-{{#if model}}
   <table>
     <tr>
       <td>{{i18n 'discourse_patrons.payment_intent_id'}}</td>
@@ -17,4 +16,4 @@
       <td>{{model.amount}}</td>
     </tr>
   </table>
-{{/if}}
+{{/unless}}

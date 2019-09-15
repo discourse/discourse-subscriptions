@@ -12,9 +12,17 @@ module DiscoursePatrons
 
     def payments_order
       if %w(created_at amount).include?(params[:order])
-        params[:order].to_sym
+        { params[:order] => ascending }
       else
-        :created_at
+        { created_at: :asc }
+      end
+    end
+
+    def ascending
+      if params[:ascending] == 'false'
+        :desc
+      else
+        :asc
       end
     end
   end

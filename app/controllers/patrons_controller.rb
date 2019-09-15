@@ -38,7 +38,7 @@ module DiscoursePatrons
           description: SiteSetting.discourse_patrons_payment_description,
           receipt_email: params[:receipt_email],
           confirm: true,
-          customer: user_id
+          metadata: { user_id: user_id }
         )
 
         Payment.create(

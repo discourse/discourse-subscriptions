@@ -49,13 +49,13 @@ module DiscoursePatrons
 
       it 'allows admin to see receipts' do
         controller.expects(:current_user).returns(admin)
-        ::Stripe::PaymentIntent.expects(:retrieve).returns(customer: user.id)
+        ::Stripe::PaymentIntent.expects(:retrieve).returns(metadata: { user_id: user.id })
         get :show, params: { pid: '123' }, format: :json
         expect(response).to have_http_status(200)
       end
 
       it 'does not allow another the user to see receipts' do
-        ::Stripe::PaymentIntent.expects(:retrieve).returns(customer: 9999)
+        ::Stripe::PaymentIntent.expects(:retrieve).returns(metadata: { user_id: 9999 })
         get :show, params: { pid: '123' }, format: :json
 
         aggregate_failures do
@@ -85,7 +85,7 @@ module DiscoursePatrons
           amount: 9000,
           receipt_email: 'hello@example.com',
           currency: 'aud',
-          customer: current_user.id
+          metadata: { user_id: current_user.id }
         }
       end
 
@@ -134,8 +134,8 @@ module DiscoursePatrons
         expect(response).to have_http_status(200)
       end
 
-      it 'has the customer id' do
-        ::Stripe::PaymentIntent.expects(:create).with(has_entry(:customer, current_user.id)).returns(payment)
+      it 'has the user id' do
+        ::Stripe::PaymentIntent.expects(:create).with(has_entry(:metadata, { user_id: current_user.id })).returns(payment)
         post :create, params: {}, format: :json
         expect(response).to have_http_status(200)
       end
