@@ -60,7 +60,7 @@ module DiscoursePatrons
 
         aggregate_failures do
           expect(response).to have_http_status(200)
-          expect(JSON.parse(response.body)).to eq({ "error" => "Not found" })
+          expect(JSON.parse(response.body)).to eq("error" => "Not found")
         end
       end
 
@@ -70,7 +70,7 @@ module DiscoursePatrons
 
         aggregate_failures do
           expect(response).to have_http_status(200)
-          expect(JSON.parse(response.body)).to eq({ "error" => "Not found" })
+          expect(JSON.parse(response.body)).to eq("error" => "Not found")
         end
       end
     end
