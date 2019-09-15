@@ -1,5 +1,12 @@
 export default Ember.Controller.extend({
+  queryParams: ["order"],
+  order: null,
+
   actions: {
-    loadMore() {}
+    loadMore() {},
+
+    orderPayments(order) {
+      this.set("order", order);
+    }
   }
 });

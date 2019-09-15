@@ -9,8 +9,5 @@ module DiscoursePatrons
     it 'is a subclass of AdminController' do
       expect(DiscoursePatrons::AdminController < Admin::AdminController).to eq(true)
     end
-
-    # TODO authenticate
-    it 'has payments'
   end
 end

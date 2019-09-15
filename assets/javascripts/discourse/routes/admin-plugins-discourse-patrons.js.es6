@@ -1,9 +1,16 @@
 import { ajax } from "discourse/lib/ajax";
 
 export default Discourse.Route.extend({
-  model() {
+  queryParams: {
+    order: {
+      refreshModel: true
+    }
+  },
+
+  model(params) {
     return ajax("/patrons/admin", {
-      method: "get"
+      method: "get",
+      data: { order: params.order }
     }).then(results => results);
   }
 });
