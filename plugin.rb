@@ -25,6 +25,7 @@ add_admin_route 'discourse_patrons.title', 'discourse-patrons'
 
 Discourse::Application.routes.append do
   get '/admin/plugins/discourse-patrons' => 'admin/plugins#index'
+  get '/admin/plugins/discourse-patrons/subscriptions' => 'admin/plugins#index'
 end
 
 after_initialize do
