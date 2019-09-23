@@ -38,9 +38,10 @@ en:
         confirm_payment: Confirm payment
         success: Go back
       admin:
-        table:
-          head:
-            user: User
-            payment_intent: Payment ID
-            receipt_email: Receipt Email
-            amount: Amount
+        payment_history:
+          table:
+            head:
+              user: User
+              payment_intent: Payment ID
+              receipt_email: Receipt Email
+              amount: Amount

@@ -6,11 +6,11 @@
     <table class="table discourse-patrons-admin">
       <thead>
         <tr>
-          <th>{{i18n 'discourse_patrons.admin.table.head.user'}}</th>
-          <th>{{i18n 'discourse_patrons.admin.table.head.payment_intent'}}</th>
-          <th>{{i18n 'discourse_patrons.admin.table.head.receipt_email'}}</th>
+          <th>{{i18n 'discourse_patrons.admin.payment_history.table.head.user'}}</th>
+          <th>{{i18n 'discourse_patrons.admin.payment_history.table.head.payment_intent'}}</th>
+          <th>{{i18n 'discourse_patrons.admin.payment_history.table.head.receipt_email'}}</th>
           <th onclick={{action "orderPayments" "created_at"}} class="sortable">{{i18n 'created'}}</th>
-          <th class="amount" onclick={{action "orderPayments" "amount"}} class="sortable amount">{{i18n 'discourse_patrons.admin.table.head.amount'}}</th>
+          <th class="amount" onclick={{action "orderPayments" "amount"}} class="sortable amount">{{i18n 'discourse_patrons.admin.payment_history.table.head.amount'}}</th>
         </tr>
       </thead>
       {{#each model as |payment|}}
