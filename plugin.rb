@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # name: discourse-patrons
-# about: Integrates Stripe into Discourse to allow visitors to make payments
+# about: Integrates Stripe into Discourse to allow visitors to make payments and Subscribe
 # version: 1.2.1
 # url: https://github.com/rimian/discourse-patrons
 # authors: Rimian Perkins
@@ -36,6 +36,7 @@ after_initialize do
     "../lib/discourse_patrons/engine",
     "../config/routes",
     "../app/controllers/admin_controller",
+    "../app/controllers/admin/subscriptions_controller",
     "../app/controllers/patrons_controller",
     "../app/models/payment",
     "../app/serializers/payment_serializer",

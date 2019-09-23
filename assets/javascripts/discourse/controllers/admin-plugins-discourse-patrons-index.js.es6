@@ -1,4 +1,3 @@
-
 export default Ember.Controller.extend({
   queryParams: ["order", "descending"],
   order: null,

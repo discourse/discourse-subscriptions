@@ -1,3 +1,22 @@
 
+<h3>Subscription Plans</h3>
 
-<h3>Subscriptions</h3>
+{{#d-button action="createSubscriptionPlan" class="btn btn-primary btn-payment btn-discourse-patrons"}}
+  New
+{{/d-button}}
+
+<table class="table discourse-patrons-admin">
+  <thead>
+    <tr>
+      <th>Plan Name</th>
+      <th>Interval</th>
+      <th>Product</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+  {{#each model as |payment|}}
+    <tr>
+
+    </tr>
+  {{/each}}
+</table>

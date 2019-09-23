@@ -3,15 +3,19 @@
 require 'rails_helper'
 
 module DiscoursePatrons
-  RSpec.describe AdminController, type: :controller do
-    routes { DiscoursePatrons::Engine.routes }
+  RSpec.describe AdminController do
+
+    let(:admin) { Fabricate(:admin) }
+
+    before { sign_in(admin) }
 
     it 'is a subclass of AdminController' do
       expect(DiscoursePatrons::AdminController < Admin::AdminController).to eq(true)
     end
 
-    # TODO: authenticate to test these
-    it "is ascending"
-    it "is has ordered by"
+    it "is ok" do
+      get "/patrons/admin.json"
+      expect(response.status).to eq(200)
+    end
   end
 end

@@ -1,3 +1,1 @@
-
-export default Discourse.Route.extend({
-});
+export default Discourse.Route.extend({});
