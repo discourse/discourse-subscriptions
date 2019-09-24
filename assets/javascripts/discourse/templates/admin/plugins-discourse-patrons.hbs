@@ -1,12 +1,23 @@
 
 <h2>{{i18n 'discourse_patrons.title' site_name=siteSettings.title}}</h2>
 
-{{!-- {{#link-to 'adminPlugins.discourse-patrons'}}
-  Payments
-{{/link-to}}
-{{#link-to 'adminPlugins.discourse-patrons.subscriptions'}}
-  Subscriptions
-{{/link-to}} --}}
+<ul class="nav nav-pills">
+  <li>
+    {{#link-to 'adminPlugins.discourse-patrons'}}
+      Payments
+    {{/link-to}}
+  </li>
+  <li>
+    {{#link-to 'adminPlugins.discourse-patrons.plans'}}
+      Plans
+    {{/link-to}}
+  </li>
+  <li>
+    {{#link-to 'adminPlugins.discourse-patrons.subscriptions'}}
+      Subscriptions
+    {{/link-to}}
+  </li>
+</ul>
 
 <hr>
 
