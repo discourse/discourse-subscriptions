@@ -8,10 +8,6 @@ module DiscoursePatrons
       render_serialized(payments, PaymentSerializer)
     end
 
-    def subscriptions
-      head 200
-    end
-
     private
 
     def payments_order

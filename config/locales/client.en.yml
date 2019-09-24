@@ -38,10 +38,19 @@ en:
         confirm_payment: Confirm payment
         success: Go back
       admin:
-        payment_history:
+        dashboard:
+          title: Dashboard
           table:
             head:
               user: User
               payment_intent: Payment ID
               receipt_email: Receipt Email
               amount: Amount
+        plans:
+          title: Plans
+          new: New
+          table:
+            head:
+              plan: Plan
+        subscriptions:
+          title: Subscriptions

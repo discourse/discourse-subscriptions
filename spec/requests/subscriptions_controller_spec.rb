@@ -13,9 +13,10 @@ module DiscoursePatrons
       expect(DiscoursePatrons::SubscriptionsController < Admin::AdminController).to eq(true)
     end
 
-    it "is ok" do
+    it "gets the empty subscriptions" do
+      ::Stripe::Subscription.expects(:list)
       get "/patrons/admin/subscriptions.json"
-      expect(response.status).to eq(200)
+      expect(response.status).to eq(204)
     end
   end
 end

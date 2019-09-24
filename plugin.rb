@@ -38,6 +38,7 @@ after_initialize do
     "../lib/discourse_patrons/engine",
     "../config/routes",
     "../app/controllers/admin_controller",
+    "../app/controllers/admin/plans_controller",
     "../app/controllers/admin/subscriptions_controller",
     "../app/controllers/patrons_controller",
     "../app/models/payment",
