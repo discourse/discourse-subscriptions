@@ -5,7 +5,7 @@ export default {
     this.route("discourse-patrons", function() {
       this.route("subscriptions");
       this.route("plans", function() {
-        this.route("show", { path: '/:plan-id' });
+        this.route("show", { path: "/:plan-id" });
       });
     });
   }

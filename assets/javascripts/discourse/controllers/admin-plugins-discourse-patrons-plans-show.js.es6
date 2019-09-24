@@ -1,7 +1,11 @@
 export default Ember.Controller.extend({
   actions: {
     createPlan() {
-      this.transitionToRoute("adminPlugins.discourse-patrons.plans");
+      this.get("model")
+        .save()
+        .then(() => {
+          this.transitionToRoute("adminPlugins.discourse-patrons.plans");
+        });
     }
   }
 });

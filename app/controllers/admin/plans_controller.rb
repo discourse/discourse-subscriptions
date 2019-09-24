@@ -2,12 +2,22 @@
 
 module DiscoursePatrons
   class PlansController < ::Admin::AdminController
-    def index
-      head 204
-    end
+    include DiscoursePatrons::Stripe
 
-    def show
-      head 204
+    before_action :set_api_key
+
+    def create
+      plan = ::Stripe::Plan.create(
+        amount: params[:amount],
+        interval: params[:interval],
+        product: {
+          name: 'Gold special',
+        },
+        currency: 'usd',
+        id: 'gold-special',
+      )
+
+      plan.to_json
     end
   end
 end

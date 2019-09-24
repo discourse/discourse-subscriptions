@@ -2,11 +2,12 @@
 
 module DiscoursePatrons
   class SubscriptionsController < ::Admin::AdminController
+    include DiscoursePatrons::Stripe
+
+    before_action :set_api_key
+
     def index
-      ::Stripe.api_key = SiteSetting.discourse_patrons_secret_key
-
       subscriptions = ::Stripe::Subscription.list
-
       subscriptions.to_json
     end
   end

@@ -49,6 +49,11 @@ en:
         plans:
           title: Plans
           new: New
+          show:
+            create: Create
+            name: Name
+            amount: Amount
+            interval: Interval
           table:
             head:
               plan: Plan
