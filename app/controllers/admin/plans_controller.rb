@@ -13,7 +13,7 @@ module DiscoursePatrons
         product: {
           name: 'Gold special',
         },
-        currency: 'usd',
+        currency: SiteSetting.discourse_patrons_currency,
         id: 'gold-special',
       )
 
