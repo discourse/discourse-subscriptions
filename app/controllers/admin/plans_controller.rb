@@ -6,6 +6,11 @@ module DiscoursePatrons
 
     before_action :set_api_key
 
+    def index
+      plans = ::Stripe::Plan.list
+      render json: plans.data
+    end
+
     def create
       plan = ::Stripe::Plan.create(
         amount: params[:amount],
@@ -17,7 +22,7 @@ module DiscoursePatrons
         id: 'gold-special',
       )
 
-      plan.to_json
+      render json: plan
     end
   end
 end

@@ -1,0 +1,22 @@
+
+<h3>{{i18n 'discourse_patrons.admin.plans.title'}}</h3>
+
+<table class="table discourse-patrons-admin">
+  <thead>
+    <th>{{i18n 'discourse_patrons.admin.plans.plan.plan_id'}}</th>
+    <th>{{i18n 'discourse_patrons.admin.plans.plan.nickname'}}</th>
+    <th>{{i18n 'discourse_patrons.admin.plans.plan.interval'}}</th>
+    <th>{{i18n 'discourse_patrons.admin.plans.plan.amount'}}</th>
+  </thead>
+  {{#each model.plans as |plan|}}
+    <tr>
+      <td>{{plan.id}}</td>
+      <td>{{plan.nickname}}</td>
+      <td>{{plan.interval}}</td>
+      <td>{{plan.amount}}</td>
+      <td>
+        {{d-button action=(action "deletePlan" plan) icon="trash" class="btn-danger btn no-text btn-icon"}}
+      </td>
+    </tr>
+  {{/each}}
+</table>

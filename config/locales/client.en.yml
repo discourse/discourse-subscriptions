@@ -54,8 +54,10 @@ en:
             name: Name
             amount: Amount
             interval: Interval
-          table:
-            head:
-              plan: Plan
+          plan:
+            plan_id: Plan ID
+            nickname: Nickname
+            interval: Interval
+            amount: Amount
         subscriptions:
           title: Subscriptions
