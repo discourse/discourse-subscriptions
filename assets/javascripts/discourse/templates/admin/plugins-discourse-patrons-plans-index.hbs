@@ -8,7 +8,7 @@
     <th>{{i18n 'discourse_patrons.admin.plans.plan.interval'}}</th>
     <th>{{i18n 'discourse_patrons.admin.plans.plan.amount'}}</th>
   </thead>
-  {{#each model.plans as |plan|}}
+  {{#each plans as |plan|}}
     <tr>
       <td>{{plan.id}}</td>
       <td>{{plan.nickname}}</td>
