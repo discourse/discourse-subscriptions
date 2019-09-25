@@ -36,5 +36,12 @@ module DiscoursePatrons
         post "/patrons/admin/plans.json", params: { amount: '102' }
       end
     end
+
+    describe "delete" do
+      it "deletes a plan" do
+        ::Stripe::Plan.expects(:delete).with('plan_12345')
+        delete "/patrons/admin/plans/plan_12345.json"
+      end
+    end
   end
 end

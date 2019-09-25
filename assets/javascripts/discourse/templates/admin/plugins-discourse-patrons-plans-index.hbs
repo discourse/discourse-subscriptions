@@ -15,7 +15,7 @@
       <td>{{plan.interval}}</td>
       <td>{{plan.amount}}</td>
       <td>
-        {{d-button action=(action "deletePlan" plan) icon="trash" class="btn-danger btn no-text btn-icon"}}
+        {{d-button action=(action "deletePlan" plan.id) icon="trash-alt" class="btn-danger btn no-text btn-icon"}}
       </td>
     </tr>
   {{/each}}

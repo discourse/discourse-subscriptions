@@ -24,5 +24,10 @@ module DiscoursePatrons
 
       render json: plan
     end
+
+    def destroy
+      plan = ::Stripe::Plan.delete(params[:id])
+      render json: plan
+    end
   end
 end
