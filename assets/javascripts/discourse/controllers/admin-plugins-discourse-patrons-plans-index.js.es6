@@ -10,6 +10,10 @@ export default Ember.Controller.extend({
   actions: {
     deletePlan(id) {
       return ajax(`/patrons/admin/plans/${id}`, { method: "delete" });
+    },
+
+    editPlan(id) {
+      return DiscourseURL.redirectTo(`/admin/plugins/discourse-patrons/plans/${id}`);
     }
   }
 });
