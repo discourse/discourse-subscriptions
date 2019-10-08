@@ -8,7 +8,7 @@ export default Discourse.Route.extend({
   actions: {
     destroyPlan(plan) {
       bootbox.confirm(
-        I18n.t("discourse-patrons.plans.operations.destroy.confirm"),
+        I18n.t("discourse_patrons.admin.plans.operations.destroy.confirm"),
         I18n.t("no_value"),
         I18n.t("yes_value"),
         confirmed => {

@@ -60,8 +60,8 @@ en:
             nickname: Nickname
             interval: Interval
             amount: Amount
-            operations:
-              destroy:
-                confirm: Are you sure you want to destroy this plan?
+          operations:
+            destroy:
+              confirm: Are you sure you want to destroy this plan?
         subscriptions:
           title: Subscriptions

@@ -6,7 +6,7 @@ export default Ember.Controller.extend({
       plan.destroy().then(() =>
         this.controllerFor("adminBackupsIndex")
           .get("model")
-          .removeObject(backup)
+          .removeObject(plan)
       );
     },
 
