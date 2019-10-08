@@ -1,5 +1,6 @@
 import { ajax } from "discourse/lib/ajax";
 import computed from "ember-addons/ember-computed-decorators";
+import DiscourseURL from "discourse/lib/url";
 
 export default Ember.Controller.extend({
   @computed("model.plans")

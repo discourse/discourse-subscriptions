@@ -35,6 +35,16 @@ module DiscoursePatrons
         ::Stripe::Plan.expects(:create).with(has_entry(:amount, '102'))
         post "/patrons/admin/plans.json", params: { amount: '102' }
       end
+
+      it "creates a plan with a title" do
+        ::Stripe::Plan.expects(:create).with(has_entry(:product, name: 'Rick Astley'))
+        post "/patrons/admin/plans.json", params: { name: 'Rick Astley' }
+      end
+
+      it "creates a plan with an id" do
+        ::Stripe::Plan.expects(:create).with(has_entry(id: 'rick-astley'))
+        post "/patrons/admin/plans.json", params: { name: 'Rick Astley' }
+      end
     end
 
     describe "delete" do

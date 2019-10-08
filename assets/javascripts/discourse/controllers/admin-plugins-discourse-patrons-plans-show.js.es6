@@ -1,3 +1,5 @@
+import { popupAjaxError } from "discourse/lib/ajax-error";
+
 export default Ember.Controller.extend({
   actions: {
     createPlan() {
@@ -5,7 +7,8 @@ export default Ember.Controller.extend({
         .save()
         .then(() => {
           this.transitionToRoute("adminPlugins.discourse-patrons.plans");
-        });
+        })
+        .catch(popupAjaxError);
     }
   }
 });
