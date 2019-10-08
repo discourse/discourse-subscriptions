@@ -2,21 +2,9 @@
 <h2>{{i18n 'discourse_patrons.title' site_name=siteSettings.title}}</h2>
 
 <ul class="nav nav-pills">
-  <li>
-    {{#link-to 'adminPlugins.discourse-patrons'}}
-      {{i18n 'discourse_patrons.admin.dashboard.title'}}
-    {{/link-to}}
-  </li>
-  <li>
-    {{#link-to 'adminPlugins.discourse-patrons.plans'}}
-      {{i18n 'discourse_patrons.admin.plans.title'}}
-    {{/link-to}}
-  </li>
-  <li>
-    {{#link-to 'adminPlugins.discourse-patrons.subscriptions'}}
-      {{i18n 'discourse_patrons.admin.subscriptions.title'}}
-    {{/link-to}}
-  </li>
+  {{nav-item route='adminPlugins.discourse-patrons' label='discourse_patrons.admin.dashboard.title'}}
+  {{nav-item route='adminPlugins.discourse-patrons.plans' label='discourse_patrons.admin.plans.title'}}
+  {{nav-item route='adminPlugins.discourse-patrons.subscriptions' label='discourse_patrons.admin.subscriptions.title'}}
 </ul>
 
 <hr>
