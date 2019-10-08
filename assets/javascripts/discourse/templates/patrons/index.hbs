@@ -5,10 +5,12 @@
   {{cook-text siteSettings.discourse_patrons_payment_page}}
 </p>
 
-<div class="donations-page-payment">
-  {{donation-form
-    billing=model
-    paymentSuccessHandler=(action "paymentSuccessHandler")
-    stripePaymentHandler=(action "stripePaymentHandler")
-  }}
-</div>
+{{#if siteSettings.discourse_patrons_enabled}}
+  <div class="donations-page-payment">
+    {{donation-form
+      billing=model
+      paymentSuccessHandler=(action "paymentSuccessHandler")
+      stripePaymentHandler=(action "stripePaymentHandler")
+    }}
+  </div>
+{{/if}}
