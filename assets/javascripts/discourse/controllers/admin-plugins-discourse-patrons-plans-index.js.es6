@@ -1,6 +1,4 @@
-import { ajax } from "discourse/lib/ajax";
 import DiscourseURL from "discourse/lib/url";
-import Plan from "discourse/plugins/discourse-patrons/discourse/models/plan";
 
 export default Ember.Controller.extend({
   actions: {
