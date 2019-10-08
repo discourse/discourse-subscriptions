@@ -1,20 +1,21 @@
 import { ajax } from "discourse/lib/ajax";
-import computed from "ember-addons/ember-computed-decorators";
 import DiscourseURL from "discourse/lib/url";
+import Plan from "discourse/plugins/discourse-patrons/discourse/models/plan";
 
 export default Ember.Controller.extend({
-  @computed("model.plans")
-  plans(plans) {
-    return plans.filter(plan => !plan.deleted);
-  },
-
   actions: {
-    deletePlan(id) {
-      return ajax(`/patrons/admin/plans/${id}`, { method: "delete" });
+    destroyPlan(plan) {
+      plan.destroy().then(() =>
+        this.controllerFor("adminBackupsIndex")
+          .get("model")
+          .removeObject(backup)
+      );
     },
 
     editPlan(id) {
-      return DiscourseURL.redirectTo(`/admin/plugins/discourse-patrons/plans/${id}`);
+      return DiscourseURL.redirectTo(
+        `/admin/plugins/discourse-patrons/plans/${id}`
+      );
     }
   }
 });
