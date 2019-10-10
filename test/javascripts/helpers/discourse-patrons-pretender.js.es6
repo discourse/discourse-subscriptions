@@ -1,4 +1,3 @@
-
 export default function(helpers) {
   const { response } = helpers;
 

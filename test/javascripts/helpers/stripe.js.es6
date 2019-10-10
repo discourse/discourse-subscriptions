@@ -1,4 +1,3 @@
-
 export function stubStripe() {
   window.Stripe = () => {
     return {

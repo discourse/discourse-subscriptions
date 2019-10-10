@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 DiscoursePatrons::Engine.routes.draw do
+  # TODO: namespace this
   scope 'admin' do
     get '/' => 'admin#index'
-
-    resources :subscriptions, only: [:index]
   end
 
   namespace :admin do
     resources :plans
+    resources :subscriptions, only: [:index]
   end
 
   get '/' => 'patrons#index'
