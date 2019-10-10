@@ -3,7 +3,11 @@ export default function(helpers) {
 
   this.get("/patrons", () => response({ email: "hello@example.com" }));
 
-  this.get("/groups/:plan", id => {
+  this.get("/groups/:plan", () => {
     return response({ full_name: "Saboo", bio_cooked: "This is the plan" });
+  });
+
+  this.get("/patrons/plans", () => {
+    return response({ plans: [] });
   });
 }
