@@ -1,8 +1,8 @@
-import Plan from "discourse/plugins/discourse-patrons/discourse/models/plan";
+import AdminPlan from "discourse/plugins/discourse-patrons/discourse/models/admin-plan";
 
 export default Discourse.Route.extend({
   model() {
-    return Plan.find();
+    return AdminPlan.find();
   },
 
   actions: {

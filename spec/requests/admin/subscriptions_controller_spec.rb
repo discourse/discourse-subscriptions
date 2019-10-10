@@ -3,22 +3,20 @@
 require 'rails_helper'
 
 module DiscoursePatrons
-  module Admin
-    RSpec.describe SubscriptionsController do
+  RSpec.describe Admin::SubscriptionsController do
 
-      let(:admin) { Fabricate(:admin) }
+    let(:admin) { Fabricate(:admin) }
 
-      before { sign_in(admin) }
+    before { sign_in(admin) }
 
-      it 'is a subclass of AdminController' do
-        expect(DiscoursePatrons::Admin::SubscriptionsController < ::Admin::AdminController).to eq(true)
-      end
+    it 'is a subclass of AdminController' do
+      expect(DiscoursePatrons::Admin::SubscriptionsController < ::Admin::AdminController).to eq(true)
+    end
 
-      it "gets the empty subscriptions" do
-        ::Stripe::Subscription.expects(:list)
-        get "/patrons/admin/subscriptions.json"
-        expect(response.status).to eq(204)
-      end
+    it "gets the empty subscriptions" do
+      ::Stripe::Subscription.expects(:list)
+      get "/patrons/admin/subscriptions.json"
+      expect(response.status).to eq(204)
     end
   end
 end

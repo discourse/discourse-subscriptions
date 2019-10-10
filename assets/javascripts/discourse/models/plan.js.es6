@@ -1,12 +1,10 @@
 import { ajax } from "discourse/lib/ajax";
 
-const Plan = Discourse.Model.extend({
-  destroy() {}
-});
+const Plan = Discourse.Model.extend({});
 
 Plan.reopenClass({
   find() {
-    return ajax("/patrons/admin/plans", { method: "get" }).then(result =>
+    return ajax("/patrons/plans", { method: "get" }).then(result =>
       result.plans.map(plan => Plan.create(plan))
     );
   }

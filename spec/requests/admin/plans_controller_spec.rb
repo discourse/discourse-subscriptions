@@ -53,7 +53,7 @@ module DiscoursePatrons
         before { sign_in(admin) }
 
         describe "index" do
-          it "is ok" do
+          it "lists the plans" do
             ::Stripe::Plan.expects(:list)
             get "/patrons/admin/plans.json"
           end

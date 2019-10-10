@@ -1,0 +1,20 @@
+
+<h3>
+ {{i18n 'discourse_patrons.subscribe.title'}}
+</h3>
+
+<div class="discourse-patrons-section-columns">
+  <div class="section-column discourse-patrons-confirmation-billing">
+    <h4>{{model.group.full_name}}</h4>
+    <p>
+      {{{model.group.bio_cooked}}}
+    </p>
+  </div>
+  <div class="section-column">
+    {{combo-box valueAttribute="id" content=model.plans value=model.plan}}
+
+    {{#d-button class="btn btn-primary btn-payment btn-discourse-patrons"}}
+      {{i18n 'discourse_patrons.subscribe.buttons.subscribe'}}
+    {{/d-button}}
+  </div>
+</div>

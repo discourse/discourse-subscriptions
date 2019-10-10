@@ -3,6 +3,7 @@ en:
     discourse_patrons_enabled: "Enable the Discourse Patrons plugin."
     discourse_patrons_secret_key: "Stripe Secret Key"
     discourse_patrons_public_key: "Stripe Public Key"
+    discourse_patrons_subscription_group: The name of the group the user is added to when successfully subscribed
     discourse_patrons_currency: "Currency Code"
     discourse_patrons_zip_code: "Show Zip Code"
     discourse_patrons_billing_address: "Collect billing address"
@@ -15,18 +16,24 @@ en:
   js:
     discourse_patrons:
       title: Discourse Patrons
-      nav_item: Payment
-      heading:
-        payment: Make a Payment
-        success: Thank you!
-      payment:
-        optional: Optional
-        receipt_info: A receipt is sent to this email address
-        your_information: Your information
-        payment_information: Payment information
-        payment_confirmation: Confirm information
-      amount: Amount
-      payment_intent_id: Payment ID
+      navigation:
+        subscribe: Subscribe
+      subscribe:
+        title: Subscribe
+        buttons:
+          subscribe: Subscribe
+      one_time:
+        heading:
+          payment: Make a Payment
+          success: Thank you!
+        payment:
+          optional: Optional
+          receipt_info: A receipt is sent to this email address
+          your_information: Your information
+          payment_information: Payment information
+          payment_confirmation: Confirm information
+        amount: Amount
+        payment_intent_id: Payment ID
       billing:
         name: Full name
         email: Email
