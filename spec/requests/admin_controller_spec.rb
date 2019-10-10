@@ -9,8 +9,8 @@ module DiscoursePatrons
 
     before { sign_in(admin) }
 
-    xit 'is a subclass of AdminController' do
-      expect(DiscoursePatrons::AdminController < Admin::AdminController).to eq(true)
+    it 'is a subclass of AdminController' do
+      expect(DiscoursePatrons::AdminController < ::Admin::AdminController).to eq(true)
     end
 
     it "is ok" do

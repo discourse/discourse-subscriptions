@@ -9,8 +9,8 @@ module DiscoursePatrons
 
     before { sign_in(admin) }
 
-    xit 'is a subclass of AdminController' do
-      expect(DiscoursePatrons::SubscriptionsController < Admin::AdminController).to eq(true)
+    it 'is a subclass of AdminController' do
+      expect(DiscoursePatrons::SubscriptionsController < ::Admin::AdminController).to eq(true)
     end
 
     it "gets the empty subscriptions" do
