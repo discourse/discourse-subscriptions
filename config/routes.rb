@@ -5,6 +5,9 @@ DiscoursePatrons::Engine.routes.draw do
     get '/' => 'admin#index'
 
     resources :subscriptions, only: [:index]
+  end
+
+  namespace :admin do
     resources :plans
   end
 
