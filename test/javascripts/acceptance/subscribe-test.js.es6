@@ -11,3 +11,11 @@ QUnit.test("subscribing", async assert => {
 
   assert.ok($("h3").length, "has a heading");
 });
+
+QUnit.test("subscribing with empty customer", async assert => {
+  await visit("/patrons/subscribe");
+  assert.ok(
+    $(".discourse-patrons-subscribe-customer-empty").length,
+    "has empty customer content"
+  );
+});

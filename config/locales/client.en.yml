@@ -20,6 +20,11 @@ en:
         subscribe: Subscribe
       subscribe:
         title: Subscribe
+        card:
+          title: Payment
+        customer:
+          title: Customer Details
+          empty: We couldn't find a customer identifier in our system. A new one will be created for you.
         buttons:
           subscribe: Subscribe
       one_time:

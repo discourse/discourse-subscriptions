@@ -11,6 +11,7 @@ DiscoursePatrons::Engine.routes.draw do
     resources :subscriptions, only: [:index]
   end
 
+  resources :customers, only: [:create]
   resources :plans, only: [:index]
   resources :patrons, only: [:index, :create]
 
