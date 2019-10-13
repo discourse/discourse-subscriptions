@@ -13,7 +13,7 @@ export default Ember.Controller.extend({
     },
 
     paymentSuccessHandler(paymentIntentId) {
-      // DiscourseURL.redirectTo(`patrons/${paymentIntentId}`);
+      DiscourseURL.redirectTo(`patrons/${paymentIntentId}`);
     }
   }
 });

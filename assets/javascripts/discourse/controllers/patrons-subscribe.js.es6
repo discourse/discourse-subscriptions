@@ -27,7 +27,8 @@ export default Ember.Controller.extend({
 
           return ajax("/patrons/customers", { method: "post", data }).then(
             result => {
-              // create subscription
+              console.log(4, result, this.get('model'));
+              // do plan
             }
           );
         }
