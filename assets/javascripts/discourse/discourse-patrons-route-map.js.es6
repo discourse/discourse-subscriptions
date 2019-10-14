@@ -4,7 +4,9 @@ export default {
   map() {
     this.route("discourse-patrons", function() {
       this.route("dashboard");
-      this.route("products");
+      this.route("products", function() {
+        this.route("show", { path: "/:plan-id" });
+      });
       this.route("plans", function() {
         this.route("show", { path: "/:plan-id" });
       });

@@ -2,10 +2,22 @@
 <table class="table discourse-patrons-admin">
   <thead>
     <th></th>
+    <th></th>
   </thead>
   {{#each model as |product|}}
     <tr>
       <td>{{product.id}}</td>
+      <td class="td-right">
+        {{d-button
+          action=(action "editProduct" product.id)
+          icon="far-edit"
+          class="btn no-text btn-icon"}}
+        {{d-button
+          action=(route-action "destroyProduct")
+          actionParam=product
+          icon="trash-alt"
+          class="btn-danger btn no-text btn-icon"}}
+      </td>
     </tr>
   {{/each}}
 </table>

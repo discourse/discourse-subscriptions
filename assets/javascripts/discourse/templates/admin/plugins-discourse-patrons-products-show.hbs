@@ -1,2 +1,17 @@
 
 <h4>{{i18n 'discourse_patrons.admin.products.title'}}</h4>
+
+<form class="form-horizontal">
+  <div>
+    <label for="name">{{i18n 'discourse_patrons.admin.plans.show.name'}}</label>
+    {{input type="text" name="name" value=model.name}}
+  </div>
+  <div>
+    <label for="interval">{{i18n 'discourse_patrons.admin.products.show.groups'}}</label>
+    {{combo-box valueAttribute="value" content=model.intervals value=model.interval}}
+  </div>
+</form>
+
+<div class="buttons">
+  {{d-button label="discourse_patrons.admin.products.show.create" action="createProduct" icon="plus"}}
+</div>

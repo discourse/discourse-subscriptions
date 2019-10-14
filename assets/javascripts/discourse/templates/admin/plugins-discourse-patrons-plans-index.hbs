@@ -5,6 +5,7 @@
     <th>{{i18n 'discourse_patrons.admin.plans.plan.nickname'}}</th>
     <th>{{i18n 'discourse_patrons.admin.plans.plan.interval'}}</th>
     <th>{{i18n 'discourse_patrons.admin.plans.plan.amount'}}</th>
+    <th></th>
   </thead>
   {{#each model as |plan|}}
     <tr>
@@ -12,7 +13,7 @@
       <td>{{plan.nickname}}</td>
       <td>{{plan.interval}}</td>
       <td>{{plan.amount}}</td>
-      <td>
+      <td class="td-right">
         {{d-button
           action=(action "editPlan" plan.id)
           icon="far-edit"
