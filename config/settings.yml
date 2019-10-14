@@ -10,6 +10,9 @@ plugins:
   discourse_patrons_subscription_group:
     default: ''
     client: true
+  discourse_patrons_subscription_group_landing_page:
+    default: ''
+    client: true
   discourse_patrons_payment_page:
     client: true
     default: ''

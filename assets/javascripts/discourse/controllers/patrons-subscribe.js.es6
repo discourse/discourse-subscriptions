@@ -1,3 +1,4 @@
+import DiscourseURL from "discourse/lib/url";
 import { ajax } from "discourse/lib/ajax";
 
 export default Ember.Controller.extend({
@@ -39,7 +40,7 @@ export default Ember.Controller.extend({
 
               return ajax("/patrons/subscriptions", { method: "post", data: subscriptionData }).then(
                 subscription => {
-                  console.log(3, subscription);
+                  return DiscourseURL.redirectTo(Discourse.SiteSettings.discourse_patrons_subscription_group_landing_page);
                 }
               );
             }
