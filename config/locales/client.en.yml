@@ -59,9 +59,12 @@ en:
               payment_intent: Payment ID
               receipt_email: Receipt Email
               amount: Amount
+        products:
+          title: Products
+          new: New Product
         plans:
           title: Plans
-          new: New
+          new: New Plan
           show:
             create: Create
             name: Name
