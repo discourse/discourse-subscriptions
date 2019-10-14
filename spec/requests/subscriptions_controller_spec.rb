@@ -15,6 +15,11 @@ module DiscoursePatrons
         ::Stripe::Subscription.expects(:create).with(has_entry(customer: 'cus_1234'))
         post "/patrons/subscriptions.json", params: { customer: 'cus_1234' }
       end
+
+      it "creates a subscription with a plan" do
+        ::Stripe::Subscription.expects(:create).with(has_entry(items: [ plan: 'plan_1234' ]))
+        post "/patrons/subscriptions.json", params: { plan: 'plan_1234' }
+      end
     end
   end
 end

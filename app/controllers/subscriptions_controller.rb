@@ -10,7 +10,7 @@ module DiscoursePatrons
       subscription = ::Stripe::Subscription.create(
         customer: params[:customer],
         items: [
-          { plan: 'plan_CBXbz9i7AIOTzr' },
+          { plan: params[:plan] },
         ]
       )
 

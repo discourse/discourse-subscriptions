@@ -5,7 +5,6 @@ export default Discourse.Route.extend({
   model() {
     const group = Group.find();
     const plans = Plan.find().then(results => results.map(p => p.id));
-
     return Ember.RSVP.hash({ group, plans });
   }
 });

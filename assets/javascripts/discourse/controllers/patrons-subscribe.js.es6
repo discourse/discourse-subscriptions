@@ -21,14 +21,27 @@ export default Ember.Controller.extend({
           // var errorElement = document.getElementById('card-errors');
           // errorElement.textContent = result.error.message;
         } else {
-          const data = {
+          const customerData = {
             source: result.token.id
           };
 
-          return ajax("/patrons/customers", { method: "post", data }).then(
-            result => {
-              console.log(4, result, this.get('model'));
-              // do plan
+          return ajax("/patrons/customers", { method: "post", data: customerData }).then(
+            customer => {
+              // TODO move default plan into settings
+              if(this.get('model.selectedPlan') == undefined) {
+                this.set('model.selectedPlan', this.get('model.plans.firstObject'));
+              }
+
+              const subscriptionData = {
+                customer: customer.id,
+                plan: this.get('model.selectedPlan')
+              };
+
+              return ajax("/patrons/subscriptions", { method: "post", data: subscriptionData }).then(
+                subscription => {
+                  console.log(3, subscription);
+                }
+              );
             }
           );
         }
