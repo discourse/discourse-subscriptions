@@ -7,7 +7,7 @@ const AdminPlan = Discourse.Model.extend({
 AdminPlan.reopenClass({
   find() {
     return ajax("/patrons/admin/plans", { method: "get" }).then(result =>
-      result.plans.map(plan => AdminPlan.create(plan))
+      result.map(plan => AdminPlan.create(plan))
     );
   }
 });

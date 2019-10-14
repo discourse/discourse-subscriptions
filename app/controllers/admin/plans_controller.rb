@@ -9,7 +9,7 @@ module DiscoursePatrons
 
       def index
         plans = ::Stripe::Plan.list
-        render json: plans.data
+        render_json_dump plans.data
       end
 
       def create
@@ -32,7 +32,7 @@ module DiscoursePatrons
 
       def destroy
         plan = ::Stripe::Plan.delete(params[:id])
-        render json: plan
+        render_json_dump plan
       end
 
       private

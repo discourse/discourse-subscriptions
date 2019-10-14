@@ -28,7 +28,7 @@ export default Ember.Controller.extend({
           return ajax("/patrons/customers", { method: "post", data: customerData }).then(
             customer => {
               // TODO move default plan into settings
-              if(this.get('model.selectedPlan') == undefined) {
+              if(this.get('model.selectedPlan') === undefined) {
                 this.set('model.selectedPlan', this.get('model.plans.firstObject'));
               }
 

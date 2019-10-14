@@ -1,7 +1,7 @@
-import { ajax } from "discourse/lib/ajax";
+import AdminSubscription from "discourse/plugins/discourse-patrons/discourse/models/admin-subscription";
 
 export default Discourse.Route.extend({
   model() {
-    return ajax("/patrons/admin/subscriptions", { method: "get" });
+    return AdminSubscription.find();
   }
 });

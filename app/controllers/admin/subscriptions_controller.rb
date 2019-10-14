@@ -9,7 +9,7 @@ module DiscoursePatrons
 
       def index
         subscriptions = ::Stripe::Subscription.list
-        subscriptions.to_json
+        render_json_dump subscriptions
       end
     end
   end

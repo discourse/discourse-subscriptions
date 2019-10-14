@@ -1,13 +1,21 @@
 
-<h3>{{i18n 'discourse_patrons.admin.subscriptions.title'}}</h3>
-
 <table class="table discourse-patrons-admin">
   <thead>
     <tr>
+      <th></th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   {{#each model as |subscription|}}
     <tr>
+      <td>{{subscription.id}}</td>
+      <td>
+        {{#link-to 'adminPlugins.discourse-patrons.plans.show' subscription.plan.id}}
+          {{subscription.plan.id}}
+        {{/link-to}}
+      </td>
+      <td>{{subscription.status}}</td>
     </tr>
   {{/each}}
 </table>
