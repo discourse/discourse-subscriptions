@@ -4,11 +4,15 @@
 <form class="form-horizontal">
   <div>
     <label for="name">{{i18n 'discourse_patrons.admin.plans.show.name'}}</label>
-    {{input type="text" name="name" value=model.name}}
+    {{input type="text" name="name" value=model.product.name}}
   </div>
   <div>
-    <label for="interval">{{i18n 'discourse_patrons.admin.products.show.groups'}}</label>
-    {{combo-box valueAttribute="value" content=model.intervals value=model.interval}}
+    <label for="interval">{{i18n 'discourse_patrons.admin.products.show.group'}}</label>
+    {{combo-box valueAttribute="value" content=model.groups value=model.product.groupName}}
+  </div>
+  <div>
+    <label for="interval">{{i18n 'discourse_patrons.admin.products.show.active'}}</label>
+    {{input type="checkbox" checked=model.product.active}}
   </div>
 </form>
 

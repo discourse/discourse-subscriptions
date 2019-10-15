@@ -1,10 +1,16 @@
 import { ajax } from "discourse/lib/ajax";
 
 const AdminProduct = Discourse.Model.extend({
+  active: true,
+
   destroy() {},
 
   save() {
-    const data = {};
+    const data = {
+      name: this.name,
+      groupName: this.groupName,
+      active: this.active
+    };
 
     return ajax("/patrons/admin/products", { method: "post", data });
   }

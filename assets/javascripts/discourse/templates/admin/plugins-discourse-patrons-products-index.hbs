@@ -2,11 +2,15 @@
 <table class="table discourse-patrons-admin">
   <thead>
     <th>{{i18n 'discourse_patrons.admin.products.product.product_id'}}</th>
+    <th>{{i18n 'discourse_patrons.admin.products.product.group'}}</th>
+    <th>{{i18n 'discourse_patrons.admin.products.product.active'}}</th>
     <th></th>
   </thead>
   {{#each model as |product|}}
     <tr>
       <td>{{product.id}}</td>
+      <td>{{product.group}}</td>
+      <td>{{product.active}}</td>
       <td class="td-right">
         {{d-button
           action=(action "editProduct" product.id)

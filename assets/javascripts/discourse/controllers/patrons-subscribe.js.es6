@@ -26,25 +26,33 @@ export default Ember.Controller.extend({
             source: result.token.id
           };
 
-          return ajax("/patrons/customers", { method: "post", data: customerData }).then(
-            customer => {
-              // TODO move default plan into settings
-              if(this.get('model.selectedPlan') === undefined) {
-                this.set('model.selectedPlan', this.get('model.plans.firstObject'));
-              }
-
-              const subscriptionData = {
-                customer: customer.id,
-                plan: this.get('model.selectedPlan')
-              };
-
-              return ajax("/patrons/subscriptions", { method: "post", data: subscriptionData }).then(
-                () => {
-                  return DiscourseURL.redirectTo(Discourse.SiteSettings.discourse_patrons_subscription_group_landing_page);
-                }
+          return ajax("/patrons/customers", {
+            method: "post",
+            data: customerData
+          }).then(customer => {
+            // TODO move default plan into settings
+            if (this.get("model.selectedPlan") === undefined) {
+              this.set(
+                "model.selectedPlan",
+                this.get("model.plans.firstObject")
               );
             }
-          );
+
+            const subscriptionData = {
+              customer: customer.id,
+              plan: this.get("model.selectedPlan")
+            };
+
+            return ajax("/patrons/subscriptions", {
+              method: "post",
+              data: subscriptionData
+            }).then(() => {
+              return DiscourseURL.redirectTo(
+                Discourse.SiteSettings
+                  .discourse_patrons_subscription_group_landing_page
+              );
+            });
+          });
         }
       });
     }
