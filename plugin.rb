@@ -33,7 +33,7 @@ Discourse::Application.routes.append do
 end
 
 after_initialize do
-  ::Stripe.api_version = "2019-08-14"
+  ::Stripe.api_version = "2019-10-08"
   ::Stripe.set_app_info('Discourse Patrons', version: '1.2.3', url: 'https://github.com/rimian/discourse-patrons')
 
   [

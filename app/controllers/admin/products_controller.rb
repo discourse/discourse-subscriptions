@@ -19,9 +19,20 @@ module DiscoursePatrons
             name: params[:name],
             active: params[:active],
             metadata: {
-              group_name: params[:groupName]
+              group_name: params[:group_name]
             }
           )
+
+          render_json_dump product
+
+        rescue ::Stripe::InvalidRequestError => e
+          return render_json_error e.message
+        end
+      end
+
+      def destroy
+        begin
+          product = ::Stripe::Product.delete(params[:id])
 
           render_json_dump product
 

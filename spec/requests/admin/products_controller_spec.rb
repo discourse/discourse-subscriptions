@@ -10,15 +10,21 @@ module DiscoursePatrons
       end
 
       context 'unauthenticated' do
-        it "does nothing" do
+        it "does not list the products" do
           ::Stripe::Product.expects(:list).never
           get "/patrons/admin/products.json"
           expect(response.status).to eq(403)
         end
 
-        it "does nothing" do
+        it "does not create the products" do
           ::Stripe::Product.expects(:create).never
           post "/patrons/admin/products.json"
+          expect(response.status).to eq(403)
+        end
+
+        it "does not delete the products" do
+          ::Stripe::Product.expects(:delete).never
+          delete "/patrons/admin/products/u2.json"
           expect(response.status).to eq(403)
         end
       end
@@ -47,13 +53,20 @@ module DiscoursePatrons
           end
 
           it 'has an active attribute' do
-            ::Stripe::Product.expects(:create).with(has_entry(active: false))
-            post "/patrons/admin/products.json", params: { active: false }
+            ::Stripe::Product.expects(:create).with(has_entry(active: 'false'))
+            post "/patrons/admin/products.json", params: { active: 'false' }
           end
 
           it 'has a metadata' do
-            ::Stripe::Product.expects(:create).with(has_entry(:metadata, { group_name: 'discourse-user-group-name' }))
+            ::Stripe::Product.expects(:create).with(has_entry(metadata: { group_name: 'discourse-user-group-name' }))
             post "/patrons/admin/products.json", params: { group_name: 'discourse-user-group-name' }
+          end
+        end
+
+        describe 'delete' do
+          it 'deletes the product' do
+            ::Stripe::Product.expects(:delete).with('prod_walterwhite')
+            delete "/patrons/admin/products/prod_walterwhite.json"
           end
         end
       end

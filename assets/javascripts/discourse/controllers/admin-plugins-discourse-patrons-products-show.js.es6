@@ -4,8 +4,11 @@ export default Ember.Controller.extend({
   actions: {
     createProduct() {
       // TODO: set default group name beforehand
-      if(this.get("model.product.groupName") === undefined) {
-        this.set("model.product.groupName", this.get("model.group.firstObject"));
+      if (this.get("model.product.groupName") === undefined) {
+        this.set(
+          "model.product.groupName",
+          this.get("model.group.firstObject")
+        );
       }
 
       this.get("model.product")

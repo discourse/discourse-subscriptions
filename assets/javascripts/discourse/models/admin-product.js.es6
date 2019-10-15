@@ -1,9 +1,9 @@
 import { ajax } from "discourse/lib/ajax";
 
 const AdminProduct = Discourse.Model.extend({
-  active: true,
-
-  destroy() {},
+  destroy() {
+    return ajax(`/patrons/admin/products/${this.id}`, { method: "delete" });
+  },
 
   save() {
     const data = {
@@ -17,7 +17,7 @@ const AdminProduct = Discourse.Model.extend({
 });
 
 AdminProduct.reopenClass({
-  find() {
+  findAll() {
     return ajax("/patrons/admin/products", { method: "get" }).then(result =>
       result.map(product => AdminProduct.create(product))
     );

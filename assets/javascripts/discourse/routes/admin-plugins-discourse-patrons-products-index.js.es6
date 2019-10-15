@@ -2,7 +2,7 @@ import AdminProduct from "discourse/plugins/discourse-patrons/discourse/models/a
 
 export default Discourse.Route.extend({
   model() {
-    return AdminProduct.find();
+    return AdminProduct.findAll();
   },
 
   actions: {
@@ -13,9 +13,12 @@ export default Discourse.Route.extend({
         I18n.t("yes_value"),
         confirmed => {
           if (confirmed) {
-            this.controllerFor("adminPluginsDiscoursePatronsProductsIndex")
-              .get("model")
-              .removeObject(product);
+            product.destroy().then(() => {
+              this.controllerFor("adminPluginsDiscoursePatronsProductsIndex")
+                .get("model")
+                .removeObject(product);
+            })
+            .catch(data => bootbox.alert(data.jqXHR.responseJSON.errors.join("\n")));
           }
         }
       );
