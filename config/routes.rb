@@ -9,6 +9,7 @@ DiscoursePatrons::Engine.routes.draw do
   namespace :admin do
     resources :plans
     resources :subscriptions, only: [:index]
+    resources :products, only: [:index]
   end
 
   resources :customers, only: [:create]

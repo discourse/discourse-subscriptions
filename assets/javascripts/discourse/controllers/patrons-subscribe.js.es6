@@ -39,7 +39,7 @@ export default Ember.Controller.extend({
               };
 
               return ajax("/patrons/subscriptions", { method: "post", data: subscriptionData }).then(
-                subscription => {
+                () => {
                   return DiscourseURL.redirectTo(Discourse.SiteSettings.discourse_patrons_subscription_group_landing_page);
                 }
               );

@@ -42,6 +42,7 @@ after_initialize do
     "../app/controllers/concerns/stripe",
     "../app/controllers/admin_controller",
     "../app/controllers/admin/plans_controller",
+    "../app/controllers/admin/products_controller",
     "../app/controllers/admin/subscriptions_controller",
     "../app/controllers/customers_controller",
     "../app/controllers/patrons_controller",
