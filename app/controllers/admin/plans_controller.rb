@@ -8,8 +8,14 @@ module DiscoursePatrons
       before_action :set_api_key
 
       def index
-        plans = ::Stripe::Plan.list
-        render_json_dump plans.data
+        begin
+          plans = ::Stripe::Plan.list
+
+          render_json_dump plans.data
+
+        rescue ::Stripe::InvalidRequestError => e
+          return render_json_error e.message
+        end
       end
 
       def create
@@ -31,8 +37,14 @@ module DiscoursePatrons
       end
 
       def destroy
-        plan = ::Stripe::Plan.delete(params[:id])
-        render_json_dump plan
+        begin
+          plan = ::Stripe::Plan.delete(params[:id])
+
+          render_json_dump plan
+
+        rescue ::Stripe::InvalidRequestError => e
+          return render_json_error e.message
+        end
       end
 
       private

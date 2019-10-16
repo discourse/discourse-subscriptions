@@ -2,7 +2,7 @@ import AdminPlan from "discourse/plugins/discourse-patrons/discourse/models/admi
 
 export default Discourse.Route.extend({
   model() {
-    return AdminPlan.find();
+    return AdminPlan.findAll();
   },
 
   actions: {
@@ -13,9 +13,12 @@ export default Discourse.Route.extend({
         I18n.t("yes_value"),
         confirmed => {
           if (confirmed) {
-            this.controllerFor("adminPluginsDiscoursePatronsPlansIndex")
+            plan.destroy().then(() => {
+              this.controllerFor("adminPluginsDiscoursePatronsPlansIndex")
               .get("model")
               .removeObject(plan);
+            })
+            .catch(data => bootbox.alert(data.jqXHR.responseJSON.errors.join("\n")));
           }
         }
       );

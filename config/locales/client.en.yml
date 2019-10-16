@@ -68,7 +68,7 @@ en:
             active: Active
           product:
             product_id: Product ID
-            group: Group
+            group: User Group
             active: Active
           operations:
             destroy:

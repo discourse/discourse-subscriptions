@@ -6,7 +6,9 @@ const AdminPlan = Discourse.Model.extend({
   amount: 0,
   intervals: ["day", "week", "month", "year"],
 
-  destroy() {},
+  destroy() {
+    return ajax(`/patrons/admin/plans/${this.id}`, { method: "delete" });
+  },
 
   save() {
     const data = {
@@ -20,7 +22,7 @@ const AdminPlan = Discourse.Model.extend({
 });
 
 AdminPlan.reopenClass({
-  find() {
+  findAll() {
     return ajax("/patrons/admin/plans", { method: "get" }).then(result =>
       result.map(plan => AdminPlan.create(plan))
     );
