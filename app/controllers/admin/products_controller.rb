@@ -30,6 +30,36 @@ module DiscoursePatrons
         end
       end
 
+      def show
+        begin
+          product = ::Stripe::Product.retrieve(params[:id])
+
+          render_json_dump product
+
+        rescue ::Stripe::InvalidRequestError => e
+          return render_json_error e.message
+        end
+      end
+
+      def update
+        begin
+          product = ::Stripe::Product.update(
+            params[:id], {
+              name: params[:name],
+              active: params[:active],
+              metadata: {
+                group_name: params[:group_name]
+              }
+            }
+          )
+
+          render_json_dump product
+
+        rescue ::Stripe::InvalidRequestError => e
+          return render_json_error e.message
+        end
+      end
+
       def destroy
         begin
           product = ::Stripe::Product.delete(params[:id])

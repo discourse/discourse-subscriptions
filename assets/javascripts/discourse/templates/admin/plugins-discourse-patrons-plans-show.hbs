@@ -2,18 +2,22 @@
 <h4>{{i18n 'discourse_patrons.admin.plans.title'}}</h4>
 
 <form class="form-horizontal">
-  <div>
+  <p>
     <label for="name">{{i18n 'discourse_patrons.admin.plans.show.name'}}</label>
-    {{input type="text" name="name" value=model.name}}
-  </div>
-  <div>
+    {{input type="text" name="name" value=model.plan.name}}
+  </p>
+  <p>
     <label for="amount">{{i18n 'discourse_patrons.admin.plans.show.amount'}}</label>
-    {{input type="text" name="name" value=model.amount}}
-  </div>
-  <div>
+    {{input type="text" name="name" value=model.plan.amount}}
+  </p>
+  <p>
+    <label for="product">{{i18n 'discourse_patrons.admin.plans.show.product'}}</label>
+    {{combo-box valueAttribute="value" content=model.products value=defaultProduct}}
+  </p>
+  <p>
     <label for="interval">{{i18n 'discourse_patrons.admin.plans.show.interval'}}</label>
-    {{combo-box valueAttribute="value" content=model.intervals value=model.interval}}
-  </div>
+    {{combo-box valueAttribute="value" content=model.plan.intervals value=model.plan.interval}}
+  </p>
 </form>
 
 <div class="buttons">

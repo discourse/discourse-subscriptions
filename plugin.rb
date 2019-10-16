@@ -8,7 +8,7 @@
 
 enabled_site_setting :discourse_patrons_enabled
 
-gem 'stripe', '5.7.0'
+gem 'stripe', '5.7.1'
 
 register_asset "stylesheets/common/discourse-patrons.scss"
 register_asset "stylesheets/mobile/discourse-patrons.scss"

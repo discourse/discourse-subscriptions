@@ -17,6 +17,15 @@ export default Ember.Controller.extend({
           this.transitionToRoute("adminPlugins.discourse-patrons.products");
         })
         .catch(popupAjaxError);
+    },
+
+    updateProduct() {
+      this.get("model.product")
+        .update()
+        .then(() => {
+          this.transitionToRoute("adminPlugins.discourse-patrons.products");
+        })
+        .catch(popupAjaxError);
     }
   }
 });

@@ -16,13 +16,25 @@ module DiscoursePatrons
           expect(response.status).to eq(403)
         end
 
-        it "does not create the products" do
+        it "does not create the product" do
           ::Stripe::Product.expects(:create).never
           post "/patrons/admin/products.json"
           expect(response.status).to eq(403)
         end
 
-        it "does not delete the products" do
+        it "does not show the product" do
+          ::Stripe::Product.expects(:retrieve).never
+          get "/patrons/admin/products/prod_qwerty123.json"
+          expect(response.status).to eq(403)
+        end
+
+        it "does not update the product" do
+          ::Stripe::Product.expects(:update).never
+          put "/patrons/admin/products/prod_qwerty123.json"
+          expect(response.status).to eq(403)
+        end
+
+        it "does not delete the product" do
           ::Stripe::Product.expects(:delete).never
           delete "/patrons/admin/products/u2.json"
           expect(response.status).to eq(403)
@@ -60,6 +72,20 @@ module DiscoursePatrons
           it 'has a metadata' do
             ::Stripe::Product.expects(:create).with(has_entry(metadata: { group_name: 'discourse-user-group-name' }))
             post "/patrons/admin/products.json", params: { group_name: 'discourse-user-group-name' }
+          end
+        end
+
+        describe 'show' do
+          it 'retrieves the product' do
+            ::Stripe::Product.expects(:retrieve).with('prod_walterwhite')
+            get "/patrons/admin/products/prod_walterwhite.json"
+          end
+        end
+
+        describe 'update' do
+          it 'updates the product' do
+            ::Stripe::Product.expects(:update)
+            patch "/patrons/admin/products/prod_walterwhite.json", params: {}
           end
         end
 

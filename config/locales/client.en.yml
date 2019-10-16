@@ -61,18 +61,17 @@ en:
               amount: Amount
         products:
           title: Products
-          new: New Product
-          show:
-            group: User Group
-            create: Create Product
-            active: Active
+          operations:
+            create: Create New Product
+            update: Update Product
+            new: New Product
+            destroy:
+                confirm: Are you sure you want to destroy this product?
           product:
             product_id: Product ID
+            name: Product Name
             group: User Group
             active: Active
-          operations:
-            destroy:
-              confirm: Are you sure you want to destroy this product?
         plans:
           title: Plans
           new: New Plan

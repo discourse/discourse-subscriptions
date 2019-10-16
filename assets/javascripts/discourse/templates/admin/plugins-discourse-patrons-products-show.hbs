@@ -2,20 +2,24 @@
 <h4>{{i18n 'discourse_patrons.admin.products.title'}}</h4>
 
 <form class="form-horizontal">
-  <div>
-    <label for="name">{{i18n 'discourse_patrons.admin.plans.show.name'}}</label>
+  <p>
+    <label for="name">{{i18n 'discourse_patrons.admin.products.product.name'}}</label>
     {{input type="text" name="name" value=model.product.name}}
-  </div>
-  <div>
-    <label for="interval">{{i18n 'discourse_patrons.admin.products.show.group'}}</label>
+  </p>
+  <p>
+    <label for="interval">{{i18n 'discourse_patrons.admin.products.product.group'}}</label>
     {{combo-box valueAttribute="value" content=model.groups value=model.product.groupName}}
-  </div>
-  <div>
-    <label for="interval">{{i18n 'discourse_patrons.admin.products.show.active'}}</label>
+  </p>
+  <p>
+    <label for="interval">{{i18n 'discourse_patrons.admin.products.product.active'}}</label>
     {{input type="checkbox" checked=model.product.active}}
-  </div>
+  </p>
 </form>
 
 <div class="buttons">
-  {{d-button label="discourse_patrons.admin.products.show.create" action="createProduct" icon="plus"}}
+  {{#if model.product.isNew}}
+    {{d-button label="discourse_patrons.admin.products.operations.create" action="createProduct" icon="plus"}}
+  {{else}}
+    {{d-button label="discourse_patrons.admin.products.operations.update" action="updateProduct" icon="fa-save"}}
+  {{/if}}
 </div>
