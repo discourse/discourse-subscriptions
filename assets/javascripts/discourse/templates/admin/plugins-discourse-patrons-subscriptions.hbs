@@ -2,19 +2,15 @@
 <table class="table discourse-patrons-admin">
   <thead>
     <tr>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>{{i18n 'discourse_patrons.admin.subscriptions.subscription.subscription_id'}}</th>
+      <th>{{i18n 'discourse_patrons.admin.subscriptions.subscription.plan'}}</th>
+      <th>{{i18n 'discourse_patrons.admin.subscriptions.subscription.status'}}</th>
     </tr>
   </thead>
   {{#each model as |subscription|}}
     <tr>
       <td>{{subscription.id}}</td>
-      <td>
-        {{#link-to 'adminPlugins.discourse-patrons.plans.show' subscription.plan.id}}
-          {{subscription.plan.id}}
-        {{/link-to}}
-      </td>
+      <td>{{subscription.plan.id}}</td>
       <td>{{subscription.status}}</td>
     </tr>
   {{/each}}

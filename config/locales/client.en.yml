@@ -88,3 +88,8 @@ en:
             amount: Amount
         subscriptions:
           title: Subscriptions
+          subscription:
+            subscription_id: Subscription ID
+            user: User
+            plan: Plan
+            status: Status
