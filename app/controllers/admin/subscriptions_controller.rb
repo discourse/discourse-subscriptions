@@ -8,8 +8,13 @@ module DiscoursePatrons
       before_action :set_api_key
 
       def index
-        subscriptions = ::Stripe::Subscription.list
-        render_json_dump subscriptions
+        begin
+          subscriptions = ::Stripe::Subscription.list
+
+          render_json_dump subscriptions
+        rescue ::Stripe::InvalidRequestError => e
+          return render_json_error e.message
+        end
       end
     end
   end

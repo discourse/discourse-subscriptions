@@ -8,7 +8,7 @@
   </p>
   <p>
     <label for="interval">{{i18n 'discourse_patrons.admin.products.product.group'}}</label>
-    {{combo-box valueAttribute="value" content=model.groups value=model.product.groupName}}
+    {{combo-box valueAttribute="name" content=model.groups value=model.product.metadata.group_name}}
   </p>
   <p>
     <label for="interval">{{i18n 'discourse_patrons.admin.products.product.active'}}</label>

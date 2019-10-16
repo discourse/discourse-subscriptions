@@ -56,22 +56,22 @@ module DiscoursePatrons
         describe 'create' do
           it 'is of product type service' do
             ::Stripe::Product.expects(:create).with(has_entry(:type, 'service'))
-            post "/patrons/admin/products.json", params: {}
+            post "/patrons/admin/products.json", params: { metadata: { group_name: '' } }
           end
 
           it 'has a name' do
             ::Stripe::Product.expects(:create).with(has_entry(:name, 'Jesse Pinkman'))
-            post "/patrons/admin/products.json", params: { name: 'Jesse Pinkman' }
+            post "/patrons/admin/products.json", params: { name: 'Jesse Pinkman', metadata: { group_name: '' } }
           end
 
           it 'has an active attribute' do
             ::Stripe::Product.expects(:create).with(has_entry(active: 'false'))
-            post "/patrons/admin/products.json", params: { active: 'false' }
+            post "/patrons/admin/products.json", params: { active: 'false', metadata: { group_name: '' } }
           end
 
           it 'has a metadata' do
             ::Stripe::Product.expects(:create).with(has_entry(metadata: { group_name: 'discourse-user-group-name' }))
-            post "/patrons/admin/products.json", params: { group_name: 'discourse-user-group-name' }
+            post "/patrons/admin/products.json", params: { metadata: { group_name: 'discourse-user-group-name' }}
           end
         end
 
@@ -85,7 +85,7 @@ module DiscoursePatrons
         describe 'update' do
           it 'updates the product' do
             ::Stripe::Product.expects(:update)
-            patch "/patrons/admin/products/prod_walterwhite.json", params: {}
+            patch "/patrons/admin/products/prod_walterwhite.json", params: { metadata: { group_name: '' }}
           end
         end
 

@@ -8,8 +8,13 @@ module DiscoursePatrons
       before_action :set_api_key
 
       def index
-        products = ::Stripe::Product.list
-        render_json_dump products.data
+        begin
+          products = ::Stripe::Product.list
+
+          render_json_dump products.data
+        rescue ::Stripe::InvalidRequestError => e
+          return render_json_error e.message
+        end
       end
 
       def create
@@ -18,9 +23,7 @@ module DiscoursePatrons
             type: 'service',
             name: params[:name],
             active: params[:active],
-            metadata: {
-              group_name: params[:group_name]
-            }
+            metadata: metadata
           )
 
           render_json_dump product
@@ -47,9 +50,7 @@ module DiscoursePatrons
             params[:id], {
               name: params[:name],
               active: params[:active],
-              metadata: {
-                group_name: params[:group_name]
-              }
+              metadata: metadata
             }
           )
 
@@ -69,6 +70,12 @@ module DiscoursePatrons
         rescue ::Stripe::InvalidRequestError => e
           return render_json_error e.message
         end
+      end
+
+      private
+
+      def metadata
+        { group_name: params[:metadata][:group_name] }
       end
     end
   end
