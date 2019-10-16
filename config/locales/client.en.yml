@@ -74,19 +74,17 @@ en:
             active: Active
         plans:
           title: Plans
-          new: New Plan
-          show:
-            create: Create
-            name: Name
-            amount: Amount
-            interval: Interval
-          plan:
-            plan_id: Plan ID
-            nickname: Nickname
-            interval: Interval
-            amount: Amount
           operations:
+            create: Create New Plan
+            new: New Plan
             destroy:
               confirm: Are you sure you want to destroy this plan?
+          plan:
+            plan_id: Plan ID
+            name: Plan Name
+            nickname: Nickname
+            product: Product
+            interval: Interval
+            amount: Amount
         subscriptions:
           title: Subscriptions

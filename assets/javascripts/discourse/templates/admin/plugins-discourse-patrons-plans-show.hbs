@@ -3,23 +3,23 @@
 
 <form class="form-horizontal">
   <p>
-    <label for="name">{{i18n 'discourse_patrons.admin.plans.show.name'}}</label>
+    <label for="name">{{i18n 'discourse_patrons.admin.plans.plan.name'}}</label>
     {{input type="text" name="name" value=model.plan.name}}
   </p>
   <p>
-    <label for="amount">{{i18n 'discourse_patrons.admin.plans.show.amount'}}</label>
+    <label for="amount">{{i18n 'discourse_patrons.admin.plans.plan.amount'}}</label>
     {{input type="text" name="name" value=model.plan.amount}}
   </p>
   <p>
-    <label for="product">{{i18n 'discourse_patrons.admin.plans.show.product'}}</label>
+    <label for="product">{{i18n 'discourse_patrons.admin.plans.plan.product'}}</label>
     {{combo-box valueAttribute="value" content=model.products value=defaultProduct}}
   </p>
   <p>
-    <label for="interval">{{i18n 'discourse_patrons.admin.plans.show.interval'}}</label>
+    <label for="interval">{{i18n 'discourse_patrons.admin.plans.plan.interval'}}</label>
     {{combo-box valueAttribute="value" content=model.plan.intervals value=model.plan.interval}}
   </p>
 </form>
 
 <div class="buttons">
-  {{d-button label="discourse_patrons.admin.plans.show.create" action="createPlan" icon="plus"}}
+  {{d-button label="discourse_patrons.admin.plans.operations.create" action="createPlan" icon="plus"}}
 </div>
