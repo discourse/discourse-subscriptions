@@ -70,7 +70,12 @@ en:
           product:
             product_id: Product ID
             name: Product Name
-            group: User Group
+            statement_descriptor:
+              title: Statement Descriptor
+              description: Extra information about a product which will appear on your customer’s credit card statement.
+            group:
+              title: User Group
+              description: This is the discourse user group the customer gets added to when the subscription is created.
             active: Active
         plans:
           title: Plans
@@ -80,9 +85,10 @@ en:
             destroy:
               confirm: Are you sure you want to destroy this plan?
           plan:
+            nickname:
+              title: Plan Nickname
+              description: This won't be visible to customers, but will help you find this plan later.
             plan_id: Plan ID
-            name: Plan Name
-            nickname: Nickname
             product: Product
             interval: Interval
             amount: Amount

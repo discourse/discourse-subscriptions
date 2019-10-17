@@ -3,8 +3,11 @@
 
 <form class="form-horizontal">
   <p>
-    <label for="name">{{i18n 'discourse_patrons.admin.plans.plan.name'}}</label>
-    {{input type="text" name="name" value=model.plan.name}}
+    <label for="name">{{i18n 'discourse_patrons.admin.plans.plan.nickname.title'}}</label>
+    {{input type="text" name="name" value=model.plan.nickname}}
+    <div class="control-instructions">
+      {{i18n 'discourse_patrons.admin.plans.plan.nickname.description'}}
+    </div>
   </p>
   <p>
     <label for="amount">{{i18n 'discourse_patrons.admin.plans.plan.amount'}}</label>

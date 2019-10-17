@@ -31,7 +31,8 @@ module DiscoursePatrons
     private
 
     def subscription_ok(subscription)
-      ['active', 'trialing'].include?(subscription[:status])
+      # ['active', 'trialing'].include?(subscription[:status])
+      false
     end
   end
 end

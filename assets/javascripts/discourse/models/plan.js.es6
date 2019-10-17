@@ -5,7 +5,7 @@ const Plan = Discourse.Model.extend({});
 Plan.reopenClass({
   findAll() {
     return ajax("/patrons/plans", { method: "get" }).then(result =>
-      result.plans.map(plan => Plan.create(plan))
+      result.map(plan => Plan.create(plan))
     );
   }
 });

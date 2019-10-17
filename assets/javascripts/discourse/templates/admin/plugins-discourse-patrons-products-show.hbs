@@ -7,8 +7,20 @@
     {{input type="text" name="name" value=model.product.name}}
   </p>
   <p>
-    <label for="interval">{{i18n 'discourse_patrons.admin.products.product.group'}}</label>
+    <label for="statement_descriptor">
+      {{i18n 'discourse_patrons.admin.products.product.statement_descriptor.title'}}
+    </label>
+    {{input type="text" name="statement_descriptor" value=model.product.statement_descriptor}}
+    <div class="control-instructions">
+      {{i18n 'discourse_patrons.admin.products.product.statement_descriptor.description'}}
+    </div>
+  </p>
+  <p>
+    <label for="interval">{{i18n 'discourse_patrons.admin.products.product.group.title'}}</label>
     {{combo-box valueAttribute="name" content=model.groups value=model.product.metadata.group_name}}
+    <div class="control-instructions">
+      {{i18n 'discourse_patrons.admin.products.product.group.description'}}
+    </div>
   </p>
   <p>
     <label for="interval">{{i18n 'discourse_patrons.admin.products.product.active'}}</label>

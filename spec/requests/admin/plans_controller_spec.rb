@@ -34,6 +34,18 @@ module DiscoursePatrons
           end
         end
 
+        describe "show" do
+          it "does not show the plan" do
+            ::Stripe::Plan.expects(:retrieve).never
+            get "/patrons/admin/plans/plan_12345.json"
+          end
+
+          it "is not ok" do
+            get "/patrons/admin/plans/plan_12345.json"
+            expect(response.status).to eq 403
+          end
+        end
+
         describe "delete" do
           it "does not delete a plan" do
             ::Stripe::Plan.expects(:delete).never
@@ -60,6 +72,11 @@ module DiscoursePatrons
         end
 
         describe "create" do
+          it "creates a plan with a nickname" do
+            ::Stripe::Plan.expects(:create).with(has_entry(:nickname, 'Veg'))
+            post "/patrons/admin/plans.json", params: { nickname: 'Veg' }
+          end
+
           it "creates a plan with a currency" do
             SiteSetting.stubs(:discourse_patrons_currency).returns('aud')
             ::Stripe::Plan.expects(:create).with(has_entry(:currency, 'aud'))
@@ -77,9 +94,8 @@ module DiscoursePatrons
           end
 
           it "creates a plan with a product" do
-            product = { id: 'prod_ww', name: 'Walter White' }
-            ::Stripe::Plan.expects(:create).with(has_entry(product: product))
-            post "/patrons/admin/plans.json", params: { product: product }
+            ::Stripe::Plan.expects(:create).with(has_entry(product: 'prod_walterwhite'))
+            post "/patrons/admin/plans.json", params: { product_id: 'prod_walterwhite' }
           end
         end
 

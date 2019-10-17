@@ -12,16 +12,11 @@ const AdminPlan = Discourse.Model.extend({
 
   save() {
     const data = {
+      nickname: this.nickname,
       interval: this.interval,
       amount: this.amount,
-      name: this.name,
-      product: {
-        id: this.product.id,
-        // name: this.product.name
-      }
+      product_id: this.product_id
     };
-
-    console.log(12, data);
 
     return ajax("/patrons/admin/plans", { method: "post", data });
   }
@@ -31,6 +26,12 @@ AdminPlan.reopenClass({
   findAll() {
     return ajax("/patrons/admin/plans", { method: "get" }).then(result =>
       result.map(plan => AdminPlan.create(plan))
+    );
+  },
+
+  find(id) {
+    return ajax(`/patrons/admin/plans/${id}`, { method: "get" }).then(plan =>
+      AdminPlan.create(plan)
     );
   }
 });

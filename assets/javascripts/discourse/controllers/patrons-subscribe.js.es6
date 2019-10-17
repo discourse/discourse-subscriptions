@@ -1,5 +1,6 @@
 import DiscourseURL from "discourse/lib/url";
 import { ajax } from "discourse/lib/ajax";
+import Subscription from "discourse/plugins/discourse-patrons/discourse/models/subscription";
 
 export default Ember.Controller.extend({
   init() {
@@ -30,27 +31,20 @@ export default Ember.Controller.extend({
             method: "post",
             data: customerData
           }).then(customer => {
-            // TODO move default plan into settings
-            if (this.get("model.selectedPlan") === undefined) {
-              this.set(
-                "model.selectedPlan",
-                this.get("model.plans.firstObject")
-              );
+            const subscription = this.get("model.subscription");
+
+            subscription.set('customer', customer.id);
+
+            if (subscription.get("plan") === undefined) {
+              subscription.set("plan", this.get("model.plans.firstObject.id"));
             }
 
-            const subscriptionData = {
-              customer: customer.id,
-              plan: this.get("model.selectedPlan")
-            };
-
-            return ajax("/patrons/subscriptions", {
-              method: "post",
-              data: subscriptionData
-            }).then(() => {
-              return DiscourseURL.redirectTo(
-                Discourse.SiteSettings
-                  .discourse_patrons_subscription_group_landing_page
-              );
+            subscription.save().then(() => {
+              console.log('ok');
+              // return DiscourseURL.redirectTo(
+              //   Discourse.SiteSettings
+              //     .discourse_patrons_subscription_group_landing_page
+              // );
             });
           });
         }

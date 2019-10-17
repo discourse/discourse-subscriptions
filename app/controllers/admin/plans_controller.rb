@@ -21,11 +21,23 @@ module DiscoursePatrons
       def create
         begin
           plan = ::Stripe::Plan.create(
+            nickname: params[:nickname],
             amount: params[:amount],
             interval: params[:interval],
-            product: product,
+            product: params[:product_id],
             currency: SiteSetting.discourse_patrons_currency,
           )
+
+          render_json_dump plan
+
+        rescue ::Stripe::InvalidRequestError => e
+          return render_json_error e.message
+        end
+      end
+
+      def show
+        begin
+          plan = ::Stripe::Plan.retrieve(params[:id])
 
           render_json_dump plan
 
@@ -43,12 +55,6 @@ module DiscoursePatrons
         rescue ::Stripe::InvalidRequestError => e
           return render_json_error e.message
         end
-      end
-
-      private
-
-      def product
-        params[:product].slice(:id, :name).permit!.to_h.symbolize_keys if params[:product]
       end
     end
   end

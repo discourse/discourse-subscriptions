@@ -11,6 +11,7 @@ const AdminProduct = Discourse.Model.extend({
   save() {
     const data = {
       name: this.name,
+      statement_descriptor: this.statement_descriptor,
       metadata: this.metadata,
       active: this.active
     };
@@ -21,6 +22,7 @@ const AdminProduct = Discourse.Model.extend({
   update() {
     const data = {
       name: this.name,
+      statement_descriptor: this.statement_descriptor,
       metadata: this.metadata,
       active: this.active
     };

@@ -11,7 +11,7 @@
     </p>
   </div>
   <div class="section-column">
-    {{combo-box valueAttribute="id" content=model.plans value=model.selectedPlan}}
+    {{combo-box valueAttribute="id" content=model.plans value=model.subscription.plan}}
 
     {{#d-button
       action="stripePaymentHandler"
