@@ -2,7 +2,7 @@
 
 # name: discourse-patrons
 # about: Integrates Stripe into Discourse to allow visitors to make payments and Subscribe
-# version: 1.2.3
+# version: 1.3.0
 # url: https://github.com/rimian/discourse-patrons
 # authors: Rimian Perkins
 
@@ -34,7 +34,7 @@ end
 
 after_initialize do
   ::Stripe.api_version = "2019-10-08"
-  ::Stripe.set_app_info('Discourse Patrons', version: '1.2.3', url: 'https://github.com/rimian/discourse-patrons')
+  ::Stripe.set_app_info('Discourse Patrons', version: '1.3.0', url: 'https://github.com/rimian/discourse-patrons')
 
   [
     "../lib/discourse_patrons/engine",
