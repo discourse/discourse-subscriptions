@@ -12,7 +12,7 @@
   </p>
   <p>
     <label for="product">{{i18n 'discourse_patrons.admin.plans.plan.product'}}</label>
-    {{combo-box valueAttribute="value" content=model.products value=defaultProduct}}
+    {{combo-box valueAttribute="id" content=model.products value=model.plan.product_id}}
   </p>
   <p>
     <label for="interval">{{i18n 'discourse_patrons.admin.plans.plan.interval'}}</label>

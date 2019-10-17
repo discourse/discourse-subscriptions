@@ -7,8 +7,14 @@ module DiscoursePatrons
     before_action :set_api_key
 
     def index
-      plans = ::Stripe::Plan.list
-      render json: plans.data
+      begin
+        plans = ::Stripe::Plan.list
+
+        render_json_dump plans.data
+
+      rescue ::Stripe::InvalidRequestError => e
+        return render_json_error e.message
+      end
     end
   end
 end

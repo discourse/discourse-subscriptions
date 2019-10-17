@@ -7,14 +7,31 @@ module DiscoursePatrons
     before_action :set_api_key
 
     def create
-      subscription = ::Stripe::Subscription.create(
-        customer: params[:customer],
-        items: [
-          { plan: params[:plan] },
-        ]
-      )
+      begin
+        subscription = ::Stripe::Subscription.create(
+          customer: params[:customer],
+          items: [
+            { plan: params[:plan] },
+          ]
+        )
 
-      render_json_dump subscription
+        if subscription_ok(subscription)
+          # TODO: check group credentials
+          group = Group.find_by_name('group-123')
+          group.add(current_user)
+        end
+
+        render_json_dump subscription
+
+      rescue ::Stripe::InvalidRequestError => e
+        return render_json_error e.message
+      end
+    end
+
+    private
+
+    def subscription_ok(subscription)
+      ['active', 'trialing'].include?(subscription[:status])
     end
   end
 end

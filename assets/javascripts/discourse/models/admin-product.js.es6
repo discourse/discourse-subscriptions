@@ -2,6 +2,7 @@ import { ajax } from "discourse/lib/ajax";
 
 const AdminProduct = Discourse.Model.extend({
   isNew: false,
+  metadata: {},
 
   destroy() {
     return ajax(`/patrons/admin/products/${this.id}`, { method: "delete" });

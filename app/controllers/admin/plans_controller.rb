@@ -20,13 +20,11 @@ module DiscoursePatrons
 
       def create
         begin
-
           plan = ::Stripe::Plan.create(
             amount: params[:amount],
             interval: params[:interval],
-            product: { name: params[:name] },
+            product: product,
             currency: SiteSetting.discourse_patrons_currency,
-            id: plan_id,
           )
 
           render_json_dump plan
@@ -49,8 +47,8 @@ module DiscoursePatrons
 
       private
 
-      def plan_id
-        params[:name].parameterize.dasherize if params[:name]
+      def product
+        params[:product].slice(:id, :name).permit!.to_h.symbolize_keys if params[:product]
       end
     end
   end

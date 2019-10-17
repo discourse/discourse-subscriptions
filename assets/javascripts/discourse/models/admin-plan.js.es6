@@ -14,8 +14,14 @@ const AdminPlan = Discourse.Model.extend({
     const data = {
       interval: this.interval,
       amount: this.amount,
-      name: this.name
+      name: this.name,
+      product: {
+        id: this.product.id,
+        // name: this.product.name
+      }
     };
+
+    console.log(12, data);
 
     return ajax("/patrons/admin/plans", { method: "post", data });
   }

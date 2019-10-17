@@ -71,7 +71,7 @@ module DiscoursePatrons
 
           it 'has a metadata' do
             ::Stripe::Product.expects(:create).with(has_entry(metadata: { group_name: 'discourse-user-group-name' }))
-            post "/patrons/admin/products.json", params: { metadata: { group_name: 'discourse-user-group-name' }}
+            post "/patrons/admin/products.json", params: { metadata: { group_name: 'discourse-user-group-name' } }
           end
         end
 
@@ -85,7 +85,7 @@ module DiscoursePatrons
         describe 'update' do
           it 'updates the product' do
             ::Stripe::Product.expects(:update)
-            patch "/patrons/admin/products/prod_walterwhite.json", params: { metadata: { group_name: '' }}
+            patch "/patrons/admin/products/prod_walterwhite.json", params: { metadata: { group_name: '' } }
           end
         end
 

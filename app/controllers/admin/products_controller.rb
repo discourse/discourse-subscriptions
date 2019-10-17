@@ -47,11 +47,10 @@ module DiscoursePatrons
       def update
         begin
           product = ::Stripe::Product.update(
-            params[:id], {
-              name: params[:name],
-              active: params[:active],
-              metadata: metadata
-            }
+            params[:id],
+            name: params[:name],
+            active: params[:active],
+            metadata: metadata
           )
 
           render_json_dump product
