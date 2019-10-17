@@ -2,13 +2,13 @@
 
 # name: discourse-patrons
 # about: Integrates Stripe into Discourse to allow visitors to make payments
-# version: 1.2.3
+# version: 1.3.0
 # url: https://github.com/rimian/discourse-patrons
 # authors: Rimian Perkins
 
 enabled_site_setting :discourse_patrons_enabled
 
-gem 'stripe', '5.6.0'
+gem 'stripe', '5.7.1'
 
 register_asset "stylesheets/common/discourse-patrons.scss"
 register_asset "stylesheets/mobile/discourse-patrons.scss"
@@ -28,8 +28,8 @@ Discourse::Application.routes.append do
 end
 
 after_initialize do
-  ::Stripe.api_version = "2019-08-14"
-  ::Stripe.set_app_info('Discourse Patrons', version: '1.2.3', url: 'https://github.com/rimian/discourse-patrons')
+  ::Stripe.api_version = "2019-10-08"
+  ::Stripe.set_app_info('Discourse Patrons', version: '1.3.0', url: 'https://github.com/rimian/discourse-patrons')
 
   [
     "../lib/discourse_patrons/engine",
