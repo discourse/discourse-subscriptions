@@ -14,10 +14,9 @@
       <td>{{product.metadata.group_name}}</td>
       <td>{{product.active}}</td>
       <td class="td-right">
-        {{d-button
-          action=(action "editProduct" product.id)
-          icon="far-edit"
-          class="btn no-text btn-icon"}}
+        {{#link-to "adminPlugins.discourse-patrons.products.show" product.id class="btn no-text btn-icon"}}
+          {{d-icon "far-edit"}}
+        {{/link-to}}
         {{d-button
           action=(route-action "destroyProduct")
           actionParam=product
