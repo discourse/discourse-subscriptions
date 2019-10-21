@@ -28,6 +28,33 @@
   </p>
 </form>
 
+<h4>{{i18n 'discourse_patrons.admin.plans.title'}}</h4>
+
+<p>
+  <table class="table discourse-patrons-admin">
+    <thead>
+      <th>{{i18n 'discourse_patrons.admin.plans.plan.plan_id'}}</th>
+      <th>{{i18n 'discourse_patrons.admin.plans.plan.nickname.title'}}</th>
+      <th>{{i18n 'discourse_patrons.admin.plans.plan.interval'}}</th>
+      <th class="td-right">
+        {{#link-to "adminPlugins.discourse-patrons.products.show.plans.show" model.product.id "new" class="btn"}}
+          {{i18n 'discourse_patrons.admin.plans.operations.add'}}
+        {{/link-to}}
+      </th>
+    </thead>
+    {{#each model.plans as |plan|}}
+      <tr>
+        <td>{{plan.id}}</td>
+        <td>{{plan.nickname}}</td>
+        <td>{{plan.interval}}</td>
+        <td>{{plan.amount}}</td>
+      </tr>
+    {{/each}}
+  </table>
+</p>
+
+<hr>
+
 <div class="buttons">
   {{#if model.product.isNew}}
     {{d-button label="discourse_patrons.admin.products.operations.create" action="createProduct" icon="plus"}}

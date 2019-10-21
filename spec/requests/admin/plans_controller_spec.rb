@@ -66,8 +66,13 @@ module DiscoursePatrons
 
         describe "index" do
           it "lists the plans" do
-            ::Stripe::Plan.expects(:list)
+            ::Stripe::Plan.expects(:list).with(nil)
             get "/patrons/admin/plans.json"
+          end
+
+          it "lists the plans for the product" do
+            ::Stripe::Plan.expects(:list).with(product: 'prod_id123')
+            get "/patrons/admin/plans.json", params: { product_id: 'prod_id123' }
           end
         end
 

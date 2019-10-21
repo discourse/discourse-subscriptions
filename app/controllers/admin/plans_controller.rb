@@ -9,7 +9,7 @@ module DiscoursePatrons
 
       def index
         begin
-          plans = ::Stripe::Plan.list
+          plans = ::Stripe::Plan.list(product_params)
 
           render_json_dump plans.data
 
@@ -55,6 +55,12 @@ module DiscoursePatrons
         rescue ::Stripe::InvalidRequestError => e
           return render_json_error e.message
         end
+      end
+
+      private
+
+      def product_params
+        { product: params[:product_id] } if params[:product_id]
       end
     end
   end

@@ -23,8 +23,8 @@ const AdminPlan = Discourse.Model.extend({
 });
 
 AdminPlan.reopenClass({
-  findAll() {
-    return ajax("/patrons/admin/plans", { method: "get" }).then(result =>
+  findAll(data) {
+    return ajax("/patrons/admin/plans", { method: "get", data }).then(result =>
       result.map(plan => AdminPlan.create(plan))
     );
   },

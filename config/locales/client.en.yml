@@ -78,9 +78,9 @@ en:
               description: This is the discourse user group the customer gets added to when the subscription is created.
             active: Active
         plans:
-          title: Plans
+          title: Pricing Plans
           operations:
-            create: Create New Plan
+            add: Add New Plan
             new: New Plan
             destroy:
               confirm: Are you sure you want to destroy this plan?
