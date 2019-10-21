@@ -53,12 +53,16 @@
   </table>
 </p>
 
-<hr>
 
-<div class="buttons">
-  {{#if model.product.isNew}}
-    {{d-button label="discourse_patrons.admin.products.operations.create" action="createProduct" icon="plus"}}
-  {{else}}
-    {{d-button label="discourse_patrons.admin.products.operations.update" action="updateProduct" icon="fa-save"}}
-  {{/if}}
-</div>
+<section>
+  <hr>
+
+  <div class="pull-right">
+    {{#if model.product.isNew}}
+      {{d-button label="discourse_patrons.admin.products.operations.create" action="createProduct" icon="plus"}}
+    {{else}}
+      {{d-button label="discourse_patrons.admin.products.operations.update" action="updateProduct" icon="check"}}
+    {{/if}}
+  </div>
+
+</section>

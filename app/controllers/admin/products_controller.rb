@@ -20,10 +20,7 @@ module DiscoursePatrons
       def create
         begin
           product = ::Stripe::Product.create(
-            type: 'service',
-            name: params[:name],
-            active: params[:active],
-            metadata: metadata
+            product_params.merge(type: 'service')
           )
 
           render_json_dump product
@@ -48,9 +45,7 @@ module DiscoursePatrons
         begin
           product = ::Stripe::Product.update(
             params[:id],
-            name: params[:name],
-            active: params[:active],
-            metadata: metadata
+            product_params
           )
 
           render_json_dump product
@@ -73,8 +68,13 @@ module DiscoursePatrons
 
       private
 
-      def metadata
-        { group_name: params[:metadata][:group_name] }
+      def product_params
+        {
+          name: params[:name],
+          statement_descriptor: params[:statement_descriptor],
+          active: params[:active],
+          metadata: { group_name: params[:metadata][:group_name] }
+        }
       end
     end
   end

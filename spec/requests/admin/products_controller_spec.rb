@@ -69,6 +69,11 @@ module DiscoursePatrons
             post "/patrons/admin/products.json", params: { active: 'false', metadata: { group_name: '' } }
           end
 
+          it 'has a statement descriptor' do
+            ::Stripe::Product.expects(:create).with(has_entry(statement_descriptor: 'Blessed are the cheesemakers'))
+            post "/patrons/admin/products.json", params: { statement_descriptor: 'Blessed are the cheesemakers', metadata: { group_name: '' } }
+          end
+
           it 'has a metadata' do
             ::Stripe::Product.expects(:create).with(has_entry(metadata: { group_name: 'discourse-user-group-name' }))
             post "/patrons/admin/products.json", params: { metadata: { group_name: 'discourse-user-group-name' } }
