@@ -35,7 +35,7 @@
       <th>{{i18n 'discourse_patrons.admin.plans.plan.nickname'}}</th>
       <th>{{i18n 'discourse_patrons.admin.plans.plan.interval'}}</th>
       <th>{{i18n 'discourse_patrons.admin.plans.plan.created_at'}}</th>
-      <th>{{i18n 'discourse_patrons.admin.plans.plan.amount'}}</th>
+      <th class="td-right">{{i18n 'discourse_patrons.admin.plans.plan.amount'}}</th>
       <th class="td-right">
         {{#link-to "adminPlugins.discourse-patrons.products.show.plans.show" model.product.id "new" class="btn"}}
           {{i18n 'discourse_patrons.admin.plans.operations.add'}}
@@ -47,20 +47,30 @@
         <td>{{plan.nickname}}</td>
         <td>{{plan.interval}}</td>
         <td>{{format-date plan.createdFormatted}}</td>
-        <td>{{plan.amount}}</td>
+        <td class="td-right">{{plan.amount}}</td>
         <td class="td-right">
           {{#link-to "adminPlugins.discourse-patrons.products.show.plans.show" model.product.id plan.id class="btn no-text btn-icon"}}
             {{d-icon "far-edit"}}
           {{/link-to}}
-          {{!-- {{d-button
+          {{d-button
             action=(route-action "destroyPlan")
             actionParam=plan
             icon="trash-alt"
-            class="btn-danger btn no-text btn-icon"}} --}}
+            class="btn-danger btn no-text btn-icon"}}
         </td>
       </tr>
     {{/each}}
+
+    <tr>
+      <td colspan="5">
+        {{#unless model.plans}}
+          <hr>
+          Create a pricing plan to subscribe customers to this product
+        {{/unless}}
+      </td>
+    </tr>
   </table>
+
 </p>
 
 <section>
@@ -69,9 +79,9 @@
   <div class="pull-right">
     {{d-button label="cancel" action=(action "cancelProduct") icon="times"}}
     {{#if model.product.isNew}}
-      {{d-button label="discourse_patrons.admin.products.operations.create" action="createProduct" icon="plus"}}
+      {{d-button label="discourse_patrons.admin.products.operations.create" action="createProduct" icon="plus" class="btn btn-primary"}}
     {{else}}
-      {{d-button label="discourse_patrons.admin.products.operations.update" action="updateProduct" icon="check"}}
+      {{d-button label="discourse_patrons.admin.products.operations.update" action="updateProduct" icon="check" class="btn btn-primary"}}
     {{/if}}
   </div>
 

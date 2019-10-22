@@ -22,4 +22,24 @@ export default Discourse.Route.extend({
 
     return Ember.RSVP.hash({ plans, product, groups });
   },
+
+  actions: {
+    destroyPlan(plan) {
+      bootbox.confirm(
+        I18n.t("discourse_patrons.admin.plans.operations.destroy.confirm"),
+        I18n.t("no_value"),
+        I18n.t("yes_value"),
+        confirmed => {
+          if (confirmed) {
+            plan.destroy().then(() => {
+              this.controllerFor("adminPluginsDiscoursePatronsProductsShow")
+              .get("model.plans")
+              .removeObject(plan);
+            })
+            .catch(data => bootbox.alert(data.jqXHR.responseJSON.errors.join("\n")));
+          }
+        }
+      );
+    }
+  }
 });
