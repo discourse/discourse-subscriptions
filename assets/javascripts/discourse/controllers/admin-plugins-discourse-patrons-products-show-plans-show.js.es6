@@ -11,7 +11,7 @@ export default Ember.Controller.extend({
     },
 
     createPlan() {
-      const product_id = this.get('model.plan.product_id');
+      const product_id = this.get('model.plan.product');
       this.get('model.plan').save().then(result => this.redirect(product_id));
     }
   }

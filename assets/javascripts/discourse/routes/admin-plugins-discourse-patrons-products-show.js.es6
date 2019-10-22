@@ -4,8 +4,6 @@ import Group from "discourse/models/group";
 
 export default Discourse.Route.extend({
   model(params) {
-    console.log('products show', params);
-
     const product_id = params['product-id'];
     let product;
     let plans = [];

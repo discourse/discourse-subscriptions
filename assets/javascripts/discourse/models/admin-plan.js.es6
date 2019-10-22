@@ -21,7 +21,8 @@ const AdminPlan = Discourse.Model.extend({
       nickname: this.nickname,
       interval: this.interval,
       amount: this.amount,
-      product_id: this.product_id
+      trial_period_days: this.trial_period_days,
+      product: this.product
     };
 
     return ajax("/patrons/admin/plans", { method: "post", data });

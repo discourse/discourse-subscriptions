@@ -98,9 +98,14 @@ module DiscoursePatrons
             post "/patrons/admin/plans.json", params: { amount: '102' }
           end
 
+          it "creates a plan with a trial period" do
+            ::Stripe::Plan.expects(:create).with(has_entry(:trial_period_days, '14'))
+            post "/patrons/admin/plans.json", params: { trial_period_days: '14' }
+          end
+
           it "creates a plan with a product" do
             ::Stripe::Plan.expects(:create).with(has_entry(product: 'prod_walterwhite'))
-            post "/patrons/admin/plans.json", params: { product_id: 'prod_walterwhite' }
+            post "/patrons/admin/plans.json", params: { product: 'prod_walterwhite' }
           end
         end
 

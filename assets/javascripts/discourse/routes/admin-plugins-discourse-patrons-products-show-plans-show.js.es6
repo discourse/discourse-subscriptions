@@ -8,7 +8,7 @@ export default Discourse.Route.extend({
     let plan;
 
     if(id === 'new') {
-      plan = AdminPlan.create({ product_id: product.get('id') });
+      plan = AdminPlan.create({ product: product.get('id') });
     }
     else {
       plan = AdminPlan.find(id);

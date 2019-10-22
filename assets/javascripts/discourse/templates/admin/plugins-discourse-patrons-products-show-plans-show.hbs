@@ -22,7 +22,7 @@
       {{i18n 'discourse_patrons.admin.plans.plan.trial'}}
       ({{i18n 'discourse_patrons.optional'}})
     </label>
-    {{input type="text" name="trial" value=model.plan.trial}}
+    {{input type="text" name="trial" value=model.plan.trial_period_days}}
     <div class="control-instructions">
       {{i18n 'discourse_patrons.admin.plans.plan.trial_help'}}
     </div>
@@ -38,12 +38,12 @@
 <section>
   <hr>
 
-  <div class="control-instructions">
+  <p class="control-instructions">
     {{i18n 'discourse_patrons.admin.plans.operations.create_help'}}
-  </div>
+  </p>
 
   <div class="pull-right">
-    {{d-button label="cancel" action=(action "cancelPlan" model.plan.product_id) icon="times"}}
+    {{d-button label="cancel" action=(action "cancelPlan" model.plan.product) icon="times"}}
     {{d-button label="discourse_patrons.admin.plans.operations.create" action="createPlan" icon="plus" class="btn btn-primary"}}
   </div>
 

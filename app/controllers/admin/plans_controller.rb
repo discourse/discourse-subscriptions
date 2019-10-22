@@ -24,7 +24,8 @@ module DiscoursePatrons
             nickname: params[:nickname],
             amount: params[:amount],
             interval: params[:interval],
-            product: params[:product_id],
+            product: params[:product],
+            trial_period_days: params[:trial_period_days],
             currency: SiteSetting.discourse_patrons_currency,
           )
 
