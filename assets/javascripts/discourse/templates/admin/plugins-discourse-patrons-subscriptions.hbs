@@ -2,16 +2,18 @@
 <table class="table discourse-patrons-admin">
   <thead>
     <tr>
-      <th>{{i18n 'discourse_patrons.admin.subscriptions.subscription.subscription_id'}}</th>
+      <th>{{i18n 'discourse_patrons.admin.subscriptions.subscription.customer'}}</th>
       <th>{{i18n 'discourse_patrons.admin.subscriptions.subscription.plan'}}</th>
       <th>{{i18n 'discourse_patrons.admin.subscriptions.subscription.status'}}</th>
+      <th class="td-right">{{i18n 'discourse_patrons.admin.subscriptions.subscription.created_at'}}</th>
     </tr>
   </thead>
   {{#each model as |subscription|}}
     <tr>
-      <td>{{subscription.id}}</td>
+      <td>{{subscription.customer}}</td>
       <td>{{subscription.plan.id}}</td>
       <td>{{subscription.status}}</td>
+      <td class="td-right">{{format-date subscription.createdFormatted}}</td>
     </tr>
   {{/each}}
 </table>
