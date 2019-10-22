@@ -3,10 +3,14 @@
 
 <form class="form-horizontal">
   <p>
-    <label for="name">{{i18n 'discourse_patrons.admin.plans.plan.nickname.title'}}</label>
+    <label for="product">{{i18n 'discourse_patrons.admin.products.product.name'}}</label>
+    {{input type="text" name="product_name" value=model.product.name disabled=true}}
+  </p>
+  <p>
+    <label for="name">{{i18n 'discourse_patrons.admin.plans.plan.nickname'}}</label>
     {{input type="text" name="name" value=model.plan.nickname}}
     <div class="control-instructions">
-      {{i18n 'discourse_patrons.admin.plans.plan.nickname.description'}}
+      {{i18n 'discourse_patrons.admin.plans.plan.nickname_help'}}
     </div>
   </p>
   <p>
@@ -14,15 +18,33 @@
     {{input type="text" name="name" value=model.plan.amount}}
   </p>
   <p>
-    <label for="product">{{i18n 'discourse_patrons.admin.plans.plan.product'}}</label>
-    {{combo-box valueAttribute="id" content=model.products value=model.plan.product_id}}
+    <label for="trial">
+      {{i18n 'discourse_patrons.admin.plans.plan.trial'}}
+      ({{i18n 'discourse_patrons.optional'}})
+    </label>
+    {{input type="text" name="trial" value=model.plan.trial}}
+    <div class="control-instructions">
+      {{i18n 'discourse_patrons.admin.plans.plan.trial_help'}}
+    </div>
   </p>
   <p>
-    <label for="interval">{{i18n 'discourse_patrons.admin.plans.plan.interval'}}</label>
+    <label for="interval">
+      {{i18n 'discourse_patrons.admin.plans.plan.interval'}}
+    </label>
     {{combo-box valueAttribute="value" content=model.plan.intervals value=model.plan.interval}}
   </p>
 </form>
 
-<div class="buttons">
-  {{d-button label="discourse_patrons.admin.plans.operations.create" action="createPlan" icon="plus"}}
-</div>
+<section>
+  <hr>
+
+  <div class="control-instructions">
+    {{i18n 'discourse_patrons.admin.plans.operations.create_help'}}
+  </div>
+
+  <div class="pull-right">
+    {{d-button label="cancel" action=(action "cancelPlan" model.plan.product_id) icon="times"}}
+    {{d-button label="discourse_patrons.admin.plans.operations.create" action="createPlan" icon="plus" class="btn btn-primary"}}
+  </div>
+
+</section>

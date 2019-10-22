@@ -2,23 +2,26 @@ import AdminPlan from "discourse/plugins/discourse-patrons/discourse/models/admi
 import AdminProduct from "discourse/plugins/discourse-patrons/discourse/models/admin-product";
 
 export default Discourse.Route.extend({
-  templateName: 'admin-plugins-discourse-patrons-plans-show',
-
   model(params) {
-    console.log('product plans', params);
+    const id = params['plan-id'];
+    const product = this.modelFor('adminPlugins.discourse-patrons.products.show').product;
+    let plan;
 
-    // const id = params['plan-id'];
-    // let plan;
-    //
-    // if(id === 'new') {
-    //   plan = AdminPlan.create();
-    // }
-    // else {
-    //   plan = AdminPlan.find(id);
-    // }
-    //
-    // const products = AdminProduct.findAll();
-    //
-    // return Ember.RSVP.hash({ plan, products });
-  }
+    if(id === 'new') {
+      plan = AdminPlan.create({ product_id: product.get('id') });
+    }
+    else {
+      plan = AdminPlan.find(id);
+    }
+
+    return Ember.RSVP.hash({ plan, product });
+  },
+
+  renderTemplate(controller, model) {
+    this.render('adminPlugins.discourse-patrons.products.show.plans.show', {
+      into: 'adminPlugins.discourse-patrons.products',
+      outlet: 'main',
+      controller: 'adminPlugins.discourse-patrons.products.show.plans.show',
+    });
+  },
 });

@@ -16,6 +16,7 @@ en:
   js:
     discourse_patrons:
       title: Discourse Patrons
+      optional: Optional
       navigation:
         subscribe: Subscribe
       subscribe:
@@ -70,28 +71,29 @@ en:
           product:
             product_id: Product ID
             name: Product Name
-            statement_descriptor:
-              title: Statement Descriptor
-              description: Extra information about a product which will appear on your customer’s credit card statement.
-            group:
-              title: User Group
-              description: This is the discourse user group the customer gets added to when the subscription is created.
+            statement_descriptor: Statement Descriptor
+            statement_descriptor_help: Extra information about a product which will appear on your customer’s credit card statement.
+            group: User Group
+            group_help: This is the discourse user group the customer gets added to when the subscription is created.
             active: Active
         plans:
           title: Pricing Plans
           operations:
             add: Add New Plan
+            create: Create Plan
+            create_help: Once a pricing plan is created, only its nickname and trial period can be updated.
             new: New Plan
             destroy:
               confirm: Are you sure you want to destroy this plan?
           plan:
-            nickname:
-              title: Plan Nickname
-              description: This won't be visible to customers, but will help you find this plan later.
+            nickname: Plan Nickname
+            nickname_help: This won't be visible to customers, but will help you find this plan later.
             plan_id: Plan ID
             product: Product
-            interval: Interval
+            interval: Billing Interval
             amount: Amount
+            trial: Trial Period Days
+            trial_help: Subscriptions to this plan will automatically start with a free trial of this length
         subscriptions:
           title: Subscriptions
           subscription:

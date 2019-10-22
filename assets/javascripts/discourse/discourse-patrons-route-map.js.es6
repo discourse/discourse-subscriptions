@@ -15,7 +15,6 @@ export default {
 
       this.route("products", function() {
         this.route("show", { path: "/:product-id" }, function() {
-          // this.route("plans");
           this.route("plans", function() {
             this.route("show", { path: "/:plan-id" });
           });

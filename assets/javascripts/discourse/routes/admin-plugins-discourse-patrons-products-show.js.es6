@@ -21,5 +21,5 @@ export default Discourse.Route.extend({
     const groups = Group.findAll({ ignore_automatic: true });
 
     return Ember.RSVP.hash({ plans, product, groups });
-  }
+  },
 });
