@@ -1,6 +1,4 @@
-import DiscourseURL from "discourse/lib/url";
 import { ajax } from "discourse/lib/ajax";
-import Subscription from "discourse/plugins/discourse-patrons/discourse/models/subscription";
 
 export default Ember.Controller.extend({
   init() {

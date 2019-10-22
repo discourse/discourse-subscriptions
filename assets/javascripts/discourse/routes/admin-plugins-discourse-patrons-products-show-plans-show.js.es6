@@ -1,5 +1,4 @@
 import AdminPlan from "discourse/plugins/discourse-patrons/discourse/models/admin-plan";
-import AdminProduct from "discourse/plugins/discourse-patrons/discourse/models/admin-product";
 
 export default Discourse.Route.extend({
   model(params) {
@@ -17,7 +16,7 @@ export default Discourse.Route.extend({
     return Ember.RSVP.hash({ plan, product });
   },
 
-  renderTemplate(controller, model) {
+  renderTemplate() {
     this.render('adminPlugins.discourse-patrons.products.show.plans.show', {
       into: 'adminPlugins.discourse-patrons.products',
       outlet: 'main',
