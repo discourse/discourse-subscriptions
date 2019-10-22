@@ -1,7 +1,15 @@
 import { popupAjaxError } from "discourse/lib/ajax-error";
 
 export default Ember.Controller.extend({
+  redirect() {
+    this.transitionToRoute("adminPlugins.discourse-patrons.products");
+  },
+
   actions: {
+    cancelProduct() {
+      this.redirect();
+    },
+
     createProduct() {
       // TODO: set default group name beforehand
       if (this.get("model.product.metadata.group_name") === undefined) {
@@ -13,18 +21,14 @@ export default Ember.Controller.extend({
 
       this.get("model.product")
         .save()
-        .then(() => {
-          this.transitionToRoute("adminPlugins.discourse-patrons.products");
-        })
+        .then(() => this.redirect())
         .catch(popupAjaxError);
     },
 
     updateProduct() {
       this.get("model.product")
         .update()
-        .then(() => {
-          this.transitionToRoute("adminPlugins.discourse-patrons.products");
-        })
+        .then(() => this.redirect())
         .catch(popupAjaxError);
     }
   }

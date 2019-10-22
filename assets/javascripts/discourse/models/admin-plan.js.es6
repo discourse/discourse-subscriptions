@@ -1,3 +1,4 @@
+import computed from "ember-addons/ember-computed-decorators";
 import { ajax } from "discourse/lib/ajax";
 
 const AdminPlan = Discourse.Model.extend({
@@ -5,6 +6,11 @@ const AdminPlan = Discourse.Model.extend({
   interval: "month",
   amount: 0,
   intervals: ["day", "week", "month", "year"],
+
+  @computed("created")
+  createdFormatted(created) {
+    return moment.unix(created).format();
+  },
 
   destroy() {
     return ajax(`/patrons/admin/plans/${this.id}`, { method: "delete" });

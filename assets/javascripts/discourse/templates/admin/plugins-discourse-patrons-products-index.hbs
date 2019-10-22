@@ -1,17 +1,24 @@
 
+<p class="btn-right">
+  {{#link-to 'adminPlugins.discourse-patrons.products.show' 'new' class="btn btn-primary"}}
+    {{d-icon "plus"}}
+    <span>{{i18n 'discourse_patrons.admin.products.operations.new'}}</span>
+  {{/link-to}}
+</p>
+
 <table class="table discourse-patrons-admin">
   <thead>
-    <th>{{i18n 'discourse_patrons.admin.products.product.product_id'}}</th>
     <th>{{i18n 'discourse_patrons.admin.products.product.name'}}</th>
     <th>{{i18n 'discourse_patrons.admin.products.product.group'}}</th>
+    <th>{{i18n 'discourse_patrons.admin.products.product.created_at'}}</th>
     <th>{{i18n 'discourse_patrons.admin.products.product.active'}}</th>
     <th></th>
   </thead>
   {{#each model as |product|}}
     <tr>
-      <td>{{product.id}}</td>
       <td>{{product.name}}</td>
       <td>{{product.metadata.group_name}}</td>
+      <td>{{format-date product.createdFormatted}}</td>
       <td>{{product.active}}</td>
       <td class="td-right">
         {{#link-to "adminPlugins.discourse-patrons.products.show" product.id class="btn no-text btn-icon"}}
