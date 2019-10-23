@@ -8,7 +8,7 @@ module DiscoursePatrons
 
     def index
       begin
-        plans = ::Stripe::Plan.list
+        plans = ::Stripe::Plan.list(active: true)
 
         render_json_dump plans.data
 
