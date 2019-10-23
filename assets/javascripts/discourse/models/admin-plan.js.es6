@@ -36,6 +36,7 @@ const AdminPlan = Discourse.Model.extend({
       trial_period_days: this.parseTrialPeriodDays,
       product: this.product,
       metadata: this.metadata,
+      active: this.active
     };
 
     return ajax("/patrons/admin/plans", { method: "post", data });
@@ -46,6 +47,7 @@ const AdminPlan = Discourse.Model.extend({
       nickname: this.nickname,
       trial_period_days: this.parseTrialPeriodDays,
       metadata: this.metadata,
+      active: this.active
     };
 
     return ajax(`/patrons/admin/plans/${this.id}`, { method: "patch", data });

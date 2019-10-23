@@ -97,6 +97,7 @@ en:
             trial_help: Subscriptions to this plan will automatically start with a free trial of this length
             group: User Group
             group_help: This is the discourse user group the customer gets added to when the subscription is created.
+            active: Active
             created_at: Created
         subscriptions:
           title: Subscriptions

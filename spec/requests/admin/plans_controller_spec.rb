@@ -120,6 +120,11 @@ module DiscoursePatrons
             post "/patrons/admin/plans.json", params: { product: 'prod_walterwhite', metadata: { group_name: '' } }
           end
 
+          it "creates a plan with an active status" do
+            ::Stripe::Plan.expects(:create).with(has_entry(:active, 'false'))
+            post "/patrons/admin/plans.json", params: { active: 'false', metadata: { group_name: '' } }
+          end
+
           it 'has a metadata' do
             ::Stripe::Plan.expects(:create).with(has_entry(metadata: { group_name: 'discourse-user-group-name' }))
             post "/patrons/admin/plans.json", params: { metadata: { group_name: 'discourse-user-group-name' } }

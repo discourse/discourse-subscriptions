@@ -40,6 +40,12 @@
     </label>
     {{combo-box valueAttribute="value" content=model.plan.intervals value=model.plan.interval}}
   </p>
+  <p>
+    <label for="active">
+      {{i18n 'discourse_patrons.admin.plans.plan.active'}}
+    </label>
+    {{input type="checkbox" name="active" checked=model.plan.active}}
+  </p>
 </form>
 
 <section>
