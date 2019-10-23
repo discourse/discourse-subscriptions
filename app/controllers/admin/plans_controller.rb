@@ -27,6 +27,7 @@ module DiscoursePatrons
             product: params[:product],
             trial_period_days: params[:trial_period_days],
             currency: SiteSetting.discourse_patrons_currency,
+            metadata: { group_name: params[:metadata][:group_name] }
           )
 
           render_json_dump plan

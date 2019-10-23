@@ -75,6 +75,7 @@ en:
             statement_descriptor_help: Extra information about a product which will appear on your customer’s credit card statement.
             group: User Group
             group_help: This is the discourse user group the customer gets added to when the subscription is created.
+            plan_help: Create a pricing plan to subscribe customers to this product
             active: Active
             created_at: Created
         plans:
@@ -95,6 +96,8 @@ en:
             amount: Amount
             trial: Trial Period Days
             trial_help: Subscriptions to this plan will automatically start with a free trial of this length
+            group: User Group
+            group_help: This is the discourse user group the customer gets added to when the subscription is created.
             created_at: Created
         subscriptions:
           title: Subscriptions

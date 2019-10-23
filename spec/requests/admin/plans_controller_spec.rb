@@ -79,33 +79,38 @@ module DiscoursePatrons
         describe "create" do
           it "creates a plan with a nickname" do
             ::Stripe::Plan.expects(:create).with(has_entry(:nickname, 'Veg'))
-            post "/patrons/admin/plans.json", params: { nickname: 'Veg' }
+            post "/patrons/admin/plans.json", params: { nickname: 'Veg', metadata: { group_name: '' } }
           end
 
           it "creates a plan with a currency" do
             SiteSetting.stubs(:discourse_patrons_currency).returns('aud')
             ::Stripe::Plan.expects(:create).with(has_entry(:currency, 'aud'))
-            post "/patrons/admin/plans.json", params: {}
+            post "/patrons/admin/plans.json", params: { metadata: { group_name: '' } }
           end
 
           it "creates a plan with an interval" do
             ::Stripe::Plan.expects(:create).with(has_entry(:interval, 'week'))
-            post "/patrons/admin/plans.json", params: { interval: 'week' }
+            post "/patrons/admin/plans.json", params: { interval: 'week', metadata: { group_name: '' } }
           end
 
           it "creates a plan with an amount" do
             ::Stripe::Plan.expects(:create).with(has_entry(:amount, '102'))
-            post "/patrons/admin/plans.json", params: { amount: '102' }
+            post "/patrons/admin/plans.json", params: { amount: '102', metadata: { group_name: '' } }
           end
 
           it "creates a plan with a trial period" do
             ::Stripe::Plan.expects(:create).with(has_entry(:trial_period_days, '14'))
-            post "/patrons/admin/plans.json", params: { trial_period_days: '14' }
+            post "/patrons/admin/plans.json", params: { trial_period_days: '14', metadata: { group_name: '' } }
           end
 
           it "creates a plan with a product" do
             ::Stripe::Plan.expects(:create).with(has_entry(product: 'prod_walterwhite'))
-            post "/patrons/admin/plans.json", params: { product: 'prod_walterwhite' }
+            post "/patrons/admin/plans.json", params: { product: 'prod_walterwhite', metadata: { group_name: '' } }
+          end
+
+          it 'has a metadata' do
+            ::Stripe::Plan.expects(:create).with(has_entry(metadata: { group_name: 'discourse-user-group-name' }))
+            post "/patrons/admin/plans.json", params: { metadata: { group_name: 'discourse-user-group-name' } }
           end
         end
 

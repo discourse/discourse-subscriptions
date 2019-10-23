@@ -73,7 +73,6 @@ module DiscoursePatrons
           name: params[:name],
           statement_descriptor: params[:statement_descriptor],
           active: params[:active],
-          metadata: { group_name: params[:metadata][:group_name] }
         }
       end
     end

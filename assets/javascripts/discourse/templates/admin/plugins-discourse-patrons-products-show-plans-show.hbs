@@ -14,6 +14,13 @@
     </div>
   </p>
   <p>
+    <label for="interval">{{i18n 'discourse_patrons.admin.plans.plan.group'}}</label>
+    {{combo-box valueAttribute="name" content=model.groups value=model.plan.metadata.group_name}}
+    <div class="control-instructions">
+      {{i18n 'discourse_patrons.admin.plans.plan.group_help'}}
+    </div>
+  </p>
+  <p>
     <label for="amount">{{i18n 'discourse_patrons.admin.plans.plan.amount'}}</label>
     {{input type="text" name="name" value=model.plan.amount}}
   </p>

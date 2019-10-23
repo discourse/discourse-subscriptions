@@ -1,4 +1,5 @@
 import AdminPlan from "discourse/plugins/discourse-patrons/discourse/models/admin-plan";
+import Group from "discourse/models/group";
 
 export default Discourse.Route.extend({
   model(params) {
@@ -13,7 +14,9 @@ export default Discourse.Route.extend({
       plan = AdminPlan.find(id);
     }
 
-    return Ember.RSVP.hash({ plan, product });
+    const groups = Group.findAll({ ignore_automatic: true });
+
+    return Ember.RSVP.hash({ plan, product, groups });
   },
 
   renderTemplate() {

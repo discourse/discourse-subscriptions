@@ -6,6 +6,7 @@ const AdminPlan = Discourse.Model.extend({
   interval: "month",
   amount: 0,
   intervals: ["day", "week", "month", "year"],
+  metadata: {},
 
   @computed("created")
   createdFormatted(created) {
@@ -22,7 +23,8 @@ const AdminPlan = Discourse.Model.extend({
       interval: this.interval,
       amount: this.amount,
       trial_period_days: this.trial_period_days,
-      product: this.product
+      product: this.product,
+      metadata: this.metadata,
     };
 
     return ajax("/patrons/admin/plans", { method: "post", data });
