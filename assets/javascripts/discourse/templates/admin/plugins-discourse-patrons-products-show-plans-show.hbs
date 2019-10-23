@@ -22,7 +22,7 @@
   </p>
   <p>
     <label for="amount">{{i18n 'discourse_patrons.admin.plans.plan.amount'}}</label>
-    {{input type="text" name="name" value=model.plan.amount}}
+    {{input type="text" name="name" value=model.plan.amount disabled=planFieldDisabled}}
   </p>
   <p>
     <label for="trial">
@@ -51,7 +51,12 @@
 
   <div class="pull-right">
     {{d-button label="cancel" action=(action "cancelPlan" model.plan.product) icon="times"}}
-    {{d-button label="discourse_patrons.admin.plans.operations.create" action="createPlan" icon="plus" class="btn btn-primary"}}
+
+    {{#if model.plan.isNew}}
+      {{d-button label="discourse_patrons.admin.plans.operations.create" action="createPlan" icon="plus" class="btn btn-primary"}}
+    {{else}}
+      {{d-button label="discourse_patrons.admin.plans.operations.update" action="updatePlan" icon="check" class="btn btn-primary"}}
+    {{/if}}
   </div>
 
 </section>

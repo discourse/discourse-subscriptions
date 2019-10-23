@@ -46,14 +46,26 @@ module DiscoursePatrons
           end
         end
 
-        describe "delete" do
-          it "does not delete a plan" do
-            ::Stripe::Plan.expects(:delete).never
+        describe "update" do
+          it "does not update a plan" do
+            ::Stripe::Plan.expects(:update).never
             delete "/patrons/admin/plans/plan_12345.json"
           end
 
           it "is not ok" do
             delete "/patrons/admin/plans/plan_12345.json"
+            expect(response.status).to eq 403
+          end
+        end
+
+        describe "delete" do
+          it "does not delete a plan" do
+            ::Stripe::Plan.expects(:delete).never
+            patch "/patrons/admin/plans/plan_12345.json"
+          end
+
+          it "is not ok" do
+            patch "/patrons/admin/plans/plan_12345.json"
             expect(response.status).to eq 403
           end
         end
@@ -111,6 +123,13 @@ module DiscoursePatrons
           it 'has a metadata' do
             ::Stripe::Plan.expects(:create).with(has_entry(metadata: { group_name: 'discourse-user-group-name' }))
             post "/patrons/admin/plans.json", params: { metadata: { group_name: 'discourse-user-group-name' } }
+          end
+        end
+
+        describe "update" do
+          it "updates a plan" do
+            ::Stripe::Plan.expects(:update)
+            patch "/patrons/admin/plans/plan_12345.json", params: { metadata: { group_name: 'discourse-user-group-name' } }
           end
         end
 

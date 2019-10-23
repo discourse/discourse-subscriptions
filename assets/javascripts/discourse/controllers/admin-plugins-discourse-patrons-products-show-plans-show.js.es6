@@ -1,6 +1,17 @@
+import computed from "ember-addons/ember-computed-decorators";
 import DiscourseURL from "discourse/lib/url";
 
 export default Ember.Controller.extend({
+  @computed("model.plan.isNew")
+  planFieldDisabled(isNew) {
+    return !isNew;
+  },
+
+  @computed("model.product.id")
+  productId(id) {
+    return id;
+  },
+
   redirect(product_id) {
     DiscourseURL.redirectTo(`/admin/plugins/discourse-patrons/products/${product_id}`);
   },
@@ -11,8 +22,19 @@ export default Ember.Controller.extend({
     },
 
     createPlan() {
-      const product_id = this.get('model.plan.product');
-      this.get('model.plan').save().then(() => this.redirect(product_id));
+      // TODO: set default group name beforehand
+      if (this.get("model.plan.metadata.group_name") === undefined) {
+        this.set(
+          "model.plan.metadata",
+          { group_name: this.get("model.groups.firstObject.name") }
+        );
+      }
+
+      this.get('model.plan').save().then(() => this.redirect(this.productId));
+    },
+
+    updatePlan() {
+      this.get('model.plan').update().then(() => this.redirect(this.productId));
     }
   }
 });

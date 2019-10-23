@@ -2,6 +2,7 @@ import computed from "ember-addons/ember-computed-decorators";
 import { ajax } from "discourse/lib/ajax";
 
 const AdminPlan = Discourse.Model.extend({
+  isNew: false,
   name: "",
   interval: "month",
   amount: 0,
@@ -13,6 +14,16 @@ const AdminPlan = Discourse.Model.extend({
     return moment.unix(created).format();
   },
 
+  @computed("trial_period_days")
+  parseTrialPeriodDays(trial_period_days) {
+    if(trial_period_days) {
+      return parseInt(0 + trial_period_days);
+    }
+    else {
+      return 0;
+    }
+  },
+
   destroy() {
     return ajax(`/patrons/admin/plans/${this.id}`, { method: "delete" });
   },
@@ -22,12 +33,22 @@ const AdminPlan = Discourse.Model.extend({
       nickname: this.nickname,
       interval: this.interval,
       amount: this.amount,
-      trial_period_days: this.trial_period_days,
+      trial_period_days: this.parseTrialPeriodDays,
       product: this.product,
       metadata: this.metadata,
     };
 
     return ajax("/patrons/admin/plans", { method: "post", data });
+  },
+
+  update() {
+    const data = {
+      nickname: this.nickname,
+      trial_period_days: this.parseTrialPeriodDays,
+      metadata: this.metadata,
+    };
+
+    return ajax(`/patrons/admin/plans/${this.id}`, { method: "patch", data });
   }
 });
 

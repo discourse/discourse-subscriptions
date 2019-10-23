@@ -19,9 +19,13 @@ module DiscoursePatrons
 
       def create
         begin
-          product = ::Stripe::Product.create(
-            product_params.merge(type: 'service')
-          )
+          create_params = product_params.merge!(type: 'service')
+
+          if params[:statement_descriptor].blank?
+            create_params.except!(:statement_descriptor)
+          end
+
+          product = ::Stripe::Product.create(create_params)
 
           render_json_dump product
 
@@ -71,8 +75,8 @@ module DiscoursePatrons
       def product_params
         {
           name: params[:name],
-          statement_descriptor: params[:statement_descriptor],
           active: params[:active],
+          statement_descriptor: params[:statement_descriptor]
         }
       end
     end

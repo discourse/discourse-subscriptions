@@ -20,53 +20,54 @@
   </p>
 </form>
 
-<h4>{{i18n 'discourse_patrons.admin.plans.title'}}</h4>
+{{#unless model.product.isNew}}
+  <h4>{{i18n 'discourse_patrons.admin.plans.title'}}</h4>
 
-<p>
-  <table class="table discourse-patrons-admin">
-    <thead>
-      <th>{{i18n 'discourse_patrons.admin.plans.plan.nickname'}}</th>
-      <th>{{i18n 'discourse_patrons.admin.plans.plan.interval'}}</th>
-      <th>{{i18n 'discourse_patrons.admin.plans.plan.created_at'}}</th>
-      <th>{{i18n 'discourse_patrons.admin.plans.plan.group'}}</th>
-      <th class="td-right">{{i18n 'discourse_patrons.admin.plans.plan.amount'}}</th>
-      <th class="td-right">
-        {{#link-to "adminPlugins.discourse-patrons.products.show.plans.show" model.product.id "new" class="btn"}}
-          {{i18n 'discourse_patrons.admin.plans.operations.add'}}
-        {{/link-to}}
-      </th>
-    </thead>
-    {{#each model.plans as |plan|}}
+  <p>
+    <table class="table discourse-patrons-admin">
+      <thead>
+        <th>{{i18n 'discourse_patrons.admin.plans.plan.nickname'}}</th>
+        <th>{{i18n 'discourse_patrons.admin.plans.plan.interval'}}</th>
+        <th>{{i18n 'discourse_patrons.admin.plans.plan.created_at'}}</th>
+        <th>{{i18n 'discourse_patrons.admin.plans.plan.group'}}</th>
+        <th class="td-right">{{i18n 'discourse_patrons.admin.plans.plan.amount'}}</th>
+        <th class="td-right">
+            {{#link-to "adminPlugins.discourse-patrons.products.show.plans.show" model.product.id "new" class="btn"}}
+              {{i18n 'discourse_patrons.admin.plans.operations.add'}}
+            {{/link-to}}
+        </th>
+      </thead>
+      {{#each model.plans as |plan|}}
+        <tr>
+          <td>{{plan.nickname}}</td>
+          <td>{{plan.interval}}</td>
+          <td>{{format-date plan.createdFormatted}}</td>
+          <td>{{plan.metadata.group_name}}</td>
+          <td class="td-right">{{plan.amount}}</td>
+          <td class="td-right">
+            {{#link-to "adminPlugins.discourse-patrons.products.show.plans.show" model.product.id plan.id class="btn no-text btn-icon"}}
+              {{d-icon "far-edit"}}
+            {{/link-to}}
+            {{d-button
+              action=(route-action "destroyPlan")
+              actionParam=plan
+              icon="trash-alt"
+              class="btn-danger btn no-text btn-icon"}}
+          </td>
+        </tr>
+      {{/each}}
+
       <tr>
-        <td>{{plan.nickname}}</td>
-        <td>{{plan.interval}}</td>
-        <td>{{format-date plan.createdFormatted}}</td>
-        <td>{{plan.metadata.group_name}}</td>
-        <td class="td-right">{{plan.amount}}</td>
-        <td class="td-right">
-          {{#link-to "adminPlugins.discourse-patrons.products.show.plans.show" model.product.id plan.id class="btn no-text btn-icon"}}
-            {{d-icon "far-edit"}}
-          {{/link-to}}
-          {{d-button
-            action=(route-action "destroyPlan")
-            actionParam=plan
-            icon="trash-alt"
-            class="btn-danger btn no-text btn-icon"}}
+        <td colspan="6">
+          {{#unless model.plans}}
+            <hr>
+            {{i18n 'discourse_patrons.admin.products.product.plan_help'}}
+          {{/unless}}
         </td>
       </tr>
-    {{/each}}
-
-    <tr>
-      <td colspan="5">
-        {{#unless model.plans}}
-          <hr>
-          {{i18n 'discourse_patrons.admin.products.product.plan_help'}}
-        {{/unless}}
-      </td>
-    </tr>
-  </table>
-
-</p>
+    </table>
+  </p>
+{{/unless}}
 
 <section>
   <hr>

@@ -73,8 +73,6 @@ en:
             name: Product Name
             statement_descriptor: Statement Descriptor
             statement_descriptor_help: Extra information about a product which will appear on your customer’s credit card statement.
-            group: User Group
-            group_help: This is the discourse user group the customer gets added to when the subscription is created.
             plan_help: Create a pricing plan to subscribe customers to this product
             active: Active
             created_at: Created
@@ -83,13 +81,14 @@ en:
           operations:
             add: Add New Plan
             create: Create Plan
-            create_help: Once a pricing plan is created, only its nickname and trial period can be updated.
+            update: Update Plan
+            create_help: Once a pricing plan is created, only its nickname, trial period and user group can be updated.
             new: New Plan
             destroy:
               confirm: Are you sure you want to destroy this plan?
           plan:
             nickname: Plan Nickname
-            nickname_help: This won't be visible to customers, but will help you find this plan later.
+            nickname_help: This won't be visible to customers, but will help you find this plan later
             plan_id: Plan ID
             product: Product
             interval: Billing Interval

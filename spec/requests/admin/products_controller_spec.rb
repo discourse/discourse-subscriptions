@@ -73,6 +73,11 @@ module DiscoursePatrons
             ::Stripe::Product.expects(:create).with(has_entry(statement_descriptor: 'Blessed are the cheesemakers'))
             post "/patrons/admin/products.json", params: { statement_descriptor: 'Blessed are the cheesemakers' }
           end
+
+          it 'has no statement descriptor if empty' do
+            ::Stripe::Product.expects(:create).with(has_key(:statement_descriptor)).never
+            post "/patrons/admin/products.json", params: { statement_descriptor: '' }
+          end
         end
 
         describe 'show' do

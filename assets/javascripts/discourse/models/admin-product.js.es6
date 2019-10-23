@@ -22,7 +22,9 @@ const AdminProduct = Discourse.Model.extend({
       active: this.active
     };
 
-    return ajax("/patrons/admin/products", { method: "post", data });
+    return ajax("/patrons/admin/products", { method: "post", data }).then(product =>
+      AdminProduct.create(product)
+    );
   },
 
   update() {

@@ -48,6 +48,22 @@ module DiscoursePatrons
         end
       end
 
+      def update
+        begin
+          plan = ::Stripe::Plan.update(
+            params[:id],
+            nickname: params[:nickname],
+            trial_period_days: params[:trial_period_days],
+            metadata: { group_name: params[:metadata][:group_name] }
+          )
+
+          render_json_dump plan
+
+        rescue ::Stripe::InvalidRequestError => e
+          return render_json_error e.message
+        end
+      end
+
       def destroy
         begin
           plan = ::Stripe::Plan.delete(params[:id])
