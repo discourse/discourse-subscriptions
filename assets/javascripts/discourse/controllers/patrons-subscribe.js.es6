@@ -13,13 +13,9 @@ export default Ember.Controller.extend({
 
   actions: {
     stripePaymentHandler() {
-      // https://stripe.com/docs/billing/subscriptions/payment#signup-flow
-
       this.stripe.createToken(this.get("cardElement")).then(result => {
         if (result.error) {
-          // Inform the customer that there was an error.
-          // var errorElement = document.getElementById('card-errors');
-          // errorElement.textContent = result.error.message;
+          bootbox.alert(result.error.message);
         } else {
           const customerData = {
             source: result.token.id
@@ -38,11 +34,7 @@ export default Ember.Controller.extend({
             }
 
             subscription.save().then(() => {
-              console.log('ok');
-              // return DiscourseURL.redirectTo(
-              //   Discourse.SiteSettings
-              //     .discourse_patrons_subscription_group_landing_page
-              // );
+              bootbox.alert("ok payment good... some kind of message");
             });
           });
         }
