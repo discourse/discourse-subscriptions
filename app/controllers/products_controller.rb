@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
 module DiscoursePatrons
-  class PlansController < ::ApplicationController
+  class ProductsController < ::ApplicationController
     include DiscoursePatrons::Stripe
 
     before_action :set_api_key
 
     def index
       begin
-        plans = ::Stripe::Plan.list(active: true)
+        products = ::Stripe::Product.list(active: true)
 
-        # TODO: Serialize. Remove some attributes like meta.group_name
-        render_json_dump plans.data
+        # TODO: Serialize. Remove some attributes like metadata
+        render_json_dump products.data
 
       rescue ::Stripe::InvalidRequestError => e
         return render_json_error e.message

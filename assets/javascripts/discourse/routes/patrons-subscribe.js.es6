@@ -10,10 +10,9 @@ export default Discourse.Route.extend({
       return `$${toCurrency(plan.amount)} ${plan.currency.toUpperCase()} / ${plan.interval}`;
     };
 
-    const group = Group.find();
     const plans = Plan.findAll().then(results => results.map(p => planSelectText(p)));
     const subscription = Subscription.create();
 
-    return Ember.RSVP.hash({ group, plans, subscription });
+    return Ember.RSVP.hash({ plans, subscription });
   }
 });
