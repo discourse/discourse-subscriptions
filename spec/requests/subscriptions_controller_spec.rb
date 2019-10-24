@@ -26,12 +26,21 @@ module DiscoursePatrons
         let(:group_name) { 'group-123' }
         let(:group) { Fabricate(:group, name: group_name) }
 
+        context "unauthorized group" do
+          it "does not add the user to the admins group" do
+            ::Stripe::Plan.expects(:retrieve).returns(metadata: { group_name: 'admins' })
+            ::Stripe::Subscription.expects(:create).returns(status: 'active')
+            post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
+            expect(user.admin).to eq false
+          end
+        end
+
         context "plan has group in metadata" do
           before do
             ::Stripe::Plan.expects(:retrieve).returns(metadata: { group_name: group_name })
           end
 
-          it "does not add the user to the group" do
+          it "does not add the user to the group when subscription fails" do
             ::Stripe::Subscription.expects(:create).returns(status: 'failed')
 
             expect {
