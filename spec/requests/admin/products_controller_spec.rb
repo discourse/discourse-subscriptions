@@ -56,7 +56,7 @@ module DiscoursePatrons
         describe 'create' do
           it 'is of product type service' do
             ::Stripe::Product.expects(:create).with(has_entry(:type, 'service'))
-            post "/patrons/admin/products.json", params: { }
+            post "/patrons/admin/products.json", params: {}
           end
 
           it 'has a name' do
