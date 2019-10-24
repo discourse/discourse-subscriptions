@@ -27,11 +27,20 @@ module DiscoursePatrons
         let(:group) { Fabricate(:group, name: group_name) }
 
         context "unauthorized group" do
+          before do
+            ::Stripe::Subscription.expects(:create).returns(status: 'active')
+          end
+
           it "does not add the user to the admins group" do
             ::Stripe::Plan.expects(:retrieve).returns(metadata: { group_name: 'admins' })
-            ::Stripe::Subscription.expects(:create).returns(status: 'active')
             post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
             expect(user.admin).to eq false
+          end
+
+          it "does not add the user to other group" do
+            ::Stripe::Plan.expects(:retrieve).returns(metadata: { group_name: 'other' })
+            post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
+            expect(user.groups).to be_empty
           end
         end
 
@@ -46,6 +55,8 @@ module DiscoursePatrons
             expect {
               post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
             }.not_to change { group.users.count }
+
+            expect(user.groups).to be_empty
           end
 
           it "adds the user to the group when the subscription is active" do
@@ -54,6 +65,8 @@ module DiscoursePatrons
             expect {
               post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
             }.to change { group.users.count }
+
+            expect(user.groups).not_to be_empty
           end
 
           it "adds the user to the group when the subscription is trialing" do
@@ -62,6 +75,8 @@ module DiscoursePatrons
             expect {
               post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
             }.to change { group.users.count }
+
+            expect(user.groups).not_to be_empty
           end
         end
       end

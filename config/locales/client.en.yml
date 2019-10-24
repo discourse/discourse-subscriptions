@@ -76,6 +76,7 @@ en:
             plan_help: Create a pricing plan to subscribe customers to this product
             active: Active
             created_at: Created
+          product_help: Before cutomers can subscribe to your site, you need to create at least one product and an associated plan.
         plans:
           title: Pricing Plans
           operations:
