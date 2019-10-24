@@ -4,8 +4,14 @@ import Subscription from "discourse/plugins/discourse-patrons/discourse/models/s
 
 export default Discourse.Route.extend({
   model() {
+    const toCurrency = (cents) => parseFloat(cents/100).toFixed(2);
+
+    const planSelectText = (plan) => {
+      return `$${toCurrency(plan.amount)} ${plan.currency.toUpperCase()} / ${plan.interval}`;
+    };
+
     const group = Group.find();
-    const plans = Plan.findAll().then(results => results.map(p => ({ id: p.id, name: p.nickname })));
+    const plans = Plan.findAll().then(results => results.map(p => planSelectText(p)));
     const subscription = Subscription.create();
 
     return Ember.RSVP.hash({ group, plans, subscription });
