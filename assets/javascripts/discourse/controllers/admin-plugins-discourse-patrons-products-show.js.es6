@@ -10,7 +10,10 @@ export default Ember.Controller.extend({
       this.get("model.product")
         .save()
         .then(product => {
-          this.transitionToRoute("adminPlugins.discourse-patrons.products.show", product.id);
+          this.transitionToRoute(
+            "adminPlugins.discourse-patrons.products.show",
+            product.id
+          );
         })
         .catch(popupAjaxError);
     },

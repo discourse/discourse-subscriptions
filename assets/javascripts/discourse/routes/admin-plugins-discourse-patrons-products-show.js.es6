@@ -3,14 +3,13 @@ import AdminPlan from "discourse/plugins/discourse-patrons/discourse/models/admi
 
 export default Discourse.Route.extend({
   model(params) {
-    const product_id = params['product-id'];
+    const product_id = params["product-id"];
     let product;
     let plans = [];
 
-    if(product_id === 'new') {
+    if (product_id === "new") {
       product = AdminProduct.create({ active: true, isNew: true });
-    }
-    else {
+    } else {
       product = AdminProduct.find(product_id);
       plans = AdminPlan.findAll({ product_id });
     }
@@ -26,12 +25,16 @@ export default Discourse.Route.extend({
         I18n.t("yes_value"),
         confirmed => {
           if (confirmed) {
-            plan.destroy().then(() => {
-              this.controllerFor("adminPluginsDiscoursePatronsProductsShow")
-              .get("model.plans")
-              .removeObject(plan);
-            })
-            .catch(data => bootbox.alert(data.jqXHR.responseJSON.errors.join("\n")));
+            plan
+              .destroy()
+              .then(() => {
+                this.controllerFor("adminPluginsDiscoursePatronsProductsShow")
+                  .get("model.plans")
+                  .removeObject(plan);
+              })
+              .catch(data =>
+                bootbox.alert(data.jqXHR.responseJSON.errors.join("\n"))
+              );
           }
         }
       );

@@ -27,7 +27,7 @@ export default Ember.Controller.extend({
           }).then(customer => {
             const subscription = this.get("model.subscription");
 
-            subscription.set('customer', customer.id);
+            subscription.set("customer", customer.id);
 
             if (subscription.get("plan") === undefined) {
               subscription.set("plan", this.get("model.plans.firstObject.id"));
@@ -35,7 +35,10 @@ export default Ember.Controller.extend({
 
             subscription.save().then(() => {
               bootbox.alert("ok payment good... some kind of message");
-              this.transitionToRoute("user.billing", Discourse.User.current().username.toLowerCase());
+              this.transitionToRoute(
+                "user.billing",
+                Discourse.User.current().username.toLowerCase()
+              );
             });
           });
         }

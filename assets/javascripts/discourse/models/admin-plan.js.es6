@@ -16,10 +16,9 @@ const AdminPlan = Discourse.Model.extend({
 
   @computed("trial_period_days")
   parseTrialPeriodDays(trial_period_days) {
-    if(trial_period_days) {
+    if (trial_period_days) {
       return parseInt(0 + trial_period_days);
-    }
-    else {
+    } else {
       return 0;
     }
   },

@@ -13,7 +13,9 @@ export default Ember.Controller.extend({
   },
 
   redirect(product_id) {
-    DiscourseURL.redirectTo(`/admin/plugins/discourse-patrons/products/${product_id}`);
+    DiscourseURL.redirectTo(
+      `/admin/plugins/discourse-patrons/products/${product_id}`
+    );
   },
 
   actions: {
@@ -24,17 +26,20 @@ export default Ember.Controller.extend({
     createPlan() {
       // TODO: set default group name beforehand
       if (this.get("model.plan.metadata.group_name") === undefined) {
-        this.set(
-          "model.plan.metadata",
-          { group_name: this.get("model.groups.firstObject.name") }
-        );
+        this.set("model.plan.metadata", {
+          group_name: this.get("model.groups.firstObject.name")
+        });
       }
 
-      this.get('model.plan').save().then(() => this.redirect(this.productId));
+      this.get("model.plan")
+        .save()
+        .then(() => this.redirect(this.productId));
     },
 
     updatePlan() {
-      this.get('model.plan').update().then(() => this.redirect(this.productId));
+      this.get("model.plan")
+        .update()
+        .then(() => this.redirect(this.productId));
     }
   }
 });

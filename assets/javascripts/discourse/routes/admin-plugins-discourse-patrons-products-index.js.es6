@@ -13,12 +13,16 @@ export default Discourse.Route.extend({
         I18n.t("yes_value"),
         confirmed => {
           if (confirmed) {
-            product.destroy().then(() => {
-              this.controllerFor("adminPluginsDiscoursePatronsProductsIndex")
-                .get("model")
-                .removeObject(product);
-            })
-            .catch(data => bootbox.alert(data.jqXHR.responseJSON.errors.join("\n")));
+            product
+              .destroy()
+              .then(() => {
+                this.controllerFor("adminPluginsDiscoursePatronsProductsIndex")
+                  .get("model")
+                  .removeObject(product);
+              })
+              .catch(data =>
+                bootbox.alert(data.jqXHR.responseJSON.errors.join("\n"))
+              );
           }
         }
       );

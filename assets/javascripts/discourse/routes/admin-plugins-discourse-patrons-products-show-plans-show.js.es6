@@ -3,14 +3,19 @@ import Group from "discourse/models/group";
 
 export default Discourse.Route.extend({
   model(params) {
-    const id = params['plan-id'];
-    const product = this.modelFor('adminPlugins.discourse-patrons.products.show').product;
+    const id = params["plan-id"];
+    const product = this.modelFor(
+      "adminPlugins.discourse-patrons.products.show"
+    ).product;
     let plan;
 
-    if(id === 'new') {
-      plan = AdminPlan.create({ active: true, isNew: true, product: product.get('id') });
-    }
-    else {
+    if (id === "new") {
+      plan = AdminPlan.create({
+        active: true,
+        isNew: true,
+        product: product.get("id")
+      });
+    } else {
       plan = AdminPlan.find(id);
     }
 
@@ -20,10 +25,10 @@ export default Discourse.Route.extend({
   },
 
   renderTemplate() {
-    this.render('adminPlugins.discourse-patrons.products.show.plans.show', {
-      into: 'adminPlugins.discourse-patrons.products',
-      outlet: 'main',
-      controller: 'adminPlugins.discourse-patrons.products.show.plans.show',
+    this.render("adminPlugins.discourse-patrons.products.show.plans.show", {
+      into: "adminPlugins.discourse-patrons.products",
+      outlet: "main",
+      controller: "adminPlugins.discourse-patrons.products.show.plans.show"
     });
-  },
+  }
 });

@@ -1,4 +1,3 @@
-
 export default Discourse.Route.extend({
   model() {
     return {};
@@ -7,9 +6,8 @@ export default Discourse.Route.extend({
   setupController(controller, model) {
     if (this.currentUser.id !== this.modelFor("user").id) {
       this.replaceWith("userActivity");
-    }
-    else {
+    } else {
       controller.setProperties({ model });
-    };
+    }
   }
 });
