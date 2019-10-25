@@ -19,5 +19,4 @@ DiscoursePatrons::Engine.routes.draw do
   resources :patrons, only: [:index, :create]
 
   get '/' => 'patrons#index'
-  get '/:pid' => 'patrons#show'
 end
