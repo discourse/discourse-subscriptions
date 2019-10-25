@@ -12,6 +12,7 @@ gem 'stripe', '5.7.1'
 
 register_asset "stylesheets/common/discourse-patrons.scss"
 register_asset "stylesheets/mobile/discourse-patrons.scss"
+register_svg_icon "credit-card" if respond_to?(:register_svg_icon)
 
 register_html_builder('server:before-head-close') do
   "<script src='https://js.stripe.com/v3/'></script>"
@@ -33,6 +34,7 @@ Discourse::Application.routes.append do
   get '/admin/plugins/discourse-patrons/subscriptions' => 'admin/plugins#index'
   get '/admin/plugins/discourse-patrons/plans' => 'admin/plugins#index'
   get '/admin/plugins/discourse-patrons/plans/:plan_id' => 'admin/plugins#index'
+  get 'u/:username/billing' => 'users#show', constraints: {username: USERNAME_ROUTE_FORMAT}
 end
 
 after_initialize do
