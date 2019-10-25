@@ -19,6 +19,7 @@ en:
       optional: Optional
       navigation:
         subscribe: Subscribe
+        billing: Billing
       subscribe:
         title: Subscribe
         card:
