@@ -1,4 +1,3 @@
-import DiscourseURL from "discourse/lib/url";
 import { ajax } from "discourse/lib/ajax";
 
 export default Ember.Controller.extend({
@@ -13,7 +12,8 @@ export default Ember.Controller.extend({
     },
 
     paymentSuccessHandler(paymentIntentId) {
-      DiscourseURL.redirectTo(`patrons/${paymentIntentId}`);
+      bootbox.alert("ok payment good... some kind of message");
+      this.transitionToRoute("user.billing", Discourse.User.current().username.toLowerCase());
     }
   }
 });

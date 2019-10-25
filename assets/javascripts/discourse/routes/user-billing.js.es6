@@ -1,7 +1,6 @@
 
 export default Discourse.Route.extend({
   model() {
-    console.log('billing');
     return {};
   },
 
