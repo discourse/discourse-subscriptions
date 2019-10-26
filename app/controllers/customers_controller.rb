@@ -13,9 +13,9 @@ module DiscoursePatrons
           source: params[:source]
         )
 
-        DiscoursePatrons::Customer.create(
-          customer_id: customer.id
-          user_id: current_user.id
+        DiscoursePatrons::Customer.create_customer(
+          current_user,
+          customer
         )
 
         render_json_dump customer

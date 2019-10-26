@@ -6,6 +6,7 @@ class CreateCustomers < ActiveRecord::Migration[5.2]
       t.timestamps
     end
 
+    add_index :discourse_patrons_customers, :user_id, unique: true
     add_index :discourse_patrons_customers, :customer_id, unique: true
   end
 end

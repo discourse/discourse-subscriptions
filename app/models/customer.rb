@@ -2,6 +2,14 @@
 
 module DiscoursePatrons
   class Customer < ActiveRecord::Base
-    self.table_name = "discourse_patrons_customers"
+    scope :find_user, ->(user) { find_by_user_id(user.id) }
+
+    class << self
+      table_name = "discourse_patrons_customers"
+
+      def create_customer(user, customer)
+        create(customer_id: customer[:id], user_id: user.id)
+      end
+    end
   end
 end
