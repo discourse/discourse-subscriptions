@@ -55,6 +55,7 @@ after_initialize do
     "../app/controllers/products_controller",
     "../app/controllers/subscriptions_controller",
     "../app/models/payment",
+    "../app/models/customer",
     "../app/serializers/payment_serializer",
   ].each { |path| require File.expand_path(path, __FILE__) }
 
