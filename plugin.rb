@@ -11,6 +11,7 @@ enabled_site_setting :discourse_patrons_enabled
 gem 'stripe', '5.7.1'
 
 register_asset "stylesheets/common/discourse-patrons.scss"
+register_asset "stylesheets/common/discourse-patrons-layout.scss"
 register_asset "stylesheets/mobile/discourse-patrons.scss"
 register_svg_icon "credit-card" if respond_to?(:register_svg_icon)
 
@@ -50,6 +51,7 @@ after_initialize do
     "../app/controllers/admin/products_controller",
     "../app/controllers/admin/subscriptions_controller",
     "../app/controllers/customers_controller",
+    "../app/controllers/invoices_controller",
     "../app/controllers/patrons_controller",
     "../app/controllers/plans_controller",
     "../app/controllers/products_controller",

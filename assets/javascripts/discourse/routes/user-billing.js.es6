@@ -1,6 +1,8 @@
+import Invoice from "discourse/plugins/discourse-patrons/discourse/models/invoice";
+
 export default Discourse.Route.extend({
   model() {
-    return {};
+    return Invoice.findAll();
   },
 
   setupController(controller, model) {

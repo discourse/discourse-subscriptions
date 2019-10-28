@@ -20,7 +20,15 @@ en:
       navigation:
         subscribe: Subscribe
         billing: Billing
-      subscribe:
+      user:
+        billing_help: We couldn't find a customer identifier in our system.
+        billing:
+          title: Billing
+          invoices:
+            amount: Amount
+            number: Invoice Number
+            created_at: Created
+            subscribe:
         title: Subscribe
         card:
           title: Payment
