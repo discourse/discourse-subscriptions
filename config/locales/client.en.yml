@@ -21,6 +21,8 @@ en:
         subscribe: Subscribe
         billing: Billing
       user:
+        subscriptions:
+          title: Subscriptions
         billing_help: We couldn't find a customer identifier in our system.
         billing:
           title: Billing

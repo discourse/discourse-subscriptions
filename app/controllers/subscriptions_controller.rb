@@ -21,6 +21,8 @@ module DiscoursePatrons
           group.add(current_user)
         end
 
+        DiscoursePatrons::Customer.create(user_id: current_user.id, customer_id: params[:customer])
+
         render_json_dump @subscription
 
       rescue ::Stripe::InvalidRequestError => e

@@ -2,6 +2,13 @@
 <h3>{{i18n 'discourse_patrons.user.billing.title'}}</h3>
 
 {{#if model}}
+  <p class="btn-right">
+    {{#link-to 'user.subscriptions' class="btn btn-primary"}}
+      {{d-icon "credit-card"}}
+      <span>{{i18n 'discourse_patrons.user.subscriptions.title'}}</span>
+    {{/link-to}}
+  </p>
+
   <table class="topic-list">
     <thead>
       <th>{{i18n 'discourse_patrons.user.billing.invoices.amount'}}</th>

@@ -20,6 +20,15 @@ module DiscoursePatrons
           )
           post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
         end
+
+        it "creates a customer" do
+          ::Stripe::Plan.expects(:retrieve).returns(metadata: {})
+          ::Stripe::Subscription.expects(:create).returns(status: 'active')
+
+          expect {
+            post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
+          }.to change { DiscoursePatrons::Customer.count }
+        end
       end
 
       describe "user groups" do

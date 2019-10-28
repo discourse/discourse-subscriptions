@@ -3,5 +3,6 @@ export default {
   path: "users/:username",
   map() {
     this.route("billing");
+    this.route("subscriptions");
   }
 };
