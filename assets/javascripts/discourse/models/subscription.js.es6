@@ -14,7 +14,11 @@ const Subscription = Discourse.Model.extend({
     };
 
     return ajax("/patrons/subscriptions", { method: "post", data });
-  }
+  },
+
+  destroy() {
+    return ajax(`/patrons/subscriptions/${this.id}`, { method: "delete" });
+  },
 });
 
 Subscription.reopenClass({

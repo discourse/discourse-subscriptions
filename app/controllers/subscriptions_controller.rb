@@ -11,7 +11,7 @@ module DiscoursePatrons
         customer = DiscoursePatrons::Customer.find_user(current_user)
 
         if customer.present?
-          subscriptions = ::Stripe::Subscription.list(customer: customer.customer_id)
+          subscriptions = ::Stripe::Subscription.list(customer: customer.customer_id).data
         else
           subscriptions = []
         end
@@ -43,6 +43,17 @@ module DiscoursePatrons
         end
 
         render_json_dump @subscription
+
+      rescue ::Stripe::InvalidRequestError => e
+        return render_json_error e.message
+      end
+    end
+
+    def destroy
+      begin
+        subscription = ::Stripe::Subscription.delete(params[:id])
+
+        render_json_dump subscription
 
       rescue ::Stripe::InvalidRequestError => e
         return render_json_error e.message

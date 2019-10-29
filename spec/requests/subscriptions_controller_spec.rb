@@ -10,6 +10,11 @@ module DiscoursePatrons
         ::Stripe::Subscription.expects(:create).never
         post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
       end
+
+      it "does not destroy a subscription" do
+        ::Stripe::Subscription.expects(:delete).never
+        patch "/patrons/subscriptions/sub_12345.json"
+      end
     end
 
     context "authenticated" do
@@ -118,6 +123,13 @@ module DiscoursePatrons
 
             expect(user.groups).not_to be_empty
           end
+        end
+      end
+
+      describe "delete" do
+        it "deletes a subscription" do
+          ::Stripe::Subscription.expects(:delete).with('sub_12345')
+          delete "/patrons/subscription/sub_12345.json"
         end
       end
     end
