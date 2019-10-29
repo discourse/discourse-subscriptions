@@ -51,6 +51,15 @@ module DiscoursePatrons
             post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
           }.to change { DiscoursePatrons::Customer.count }
         end
+
+        it "does not create a customer id one existeth" do
+          ::Stripe::Plan.expects(:retrieve).returns(metadata: {})
+          ::Stripe::Subscription.expects(:create).returns(status: 'active')
+          DiscoursePatrons::Customer.create(user_id: user.id, customer_id: 'cus_1234')
+
+          DiscoursePatrons::Customer.expects(:create).never
+          post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
+        end
       end
 
       describe "user groups" do

@@ -13,8 +13,9 @@ export default Discourse.Route.extend({
     };
 
     const plans = Plan.findAll().then(results =>
-      results.map(p => planSelectText(p))
+      results.map(p => ({ id: p.id, name: planSelectText(p) }))
     );
+
     const subscription = Subscription.create();
 
     return Ember.RSVP.hash({ plans, subscription });

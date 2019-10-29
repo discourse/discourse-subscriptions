@@ -20,4 +20,5 @@ DiscoursePatrons::Engine.routes.draw do
   resources :subscriptions, only: [:index, :create]
 
   get '/' => 'patrons#index'
+  get '/subscribe' => 'patrons#index'
 end

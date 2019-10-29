@@ -38,7 +38,9 @@ module DiscoursePatrons
           group.add(current_user)
         end
 
-        DiscoursePatrons::Customer.create(user_id: current_user.id, customer_id: params[:customer])
+        unless DiscoursePatrons::Customer.exists?(user_id: current_user.id)
+          DiscoursePatrons::Customer.create(user_id: current_user.id, customer_id: params[:customer])
+        end
 
         render_json_dump @subscription
 
