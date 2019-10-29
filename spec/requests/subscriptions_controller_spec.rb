@@ -4,11 +4,33 @@ require 'rails_helper'
 
 module DiscoursePatrons
   RSpec.describe SubscriptionsController do
+    context "not authenticated" do
+      it "does not create a subscription" do
+        ::Stripe::Plan.expects(:retrieve).never
+        ::Stripe::Subscription.expects(:create).never
+        post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
+      end
+    end
+
     context "authenticated" do
       let(:user) { Fabricate(:user, email: 'hello.2@example.com') }
 
       before do
         sign_in(user)
+      end
+
+      describe "index" do
+        it "does not get subscriptions if there is no customer" do
+          ::Stripe::Subscription.expects(:create).never
+          get "/patrons/subscriptions.json"
+          expect(response.body).to eq "[]"
+        end
+
+        it "gets subscriptions" do
+          DiscoursePatrons::Customer.create(user_id: user.id, customer_id: 'cus_id5678')
+          ::Stripe::Subscription.expects(:list).with(customer: 'cus_id5678')
+          get "/patrons/subscriptions.json"
+        end
       end
 
       describe "create" do

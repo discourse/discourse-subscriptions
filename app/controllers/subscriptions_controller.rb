@@ -3,8 +3,25 @@
 module DiscoursePatrons
   class SubscriptionsController < ::ApplicationController
     include DiscoursePatrons::Stripe
-
     before_action :set_api_key
+    requires_login
+
+    def index
+      begin
+        customer = DiscoursePatrons::Customer.find_user(current_user)
+
+        if customer.present?
+          subscriptions = ::Stripe::Subscription.list(customer: customer.customer_id)
+        else
+          subscriptions = []
+        end
+
+        render_json_dump subscriptions
+
+      rescue ::Stripe::InvalidRequestError => e
+        return render_json_error e.message
+      end
+    end
 
     def create
       begin

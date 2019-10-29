@@ -17,7 +17,7 @@ DiscoursePatrons::Engine.routes.draw do
   resources :patrons, only: [:index, :create]
   resources :plans, only: [:index]
   resources :products, only: [:index]
-  resources :subscriptions, only: [:create]
+  resources :subscriptions, only: [:index, :create]
 
   get '/' => 'patrons#index'
 end

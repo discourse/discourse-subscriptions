@@ -3,10 +3,8 @@
 module DiscoursePatrons
   class InvoicesController < ::ApplicationController
     include DiscoursePatrons::Stripe
-
-    requires_login
-
     before_action :set_api_key
+    requires_login
 
     def index
       begin

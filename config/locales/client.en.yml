@@ -18,11 +18,14 @@ en:
       title: Discourse Patrons
       optional: Optional
       navigation:
+        subscriptions: Subscriptions
         subscribe: Subscribe
         billing: Billing
       user:
+        subscriptions_help: You have no subscriptions.
         subscriptions:
           title: Subscriptions
+          created_at: Created
         billing_help: We couldn't find a customer identifier in our system.
         billing:
           title: Billing
@@ -30,7 +33,6 @@ en:
             amount: Amount
             number: Invoice Number
             created_at: Created
-            subscribe:
         title: Subscribe
         card:
           title: Payment
