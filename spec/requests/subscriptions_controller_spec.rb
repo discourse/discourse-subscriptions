@@ -49,7 +49,7 @@ module DiscoursePatrons
 
           get "/patrons/subscriptions.json"
 
-          expect(JSON.parse(response.body)).to eq([{"id"=>"sub_1234"}, {"id"=>"sub_4567"}])
+          expect(JSON.parse(response.body)).to eq([{ "id" => "sub_1234" }, { "id" => "sub_4567" }])
         end
       end
 

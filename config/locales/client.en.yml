@@ -28,14 +28,12 @@ en:
         subscriptions_help: You have no subscriptions.
         subscriptions:
           title: Subscriptions
+          id: Subscription ID
+          status: Status
           created_at: Created
-        billing_help: We couldn't find a customer identifier in our system.
-        billing:
-          title: Billing
-          invoices:
-            amount: Amount
-            number: Invoice Number
-            created_at: Created
+          operations:
+            destroy:
+              confirm: Are you sure you want to cancel this subscription?
         title: Subscribe
         card:
           title: Payment

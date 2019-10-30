@@ -16,9 +16,14 @@ textarea[readonly] {
   }
 }
 
-table.discourse-patrons-table {
-  .td-right {
-    text-align: right;
+.td-right {
+  text-align: right;
+}
+
+table.discourse-patrons-user-table {
+  width: 100%;
+  th, td {
+    padding: 10px;
   }
 }
 

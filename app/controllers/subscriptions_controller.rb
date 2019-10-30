@@ -13,7 +13,6 @@ module DiscoursePatrons
           expand: ['data.subscriptions']
         )
 
-
         subscriptions = customers[:data].map do |customer|
           customer[:subscriptions][:data]
         end.flatten(1)

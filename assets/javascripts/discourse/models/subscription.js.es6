@@ -7,6 +7,11 @@ const Subscription = Discourse.Model.extend({
     return moment.unix(created).format();
   },
 
+  @computed("status")
+  canceled(status) {
+    return status === 'canceled';
+  },
+
   save() {
     const data = {
       customer: this.customer,
@@ -17,7 +22,9 @@ const Subscription = Discourse.Model.extend({
   },
 
   destroy() {
-    return ajax(`/patrons/subscriptions/${this.id}`, { method: "delete" });
+    return ajax(`/patrons/subscriptions/${this.id}`, { method: "delete" }).then(result =>
+      Subscription.create(result)
+    );
   },
 });
 
