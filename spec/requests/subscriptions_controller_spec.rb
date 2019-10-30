@@ -5,6 +5,11 @@ require 'rails_helper'
 module DiscoursePatrons
   RSpec.describe SubscriptionsController do
     context "not authenticated" do
+      it "does not get the subscriptions" do
+        ::Stripe::Customer.expects(:list).never
+        get "/patrons/subscriptions.json"
+      end
+
       it "does not create a subscription" do
         ::Stripe::Plan.expects(:retrieve).never
         ::Stripe::Subscription.expects(:create).never
@@ -25,16 +30,26 @@ module DiscoursePatrons
       end
 
       describe "index" do
-        it "does not get subscriptions if there is no customer" do
-          ::Stripe::Subscription.expects(:create).never
-          get "/patrons/subscriptions.json"
-          expect(response.body).to eq "[]"
+        let(:customers) do
+          {
+            data: [{
+              id: "cus_23456",
+              subscriptions: {
+                data: [{ id: "sub_1234" }, { id: "sub_4567" }]
+              },
+            }]
+          }
         end
 
         it "gets subscriptions" do
-          DiscoursePatrons::Customer.create(user_id: user.id, customer_id: 'cus_id5678')
-          ::Stripe::Subscription.expects(:list).with(customer: 'cus_id5678')
+          ::Stripe::Customer.expects(:list).with(
+            email: user.email,
+            expand: ['data.subscriptions']
+          ).returns(customers)
+
           get "/patrons/subscriptions.json"
+
+          expect(JSON.parse(response.body)).to eq([{"id"=>"sub_1234"}, {"id"=>"sub_4567"}])
         end
       end
 
@@ -129,7 +144,7 @@ module DiscoursePatrons
       describe "delete" do
         it "deletes a subscription" do
           ::Stripe::Subscription.expects(:delete).with('sub_12345')
-          delete "/patrons/subscription/sub_12345.json"
+          delete "/patrons/subscriptions/sub_12345.json"
         end
       end
     end

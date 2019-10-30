@@ -17,6 +17,9 @@ en:
     discourse_patrons:
       title: Discourse Patrons
       optional: Optional
+      transactions:
+        payment:
+          success: Your payment was successful
       navigation:
         subscriptions: Subscriptions
         subscribe: Subscribe

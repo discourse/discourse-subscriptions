@@ -1,4 +1,3 @@
-import Group from "discourse/plugins/discourse-patrons/discourse/models/group";
 import Plan from "discourse/plugins/discourse-patrons/discourse/models/plan";
 import Subscription from "discourse/plugins/discourse-patrons/discourse/models/subscription";
 

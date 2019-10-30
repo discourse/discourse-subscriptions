@@ -8,13 +8,15 @@ module DiscoursePatrons
 
     def index
       begin
-        customer = DiscoursePatrons::Customer.find_user(current_user)
+        customers = ::Stripe::Customer.list(
+          email: current_user.email,
+          expand: ['data.subscriptions']
+        )
 
-        if customer.present?
-          subscriptions = ::Stripe::Subscription.list(customer: customer.customer_id).data
-        else
-          subscriptions = []
-        end
+
+        subscriptions = customers[:data].map do |customer|
+          customer[:subscriptions][:data]
+        end.flatten(1)
 
         render_json_dump subscriptions
 

@@ -11,8 +11,8 @@ export default Ember.Controller.extend({
       });
     },
 
-    paymentSuccessHandler(paymentIntentId) {
-      bootbox.alert("ok payment good... some kind of message");
+    paymentSuccessHandler(/* paymentIntentId */) {
+      bootbox.alert(I18n.t("discourse_patrons.transactions.payment.success"));
       this.transitionToRoute(
         "user.billing",
         Discourse.User.current().username.toLowerCase()
