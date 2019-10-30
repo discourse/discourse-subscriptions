@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateCustomers < ActiveRecord::Migration[5.2]
   def change
     create_table :discourse_patrons_customers do |t|
@@ -6,7 +8,6 @@ class CreateCustomers < ActiveRecord::Migration[5.2]
       t.timestamps
     end
 
-    add_index :discourse_patrons_customers, :user_id, unique: true
     add_index :discourse_patrons_customers, :customer_id, unique: true
   end
 end
