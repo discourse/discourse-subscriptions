@@ -10,7 +10,7 @@ const Subscription = Discourse.Model.extend({
 
   @computed("status")
   canceled(status) {
-    return status === 'canceled';
+    return status === "canceled";
   },
 
   save() {
@@ -23,10 +23,10 @@ const Subscription = Discourse.Model.extend({
   },
 
   destroy() {
-    return ajax(`/patrons/subscriptions/${this.id}`, { method: "delete" }).then(result =>
-      Subscription.create(result)
+    return ajax(`/patrons/subscriptions/${this.id}`, { method: "delete" }).then(
+      result => Subscription.create(result)
     );
-  },
+  }
 });
 
 Subscription.reopenClass({

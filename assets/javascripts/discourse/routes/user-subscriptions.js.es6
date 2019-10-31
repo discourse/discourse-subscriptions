@@ -16,14 +16,16 @@ export default Discourse.Route.extend({
   actions: {
     cancelSubscription(subscription) {
       bootbox.confirm(
-        I18n.t("discourse_patrons.user.subscriptions.operations.destroy.confirm"),
+        I18n.t(
+          "discourse_patrons.user.subscriptions.operations.destroy.confirm"
+        ),
         I18n.t("no_value"),
         I18n.t("yes_value"),
         confirmed => {
           if (confirmed) {
             subscription
               .destroy()
-              .then(result => subscription.set('status', result.status))
+              .then(result => subscription.set("status", result.status))
               .catch(data =>
                 bootbox.alert(data.jqXHR.responseJSON.errors.join("\n"))
               );
