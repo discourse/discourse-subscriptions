@@ -22,9 +22,9 @@ module DiscoursePatrons
         get "/patrons/plans.json"
 
         expect(JSON.parse(response.body)).to eq([
-          { "amount" => 1000, "currency" => "aud", "id" => "plan_id678", "interval"=>"week" },
-          { "amount" => 1220, "currency" => "aud", "id" => "plan_id123", "interval"=>"year" },
-          { "amount" => 1399, "currency" => "usd", "id" => "plan_id234", "interval"=>"year" }
+          { "amount" => 1000, "currency" => "aud", "id" => "plan_id678", "interval" => "week" },
+          { "amount" => 1220, "currency" => "aud", "id" => "plan_id123", "interval" => "year" },
+          { "amount" => 1399, "currency" => "usd", "id" => "plan_id234", "interval" => "year" }
         ])
       end
     end
