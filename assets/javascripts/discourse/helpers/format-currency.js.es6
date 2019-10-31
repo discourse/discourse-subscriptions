@@ -1,5 +1,4 @@
 
-// TODO: typo in this helper name: currency not curency.
 export default Ember.Helper.helper(function(params) {
   let currencySign;
 
@@ -14,5 +13,7 @@ export default Ember.Helper.helper(function(params) {
       currencySign = "$";
   }
 
-  return [currencySign, params[0]].join("");
+
+
+  return currencySign + params.map(p => p.toUpperCase()).join(' ');
 });

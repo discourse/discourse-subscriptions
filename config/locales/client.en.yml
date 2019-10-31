@@ -1,10 +1,10 @@
 en:
   site_settings:
     discourse_patrons_enabled: "Enable the Discourse Patrons plugin."
-    discourse_patrons_secret_key: "Stripe Secret Key"
-    discourse_patrons_public_key: "Stripe Public Key"
+    discourse_patrons_secret_key: Stripe Secret Key
+    discourse_patrons_public_key: Stripe Public Key
     discourse_patrons_subscription_group: The name of the group the user is added to when successfully subscribed
-    discourse_patrons_currency: "Currency Code"
+    discourse_patrons_currency: Default Currency Code. This can be overridden when creating a subscription plan
     discourse_patrons_zip_code: "Show Zip Code"
     discourse_patrons_billing_address: "Collect billing address"
     discourse_patrons_payment_page: "Text to be added to enter payments page. Markdown is supported."
