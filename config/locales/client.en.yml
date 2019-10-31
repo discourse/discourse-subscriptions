@@ -25,6 +25,8 @@ en:
         subscribe: Subscribe
         billing: Billing
       user:
+        plans:
+          rate: Rate
         subscriptions_help: You have no subscriptions.
         subscriptions:
           title: Subscriptions

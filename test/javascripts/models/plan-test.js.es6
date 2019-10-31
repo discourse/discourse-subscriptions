@@ -12,6 +12,16 @@ QUnit.test("subscriptionRate", assert => {
   assert.equal(
     plan.get("subscriptionRate"),
     "$23.99 AUD / month",
-    "it should return the formatted subscription rate"
+    "it returns the formatted subscription rate"
+  );
+});
+
+QUnit.test("amountDollars", assert => {
+  const plan = Plan.create({ amount: 2399 });
+
+  assert.equal(
+    plan.get("amountDollars"),
+    23.99,
+    "it returns the formatted amount"
   );
 });

@@ -1,5 +1,6 @@
 import computed from "ember-addons/ember-computed-decorators";
 import { ajax } from "discourse/lib/ajax";
+import Plan from "discourse/plugins/discourse-patrons/discourse/models/plan";
 
 const Subscription = Discourse.Model.extend({
   @computed("created")
@@ -31,7 +32,10 @@ const Subscription = Discourse.Model.extend({
 Subscription.reopenClass({
   findAll() {
     return ajax("/patrons/subscriptions", { method: "get" }).then(result =>
-      result.map(subscription => Subscription.create(subscription))
+      result.map(subscription => {
+        subscription.plan = Plan.create(subscription.plan);
+        return Subscription.create(subscription)
+      })
     );
   }
 });

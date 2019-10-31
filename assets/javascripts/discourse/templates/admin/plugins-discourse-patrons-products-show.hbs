@@ -45,7 +45,7 @@
           <td>{{format-date plan.createdFormatted}}</td>
           <td>{{plan.metadata.group_name}}</td>
           <td>{{plan.active}}</td>
-          <td class="td-right">{{plan.amount}}</td>
+          <td class="td-right">{{plan.amountDollars}}</td>
           <td class="td-right">
             {{#link-to "adminPlugins.discourse-patrons.products.show.plans.show" model.product.id plan.id class="btn no-text btn-icon"}}
               {{d-icon "far-edit"}}

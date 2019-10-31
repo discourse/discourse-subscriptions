@@ -1,7 +1,8 @@
+import Plan from "discourse/plugins/discourse-patrons/discourse/models/plan";
 import computed from "ember-addons/ember-computed-decorators";
 import { ajax } from "discourse/lib/ajax";
 
-const AdminPlan = Discourse.Model.extend({
+const AdminPlan = Plan.extend({
   isNew: false,
   name: "",
   interval: "month",

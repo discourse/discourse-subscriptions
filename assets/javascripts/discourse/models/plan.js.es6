@@ -2,10 +2,14 @@ import computed from "ember-addons/ember-computed-decorators";
 import { ajax } from "discourse/lib/ajax";
 
 const Plan = Discourse.Model.extend({
-  @computed("amount", "currency", "interval")
-  subscriptionRate(amount, currency, interval) {
-    const dollars = parseFloat(amount / 100).toFixed(2);
-    return `$${dollars} ${currency.toUpperCase()} / ${interval}`;
+  @computed("amount")
+  amountDollars(amount) {
+    return parseFloat(amount / 100).toFixed(2);
+  },
+
+  @computed("amountDollars", "currency", "interval")
+  subscriptionRate(amountDollars, currency, interval) {
+    return `$${amountDollars} ${currency.toUpperCase()} / ${interval}`;
   },
 });
 

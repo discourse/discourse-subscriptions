@@ -3,16 +3,8 @@ import Subscription from "discourse/plugins/discourse-patrons/discourse/models/s
 
 export default Discourse.Route.extend({
   model() {
-    const toCurrency = cents => parseFloat(cents / 100).toFixed(2);
-
-    const planSelectText = plan => {
-      return `$${toCurrency(plan.amount)} ${plan.currency.toUpperCase()} / ${
-        plan.interval
-      }`;
-    };
-
     const plans = Plan.findAll().then(results =>
-      results.map(p => ({ id: p.id, name: planSelectText(p) }))
+      results.map(p => ({ id: p.id, name: p.subscriptionRate }))
     );
 
     const subscription = Subscription.create();
