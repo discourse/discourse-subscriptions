@@ -33,13 +33,19 @@ export default Ember.Controller.extend({
 
       this.get("model.plan")
         .save()
-        .then(() => this.redirect(this.productId));
+        .then(() => this.redirect(this.productId))
+        .catch(data =>
+          bootbox.alert(data.jqXHR.responseJSON.errors.join("\n"))
+        );
     },
 
     updatePlan() {
       this.get("model.plan")
         .update()
-        .then(() => this.redirect(this.productId));
+        .then(() => this.redirect(this.productId))
+        .catch(data =>
+          bootbox.alert(data.jqXHR.responseJSON.errors.join("\n"))
+        );
     }
   }
 });

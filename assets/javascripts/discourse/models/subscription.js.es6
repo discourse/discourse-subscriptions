@@ -34,7 +34,7 @@ Subscription.reopenClass({
     return ajax("/patrons/subscriptions", { method: "get" }).then(result =>
       result.map(subscription => {
         subscription.plan = Plan.create(subscription.plan);
-        return Subscription.create(subscription)
+        return Subscription.create(subscription);
       })
     );
   }
