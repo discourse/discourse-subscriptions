@@ -10,8 +10,11 @@ module DiscoursePatrons
       begin
         plans = ::Stripe::Plan.list(active: true)
 
-        # TODO: Serialize. Remove some attributes like meta.group_name
-        render_json_dump plans.data
+        serialized = plans[:data].map do |plan|
+          plan.to_h.slice(:id, :amount, :currency, :interval)
+        end.sort_by { |plan| plan[:amount] }
+
+        render_json_dump serialized
 
       rescue ::Stripe::InvalidRequestError => e
         return render_json_error e.message
