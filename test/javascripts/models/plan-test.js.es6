@@ -4,7 +4,7 @@ QUnit.module("discourse-patrons:model:plan");
 
 QUnit.test("subscriptionRate", assert => {
   const plan = Plan.create({
-    amount: 2399,
+    amount: "2399",
     currency: 'aud',
     interval: 'month'
   });
@@ -22,6 +22,16 @@ QUnit.test("amountDollars", assert => {
   assert.equal(
     plan.get("amountDollars"),
     23.99,
-    "it returns the formatted amount"
+    "it returns the formatted dollar amount"
+  );
+});
+
+QUnit.test("amount", assert => {
+  const plan = Plan.create({ amountDollars: "22.12" });
+
+  assert.equal(
+    plan.get("amount"),
+    2212,
+    "it returns the cents amount"
   );
 });

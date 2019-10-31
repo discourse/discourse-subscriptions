@@ -2,10 +2,16 @@ import computed from "ember-addons/ember-computed-decorators";
 import { ajax } from "discourse/lib/ajax";
 
 const Plan = Discourse.Model.extend({
-  @computed("amount")
-  amountDollars(amount) {
-    return parseFloat(amount / 100).toFixed(2);
-  },
+  amountDollars: Ember.computed("amount", {
+    get() {
+      return parseFloat(this.get("amount") / 100).toFixed(2);
+    },
+    set(key, value) {
+      const decimal = parseFloat(value) * 100;
+      this.set("amount", decimal);
+      return value;
+    }
+  }),
 
   @computed("amountDollars", "currency", "interval")
   subscriptionRate(amountDollars, currency, interval) {
