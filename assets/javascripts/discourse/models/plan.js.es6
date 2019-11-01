@@ -17,8 +17,6 @@ const Plan = Discourse.Model.extend({
   subscriptionRate(amountDollars, currency, interval) {
     return `$${amountDollars} ${currency.toUpperCase()} / ${interval}`;
   }
-
-
 });
 
 Plan.reopenClass({

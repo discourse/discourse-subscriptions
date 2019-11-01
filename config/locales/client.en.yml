@@ -91,8 +91,11 @@ en:
             statement_descriptor: Statement Descriptor
             statement_descriptor_help: Extra information about a product which will appear on your customer’s credit card statement.
             plan_help: Create a pricing plan to subscribe customers to this product
+            description: Description
+            description_help: This describes your subscription product.
             active: Active
             created_at: Created
+            updated_at: Updated
           product_help: Before cutomers can subscribe to your site, you need to create at least one product and an associated plan.
         plans:
           title: Pricing Plans

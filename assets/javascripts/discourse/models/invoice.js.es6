@@ -1,12 +1,6 @@
-import computed from "ember-addons/ember-computed-decorators";
 import { ajax } from "discourse/lib/ajax";
 
-const Invoice = Discourse.Model.extend({
-  @computed("created")
-  createdFormatted(created) {
-    return moment.unix(created).format();
-  }
-});
+const Invoice = Discourse.Model.extend({});
 
 Invoice.reopenClass({
   findAll() {

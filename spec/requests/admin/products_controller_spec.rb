@@ -78,6 +78,11 @@ module DiscoursePatrons
             ::Stripe::Product.expects(:create).with(has_key(:statement_descriptor)).never
             post "/patrons/admin/products.json", params: { statement_descriptor: '' }
           end
+
+          it 'has a description' do
+            ::Stripe::Product.expects(:create).with(has_entry(metadata: { description: 'Oi, I think he just said bless be all the bignoses!' }))
+            post "/patrons/admin/products.json", params: { metadata: { description: 'Oi, I think he just said bless be all the bignoses!' }}
+          end
         end
 
         describe 'show' do

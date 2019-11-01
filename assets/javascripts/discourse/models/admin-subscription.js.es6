@@ -1,12 +1,6 @@
-import computed from "ember-addons/ember-computed-decorators";
 import { ajax } from "discourse/lib/ajax";
 
-const AdminSubscription = Discourse.Model.extend({
-  @computed("created")
-  createdFormatted(created) {
-    return moment.unix(created).format();
-  }
-});
+const AdminSubscription = Discourse.Model.extend({});
 
 AdminSubscription.reopenClass({
   find() {

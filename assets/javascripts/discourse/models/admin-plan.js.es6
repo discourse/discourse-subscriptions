@@ -10,11 +10,6 @@ const AdminPlan = Plan.extend({
   intervals: ["day", "week", "month", "year"],
   metadata: {},
 
-  @computed("created")
-  createdFormatted(created) {
-    return moment.unix(created).format();
-  },
-
   @computed("trial_period_days")
   parseTrialPeriodDays(trial_period_days) {
     if (trial_period_days) {

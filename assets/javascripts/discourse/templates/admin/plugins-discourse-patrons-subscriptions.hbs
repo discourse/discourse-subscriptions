@@ -13,7 +13,7 @@
       <td>{{subscription.customer}}</td>
       <td>{{subscription.plan.id}}</td>
       <td>{{subscription.status}}</td>
-      <td class="td-right">{{format-date subscription.createdFormatted}}</td>
+      <td class="td-right">{{format-unix-date subscription.created}}</td>
     </tr>
   {{/each}}
 </table>

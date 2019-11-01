@@ -3,11 +3,6 @@ import { ajax } from "discourse/lib/ajax";
 import Plan from "discourse/plugins/discourse-patrons/discourse/models/plan";
 
 const Subscription = Discourse.Model.extend({
-  @computed("created")
-  createdFormatted(created) {
-    return moment.unix(created).format();
-  },
-
   @computed("status")
   canceled(status) {
     return status === "canceled";

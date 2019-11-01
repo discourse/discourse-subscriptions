@@ -6,6 +6,15 @@
     {{input type="text" name="name" value=model.product.name}}
   </p>
   <p>
+    <label for="description">
+      {{i18n 'discourse_patrons.admin.products.product.description'}}
+    </label>
+    {{textarea name="description" value=model.product.metadata.description class="discourse-patrons-admin-textarea"}}
+    <div class="control-instructions">
+      {{i18n 'discourse_patrons.admin.products.product.description_help'}}
+    </div>
+  </p>
+  <p>
     <label for="statement_descriptor">
       {{i18n 'discourse_patrons.admin.products.product.statement_descriptor'}}
     </label>
@@ -42,7 +51,7 @@
         <tr>
           <td>{{plan.nickname}}</td>
           <td>{{plan.interval}}</td>
-          <td>{{format-date plan.createdFormatted}}</td>
+          <td>{{format-unix-date plan.created}}</td>
           <td>{{plan.metadata.group_name}}</td>
           <td>{{plan.active}}</td>
           <td class="td-right">{{format-currency plan.currency plan.amountDollars}}</td>

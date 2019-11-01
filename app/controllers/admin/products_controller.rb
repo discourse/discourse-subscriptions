@@ -73,10 +73,13 @@ module DiscoursePatrons
       private
 
       def product_params
+        params.permit!
+
         {
           name: params[:name],
           active: params[:active],
-          statement_descriptor: params[:statement_descriptor]
+          statement_descriptor: params[:statement_descriptor],
+          metadata: { description: params.dig(:metadata, :description) }
         }
       end
     end

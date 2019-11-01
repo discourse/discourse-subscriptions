@@ -11,13 +11,15 @@
     <thead>
       <th>{{i18n 'discourse_patrons.admin.products.product.name'}}</th>
       <th>{{i18n 'discourse_patrons.admin.products.product.created_at'}}</th>
+      <th>{{i18n 'discourse_patrons.admin.products.product.updated_at'}}</th>
       <th class="td-right">{{i18n 'discourse_patrons.admin.products.product.active'}}</th>
       <th></th>
     </thead>
     {{#each model as |product|}}
       <tr>
         <td>{{product.name}}</td>
-        <td>{{format-date product.createdFormatted}}</td>
+        <td>{{format-unix-date product.created}}</td>
+        <td>{{format-unix-date product.updated}}</td>
         <td class="td-right">{{product.active}}</td>
         <td class="td-right">
           {{#link-to "adminPlugins.discourse-patrons.products.show" product.id class="btn no-text btn-icon"}}

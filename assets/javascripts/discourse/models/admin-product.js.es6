@@ -1,14 +1,8 @@
-import computed from "ember-addons/ember-computed-decorators";
 import { ajax } from "discourse/lib/ajax";
 
 const AdminProduct = Discourse.Model.extend({
   isNew: false,
   metadata: {},
-
-  @computed("created")
-  createdFormatted(created) {
-    return moment.unix(created).format();
-  },
 
   destroy() {
     return ajax(`/patrons/admin/products/${this.id}`, { method: "delete" });

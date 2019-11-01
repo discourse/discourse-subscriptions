@@ -33,6 +33,10 @@ table.discourse-patrons-user-table {
   font-size: 0.8em;
 }
 
+.discourse-patrons-admin-textarea {
+  width: 80%;
+}
+
 #stripe-elements {
   border: 1px $primary-low-mid solid;
   padding: 10px;

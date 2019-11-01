@@ -11,13 +11,13 @@ module DiscoursePatrons
       end
 
       it "orders and serialises the plans" do
-        ::Stripe::Plan.expects(:list).returns({
+        ::Stripe::Plan.expects(:list).returns(
           data: [
             { id: 'plan_id123', amount: 1220, currency: 'aud', interval: 'year', metadata: {} },
             { id: 'plan_id234', amount: 1399, currency: 'usd', interval: 'year', metadata: {} },
             { id: 'plan_id678', amount: 1000, currency: 'aud', interval: 'week', metadata: {} }
           ]
-        })
+        )
 
         get "/patrons/plans.json"
 

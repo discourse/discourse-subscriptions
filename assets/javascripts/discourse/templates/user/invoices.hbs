@@ -13,7 +13,7 @@
       <tr>
         <td>{{invoice.amount_paid}}</td>
         <td>{{invoice.number}}</td>
-        <td>{{format-date invoice.createdFormatted}}</td>
+        <td>{{format-unix-date invoice.created}}</td>
         <td class="td-right">
           <a href="{{invoice.invoice_pdf}}" class="btn btn-icon">
             {{d-icon "download"}}
