@@ -12,6 +12,10 @@ DiscoursePatrons::Engine.routes.draw do
     resources :products
   end
 
+  namespace :user do
+    resources :subscriptions, only: [:index]
+  end
+
   resources :customers, only: [:create]
   resources :invoices, only: [:index]
   resources :patrons, only: [:index, :create]

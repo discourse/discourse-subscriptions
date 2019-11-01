@@ -1,8 +1,8 @@
-import Subscription from "discourse/plugins/discourse-patrons/discourse/models/subscription";
+import UserSubscription from "discourse/plugins/discourse-patrons/discourse/models/user-subscription";
 
 export default Discourse.Route.extend({
   model() {
-    return Subscription.findAll();
+    return UserSubscription.findAll();
   },
 
   setupController(controller, model) {

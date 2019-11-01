@@ -5,11 +5,6 @@ require 'rails_helper'
 module DiscoursePatrons
   RSpec.describe SubscriptionsController do
     context "not authenticated" do
-      it "does not get the subscriptions" do
-        ::Stripe::Customer.expects(:list).never
-        get "/patrons/subscriptions.json"
-      end
-
       it "does not create a subscription" do
         ::Stripe::Plan.expects(:retrieve).never
         ::Stripe::Subscription.expects(:create).never
@@ -23,7 +18,7 @@ module DiscoursePatrons
     end
 
     context "authenticated" do
-      let(:user) { Fabricate(:user, email: 'hello.2@example.com') }
+      let(:user) { Fabricate(:user) }
 
       before do
         sign_in(user)
