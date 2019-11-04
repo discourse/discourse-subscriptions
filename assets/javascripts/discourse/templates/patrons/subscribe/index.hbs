@@ -1,0 +1,17 @@
+
+
+{{#each model as |product|}}
+  <div>
+    <h2>{{product.name}}</h2>
+
+    <p>
+      {{product.description}}
+    </p>
+
+    <div class="pull-right">
+      {{#link-to "patrons.subscribe.show" product.id class="btn btn-primary"}}
+        {{i18n 'discourse_patrons.subscribe.title'}}
+      {{/link-to}}
+    </div>
+  </div>
+{{/each}}

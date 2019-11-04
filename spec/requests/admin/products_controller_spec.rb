@@ -81,7 +81,7 @@ module DiscoursePatrons
 
           it 'has a description' do
             ::Stripe::Product.expects(:create).with(has_entry(metadata: { description: 'Oi, I think he just said bless be all the bignoses!' }))
-            post "/patrons/admin/products.json", params: { metadata: { description: 'Oi, I think he just said bless be all the bignoses!' }}
+            post "/patrons/admin/products.json", params: { metadata: { description: 'Oi, I think he just said bless be all the bignoses!' } }
           end
         end
 

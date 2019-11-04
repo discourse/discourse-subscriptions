@@ -34,9 +34,9 @@ export default Ember.Controller.extend({
             }
 
             subscription.save().then(() => {
-              bootbox.alert("ok payment good... some kind of message");
+              bootbox.alert(I18n.t("discourse_patrons.transactions.payment.success"));
               this.transitionToRoute(
-                "user.billing",
+                "user.subscriptions",
                 Discourse.User.current().username.toLowerCase()
               );
             });

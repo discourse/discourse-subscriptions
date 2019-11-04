@@ -20,8 +20,8 @@ const Plan = Discourse.Model.extend({
 });
 
 Plan.reopenClass({
-  findAll() {
-    return ajax("/patrons/plans", { method: "get" }).then(result =>
+  findAll(data) {
+    return ajax("/patrons/plans", { method: "get", data }).then(result =>
       result.map(plan => Plan.create(plan))
     );
   }

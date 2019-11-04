@@ -8,14 +8,38 @@ module DiscoursePatrons
 
     def index
       begin
-        products = ::Stripe::Product.list(active: true)
+        response = ::Stripe::Product.list(active: true)
 
-        # TODO: Serialize. Remove some attributes like metadata
-        render_json_dump products.data
+        products = response[:data].map do |p|
+          serialize(p)
+        end
+
+        render_json_dump products
 
       rescue ::Stripe::InvalidRequestError => e
         return render_json_error e.message
       end
+    end
+
+    def show
+      begin
+        product = ::Stripe::Product.retrieve(params[:id])
+
+        render_json_dump serialize(product)
+
+      rescue ::Stripe::InvalidRequestError => e
+        return render_json_error e.message
+      end
+    end
+
+    private
+
+    def serialize(product)
+      {
+        id: product[:id],
+        name: product[:name],
+        description: product[:metadata][:description]
+      }
     end
   end
 end

@@ -13,16 +13,17 @@ DiscoursePatrons::Engine.routes.draw do
   end
 
   namespace :user do
-    resources :subscriptions, only: [:index]
+    resources :subscriptions, only: [:index, :destroy]
   end
 
   resources :customers, only: [:create]
   resources :invoices, only: [:index]
   resources :patrons, only: [:index, :create]
   resources :plans, only: [:index]
-  resources :products, only: [:index]
-  resources :subscriptions, only: [:index, :create, :destroy]
+  resources :products, only: [:index, :show]
+  resources :subscriptions, only: [:create]
 
   get '/' => 'patrons#index'
   get '/subscribe' => 'patrons#index'
+  get '/subscribe/:id' => 'patrons#index'
 end

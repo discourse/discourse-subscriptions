@@ -6,6 +6,12 @@ const UserSubscription = Discourse.Model.extend({
   @computed("status")
   canceled(status) {
     return status === "canceled";
+  },
+
+  destroy() {
+    return ajax(`/patrons/user/subscriptions/${this.id}`, { method: "delete" }).then(
+      result => UserSubscription.create(result)
+    );
   }
 });
 

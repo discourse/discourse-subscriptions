@@ -25,6 +25,17 @@ module DiscoursePatrons
           return render_json_error e.message
         end
       end
+
+      def destroy
+        begin
+          subscription = ::Stripe::Subscription.delete(params[:id])
+
+          render_json_dump subscription
+
+        rescue ::Stripe::InvalidRequestError => e
+          return render_json_error e.message
+        end
+      end
     end
   end
 end

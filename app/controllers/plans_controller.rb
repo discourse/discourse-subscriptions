@@ -8,7 +8,11 @@ module DiscoursePatrons
 
     def index
       begin
-        plans = ::Stripe::Plan.list(active: true)
+        if params[:product_id].present?
+          plans = ::Stripe::Plan.list(active: true, product: params[:product_id])
+        else
+          plans = ::Stripe::Plan.list(active: true)
+        end
 
         serialized = plans[:data].map do |plan|
           plan.to_h.slice(:id, :amount, :currency, :interval)

@@ -10,6 +10,11 @@ module DiscoursePatrons
         get "/patrons/plans.json"
       end
 
+      it "lists the active plans for a product" do
+        ::Stripe::Plan.expects(:list).with(active: true, product: 'prod_3765')
+        get "/patrons/plans.json", params: { product_id: 'prod_3765' }
+      end
+
       it "orders and serialises the plans" do
         ::Stripe::Plan.expects(:list).returns(
           data: [

@@ -15,22 +15,13 @@ const Subscription = Discourse.Model.extend({
     };
 
     return ajax("/patrons/subscriptions", { method: "post", data });
-  },
-
-  destroy() {
-    return ajax(`/patrons/subscriptions/${this.id}`, { method: "delete" }).then(
-      result => Subscription.create(result)
-    );
   }
 });
 
 Subscription.reopenClass({
   findAll() {
     return ajax("/patrons/subscriptions", { method: "get" }).then(result =>
-      result.map(subscription => {
-        subscription.plan = Plan.create(subscription.plan);
-        return Subscription.create(subscription);
-      })
+      result.map(subscription => Subscription.create(subscription))
     );
   }
 });

@@ -10,11 +10,6 @@ module DiscoursePatrons
         ::Stripe::Subscription.expects(:create).never
         post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
       end
-
-      it "does not destroy a subscription" do
-        ::Stripe::Subscription.expects(:delete).never
-        patch "/patrons/subscriptions/sub_12345.json"
-      end
     end
 
     context "authenticated" do
@@ -22,30 +17,6 @@ module DiscoursePatrons
 
       before do
         sign_in(user)
-      end
-
-      describe "index" do
-        let(:customers) do
-          {
-            data: [{
-              id: "cus_23456",
-              subscriptions: {
-                data: [{ id: "sub_1234" }, { id: "sub_4567" }]
-              },
-            }]
-          }
-        end
-
-        it "gets subscriptions" do
-          ::Stripe::Customer.expects(:list).with(
-            email: user.email,
-            expand: ['data.subscriptions']
-          ).returns(customers)
-
-          get "/patrons/subscriptions.json"
-
-          expect(JSON.parse(response.body)).to eq([{ "id" => "sub_1234" }, { "id" => "sub_4567" }])
-        end
       end
 
       describe "create" do
@@ -58,22 +29,13 @@ module DiscoursePatrons
           post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
         end
 
-        it "creates a customer" do
+        it "creates a customer model" do
           ::Stripe::Plan.expects(:retrieve).returns(metadata: {})
           ::Stripe::Subscription.expects(:create).returns(status: 'active')
 
           expect {
             post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
           }.to change { DiscoursePatrons::Customer.count }
-        end
-
-        it "does not create a customer id one existeth" do
-          ::Stripe::Plan.expects(:retrieve).returns(metadata: {})
-          ::Stripe::Subscription.expects(:create).returns(status: 'active')
-          DiscoursePatrons::Customer.create(user_id: user.id, customer_id: 'cus_1234')
-
-          DiscoursePatrons::Customer.expects(:create).never
-          post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
         end
       end
 
@@ -133,13 +95,6 @@ module DiscoursePatrons
 
             expect(user.groups).not_to be_empty
           end
-        end
-      end
-
-      describe "delete" do
-        it "deletes a subscription" do
-          ::Stripe::Subscription.expects(:delete).with('sub_12345')
-          delete "/patrons/subscriptions/sub_12345.json"
         end
       end
     end
