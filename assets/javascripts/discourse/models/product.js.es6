@@ -10,8 +10,8 @@ Product.reopenClass({
   },
 
   find(id) {
-    return ajax(`/patrons/products/${id}`, { method: "get" }).then(
-      product => Product.create(product)
+    return ajax(`/patrons/products/${id}`, { method: "get" }).then(product =>
+      Product.create(product)
     );
   }
 });

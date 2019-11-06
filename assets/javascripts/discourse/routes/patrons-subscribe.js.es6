@@ -3,5 +3,5 @@ import Product from "discourse/plugins/discourse-patrons/discourse/models/produc
 export default Discourse.Route.extend({
   model() {
     return Product.findAll();
-  },
+  }
 });

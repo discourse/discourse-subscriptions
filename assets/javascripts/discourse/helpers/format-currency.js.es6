@@ -1,4 +1,3 @@
-
 export default Ember.Helper.helper(function(params) {
   let currencySign;
 
@@ -13,5 +12,5 @@ export default Ember.Helper.helper(function(params) {
       currencySign = "$";
   }
 
-  return currencySign + params.map(p => p.toUpperCase()).join(' ');
+  return currencySign + params.map(p => p.toUpperCase()).join(" ");
 });

@@ -4,13 +4,13 @@ import Subscription from "discourse/plugins/discourse-patrons/discourse/models/s
 
 export default Discourse.Route.extend({
   model(params) {
-  const product_id = params["subscription-id"];
-  const product = Product.find(product_id);
-  const subscription = Subscription.create();
-  const plans = Plan.findAll({ product_id: product_id }).then(results =>
-    results.map(p => ({ id: p.id, name: p.subscriptionRate }))
-  );
+    const product_id = params["subscription-id"];
+    const product = Product.find(product_id);
+    const subscription = Subscription.create();
+    const plans = Plan.findAll({ product_id: product_id }).then(results =>
+      results.map(p => ({ id: p.id, name: p.subscriptionRate }))
+    );
 
-  return Ember.RSVP.hash({ plans, product, subscription });
-  },
+    return Ember.RSVP.hash({ plans, product, subscription });
+  }
 });

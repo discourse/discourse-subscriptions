@@ -9,9 +9,9 @@ const UserSubscription = Discourse.Model.extend({
   },
 
   destroy() {
-    return ajax(`/patrons/user/subscriptions/${this.id}`, { method: "delete" }).then(
-      result => UserSubscription.create(result)
-    );
+    return ajax(`/patrons/user/subscriptions/${this.id}`, {
+      method: "delete"
+    }).then(result => UserSubscription.create(result));
   }
 });
 
