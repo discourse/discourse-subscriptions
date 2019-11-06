@@ -8,7 +8,7 @@
 
 enabled_site_setting :discourse_patrons_enabled
 
-gem 'stripe', '5.7.1'
+gem 'stripe', '5.8.0'
 
 register_asset "stylesheets/common/discourse-patrons.scss"
 register_asset "stylesheets/common/discourse-patrons-layout.scss"
@@ -40,7 +40,7 @@ Discourse::Application.routes.append do
 end
 
 after_initialize do
-  ::Stripe.api_version = "2019-10-17"
+  ::Stripe.api_version = "2019-11-05"
   ::Stripe.set_app_info('Discourse Patrons', version: '1.3.0', url: 'https://github.com/rimian/discourse-patrons')
 
   [
