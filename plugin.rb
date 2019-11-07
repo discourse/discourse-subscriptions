@@ -23,7 +23,7 @@ extend_content_security_policy(
   script_src: ['https://js.stripe.com/v3/']
 )
 
-add_admin_route 'discourse_patrons.title', 'discourse-patrons.dashboard'
+add_admin_route 'discourse_patrons.title', 'discourse-patrons.products'
 
 Discourse::Application.routes.append do
   get '/admin/plugins/discourse-patrons' => 'admin/plugins#index'
