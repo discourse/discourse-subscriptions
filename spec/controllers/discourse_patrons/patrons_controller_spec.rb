@@ -53,14 +53,6 @@ module DiscoursePatrons
         expect(response).to have_http_status(200)
       end
 
-      it 'creates a payment' do
-        ::Stripe::PaymentIntent.expects(:create).returns(payment)
-
-        expect {
-          post :create, params: { receipt_email: 'hello@example.com', amount: '20.00' }, format: :json
-        }.to change { Payment.count }
-      end
-
       it 'has no user' do
         controller.stubs(:current_user).returns(nil)
         ::Stripe::PaymentIntent.expects(:create).returns(payment)

@@ -2,7 +2,11 @@
 
 # name: discourse-patrons
 # about: Integrates Stripe into Discourse to allow visitors to make payments and Subscribe
+<<<<<<< HEAD
 # version: 2.0.0
+=======
+# version: 1.3.1
+>>>>>>> 0b90caac2d8bd82beb147226c00417883391edcb
 # url: https://github.com/rimian/discourse-patrons
 # authors: Rimian Perkins
 
@@ -23,7 +27,7 @@ extend_content_security_policy(
   script_src: ['https://js.stripe.com/v3/']
 )
 
-add_admin_route 'discourse_patrons.title', 'discourse-patrons.dashboard'
+add_admin_route 'discourse_patrons.title', 'discourse-patrons.products'
 
 Discourse::Application.routes.append do
   get '/admin/plugins/discourse-patrons' => 'admin/plugins#index'
@@ -41,7 +45,11 @@ end
 
 after_initialize do
   ::Stripe.api_version = "2019-11-05"
+<<<<<<< HEAD
   ::Stripe.set_app_info('Discourse Patrons', version: '2.0.0', url: 'https://github.com/rimian/discourse-patrons')
+=======
+  ::Stripe.set_app_info('Discourse Patrons', version: '1.3.1', url: 'https://github.com/rimian/discourse-patrons')
+>>>>>>> 0b90caac2d8bd82beb147226c00417883391edcb
 
   [
     "../lib/discourse_patrons/engine",
@@ -58,7 +66,6 @@ after_initialize do
     "../app/controllers/plans_controller",
     "../app/controllers/products_controller",
     "../app/controllers/subscriptions_controller",
-    "../app/models/payment",
     "../app/models/customer",
     "../app/serializers/payment_serializer",
   ].each { |path| require File.expand_path(path, __FILE__) }
