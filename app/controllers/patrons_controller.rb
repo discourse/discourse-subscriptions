@@ -31,15 +31,6 @@ module DiscoursePatrons
           metadata: { user_id: user_id }
         )
 
-        # Payment.create(
-        #   user_id: response[:metadata][:user_id],
-        #   payment_intent_id: response[:id],
-        #   receipt_email: response[:receipt_email],
-        #   url: response[:charges][:url],
-        #   amount: response[:amount],
-        #   currency: response[:currency]
-        # )
-
       rescue ::Stripe::InvalidRequestError => e
         response = { error: e }
       rescue ::Stripe::CardError => e
