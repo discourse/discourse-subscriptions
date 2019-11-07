@@ -1,3 +1,4 @@
+// TODO: typo in this helper name: currency not curency.
 export default Ember.Helper.helper(function(params) {
   let currencySign;
 

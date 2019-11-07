@@ -1,0 +1,35 @@
+
+<h3>{{i18n 'discourse_patrons.admin.dashboard.title'}}</h3>
+
+{{#load-more selector=".discourse-patrons-table tr" action=(action "loadMore")}}
+  {{#if model}}
+    <table class="table discourse-patrons-table">
+      <thead>
+        <tr>
+          <th>{{i18n 'discourse_patrons.admin.dashboard.table.head.user'}}</th>
+          <th>{{i18n 'discourse_patrons.admin.dashboard.table.head.payment_intent'}}</th>
+          <th>{{i18n 'discourse_patrons.admin.dashboard.table.head.receipt_email'}}</th>
+          <th onclick={{action "orderPayments" "created_at"}} class="sortable">{{i18n 'created'}}</th>
+          <th class="amount" onclick={{action "orderPayments" "amount"}} class="sortable amount">{{i18n 'discourse_patrons.admin.dashboard.table.head.amount'}}</th>
+        </tr>
+      </thead>
+      {{#each model as |payment|}}
+        <tr>
+          <td>
+            {{#link-to "adminUser.index" payment.user_id payment.username}}
+              {{payment.username}}
+            {{/link-to}}
+          </td>
+          <td>
+            {{#link-to "patrons.show" payment.payment_intent_id}}
+              {{{payment.payment_intent_id}}}
+            {{/link-to}}
+          </td>
+          <td>{{payment.receipt_email}}</td>
+          <td>{{{format-duration payment.created_at_age}}}</td>
+          <td class="amount">{{payment.amount_currency}}</td>
+        </tr>
+      {{/each}}
+    </table>
+  {{/if}}
+{{/load-more}}

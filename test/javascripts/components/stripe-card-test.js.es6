@@ -1,4 +1,5 @@
 import componentTest from "helpers/component-test";
+import { stubStripe } from "discourse/plugins/discourse-patrons/helpers/stripe";
 
 moduleForComponent("stripe-card", { integration: true });
 
@@ -6,26 +7,7 @@ componentTest("Discourse Patrons stripe card success", {
   template: `{{stripe-card handleConfirmStripeCard=onSubmit billing=billing}}`,
 
   beforeEach() {
-    window.Stripe = () => {
-      return {
-        createPaymentMethod() {
-          return new Ember.RSVP.Promise(resolve => {
-            resolve({});
-          });
-        },
-        elements() {
-          return {
-            create() {
-              return {
-                on() {},
-                card() {},
-                mount() {}
-              };
-            }
-          };
-        }
-      };
-    };
+    stubStripe();
 
     this.set(
       "billing",

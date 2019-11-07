@@ -1,6 +1,9 @@
 plugins:
   discourse_patrons_enabled:
     default: false
+  discourse_patrons_extra_nav_subscribe:
+    default: false
+    client: true
   discourse_patrons_public_key:
     default: ''
     client: true

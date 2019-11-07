@@ -2,6 +2,8 @@
 
 module DiscoursePatrons
   class PatronsController < ::ApplicationController
+    include DiscoursePatrons::Stripe
+
     skip_before_action :verify_authenticity_token, only: [:create]
     before_action :set_api_key
 
@@ -10,18 +12,6 @@ module DiscoursePatrons
 
       if current_user
         result[:email] = current_user.email
-      end
-
-      render json: result
-    end
-
-    def show
-      payment_intent = Stripe::PaymentIntent.retrieve(params[:pid])
-
-      if current_user && (current_user.admin || payment_intent[:customer] == current_user.id)
-        result = payment_intent
-      else
-        result = { error: 'Not found' }
       end
 
       render json: result
@@ -41,15 +31,6 @@ module DiscoursePatrons
           metadata: { user_id: user_id }
         )
 
-        Payment.create(
-          user_id: response[:metadata][:user_id],
-          payment_intent_id: response[:id],
-          receipt_email: response[:receipt_email],
-          url: response[:charges][:url],
-          amount: response[:amount],
-          currency: response[:currency]
-        )
-
       rescue ::Stripe::InvalidRequestError => e
         response = { error: e }
       rescue ::Stripe::CardError => e
@@ -60,10 +41,6 @@ module DiscoursePatrons
     end
 
     private
-
-    def set_api_key
-      ::Stripe.api_key = SiteSetting.discourse_patrons_secret_key
-    end
 
     def param_currency_to_number
       params[:amount].to_s.sub('.', '').to_i

@@ -11,13 +11,10 @@ This is a newer version of https://github.com/rimian/discourse-donations.
 * Be sure your site is enforcing https.
 * Follow the install instructions here: https://meta.discourse.org/t/install-a-plugin/19157
 * Add your Stripe public and private keys in settings and set the currency to your local value.
-* Enable the plugin and wait for people to donate money.
 
-## Usage
+## Creating Subscription Plans
 
-Enable the plugin and enter your Stripe API keys in the settings. You can also configure amounts and the default currency.
-
-Visit `/patrons`
+When users subscribe to your Discourse application, they are added to a user group. You can create new user groups or use existing ones. Of course, you should be careful what permissions you apply to the user group.
 
 ## Testing
 

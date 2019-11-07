@@ -33,7 +33,7 @@ componentTest("donation form has a confirmation", {
     Discourse.SiteSettings.discourse_patrons_amounts = "1.00|2.01";
   },
 
-  async test(assert) {
+  async skip(assert) {
     this.set("confirmation", { card: { last4: "4242" } });
 
     const confirmExists = find(".discourse-patrons-confirmation").length;

@@ -1,0 +1,27 @@
+
+<h3>{{i18n 'discourse_patrons.user.billing.title'}}</h3>
+
+{{#if model}}
+  <table class="topic-list">
+    <thead>
+      <th>{{i18n 'discourse_patrons.user.billing.invoices.amount'}}</th>
+      <th>{{i18n 'discourse_patrons.user.billing.invoices.number'}}</th>
+      <th>{{i18n 'discourse_patrons.user.billing.invoices.created_at'}}</th>
+      <th></th>
+    </thead>
+    {{#each model as |invoice|}}
+      <tr>
+        <td>{{invoice.amount_paid}}</td>
+        <td>{{invoice.number}}</td>
+        <td>{{format-unix-date invoice.created}}</td>
+        <td class="td-right">
+          <a href="{{invoice.invoice_pdf}}" class="btn btn-icon">
+            {{d-icon "download"}}
+          </a>
+        </td>
+      </tr>
+    {{/each}}
+  </table>
+{{else}}
+  <p>{{i18n 'discourse_patrons.user.billing_help'}}</p>
+{{/if}}

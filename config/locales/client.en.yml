@@ -1,31 +1,62 @@
 en:
   site_settings:
-    discourse_patrons_enabled: "Enable the Discourse Patrons plugin."
-    discourse_patrons_secret_key: "Stripe Secret Key"
-    discourse_patrons_public_key: "Stripe Public Key"
-    discourse_patrons_currency: "Currency Code"
+    discourse_patrons_enabled: Enable the Discourse Patrons plugin.
+    discourse_patrons_extra_nav_subscribe: Show the subscribe button in the primary navigation
+    discourse_patrons_secret_key: Stripe Secret Key
+    discourse_patrons_public_key: Stripe Public Key
+    discourse_patrons_currency: Default Currency Code. This can be overridden when creating a subscription plan
     discourse_patrons_zip_code: "Show Zip Code"
     discourse_patrons_billing_address: "Collect billing address"
     discourse_patrons_payment_page: "Text to be added to enter payments page. Markdown is supported."
     discourse_patrons_success_page: "Text to be added to success page. Markdown is supported."
     discourse_patrons_payment_description: "This is sent to Stripe and shows in the payment information"
+    discourse_patrons_amounts: "Payment amounts a user can select"
     errors:
       discourse_patrons_amount_must_be_currency: "Currency amounts must be currencies without dollar symbol (eg 1.50)"
   js:
     discourse_patrons:
       title: Discourse Patrons
-      nav_item: Payment
-      heading:
-        payment: Make a Payment
-        success: Thank you!
-      payment:
-        optional: Optional
-        receipt_info: A receipt is sent to this email address
-        your_information: Your information
-        payment_information: Payment information
-        payment_confirmation: Confirm information
-      amount: Amount
-      payment_intent_id: Payment ID
+      optional: Optional
+      transactions:
+        payment:
+          success: Your payment was successful
+      navigation:
+        subscriptions: Subscriptions
+        subscribe: Subscribe
+        billing: Billing
+      user:
+        plans:
+          rate: Rate
+        subscriptions_help: You have no subscriptions.
+        subscriptions:
+          title: Subscriptions
+          id: Subscription ID
+          status: Status
+          created_at: Created
+          operations:
+            destroy:
+              confirm: Are you sure you want to cancel this subscription?
+      subscribe:
+        title: Subscribe
+        card:
+          title: Payment
+        customer:
+          title: Customer Details
+          empty: We couldn't find a customer identifier in our system. A new one will be created for you.
+        buttons:
+          subscribe: Subscribe
+      one_time:
+        heading:
+          payment: Make a Payment
+          success: Thank you!
+        payment:
+          optional: Optional
+          receipt_info: A receipt is sent to this email address
+          your_information: Your information
+          payment_information: Payment information
+          payment_confirmation: Confirm information
+        amount: Amount
+        payment_intent_id: Payment ID
       billing:
         name: Full name
         email: Email
@@ -38,10 +69,62 @@ en:
         confirm_payment: Confirm payment
         success: Go back
       admin:
-        payment_history:
+        dashboard:
+          title: Dashboard
           table:
             head:
               user: User
               payment_intent: Payment ID
               receipt_email: Receipt Email
               amount: Amount
+        products:
+          title: Products
+          operations:
+            create: Create New Product
+            update: Update Product
+            new: New Product
+            destroy:
+                confirm: Are you sure you want to destroy this product?
+          product:
+            product_id: Product ID
+            name: Product Name
+            statement_descriptor: Statement Descriptor
+            statement_descriptor_help: Extra information about a product which will appear on your customer’s credit card statement.
+            plan_help: Create a pricing plan to subscribe customers to this product
+            description: Description
+            description_help: This describes your subscription product.
+            active: Active
+            created_at: Created
+            updated_at: Updated
+          product_help: Before cutomers can subscribe to your site, you need to create at least one product and an associated plan.
+        plans:
+          title: Pricing Plans
+          operations:
+            add: Add New Plan
+            create: Create Plan
+            update: Update Plan
+            create_help: Once a pricing plan is created, only its nickname, trial period and user group can be updated.
+            new: New Plan
+            destroy:
+              confirm: Are you sure you want to destroy this plan?
+          plan:
+            nickname: Plan Nickname
+            nickname_help: This won't be visible to customers, but will help you find this plan later
+            plan_id: Plan ID
+            product: Product
+            interval: Billing Interval
+            amount: Amount
+            trial: Trial Period Days
+            trial_help: Subscriptions to this plan will automatically start with a free trial of this length
+            group: User Group
+            group_help: This is the discourse user group the customer gets added to when the subscription is created.
+            active: Active
+            created_at: Created
+        subscriptions:
+          title: Subscriptions
+          subscription:
+            subscription_id: Subscription ID
+            customer: Customer
+            plan: Plan
+            status: Status
+            created_at: Created

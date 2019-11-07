@@ -1,5 +1,7 @@
 export default function() {
   this.route("patrons", function() {
-    this.route("show", { path: ":pid" });
+    this.route("subscribe", function() {
+      this.route("show", { path: "/:subscription-id" });
+    });
   });
 }

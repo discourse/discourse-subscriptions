@@ -1,0 +1,41 @@
+
+<p class="btn-right">
+  {{#link-to 'adminPlugins.discourse-patrons.products.show' 'new' class="btn btn-primary"}}
+    {{d-icon "plus"}}
+    <span>{{i18n 'discourse_patrons.admin.products.operations.new'}}</span>
+  {{/link-to}}
+</p>
+
+{{#if model}}
+  <table class="table discourse-patrons-table">
+    <thead>
+      <th>{{i18n 'discourse_patrons.admin.products.product.name'}}</th>
+      <th>{{i18n 'discourse_patrons.admin.products.product.created_at'}}</th>
+      <th>{{i18n 'discourse_patrons.admin.products.product.updated_at'}}</th>
+      <th class="td-right">{{i18n 'discourse_patrons.admin.products.product.active'}}</th>
+      <th></th>
+    </thead>
+    {{#each model as |product|}}
+      <tr>
+        <td>{{product.name}}</td>
+        <td>{{format-unix-date product.created}}</td>
+        <td>{{format-unix-date product.updated}}</td>
+        <td class="td-right">{{product.active}}</td>
+        <td class="td-right">
+          {{#link-to "adminPlugins.discourse-patrons.products.show" product.id class="btn no-text btn-icon"}}
+            {{d-icon "far-edit"}}
+          {{/link-to}}
+          {{d-button
+            action=(route-action "destroyProduct")
+            actionParam=product
+            icon="trash-alt"
+            class="btn-danger btn no-text btn-icon"}}
+        </td>
+      </tr>
+    {{/each}}
+  </table>
+{{else}}
+  <p>
+    {{i18n 'discourse_patrons.admin.products.product_help'}}
+  </p>
+{{/if}}

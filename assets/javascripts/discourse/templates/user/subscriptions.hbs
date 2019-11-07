@@ -1,0 +1,25 @@
+
+{{i18n 'discourse_patrons.user.subscriptions.title'}}
+
+{{#if model}}
+  <table class="table discourse-patrons-user-table">
+    <thead>
+      <th>{{i18n 'discourse_patrons.user.subscriptions.id'}}</th>
+      <th>{{i18n 'discourse_patrons.user.plans.rate'}}</th>
+      <th>{{i18n 'discourse_patrons.user.subscriptions.status'}}</th>
+      <th>{{i18n 'discourse_patrons.user.subscriptions.created_at'}}</th>
+      <th></th>
+    </thead>
+    {{#each model as |subscription|}}
+      <tr>
+        <td>{{subscription.id}}</td>
+        <td>{{subscription.plan.subscriptionRate}}</td>
+        <td>{{subscription.status}}</td>
+        <td>{{format-unix-date subscription.created}}</td>
+        <td class="td-right">{{d-button disabled=subscription.canceled label="cancel" action=(route-action "cancelSubscription" subscription) icon="times"}}</td>
+      </tr>
+    {{/each}}
+  </table>
+{{else}}
+  <p>{{i18n 'discourse_patrons.user.subscriptions_help'}}</p>
+{{/if}}
