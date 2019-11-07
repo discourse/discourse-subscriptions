@@ -13,7 +13,7 @@ componentTest("Discourse Patrons donation form has content", {
     Discourse.SiteSettings.discourse_patrons_amounts = "1.00|2.01";
   },
 
-  async skip(assert) {
+  async test(assert) {
     assert.ok(
       find(".discourse-patrons-section-columns").length,
       "The card section renders"
