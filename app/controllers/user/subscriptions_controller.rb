@@ -38,6 +38,9 @@ module DiscoursePatrons
             end
 
             render_json_dump deleted
+
+          else
+            render_json_error "Customer ID not found"
           end
 
         rescue ::Stripe::InvalidRequestError => e
