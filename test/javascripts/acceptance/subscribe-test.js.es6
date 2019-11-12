@@ -7,7 +7,7 @@ acceptance("Discourse Patrons", {
   loggedIn: true
 });
 
-QUnit.test("subscribing", async assert => {
+QUnit.skip("subscribing", async assert => {
   await visit("/patrons/subscribe");
 
   assert.ok($("h3").length, "has a heading");
