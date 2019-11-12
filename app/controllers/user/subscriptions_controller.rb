@@ -28,9 +28,17 @@ module DiscoursePatrons
 
       def destroy
         begin
-          subscription = ::Stripe::Subscription.delete(params[:id])
+          customer = Customer.find_user(current_user)
 
-          render_json_dump subscription
+          if customer.present?
+            subscription = ::Stripe::Subscription.retrieve(params[:id])
+
+            if subscription[:customer] == customer.customer_id
+              deleted = ::Stripe::Subscription.delete(params[:id])
+            end
+
+            render_json_dump deleted
+          end
 
         rescue ::Stripe::InvalidRequestError => e
           return render_json_error e.message
