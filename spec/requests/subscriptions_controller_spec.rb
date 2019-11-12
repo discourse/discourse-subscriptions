@@ -24,7 +24,8 @@ module DiscoursePatrons
           ::Stripe::Plan.expects(:retrieve).returns(metadata: { group_name: 'awesome' })
           ::Stripe::Subscription.expects(:create).with(
             customer: 'cus_1234',
-            items: [ plan: 'plan_1234' ]
+            items: [ plan: 'plan_1234' ],
+            metadata: { username_lower: user.username_lower },
           )
           post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
         end
