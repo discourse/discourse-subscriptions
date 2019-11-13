@@ -12,10 +12,10 @@
   {{#each model as |subscription|}}
     <tr>
       <td>
-        {{#if subscription.user}}
-          {{#link-to 'adminUser' subscription.user}}
-            {{subscription.user.username}}
-          {{/link-to}}
+        {{#if subscription.metadataUserExists}}
+          <a href="{{unbound subscription.subscriptionUserPath}}">
+            {{subscription.metadata.username}}
+          </a>
         {{/if}}
       </td>
       <td>{{subscription.customer}}</td>
