@@ -27,7 +27,6 @@ add_admin_route 'discourse_patrons.title', 'discourse-patrons.products'
 
 Discourse::Application.routes.append do
   get '/admin/plugins/discourse-patrons' => 'admin/plugins#index'
-  get '/admin/plugins/discourse-patrons/dashboard' => 'admin/plugins#index'
   get '/admin/plugins/discourse-patrons/products' => 'admin/plugins#index'
   get '/admin/plugins/discourse-patrons/products/:product_id' => 'admin/plugins#index'
   get '/admin/plugins/discourse-patrons/products/:product_id/plans' => 'admin/plugins#index'

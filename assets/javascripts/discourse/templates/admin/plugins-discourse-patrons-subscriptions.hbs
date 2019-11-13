@@ -7,6 +7,7 @@
       <th>{{i18n 'discourse_patrons.admin.subscriptions.subscription.plan'}}</th>
       <th>{{i18n 'discourse_patrons.admin.subscriptions.subscription.status'}}</th>
       <th class="td-right">{{i18n 'discourse_patrons.admin.subscriptions.subscription.created_at'}}</th>
+      <th></th>
     </tr>
   </thead>
   {{#each model as |subscription|}}
@@ -22,6 +23,7 @@
       <td>{{subscription.plan.id}}</td>
       <td>{{subscription.status}}</td>
       <td class="td-right">{{format-unix-date subscription.created}}</td>
+      <td class="td-right">{{d-button disabled=subscription.canceled label="cancel" action=(route-action "cancelSubscription" subscription) icon="times"}}</td>
     </tr>
   {{/each}}
 </table>
