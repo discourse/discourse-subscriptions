@@ -1,4 +1,3 @@
-import EmberObject from "@ember/object";
 import computed from "ember-addons/ember-computed-decorators";
 import { ajax } from "discourse/lib/ajax";
 
