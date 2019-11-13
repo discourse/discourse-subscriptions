@@ -31,7 +31,7 @@ module DiscoursePatrons
         @subscription = ::Stripe::Subscription.create(
           customer: params[:customer],
           items: [ { plan: params[:plan] } ],
-          metadata: { username_lower:  current_user.username_lower  },
+          metadata: metadata_user,
         )
 
         group = plan_group(plan)
@@ -52,6 +52,10 @@ module DiscoursePatrons
     end
 
     private
+
+    def metadata_user
+      { user_id: current_user.id, username: current_user.username_lower }
+    end
 
     def plan_group(plan)
       Group.find_by_name(plan[:metadata][:group_name])

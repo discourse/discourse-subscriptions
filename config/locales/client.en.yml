@@ -123,6 +123,7 @@ en:
         subscriptions:
           title: Subscriptions
           subscription:
+            user: User
             subscription_id: Subscription ID
             customer: Customer
             plan: Plan
