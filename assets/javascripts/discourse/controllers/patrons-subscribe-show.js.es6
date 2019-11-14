@@ -13,9 +13,12 @@ export default Ember.Controller.extend({
 
   actions: {
     stripePaymentHandler() {
+      this.set("loading", true);
+
       this.stripe.createToken(this.get("cardElement")).then(result => {
         if (result.error) {
           bootbox.alert(result.error.message);
+          this.set("loading", false);
         } else {
           const customerData = {
             source: result.token.id
@@ -33,15 +36,20 @@ export default Ember.Controller.extend({
               subscription.set("plan", this.get("model.plans.firstObject.id"));
             }
 
-            subscription.save().then(() => {
-              bootbox.alert(
-                I18n.t("discourse_patrons.transactions.payment.success")
-              );
-              this.transitionToRoute(
-                "user.subscriptions",
-                Discourse.User.current().username.toLowerCase()
-              );
-            });
+            subscription
+              .save()
+              .then(() => {
+                bootbox.alert(
+                  I18n.t("discourse_patrons.transactions.payment.success")
+                );
+                this.transitionToRoute(
+                  "user.subscriptions",
+                  Discourse.User.current().username.toLowerCase()
+                );
+              })
+              .finally(() => {
+                this.set("loading", false);
+              });
           });
         }
       });

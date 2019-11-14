@@ -12,6 +12,7 @@
     {{combo-box valueAttribute="id" content=model.plans value=model.product.plan}}
 
     {{#d-button
+      disabled=loading
       action="stripePaymentHandler"
       class="btn btn-primary btn-payment btn-discourse-patrons"}}
       {{i18n 'discourse_patrons.subscribe.buttons.subscribe'}}
@@ -19,14 +20,14 @@
 
     <hr>
 
-    <h4>{{i18n 'discourse_patrons.subscribe.card.title'}}</h4>
+    <h4>
+      {{i18n 'discourse_patrons.subscribe.card.title'}}
+    </h4>
+
     {{subscribe-card cardElement=cardElement}}
 
-    {{!-- <div id="discourse-patrons-subscribe-customer">
-      <h4>{{i18n 'discourse_patrons.subscribe.customer.title'}}</h4>
-      <div class="discourse-patrons-subscribe-customer-empty">
-        {{i18n 'discourse_patrons.subscribe.customer.empty'}}
-      </div>
-    </div> --}}
+    {{#if loading}}
+      {{loading-spinner}}
+    {{/if}}
   </div>
 </div>
