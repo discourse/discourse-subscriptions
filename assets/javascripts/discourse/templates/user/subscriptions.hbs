@@ -16,7 +16,13 @@
         <td>{{subscription.plan.subscriptionRate}}</td>
         <td>{{subscription.status}}</td>
         <td>{{format-unix-date subscription.created}}</td>
-        <td class="td-right">{{d-button disabled=subscription.canceled label="cancel" action=(route-action "cancelSubscription" subscription) icon="times"}}</td>
+        <td class="td-right">
+          {{#if subscription.loading}}
+            {{loading-spinner size="small"}}
+          {{else}}
+            {{d-button disabled=subscription.canceled label="cancel" action=(route-action "cancelSubscription" subscription) icon="times"}}
+          {{/if}}
+        </td>
       </tr>
     {{/each}}
   </table>
