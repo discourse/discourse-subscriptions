@@ -35,9 +35,10 @@ module DiscoursePatrons
 
             if subscription[:customer] == customer.customer_id
               deleted = ::Stripe::Subscription.delete(params[:id])
+              render_json_dump deleted
+            else
+              render_json_error "Customer ID not found"
             end
-
-            render_json_dump deleted
 
           else
             render_json_error "Customer ID not found"

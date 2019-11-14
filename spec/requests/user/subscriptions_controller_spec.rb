@@ -56,6 +56,7 @@ module DiscoursePatrons
           it "deletes a subscription" do
             ::Stripe::Subscription.expects(:delete).never
             delete "/patrons/user/subscriptions/sub_12345.json"
+            expect(response.status).to eq 422
           end
         end
 
@@ -66,12 +67,14 @@ module DiscoursePatrons
             ::Stripe::Subscription.expects(:retrieve).with('sub_12345').returns(customer: 'other')
             ::Stripe::Subscription.expects(:delete).never
             delete "/patrons/user/subscriptions/sub_12345.json"
+            expect(response.status).to eq 422
           end
 
           it "deletes a subscription" do
             ::Stripe::Subscription.expects(:retrieve).with('sub_12345').returns(customer: 'cus_tmp76543g')
             ::Stripe::Subscription.expects(:delete).with('sub_12345')
             delete "/patrons/user/subscriptions/sub_12345.json"
+            expect(response.status).to eq 200
           end
         end
       end
