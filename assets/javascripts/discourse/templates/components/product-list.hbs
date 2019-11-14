@@ -1,6 +1,6 @@
 
 {{#each products as |product|}}
-  <div>
+  <div class="product">
     <h2>{{product.name}}</h2>
 
     <p>
@@ -16,3 +16,9 @@
     {{/if}}
   </div>
 {{/each}}
+
+{{#unless currentUser}}
+  <p>
+    {{i18n 'discourse_patrons.subscribe.unauthenticated'}}
+  </p>
+{{/unless}}

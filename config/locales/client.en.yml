@@ -38,11 +38,11 @@ en:
               confirm: Are you sure you want to cancel this subscription?
       subscribe:
         title: Subscribe
+        unauthenticated: You need to create an account to subscribe.
         card:
           title: Payment
         customer:
           title: Customer Details
-          empty: We couldn't find a customer identifier in our system. A new one will be created for you.
         buttons:
           subscribe: Subscribe
       one_time:
