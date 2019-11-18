@@ -13,7 +13,7 @@ const AdminPlan = Plan.extend({
   @computed("trial_period_days")
   parseTrialPeriodDays(trial_period_days) {
     if (trial_period_days) {
-      return parseInt(0 + trial_period_days);
+      return parseInt(0 + trial_period_days, 10);
     } else {
       return 0;
     }
