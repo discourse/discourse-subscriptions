@@ -26,9 +26,15 @@ Together, Products and Plans make up subscriptions.
 
 ### Set up your payment gateway.
 
-Firstly, you'll need an account with the [Stripe](https://stripe.com) payment gateway. This is how you take your payments. When you get a moment, take a look at Stripe's documentation. But for now, you can set up an account in test mode and see how it all works without making any real transactions. Then, if you're happy with how everything works, you can start taking real transactions. See below for test credit card numbers.
+Firstly, you'll need an account with the [Stripe](https://stripe.com) payment gateway. This is how you manage your transactions. 
 
-### Set up your user groups in Discourse
+When you get a moment, take a look at Stripe's documentation. But for now, you can set up an account in test mode and see how it all works without making any real transactions. Then, if you're happy with how everything works, you can start taking real transactions. See below for test credit card numbers.
+
+### Set up your User Groups in Discourse
+
+When a user successfully subscribes to your Discourse application, after their credit card transation has been processed, they are added to a User Group. By assigning user's to a User Group, you can manage what your user's have access to on your website. User groups are a core functionality of Discourse and this plugin does nothing with them except and and remove users from the group you accociated with your Plan.
+
+## Enter your configuration details
 
 ## Testing
 
@@ -42,7 +48,7 @@ This software comes without warranties or conditions of any kind.
 
 ## Credits
 
-Many thanks to Chris Beach and Angus McLeod who helped on the [previous version](https://github.com/chrisbeach/discourse-donations) of this plugin.
+Many thanks to Chris Beach and Angus McLeod who helped on the [previous version](https://github.com/chrisbeach/discourse-donations) of this plugin. Many thanks to the Discourse team who sponsored this plugin! You guys rock.
 
 ## Known issues
 
