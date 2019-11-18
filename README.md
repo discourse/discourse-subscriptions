@@ -20,6 +20,16 @@ A Product describes what the user gets when they subscribe. It has a name and de
 
 A Plan is how you charge your users for the Product. Plans have rates, billing intervals and trial periods. A Product may have multiple Plans. For example: a yearly and a monthly Plan. You can't change plans much once they are created but you can archive them and create new ones.
 
+Together, Products and Plans make up subscriptions. 
+
+## How to set up your Discourse app for subscriptions.
+
+### Set up your payment gateway.
+
+Firstly, you'll need an account with the [Stripe](https://stripe.com) payment gateway. This is how you take your payments. When you get a moment, take a look at Stripe's documentation. But for now, you can set up an account in test mode and see how it all works without making any real transactions. Then, if you're happy with how everything works, you can start taking real transactions. See below for test credit card numbers.
+
+### Set up your user groups in Discourse
+
 ## Testing
 
 Test with these credit card numbers:
