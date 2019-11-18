@@ -12,9 +12,13 @@ This is a newer version of https://github.com/rimian/discourse-donations.
 * Follow the install instructions here: https://meta.discourse.org/t/install-a-plugin/19157
 * Add your Stripe public and private keys in settings and set the currency to your local value.
 
-## Creating Subscription Plans
+## What are Subscriptions?
 
-When users subscribe to your Discourse application, they are added to a user group. You can create new user groups or use existing ones. Of course, you should be careful what permissions you apply to the user group.
+There are two core components to make subscriptions work for your Discourse application. These are **Products** and **Plans**. 
+
+A Product describes what the user gets when they subscribe. It has a name and description and is associated with a Discourse user group. 
+
+A Plan is how you charge your users for the Product. Plans have rates, billing intervals and trial periods. A Product may have multiple Plans. For example: a yearly and a monthly Plan. You can't change plans much once they are created but you can archive them and create new ones.
 
 ## Testing
 
