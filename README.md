@@ -6,6 +6,8 @@ The Discourse Patrons plugin allows you to set up a subscription based Discourse
 
 You can try it out here: https://discourse.rimian.com.au/patrons/subscribe
 
+See [Screenshots](#screenshots) below.
+
 ## Installation
 
 * Be sure your site is enforcing https.
@@ -71,8 +73,12 @@ Many thanks to Chris Beach and Angus McLeod who helped on the [previous version]
 
 ## Screenshots
 
+### Products Admin
 ![Admin Products](doc/admin-products.png)
+### Product Admin
 ![Admin Product](doc/admin-product.png)
+### Plan Admin
 ![Admin Plan](doc/admin-plan.png)
+### Subscription Admin
 ![Admin Subscriptions](doc/admin-subscriptions.png)
 
