@@ -16,11 +16,11 @@ Subscriptions are how you manage access to your content. There are two core comp
 
 A Product describes what the user gets when they subscribe. It has a *name* and *description* and most importantly, it is associated with a Discourse User Group. A product can have one or more plans.
 
-A Plan is how you charge your users for the Product. Plans have rates, billing intervals and trial periods. A Product may have multiple Plans. For example: a yearly and a monthly Plan with different pricing. You can't change plans much once they are created but you can archive them and create new ones.
+A Plan is how you charge your users for the Product. Plans have *rates*, *billing intervals* and *trial periods*. A Product may have multiple Plans. For example: a yearly and a monthly Plan with different pricing. You can't change plans much once they are created but you can archive them and create new ones.
 
 Together, Products and Plans make up Subscriptions. 
 
-It is **important to note** that untimately, your subscriptions are managed by the Stripe payment gateway. Stripe will handle the billing, etc at the required intervals and notify your Discourse Plugin when something happens. If you were to destroy your instance of Discourse, you will need to cancel all of your subscriptions manually with Stripe. 
+It is **important to note** that untimately, your subscriptions are managed by the Stripe payment gateway. Stripe will handle the billing, etc at the required intervals and notify your Discourse Plugin when something happens. If you were to destroy your instance of Discourse, you will need to cancel all of your subscriptions manually with Stripe. Thankfully, Stripe has a [portal](https://dashboard.stripe.com) where you can manage all that.
 
 ## How to set up your Discourse app for subscriptions.
 
@@ -36,6 +36,8 @@ When a user successfully subscribes to your Discourse application, after their c
 
 ## Enter your configuration details
 
+When you create an account with Stripe, you'll get a public and private key. These are entered in the Discourse Patrons admin so your subscriptions can integrate with Stripe. There are different keys for testing and production environments.
+
 ## Testing
 
 Test with these credit card numbers:
@@ -48,7 +50,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” 
 
 ## Credits
 
-This is a newer version of https://github.com/rimian/discourse-donations. Many thanks to Chris Beach and Angus McLeod who helped on the [previous version](https://github.com/chrisbeach/discourse-donations) of this plugin. Many thanks to the Discourse team who sponsored this plugin! You guys rock.
+Many thanks to Chris Beach and Angus McLeod who helped on the [previous version](https://github.com/chrisbeach/discourse-donations) of this plugin. Many thanks to the Discourse team who sponsored this plugin! You guys rock.
 
 ## Known issues
 
