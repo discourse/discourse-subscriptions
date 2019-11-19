@@ -4,6 +4,8 @@
 
 The Discourse Patrons plugin allows you to set up a subscription based Discourse application. By integrating with the [Stripe](https://stripe.com) payment gateway and setting up this plugin to manage Subscriptions, you can start selling users access to content on your website. 
 
+You can try it out here: https://discourse.rimian.com.au/patrons/subscribe
+
 ## Installation
 
 * Be sure your site is enforcing https.
