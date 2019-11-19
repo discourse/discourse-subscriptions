@@ -42,6 +42,14 @@ When a user successfully subscribes to your Discourse application, after their c
 
 When you create an account with Stripe, you'll get a public and private key. These are entered in the Discourse Patrons admin so your subscriptions can integrate with Stripe. There are different keys for testing and production environments.
 
+You can also toggle the Subscribe button on and off in case you want to hide the link while you're setting up.
+
+## Create one or more products with plans.
+
+In the admin, add a new Product. Once you have a product saved, you can add plans to it. Keep in mind that the pricing and billing intervals of plans cannot be changed once you create them. This is to avoid confusion around subscription management.
+
+If you take a look at your [Stripe Dashboard](https://dashboard.stripe.com), you'll see all those products and plans are listed. Discourse Patrons does not create them locally. They are created in Stripe. 
+
 ## Testing
 
 Test with these credit card numbers:
