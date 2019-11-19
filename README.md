@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/rimian/discourse-patrons.svg?branch=master)](https://travis-ci.org/rimian/discourse-patrons)
 
-The Discourse Patrons plugin allows you to set up a subscription based Discourse application. By integrating with the [Stripe](https://stripe.com) payment gateway and setting up this plugin to manage Subscriptions, you can start selling users access to content on your website. 
+The Discourse Patrons plugin allows you to set up a subscription based Discourse application. By integrating with the [Stripe](https://stripe.com) payment gateway and setting up this plugin to manage Subscriptions, you can start selling users access to content on your website.
 
 You can try it out here: https://discourse.rimian.com.au/patrons/subscribe
 
@@ -16,13 +16,13 @@ See [Screenshots](#screenshots) below.
 
 ## What are Subscriptions?
 
-Subscriptions are how you manage access to your content. There are two core components to make Subscriptions work for your Discourse application. These are **Products** and **Plans**. 
+Subscriptions are how you manage access to your content. There are two core components to make Subscriptions work for your Discourse application. These are **Products** and **Plans**.
 
 A Product describes what the user gets when they subscribe. It has a *name* and *description* and most importantly, it is associated with a Discourse User Group. A product can have one or more plans.
 
 A Plan is how you charge your users for the Product. Plans have *rates*, *billing intervals* and *trial periods*. A Product may have multiple Plans. For example: a yearly and a monthly Plan with different pricing. You can't change plans much once they are created but you can archive them and create new ones.
 
-Together, Products and Plans make up Subscriptions. 
+Together, Products and Plans make up Subscriptions.
 
 It is **important to note** that untimately, your subscriptions are managed by the Stripe payment gateway. Stripe will handle the billing, etc at the required intervals and notify your Discourse Plugin when something happens. If you were to destroy your instance of Discourse, you will need to cancel all of your subscriptions manually with Stripe. Thankfully, Stripe has a [portal](https://dashboard.stripe.com) where you can manage all that.
 
@@ -30,7 +30,7 @@ It is **important to note** that untimately, your subscriptions are managed by t
 
 ### Set up your payment gateway.
 
-Firstly, you'll need an account with the [Stripe](https://stripe.com) payment gateway. This is how you manage your transactions. 
+Firstly, you'll need an account with the [Stripe](https://stripe.com) payment gateway. This is how you manage your transactions.
 
 When you get a moment, take a look at Stripe's documentation. But for now, you can set up an account in test mode and see how it all works without making any real transactions. Then, if you're happy with how everything works, you can start taking real transactions. See below for test credit card numbers.
 
@@ -81,4 +81,5 @@ Many thanks to Chris Beach and Angus McLeod who helped on the [previous version]
 ![Admin Plan](doc/admin-plan.png)
 ### Subscription Admin
 ![Admin Subscriptions](doc/admin-subscriptions.png)
-
+### Subscription User
+![Admin Subscriptions](doc/user-subscriptions.png)
