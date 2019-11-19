@@ -83,3 +83,5 @@ Many thanks to Chris Beach and Angus McLeod who helped on the [previous version]
 ![Admin Subscriptions](doc/admin-subscriptions.png)
 ### Subscription User
 ![Admin Subscriptions](doc/user-subscriptions.png)
+### Subscribe
+![Admin Subscriptions](doc/subscribe.png)
