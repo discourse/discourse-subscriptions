@@ -61,8 +61,18 @@ Many thanks to Chris Beach and Angus McLeod who helped on the [previous version]
 
 ## TODOs
 
+* Currency on plans isn't done.
+* Admin pagination
 * Confirm dialog CSS isn't the best.
 * Check against other themes (works ok with light and dark)
 * Validate the model properly. Not in the stripe component
 * Show the transaction on the thank you page.
 * Work out where to put the helper tests. Name collision!
+
+## Screenshots
+
+![Admin Products](doc/admin-products.png)
+![Admin Product](doc/admin-product.png)
+![Admin Plan](doc/admin-plan.png)
+![Admin Subscriptions](doc/admin-subscriptions.png)
+
