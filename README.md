@@ -38,6 +38,8 @@ When you get a moment, take a look at Stripe's documentation. But for now, you c
 
 When a user successfully subscribes to your Discourse application, after their credit card transation has been processed, they are added to a User Group. By assigning users to a User Group, you can manage what your users have access to on your website. User groups are a core functionality of Discourse and this plugin does nothing with them except and and remove users from the group you accociated with your Plan.
 
+After you have created a User Group and configured it correctly, you can move onto setting up Discouse Patrons.
+
 ## Enter your configuration details
 
 When you create an account with Stripe, you'll get a public and private key. These are entered in the Discourse Patrons admin so your subscriptions can integrate with Stripe. There are different keys for testing and production environments.
@@ -55,6 +57,8 @@ If you take a look at your [Stripe Dashboard](https://dashboard.stripe.com), you
 Test with these credit card numbers:
 
 * 4111 1111 1111 1111
+
+Visit `/patrons/subscribe` and enter a few test transcations. 
 
 ## Warranty
 
