@@ -2,9 +2,7 @@
 
 [![Build Status](https://travis-ci.org/rimian/discourse-patrons.svg?branch=master)](https://travis-ci.org/rimian/discourse-patrons)
 
-Accept payments from visitors to your [Discourse](https://www.discourse.org/) application. Integrates with [Stripe](https://stripe.com).
-
-This is a newer version of https://github.com/rimian/discourse-donations.
+The Discourse Patrons plugin allows you to set up a subscription based Discourse application. By integrating with the [Stripe](https://stripe.com) payment gateway and setting up this plugin to manage Subscriptions, you can start selling users access to content on your website. 
 
 ## Installation
 
@@ -14,13 +12,15 @@ This is a newer version of https://github.com/rimian/discourse-donations.
 
 ## What are Subscriptions?
 
-There are two core components to make subscriptions work for your Discourse application. These are **Products** and **Plans**. 
+Subscriptions are how you manage access to your content. There are two core components to make Subscriptions work for your Discourse application. These are **Products** and **Plans**. 
 
-A Product describes what the user gets when they subscribe. It has a name and description and is associated with a Discourse user group. 
+A Product describes what the user gets when they subscribe. It has a *name* and *description* and most importantly, it is associated with a Discourse User Group. A product can have one or more plans.
 
-A Plan is how you charge your users for the Product. Plans have rates, billing intervals and trial periods. A Product may have multiple Plans. For example: a yearly and a monthly Plan. You can't change plans much once they are created but you can archive them and create new ones.
+A Plan is how you charge your users for the Product. Plans have rates, billing intervals and trial periods. A Product may have multiple Plans. For example: a yearly and a monthly Plan with different pricing. You can't change plans much once they are created but you can archive them and create new ones.
 
-Together, Products and Plans make up subscriptions. 
+Together, Products and Plans make up Subscriptions. 
+
+It is **important to note** that untimately, your subscriptions are managed by the Stripe payment gateway. Stripe will handle the billing, etc at the required intervals and notify your Discourse Plugin when something happens. If you were to destroy your instance of Discourse, you will need to cancel all of your subscriptions manually with Stripe. 
 
 ## How to set up your Discourse app for subscriptions.
 
@@ -44,11 +44,11 @@ Test with these credit card numbers:
 
 ## Warranty
 
-This software comes without warranties or conditions of any kind.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ## Credits
 
-Many thanks to Chris Beach and Angus McLeod who helped on the [previous version](https://github.com/chrisbeach/discourse-donations) of this plugin. Many thanks to the Discourse team who sponsored this plugin! You guys rock.
+This is a newer version of https://github.com/rimian/discourse-donations. Many thanks to Chris Beach and Angus McLeod who helped on the [previous version](https://github.com/chrisbeach/discourse-donations) of this plugin. Many thanks to the Discourse team who sponsored this plugin! You guys rock.
 
 ## Known issues
 
