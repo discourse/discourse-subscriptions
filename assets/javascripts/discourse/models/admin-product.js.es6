@@ -16,9 +16,10 @@ const AdminProduct = Discourse.Model.extend({
       active: this.active
     };
 
-    return ajax("/patrons/admin/products", { method: "post", data }).then(
-      product => AdminProduct.create(product)
-    );
+    return ajax("/patrons/admin/products", {
+      method: "post",
+      data
+    }).then(product => AdminProduct.create(product));
   },
 
   update() {
@@ -44,9 +45,9 @@ AdminProduct.reopenClass({
   },
 
   find(id) {
-    return ajax(`/patrons/admin/products/${id}`, { method: "get" }).then(
-      product => AdminProduct.create(product)
-    );
+    return ajax(`/patrons/admin/products/${id}`, {
+      method: "get"
+    }).then(product => AdminProduct.create(product));
   }
 });
 
