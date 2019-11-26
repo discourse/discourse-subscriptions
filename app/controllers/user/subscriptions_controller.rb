@@ -28,18 +28,16 @@ module DiscoursePatrons
 
       def destroy
         begin
-          customer = Customer.find_user(current_user)
+          subscription = ::Stripe::Subscription.retrieve(params[:id])
+
+          customer = Customer.find_by(
+            user_id: current_user.id,
+            customer_id: subscription[:customer]
+          )
 
           if customer.present?
-            subscription = ::Stripe::Subscription.retrieve(params[:id])
-
-            if subscription[:customer] == customer.customer_id
-              deleted = ::Stripe::Subscription.delete(params[:id])
-              render_json_dump deleted
-            else
-              render_json_error "Customer ID not found"
-            end
-
+            deleted = ::Stripe::Subscription.delete(params[:id])
+            render_json_dump deleted
           else
             render_json_error "Customer ID not found"
           end
