@@ -5,6 +5,7 @@
   <table class="table discourse-patrons-user-table">
     <thead>
       <th>{{i18n 'discourse_patrons.user.subscriptions.id'}}</th>
+      <th>{{i18n 'discourse_patrons.user.plans.product'}}</th>
       <th>{{i18n 'discourse_patrons.user.plans.rate'}}</th>
       <th>{{i18n 'discourse_patrons.user.subscriptions.status'}}</th>
       <th>{{i18n 'discourse_patrons.user.subscriptions.created_at'}}</th>
@@ -13,6 +14,7 @@
     {{#each model as |subscription|}}
       <tr>
         <td>{{subscription.id}}</td>
+        <td>{{subscription.product.name}}</td>
         <td>{{subscription.plan.subscriptionRate}}</td>
         <td>{{subscription.status}}</td>
         <td>{{format-unix-date subscription.created}}</td>

@@ -28,18 +28,40 @@ module DiscoursePatrons
       end
 
       describe "index" do
+        let(:plans) do
+          {
+            data: [
+              {
+                id: "plan_1",
+                product: { name: 'ACME Subscriptions' },
+              },
+              {
+                id: "plan_2",
+                product: { name: 'ACME Other Subscriptions' },
+              }
+            ]
+          }
+        end
+
         let(:customers) do
           {
             data: [{
               id: "cus_23456",
               subscriptions: {
-                data: [{ id: "sub_1234" }, { id: "sub_4567" }]
+                data: [
+                  { id: "sub_1234", plan: { id: "plan_1" } },
+                  { id: "sub_4567", plan: { id: "plan_2" } }
+                ]
               },
             }]
           }
         end
 
         it "gets subscriptions" do
+          ::Stripe::Plan.expects(:list).with(
+            expand: ['data.product']
+          ).returns(plans)
+
           ::Stripe::Customer.expects(:list).with(
             email: user.email,
             expand: ['data.subscriptions']
@@ -47,7 +69,13 @@ module DiscoursePatrons
 
           get "/patrons/user/subscriptions.json"
 
-          expect(JSON.parse(response.body)).to eq([{ "id" => "sub_1234" }, { "id" => "sub_4567" }])
+          subscription = JSON.parse(response.body).first
+
+          expect(subscription).to eq(
+            "id" => "sub_1234",
+            "plan" => { "id" => "plan_1" },
+            "product" => { "name" => "ACME Subscriptions" }
+          )
         end
       end
 

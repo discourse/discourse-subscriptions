@@ -27,6 +27,7 @@ en:
       user:
         plans:
           rate: Rate
+          product: Name
         subscriptions_help: You have no subscriptions.
         subscriptions:
           title: Subscriptions

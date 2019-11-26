@@ -9,15 +9,23 @@ module DiscoursePatrons
 
       def index
         begin
+          plans = ::Stripe::Plan.list(
+            expand: ['data.product']
+          )
+
           customers = ::Stripe::Customer.list(
             email: current_user.email,
             expand: ['data.subscriptions']
           )
 
-          # TODO: Serialize and remove stuff
           subscriptions = customers[:data].map do |customer|
             customer[:subscriptions][:data]
           end.flatten(1)
+
+          subscriptions.map! do |subscription|
+            plan = plans[:data].find { |p| p[:id] == subscription[:plan][:id] }
+            subscription.to_h.merge(product: plan[:product].to_h.slice(:id, :name))
+          end
 
           render_json_dump subscriptions
 
@@ -39,7 +47,7 @@ module DiscoursePatrons
             deleted = ::Stripe::Subscription.delete(params[:id])
             render_json_dump deleted
           else
-            render_json_error "Customer ID not found"
+            render_json_error I18n.t('discourse_patrons.customer_id_not_found')
           end
 
         rescue ::Stripe::InvalidRequestError => e
