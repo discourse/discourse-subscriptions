@@ -126,6 +126,7 @@ en:
             user: User
             subscription_id: Subscription ID
             customer: Customer
+            product: Product
             plan: Plan
             status: Status
             created_at: Created

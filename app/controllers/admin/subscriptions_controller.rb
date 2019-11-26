@@ -9,7 +9,7 @@ module DiscoursePatrons
 
       def index
         begin
-          subscriptions = ::Stripe::Subscription.list
+          subscriptions = ::Stripe::Subscription.list(expand: ['data.plan.product'])
 
           render_json_dump subscriptions
         rescue ::Stripe::InvalidRequestError => e

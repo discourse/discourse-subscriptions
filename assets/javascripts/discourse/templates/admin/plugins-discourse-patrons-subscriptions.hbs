@@ -4,6 +4,7 @@
     <tr>
       <th>{{i18n 'discourse_patrons.admin.subscriptions.subscription.user'}}</th>
       <th>{{i18n 'discourse_patrons.admin.subscriptions.subscription.customer'}}</th>
+      <th>{{i18n 'discourse_patrons.admin.subscriptions.subscription.product'}}</th>
       <th>{{i18n 'discourse_patrons.admin.subscriptions.subscription.plan'}}</th>
       <th>{{i18n 'discourse_patrons.admin.subscriptions.subscription.status'}}</th>
       <th class="td-right">{{i18n 'discourse_patrons.admin.subscriptions.subscription.created_at'}}</th>
@@ -20,7 +21,8 @@
         {{/if}}
       </td>
       <td>{{subscription.customer}}</td>
-      <td>{{subscription.plan.id}}</td>
+      <td>{{subscription.plan.product.name}}</td>
+      <td>{{subscription.plan.nickname}}</td>
       <td>{{subscription.status}}</td>
       <td class="td-right">{{format-unix-date subscription.created}}</td>
       <td class="td-right">

@@ -27,8 +27,8 @@ module DiscoursePatrons
       before { sign_in(admin) }
 
       describe "index" do
-        it "gets the subscriptions" do
-          ::Stripe::Subscription.expects(:list)
+        it "gets the subscriptions and products" do
+          ::Stripe::Subscription.expects(:list).with(expand: ['data.plan.product'])
           get "/patrons/admin/subscriptions.json"
           expect(response.status).to eq(200)
         end
