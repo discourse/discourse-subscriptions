@@ -21,6 +21,13 @@ module DiscoursePatrons
         begin
           subscription = ::Stripe::Subscription.delete(params[:id])
 
+          customer = DiscoursePatrons::Customer.find_by(
+            product_id: subscription[:plan][:product][:id],
+            customer_id: subscription[:customer]
+          )
+
+          customer.delete if customer
+
           render_json_dump subscription
 
         rescue ::Stripe::InvalidRequestError => e

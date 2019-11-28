@@ -22,6 +22,7 @@ module DiscoursePatrons
     end
 
     context 'authenticated' do
+      let(:user) { Fabricate(:user) }
       let(:admin) { Fabricate(:admin) }
 
       before { sign_in(admin) }
@@ -35,9 +36,23 @@ module DiscoursePatrons
       end
 
       describe "destroy" do
-        it "deletes a subscription" do
-          ::Stripe::Subscription.expects(:delete).with('sub_12345')
-          delete "/patrons/admin/subscriptions/sub_12345.json"
+        before do
+          DiscoursePatrons::Customer.create(
+            user_id: user.id,
+            customer_id: 'c_123',
+            product_id: 'pr_34578'
+          )
+        end
+
+        it "deletes a customer" do
+          ::Stripe::Subscription
+            .expects(:delete)
+            .with('sub_12345')
+            .returns(customer: 'c_123', plan: { product: { id: 'pr_34578' } })
+
+          expect {
+            delete "/patrons/admin/subscriptions/sub_12345.json"
+          }.to change { DiscoursePatrons::Customer.count }.by(-1)
         end
       end
     end

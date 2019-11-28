@@ -3,6 +3,7 @@
   <thead>
     <tr>
       <th>{{i18n 'discourse_patrons.admin.subscriptions.subscription.user'}}</th>
+      <th>{{i18n 'discourse_patrons.admin.subscriptions.subscription.subscription_id'}}</th>
       <th>{{i18n 'discourse_patrons.admin.subscriptions.subscription.customer'}}</th>
       <th>{{i18n 'discourse_patrons.admin.subscriptions.subscription.product'}}</th>
       <th>{{i18n 'discourse_patrons.admin.subscriptions.subscription.plan'}}</th>
@@ -20,6 +21,7 @@
           </a>
         {{/if}}
       </td>
+      <td>{{subscription.id}}</td>
       <td>{{subscription.customer}}</td>
       <td>{{subscription.plan.product.name}}</td>
       <td>{{subscription.plan.nickname}}</td>
