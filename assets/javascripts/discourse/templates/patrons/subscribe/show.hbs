@@ -9,25 +9,29 @@
     </p>
   </div>
   <div class="section-column">
-    {{combo-box valueAttribute="id" content=model.plans value=model.product.plan}}
+    {{#unless model.product.subscribed}}
 
-    {{#d-button
-      disabled=loading
-      action="stripePaymentHandler"
-      class="btn btn-primary btn-payment btn-discourse-patrons"}}
-      {{i18n 'discourse_patrons.subscribe.buttons.subscribe'}}
-    {{/d-button}}
+      {{combo-box valueAttribute="id" content=model.plans value=model.product.plan}}
 
-    <hr>
+      {{#d-button
+        disabled=loading
+        action="stripePaymentHandler"
+        class="btn btn-primary btn-payment btn-discourse-patrons"}}
+        {{i18n 'discourse_patrons.subscribe.buttons.subscribe'}}
+      {{/d-button}}
 
-    <h4>
-      {{i18n 'discourse_patrons.subscribe.card.title'}}
-    </h4>
+      <hr>
 
-    {{subscribe-card cardElement=cardElement}}
+      <h4>
+        {{i18n 'discourse_patrons.subscribe.card.title'}}
+      </h4>
 
-    {{#if loading}}
-      {{loading-spinner}}
-    {{/if}}
+      {{subscribe-card cardElement=cardElement}}
+
+      {{#if loading}}
+        {{loading-spinner}}
+      {{/if}}
+
+    {{/unless}}
   </div>
 </div>

@@ -9,7 +9,7 @@
 
     {{#if currentUser}}
       <div class="pull-right">
-        {{#link-to "patrons.subscribe.show" product.id class="btn btn-primary"}}
+        {{#link-to "patrons.subscribe.show" product.id disabled=product.subscribed class="btn btn-primary"}}
           {{i18n 'discourse_patrons.subscribe.title'}}
         {{/link-to}}
       </div>
