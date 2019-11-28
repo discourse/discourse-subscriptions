@@ -68,30 +68,25 @@
         </tr>
       {{/each}}
 
-      <tr>
-        <td colspan="7">
-          {{#unless model.plans}}
+      {{#unless model.plans}}
+        <tr>
+          <td colspan="8">
             <hr>
             {{i18n 'discourse_patrons.admin.products.product.plan_help'}}
-          {{/unless}}
-        </td>
-      </tr>
+          </td>
+        </tr>
+      {{/unless}}
     </table>
   </p>
 {{/unless}}
 
-<section>
-  <hr>
-
-  <div class="pull-right">
-    {{d-button label="cancel" action=(action "cancelProduct") icon="times"}}
-    {{#if model.product.isNew}}
-      {{d-button label="discourse_patrons.admin.products.operations.create" action="createProduct" icon="plus" class="btn btn-primary"}}
-    {{else}}
-      {{d-button label="discourse_patrons.admin.products.operations.update" action="updateProduct" icon="check" class="btn btn-primary"}}
-    {{/if}}
-  </div>
-
-</section>
+<div class="pull-right">
+  {{d-button label="cancel" action=(action "cancelProduct") icon="times"}}
+  {{#if model.product.isNew}}
+    {{d-button label="discourse_patrons.admin.products.operations.create" action="createProduct" icon="plus" class="btn btn-primary"}}
+  {{else}}
+    {{d-button label="discourse_patrons.admin.products.operations.update" action="updateProduct" icon="check" class="btn btn-primary"}}
+  {{/if}}
+</div>
 
 {{outlet}}
