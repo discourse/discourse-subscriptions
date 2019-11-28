@@ -80,11 +80,15 @@ module DiscoursePatrons
       end
 
       describe "delete" do
+        let(:group) { Fabricate(:group, name: 'subscribers') }
+
         before do
           # Users can have more than one customer id
           Customer.create(user_id: user.id, customer_id: 'customer_id_1', product_id: 'p_1')
           Customer.create(user_id: user.id, customer_id: 'customer_id_1', product_id: 'p_2')
           Customer.create(user_id: user.id, customer_id: 'customer_id_2', product_id: 'p_2')
+
+          group.add(user)
         end
 
         it "does not delete a subscription when the customer is wrong" do
@@ -127,12 +131,46 @@ module DiscoursePatrons
           expect(response.status).to eq 422
         end
 
+        it "removes the user from the group" do
+          ::Stripe::Subscription
+            .expects(:retrieve)
+            .with('sub_12345')
+            .returns(
+              plan: { product: 'p_1', metadata: { group_name: 'subscribers' } },
+              customer: 'customer_id_1'
+            )
+
+          ::Stripe::Subscription
+            .expects(:delete)
+
+          expect {
+            delete "/patrons/user/subscriptions/sub_12345.json"
+          }.to change { user.groups.count }.by(-1)
+        end
+
+        it "does not remove the user from the group" do
+          ::Stripe::Subscription
+            .expects(:retrieve)
+            .with('sub_12345')
+            .returns(
+              plan: { product: 'p_1', metadata: { group_name: 'does_not_exist' } },
+              customer: 'customer_id_1'
+            )
+
+          ::Stripe::Subscription
+            .expects(:delete)
+
+          expect {
+            delete "/patrons/user/subscriptions/sub_12345.json"
+          }.not_to change { user.groups.count }
+        end
+
         it "deletes the first subscription product 1" do
           ::Stripe::Subscription
             .expects(:retrieve)
             .with('sub_12345')
             .returns(
-              plan: { product: 'p_1' },
+              plan: { product: 'p_1', metadata: {} },
               customer: 'customer_id_1'
             )
 
@@ -152,7 +190,7 @@ module DiscoursePatrons
             .expects(:retrieve)
             .with('sub_12345')
             .returns(
-              plan: { product: 'p_2' },
+              plan: { product: 'p_2', metadata: {} },
               customer: 'customer_id_1'
             )
 
@@ -172,7 +210,7 @@ module DiscoursePatrons
             .expects(:retrieve)
             .with('sub_12345')
             .returns(
-              plan: { product: 'p_2' },
+              plan: { product: 'p_2', metadata: {} },
               customer: 'customer_id_2'
             )
 
