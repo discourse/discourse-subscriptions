@@ -40,7 +40,8 @@ module DiscoursePatrons
 
           customer = Customer.find_by(
             user_id: current_user.id,
-            customer_id: subscription[:customer]
+            customer_id: subscription[:customer],
+            product_id: subscription[:plan][:product]
           )
 
           if customer.present?
@@ -49,7 +50,7 @@ module DiscoursePatrons
 
             render_json_dump deleted
           else
-            render_json_error I18n.t('discourse_patrons.customer_id_not_found')
+            render_json_error I18n.t('discourse_patrons.customer_not_found')
           end
 
         rescue ::Stripe::InvalidRequestError => e
