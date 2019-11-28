@@ -21,13 +21,20 @@ module DiscoursePatrons
 
       describe "create" do
         it "creates a subscription" do
-          ::Stripe::Plan.expects(:retrieve).returns(metadata: { group_name: 'awesome' })
+          ::Stripe::Plan.expects(:retrieve).returns(
+            product: 'product_12345',
+            metadata: { group_name: 'awesome' }
+          )
+
           ::Stripe::Subscription.expects(:create).with(
             customer: 'cus_1234',
             items: [ plan: 'plan_1234' ],
             metadata: { user_id: user.id, username: user.username_lower },
-          )
-          post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
+          ).returns(status: 'active')
+
+          expect {
+            post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
+          }.to change { DiscoursePatrons::Customer.count }
         end
 
         it "creates a customer model" do

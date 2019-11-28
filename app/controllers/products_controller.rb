@@ -38,8 +38,16 @@ module DiscoursePatrons
       {
         id: product[:id],
         name: product[:name],
-        description: product[:metadata][:description]
+        description: product[:metadata][:description],
+        subscribed: current_user_products.include?(product[:id])
       }
+    end
+
+    def current_user_products
+      ::DiscoursePatrons::Customer
+        .select(:product_id)
+        .where(user_id: current_user.id)
+        .map { |c| c.product_id }.compact
     end
   end
 end
