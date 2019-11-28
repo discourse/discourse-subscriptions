@@ -45,6 +45,7 @@ after_initialize do
   [
     "../lib/discourse_patrons/engine",
     "../config/routes",
+    "../app/controllers/concerns/group",
     "../app/controllers/concerns/stripe",
     "../app/controllers/admin_controller",
     "../app/controllers/admin/plans_controller",

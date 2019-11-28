@@ -3,6 +3,7 @@
 module DiscoursePatrons
   class SubscriptionsController < ::ApplicationController
     include DiscoursePatrons::Stripe
+    include DiscoursePatrons::Group
     before_action :set_api_key
     requires_login
 
@@ -57,10 +58,6 @@ module DiscoursePatrons
 
     def metadata_user
       { user_id: current_user.id, username: current_user.username_lower }
-    end
-
-    def plan_group(plan)
-      Group.find_by_name(plan[:metadata][:group_name])
     end
 
     def subscription_ok

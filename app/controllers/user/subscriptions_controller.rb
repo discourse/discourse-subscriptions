@@ -4,6 +4,7 @@ module DiscoursePatrons
   module User
     class SubscriptionsController < ::ApplicationController
       include DiscoursePatrons::Stripe
+      include DiscoursePatrons::Group
       before_action :set_api_key
       requires_login
 
