@@ -4,7 +4,7 @@ module DiscoursePatrons
   module Admin
     class SubscriptionsController < ::Admin::AdminController
       include DiscoursePatrons::Stripe
-
+      include DiscoursePatrons::Group
       before_action :set_api_key
 
       def index
@@ -22,11 +22,17 @@ module DiscoursePatrons
           subscription = ::Stripe::Subscription.delete(params[:id])
 
           customer = DiscoursePatrons::Customer.find_by(
-            product_id: subscription[:plan][:product][:id],
+            product_id: subscription[:plan][:product],
             customer_id: subscription[:customer]
           )
 
-          customer.delete if customer
+          if customer
+            customer.delete
+
+            user = ::User.find(customer.user_id)
+            group = plan_group(subscription[:plan])
+            group.remove(user) if group
+          end
 
           render_json_dump subscription
 

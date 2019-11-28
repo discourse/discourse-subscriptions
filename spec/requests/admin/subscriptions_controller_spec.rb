@@ -36,23 +36,58 @@ module DiscoursePatrons
       end
 
       describe "destroy" do
+        let(:group) { Fabricate(:group, name: 'subscribers') }
+
         before do
           DiscoursePatrons::Customer.create(
             user_id: user.id,
             customer_id: 'c_123',
             product_id: 'pr_34578'
           )
+
+          group.add(user)
         end
 
         it "deletes a customer" do
           ::Stripe::Subscription
             .expects(:delete)
             .with('sub_12345')
-            .returns(customer: 'c_123', plan: { product: { id: 'pr_34578' } })
+            .returns(
+              plan: { product: 'pr_34578' },
+              customer: 'c_123'
+            )
 
           expect {
             delete "/patrons/admin/subscriptions/sub_12345.json"
           }.to change { DiscoursePatrons::Customer.count }.by(-1)
+        end
+
+        it "removes the user from the group" do
+          ::Stripe::Subscription
+            .expects(:delete)
+            .with('sub_12345')
+            .returns(
+              plan: { product: 'pr_34578', metadata: { group_name: 'subscribers' } },
+              customer: 'c_123'
+            )
+
+          expect {
+            delete "/patrons/admin/subscriptions/sub_12345.json"
+          }.to change { user.groups.count }.by(-1)
+        end
+
+        it "does not remove the user from the group" do
+          ::Stripe::Subscription
+            .expects(:delete)
+            .with('sub_12345')
+            .returns(
+              plan: { product: 'pr_34578', metadata: { group_name: 'group_does_not_exist' } },
+              customer: 'c_123'
+            )
+
+          expect {
+            delete "/patrons/admin/subscriptions/sub_12345.json"
+          }.not_to change { user.groups.count }
         end
       end
     end
