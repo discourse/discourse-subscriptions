@@ -82,28 +82,40 @@ module DiscoursePatrons
       describe "delete" do
         before do
           # Users can have more than one customer id
-          Customer.create(user_id: user.id, customer_id: 'customer_id_1')
-          Customer.create(user_id: user.id, customer_id: 'customer_id_2')
+          Customer.create(user_id: user.id, customer_id: 'customer_id_1', product_id: 'p_1')
+          Customer.create(user_id: user.id, customer_id: 'customer_id_2', product_id: 'p_2')
         end
 
         it "does not delete a subscription" do
           ::Stripe::Subscription.expects(:retrieve).with('sub_12345').returns(customer: 'wrong_id')
           ::Stripe::Subscription.expects(:delete).never
-          delete "/patrons/user/subscriptions/sub_12345.json"
+
+          expect {
+            delete "/patrons/user/subscriptions/sub_12345.json"
+          }.not_to change { DiscoursePatrons::Customer.count }
+
           expect(response.status).to eq 422
         end
 
         it "deletes the first subscription" do
           ::Stripe::Subscription.expects(:retrieve).with('sub_12345').returns(customer: 'customer_id_1')
           ::Stripe::Subscription.expects(:delete).with('sub_12345')
-          delete "/patrons/user/subscriptions/sub_12345.json"
+
+          expect {
+            delete "/patrons/user/subscriptions/sub_12345.json"
+          }.to change { DiscoursePatrons::Customer.count }.by(-1)
+
           expect(response.status).to eq 200
         end
 
         it "deletes the second subscription" do
           ::Stripe::Subscription.expects(:retrieve).with('sub_12345').returns(customer: 'customer_id_2')
           ::Stripe::Subscription.expects(:delete).with('sub_12345')
-          delete "/patrons/user/subscriptions/sub_12345.json"
+
+          expect {
+            delete "/patrons/user/subscriptions/sub_12345.json"
+          }.to change { DiscoursePatrons::Customer.count }.by(-1)
+
           expect(response.status).to eq 200
         end
       end

@@ -34,7 +34,6 @@ module DiscoursePatrons
           return render_json_error e.message
         end
       end
-
     end
   end
 end
