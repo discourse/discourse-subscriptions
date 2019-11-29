@@ -10,26 +10,23 @@
   </div>
   <div class="section-column">
     {{#unless model.product.subscribed}}
-
-      {{combo-box valueAttribute="id" content=model.plans value=model.product.plan}}
-
-      {{#d-button
-        disabled=loading
-        action="stripePaymentHandler"
-        class="btn btn-primary btn-payment btn-discourse-patrons"}}
-        {{i18n 'discourse_patrons.subscribe.buttons.subscribe'}}
-      {{/d-button}}
-
-      <hr>
-
-      <h4>
+      <h2>
         {{i18n 'discourse_patrons.subscribe.card.title'}}
-      </h4>
+      </h2>
 
       {{subscribe-card cardElement=cardElement}}
 
       {{#if loading}}
         {{loading-spinner}}
+      {{else}}
+        {{combo-box valueAttribute="id" content=model.plans value=model.product.plan}}
+
+        {{#d-button
+          disabled=loading
+          action="stripePaymentHandler"
+          class="btn btn-primary btn-payment btn-discourse-patrons pull-right"}}
+          {{i18n 'discourse_patrons.subscribe.buttons.subscribe'}}
+          {{/d-button}}
       {{/if}}
 
     {{/unless}}

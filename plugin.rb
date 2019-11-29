@@ -12,6 +12,7 @@ gem 'stripe', '5.11.0'
 
 register_asset "stylesheets/common/discourse-patrons.scss"
 register_asset "stylesheets/common/discourse-patrons-layout.scss"
+register_asset "stylesheets/common/stripe.scss"
 register_asset "stylesheets/mobile/discourse-patrons.scss"
 register_svg_icon "credit-card" if respond_to?(:register_svg_icon)
 

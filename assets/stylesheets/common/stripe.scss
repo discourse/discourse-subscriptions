@@ -1,0 +1,26 @@
+
+.StripeElement {
+  box-sizing: border-box;
+
+  padding: 10px;
+  height: 40px;
+  margin-bottom: 20px;
+
+  border: 1px $primary solid;
+  background-color: $secondary;
+
+  font-size: $base-font-size;
+  font-family: $base-font-family;
+}
+
+.StripeElement--focus {
+  box-shadow: shadow("focus");
+}
+
+.StripeElement--invalid {
+  border-color: $danger;
+}
+
+.StripeElement--webkit-autofill {
+  color: $quaternary;
+}

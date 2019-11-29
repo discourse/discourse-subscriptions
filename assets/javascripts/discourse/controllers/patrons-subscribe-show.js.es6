@@ -8,6 +8,7 @@ export default Ember.Controller.extend({
       Stripe(Discourse.SiteSettings.discourse_patrons_public_key)
     );
     const elements = this.get("stripe").elements();
+
     this.set("cardElement", elements.create("card", { hidePostalCode: true }));
   },
 
