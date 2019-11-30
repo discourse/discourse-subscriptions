@@ -90,7 +90,7 @@ module DiscoursePatrons
 
         describe "show" do
           it "shows a plan" do
-            ::Stripe::Plan.expects(:retrieve).with('plan_12345')
+            ::Stripe::Plan.expects(:retrieve).with('plan_12345').returns(currency: 'aud')
             get "/patrons/admin/plans/plan_12345.json"
             expect(response.status).to eq 200
           end
