@@ -22,7 +22,12 @@
   </p>
   <p>
     <label for="amount">{{i18n 'discourse_patrons.admin.plans.plan.amount'}}</label>
-    {{input type="text" name="name" value=model.plan.amountDollars disabled=planFieldDisabled}}
+    {{#if planFieldDisabled}}
+      {{input class="plan-amount plan-currency" disabled=true value=model.plan.currency}}
+    {{else}}
+      {{combo-box disabled=planFieldDisabled content=currencies value=model.plan.currency}}
+    {{/if}}
+    {{input class="plan-amount" type="text" name="name" value=model.plan.amountDollars disabled=planFieldDisabled}}
   </p>
   <p>
     <label for="trial">

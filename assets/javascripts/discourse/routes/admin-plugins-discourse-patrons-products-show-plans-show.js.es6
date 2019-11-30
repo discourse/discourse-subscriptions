@@ -13,6 +13,7 @@ export default Discourse.Route.extend({
       plan = AdminPlan.create({
         active: true,
         isNew: true,
+        currency: Discourse.SiteSettings.discourse_patrons_currency,
         product: product.get("id")
       });
     } else {

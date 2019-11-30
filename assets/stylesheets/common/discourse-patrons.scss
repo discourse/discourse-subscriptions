@@ -16,6 +16,14 @@ textarea[readonly] {
   }
 }
 
+.plan-amount {
+  position: relative;
+  top: 2px;
+}
+.plan-currency {
+  width: 70px;
+}
+
 .td-right {
   text-align: right;
 }

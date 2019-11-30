@@ -88,6 +88,20 @@ module DiscoursePatrons
           end
         end
 
+        describe "show" do
+          it "shows a plan" do
+            ::Stripe::Plan.expects(:retrieve).with('plan_12345')
+            get "/patrons/admin/plans/plan_12345.json"
+            expect(response.status).to eq 200
+          end
+
+          it "upcases the currency" do
+            ::Stripe::Plan.expects(:retrieve).with('plan_12345').returns(currency: 'aud')
+            get "/patrons/admin/plans/plan_12345.json"
+            expect(response.body).to eq '{"currency":"AUD"}'
+          end
+        end
+
         describe "create" do
           it "creates a plan with a nickname" do
             ::Stripe::Plan.expects(:create).with(has_entry(:nickname, 'Veg'))

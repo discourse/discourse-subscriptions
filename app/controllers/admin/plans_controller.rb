@@ -42,7 +42,9 @@ module DiscoursePatrons
         begin
           plan = ::Stripe::Plan.retrieve(params[:id])
 
-          render_json_dump plan
+          serialized = plan.to_h.merge(currency: plan[:currency].upcase)
+
+          render_json_dump serialized
 
         rescue ::Stripe::InvalidRequestError => e
           return render_json_error e.message

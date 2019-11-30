@@ -2,6 +2,9 @@ import computed from "ember-addons/ember-computed-decorators";
 import DiscourseURL from "discourse/lib/url";
 
 export default Ember.Controller.extend({
+  // Also defined in settings.
+  currencies: ['AUD', 'CAD', 'EUR', 'GBP', 'USD'],
+
   @computed("model.plan.isNew")
   planFieldDisabled(isNew) {
     return !isNew;
