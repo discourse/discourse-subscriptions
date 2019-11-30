@@ -28,6 +28,7 @@ const AdminPlan = Plan.extend({
       nickname: this.nickname,
       interval: this.interval,
       amount: this.amount,
+      currency: this.currency,
       trial_period_days: this.parseTrialPeriodDays,
       product: this.product,
       metadata: this.metadata,
