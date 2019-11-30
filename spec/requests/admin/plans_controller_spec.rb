@@ -109,9 +109,8 @@ module DiscoursePatrons
           end
 
           it "creates a plan with a currency" do
-            SiteSetting.stubs(:discourse_patrons_currency).returns('aud')
-            ::Stripe::Plan.expects(:create).with(has_entry(:currency, 'aud'))
-            post "/patrons/admin/plans.json", params: { metadata: { group_name: '' } }
+            ::Stripe::Plan.expects(:create).with(has_entry(:currency, 'AUD'))
+            post "/patrons/admin/plans.json", params: { currency: 'AUD', metadata: { group_name: '' } }
           end
 
           it "creates a plan with an interval" do

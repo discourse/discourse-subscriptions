@@ -26,7 +26,7 @@ module DiscoursePatrons
             interval: params[:interval],
             product: params[:product],
             trial_period_days: params[:trial_period_days],
-            currency: SiteSetting.discourse_patrons_currency,
+            currency: params[:currency],
             active: params[:active],
             metadata: { group_name: params[:metadata][:group_name] }
           )
