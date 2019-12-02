@@ -68,21 +68,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” 
 
 Many thanks to Chris Beach and Angus McLeod who helped on the [previous version](https://github.com/chrisbeach/discourse-donations) of this plugin. Many thanks to the Discourse team who sponsored this plugin! You guys rock.
 
-## Known issues
-
-* CSS is mucked up in Safari and probably Firefox too.
-* The phone number isn't sent to Stripe
-
-## TODOs
-
-* Currency on plans isn't done.
-* Admin pagination
-* Confirm dialog CSS isn't the best.
-* Check against other themes (works ok with light and dark)
-* Validate the model properly. Not in the stripe component
-* Show the transaction on the thank you page.
-* Work out where to put the helper tests. Name collision!
-
 ## Screenshots
 
 ### Products Admin
