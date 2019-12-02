@@ -1,6 +1,6 @@
 en:
   site_settings:
-    discourse_patrons_enabled: Enable the Discourse Patrons plugin.
+    discourse_patrons_enabled: Enable the Discourse Subscriptions plugin.
     discourse_patrons_extra_nav_subscribe: Show the subscribe button in the primary navigation
     discourse_patrons_public_key: Stripe Publishable Key
     discourse_patrons_secret_key: Stripe Secret Key
@@ -15,7 +15,7 @@ en:
       discourse_patrons_amount_must_be_currency: "Currency amounts must be currencies without dollar symbol (eg 1.50)"
   js:
     discourse_patrons:
-      title: Discourse Patrons
+      title: Discourse Subscriptions
       optional: Optional
       transactions:
         payment:

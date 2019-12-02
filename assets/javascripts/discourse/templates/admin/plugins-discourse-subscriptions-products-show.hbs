@@ -42,9 +42,9 @@
         <th>{{i18n 'discourse_patrons.admin.plans.plan.active'}}</th>
         <th class="td-right">{{i18n 'discourse_patrons.admin.plans.plan.amount'}}</th>
         <th class="td-right">
-            {{#link-to "adminPlugins.discourse-patrons.products.show.plans.show" model.product.id "new" class="btn"}}
-              {{i18n 'discourse_patrons.admin.plans.operations.add'}}
-            {{/link-to}}
+          {{#link-to "adminPlugins.discourse-subscriptions.products.show.plans.show" model.product.id "new" class="btn"}}
+            {{i18n 'discourse_patrons.admin.plans.operations.add'}}
+          {{/link-to}}
         </th>
       </thead>
       {{#each model.plans as |plan|}}
@@ -56,7 +56,7 @@
           <td>{{plan.active}}</td>
           <td class="td-right">{{format-currency plan.currency plan.amountDollars}}</td>
           <td class="td-right">
-            {{#link-to "adminPlugins.discourse-patrons.products.show.plans.show" model.product.id plan.id class="btn no-text btn-icon"}}
+            {{#link-to "adminPlugins.discourse-subscriptions.products.show.plans.show" model.product.id plan.id class="btn no-text btn-icon"}}
               {{d-icon "far-edit"}}
             {{/link-to}}
             {{d-button

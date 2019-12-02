@@ -11,7 +11,7 @@ export default Ember.Controller.extend({
       this.get("model.plan")
         .save()
         .then(() => {
-          this.transitionToRoute("adminPlugins.discourse-patrons.plans");
+          this.transitionToRoute("adminPlugins.discourse-subscriptions.plans");
         })
         .catch(popupAjaxError);
     }

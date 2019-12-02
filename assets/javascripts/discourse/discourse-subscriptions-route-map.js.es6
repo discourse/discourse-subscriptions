@@ -3,7 +3,7 @@ export default {
   path: "/plugins",
 
   map() {
-    this.route("discourse-patrons", function() {
+    this.route("discourse-subscriptions", function() {
       this.route("dashboard");
 
       this.route("products", function() {

@@ -1,4 +1,4 @@
-import UserSubscription from "discourse/plugins/discourse-patrons/discourse/models/user-subscription";
+import UserSubscription from "discourse/plugins/discourse-subscriptions/discourse/models/user-subscription";
 
 export default Discourse.Route.extend({
   model() {

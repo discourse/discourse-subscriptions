@@ -1,11 +1,11 @@
-import AdminPlan from "discourse/plugins/discourse-patrons/discourse/models/admin-plan";
+import AdminPlan from "discourse/plugins/discourse-subscriptions/discourse/models/admin-plan";
 import Group from "discourse/models/group";
 
 export default Discourse.Route.extend({
   model(params) {
     const id = params["plan-id"];
     const product = this.modelFor(
-      "adminPlugins.discourse-patrons.products.show"
+      "adminPlugins.discourse-subscriptions.products.show"
     ).product;
     let plan;
 
@@ -26,10 +26,10 @@ export default Discourse.Route.extend({
   },
 
   renderTemplate() {
-    this.render("adminPlugins.discourse-patrons.products.show.plans.show", {
-      into: "adminPlugins.discourse-patrons.products",
+    this.render("adminPlugins.discourse-subscriptions.products.show.plans.show", {
+      into: "adminPlugins.discourse-subscriptions.products",
       outlet: "main",
-      controller: "adminPlugins.discourse-patrons.products.show.plans.show"
+      controller: "adminPlugins.discourse-subscriptions.products.show.plans.show"
     });
   }
 });

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-# name: discourse-patrons
-# about: Integrates Stripe into Discourse to allow visitors to make payments and Subscribe
-# version: 2.3.2
-# url: https://github.com/rimian/discourse-patrons
+# name: discourse-subscriptions
+# about: Integrates Stripe into Discourse to allow visitors to subscribe
+# version: 2.4.0
+# url: https://github.com/rimian/discourse-subscriptions
 # authors: Rimian Perkins
 
 enabled_site_setting :discourse_patrons_enabled
@@ -24,24 +24,29 @@ extend_content_security_policy(
   script_src: ['https://js.stripe.com/v3/']
 )
 
-add_admin_route 'discourse_patrons.title', 'discourse-patrons.products'
+add_admin_route 'discourse_patrons.title', 'discourse-subscriptions.products'
 
 Discourse::Application.routes.append do
-  get '/admin/plugins/discourse-patrons' => 'admin/plugins#index'
-  get '/admin/plugins/discourse-patrons/products' => 'admin/plugins#index'
-  get '/admin/plugins/discourse-patrons/products/:product_id' => 'admin/plugins#index'
-  get '/admin/plugins/discourse-patrons/products/:product_id/plans' => 'admin/plugins#index'
-  get '/admin/plugins/discourse-patrons/products/:product_id/plans/:plan_id' => 'admin/plugins#index'
-  get '/admin/plugins/discourse-patrons/subscriptions' => 'admin/plugins#index'
-  get '/admin/plugins/discourse-patrons/plans' => 'admin/plugins#index'
-  get '/admin/plugins/discourse-patrons/plans/:plan_id' => 'admin/plugins#index'
+  get '/admin/plugins/discourse-subscriptions' => 'admin/plugins#index'
+  get '/admin/plugins/discourse-subscriptions/products' => 'admin/plugins#index'
+  get '/admin/plugins/discourse-subscriptions/products/:product_id' => 'admin/plugins#index'
+  get '/admin/plugins/discourse-subscriptions/products/:product_id/plans' => 'admin/plugins#index'
+  get '/admin/plugins/discourse-subscriptions/products/:product_id/plans/:plan_id' => 'admin/plugins#index'
+  get '/admin/plugins/discourse-subscriptions/subscriptions' => 'admin/plugins#index'
+  get '/admin/plugins/discourse-subscriptions/plans' => 'admin/plugins#index'
+  get '/admin/plugins/discourse-subscriptions/plans/:plan_id' => 'admin/plugins#index'
   get 'u/:username/billing' => 'users#show', constraints: { username: USERNAME_ROUTE_FORMAT }
   get 'u/:username/subscriptions' => 'users#show', constraints: { username: USERNAME_ROUTE_FORMAT }
 end
 
 after_initialize do
   ::Stripe.api_version = "2019-11-05"
-  ::Stripe.set_app_info('Discourse Patrons', version: '2.3.2', url: 'https://github.com/rimian/discourse-patrons')
+
+  ::Stripe.set_app_info(
+    'Discourse Subscriptions',
+    version: '2.4.0',
+    url: 'https://github.com/rimian/discourse-subscriptions'
+  )
 
   [
     "../lib/discourse_patrons/engine",

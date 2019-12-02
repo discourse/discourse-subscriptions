@@ -1,5 +1,5 @@
-import AdminProduct from "discourse/plugins/discourse-patrons/discourse/models/admin-product";
-import AdminPlan from "discourse/plugins/discourse-patrons/discourse/models/admin-plan";
+import AdminProduct from "discourse/plugins/discourse-subscriptions/discourse/models/admin-product";
+import AdminPlan from "discourse/plugins/discourse-subscriptions/discourse/models/admin-plan";
 
 export default Discourse.Route.extend({
   model(params) {
@@ -28,7 +28,7 @@ export default Discourse.Route.extend({
             plan
               .destroy()
               .then(() => {
-                this.controllerFor("adminPluginsDiscoursePatronsProductsShow")
+                this.controllerFor("adminPluginsDiscourseSubscriptionsProductsShow")
                   .get("model.plans")
                   .removeObject(plan);
               })

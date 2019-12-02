@@ -1,4 +1,4 @@
-import Invoice from "discourse/plugins/discourse-patrons/discourse/models/invoice";
+import Invoice from "discourse/plugins/discourse-subscriptions/discourse/models/invoice";
 
 export default Discourse.Route.extend({
   model() {

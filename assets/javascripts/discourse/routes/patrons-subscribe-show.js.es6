@@ -1,6 +1,6 @@
-import Product from "discourse/plugins/discourse-patrons/discourse/models/product";
-import Plan from "discourse/plugins/discourse-patrons/discourse/models/plan";
-import Subscription from "discourse/plugins/discourse-patrons/discourse/models/subscription";
+import Product from "discourse/plugins/discourse-subscriptions/discourse/models/product";
+import Plan from "discourse/plugins/discourse-subscriptions/discourse/models/plan";
+import Subscription from "discourse/plugins/discourse-subscriptions/discourse/models/subscription";
 
 export default Discourse.Route.extend({
   model(params) {

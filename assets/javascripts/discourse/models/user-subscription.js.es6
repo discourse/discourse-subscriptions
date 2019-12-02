@@ -1,6 +1,6 @@
 import computed from "ember-addons/ember-computed-decorators";
 import { ajax } from "discourse/lib/ajax";
-import Plan from "discourse/plugins/discourse-patrons/discourse/models/plan";
+import Plan from "discourse/plugins/discourse-subscriptions/discourse/models/plan";
 
 const UserSubscription = Discourse.Model.extend({
   @computed("status")

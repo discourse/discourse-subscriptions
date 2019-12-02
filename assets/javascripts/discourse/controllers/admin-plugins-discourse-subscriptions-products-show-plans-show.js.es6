@@ -17,7 +17,7 @@ export default Ember.Controller.extend({
 
   redirect(product_id) {
     DiscourseURL.redirectTo(
-      `/admin/plugins/discourse-patrons/products/${product_id}`
+      `/admin/plugins/discourse-subscriptions/products/${product_id}`
     );
   },
 

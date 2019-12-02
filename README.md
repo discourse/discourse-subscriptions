@@ -1,8 +1,8 @@
-# Discourse Patrons
+# Discourse Subscriptions
 
-[![Build Status](https://travis-ci.org/rimian/discourse-patrons.svg?branch=master)](https://travis-ci.org/rimian/discourse-patrons)
+[![Build Status](https://travis-ci.org/rimian/discourse-subscriptions.svg?branch=master)](https://travis-ci.org/rimian/discourse-subscriptions)
 
-The Discourse Patrons plugin allows you to set up a subscription based Discourse application. By integrating with the [Stripe](https://stripe.com) payment gateway and setting up this plugin to manage Subscriptions, you can start selling users access to content on your website.
+The Discourse Subscriptions plugin allows you to set up a subscription based Discourse application. By integrating with the [Stripe](https://stripe.com) payment gateway and setting up this plugin to manage Subscriptions, you can start selling users access to content on your website.
 
 You can try it out here: https://discourse.rimian.com.au/patrons/subscribe
 
@@ -50,7 +50,7 @@ You can also toggle the Subscribe button on and off in case you want to hide the
 
 In the admin, add a new Product. Once you have a product saved, you can add plans to it. Keep in mind that the pricing and billing intervals of plans cannot be changed once you create them. This is to avoid confusion around subscription management.
 
-If you take a look at your [Stripe Dashboard](https://dashboard.stripe.com), you'll see all those products and plans are listed. Discourse Patrons does not create them locally. They are created in Stripe. 
+If you take a look at your [Stripe Dashboard](https://dashboard.stripe.com), you'll see all those products and plans are listed. Discourse Patrons does not create them locally. They are created in Stripe.
 
 ## Testing
 
@@ -58,7 +58,7 @@ Test with these credit card numbers:
 
 * 4111 1111 1111 1111
 
-Visit `/patrons/subscribe` and enter a few test transcations. 
+Visit `/patrons/subscribe` and enter a few test transcations.
 
 ## Warranty
 

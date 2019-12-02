@@ -1,4 +1,4 @@
-import Product from "discourse/plugins/discourse-patrons/discourse/models/product";
+import Product from "discourse/plugins/discourse-subscriptions/discourse/models/product";
 
 export default Discourse.Route.extend({
   model() {

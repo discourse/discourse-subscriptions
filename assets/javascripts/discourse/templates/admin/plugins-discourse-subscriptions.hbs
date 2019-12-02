@@ -1,0 +1,14 @@
+
+<h2>{{i18n 'discourse_patrons.title' site_name=siteSettings.title}}</h2>
+
+<ul class="nav nav-pills">
+  {{!-- {{nav-item route='adminPlugins.discourse-subscriptions.dashboard' label='discourse_patrons.admin.dashboard.title'}} --}}
+  {{nav-item route='adminPlugins.discourse-subscriptions.products' label='discourse_patrons.admin.products.title'}}
+  {{nav-item route='adminPlugins.discourse-subscriptions.subscriptions' label='discourse_patrons.admin.subscriptions.title'}}
+</ul>
+
+<hr>
+
+<div id="discourse-patrons-admin">
+  {{outlet}}
+</div>

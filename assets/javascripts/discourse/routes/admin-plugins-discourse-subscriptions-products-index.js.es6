@@ -1,4 +1,4 @@
-import AdminProduct from "discourse/plugins/discourse-patrons/discourse/models/admin-product";
+import AdminProduct from "discourse/plugins/discourse-subscriptions/discourse/models/admin-product";
 
 export default Discourse.Route.extend({
   model() {
@@ -16,7 +16,7 @@ export default Discourse.Route.extend({
             product
               .destroy()
               .then(() => {
-                this.controllerFor("adminPluginsDiscoursePatronsProductsIndex")
+                this.controllerFor("adminPluginsDiscourseSubscriptionsProductsIndex")
                   .get("model")
                   .removeObject(product);
               })

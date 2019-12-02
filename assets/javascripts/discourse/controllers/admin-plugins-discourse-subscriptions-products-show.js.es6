@@ -3,7 +3,7 @@ import { popupAjaxError } from "discourse/lib/ajax-error";
 export default Ember.Controller.extend({
   actions: {
     cancelProduct() {
-      this.transitionToRoute("adminPlugins.discourse-patrons.products");
+      this.transitionToRoute("adminPlugins.discourse-subscriptions.products");
     },
 
     createProduct() {
@@ -11,7 +11,7 @@ export default Ember.Controller.extend({
         .save()
         .then(product => {
           this.transitionToRoute(
-            "adminPlugins.discourse-patrons.products.show",
+            "adminPlugins.discourse-subscriptions.products.show",
             product.id
           );
         })
@@ -22,7 +22,7 @@ export default Ember.Controller.extend({
       this.get("model.product")
         .update()
         .then(() => {
-          this.transitionToRoute("adminPlugins.discourse-patrons.products");
+          this.transitionToRoute("adminPlugins.discourse-subscriptions.products");
         })
         .catch(popupAjaxError);
     }

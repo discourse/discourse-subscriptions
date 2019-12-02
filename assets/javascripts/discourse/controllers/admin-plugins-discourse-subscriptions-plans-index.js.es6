@@ -4,7 +4,7 @@ export default Ember.Controller.extend({
   actions: {
     editPlan(id) {
       return DiscourseURL.redirectTo(
-        `/admin/plugins/discourse-patrons/plans/${id}`
+        `/admin/plugins/discourse-subscriptions/plans/${id}`
       );
     }
   }
