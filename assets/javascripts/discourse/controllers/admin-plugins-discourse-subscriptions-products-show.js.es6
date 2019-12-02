@@ -22,7 +22,9 @@ export default Ember.Controller.extend({
       this.get("model.product")
         .update()
         .then(() => {
-          this.transitionToRoute("adminPlugins.discourse-subscriptions.products");
+          this.transitionToRoute(
+            "adminPlugins.discourse-subscriptions.products"
+          );
         })
         .catch(popupAjaxError);
     }

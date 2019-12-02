@@ -26,10 +26,14 @@ export default Discourse.Route.extend({
   },
 
   renderTemplate() {
-    this.render("adminPlugins.discourse-subscriptions.products.show.plans.show", {
-      into: "adminPlugins.discourse-subscriptions.products",
-      outlet: "main",
-      controller: "adminPlugins.discourse-subscriptions.products.show.plans.show"
-    });
+    this.render(
+      "adminPlugins.discourse-subscriptions.products.show.plans.show",
+      {
+        into: "adminPlugins.discourse-subscriptions.products",
+        outlet: "main",
+        controller:
+          "adminPlugins.discourse-subscriptions.products.show.plans.show"
+      }
+    );
   }
 });

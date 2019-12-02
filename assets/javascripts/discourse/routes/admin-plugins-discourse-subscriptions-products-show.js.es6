@@ -28,7 +28,9 @@ export default Discourse.Route.extend({
             plan
               .destroy()
               .then(() => {
-                this.controllerFor("adminPluginsDiscourseSubscriptionsProductsShow")
+                this.controllerFor(
+                  "adminPluginsDiscourseSubscriptionsProductsShow"
+                )
                   .get("model.plans")
                   .removeObject(plan);
               })
