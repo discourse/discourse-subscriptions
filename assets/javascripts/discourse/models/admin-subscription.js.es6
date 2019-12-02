@@ -20,7 +20,7 @@ const AdminSubscription = Discourse.Model.extend({
   },
 
   destroy() {
-    return ajax(`/patrons/admin/subscriptions/${this.id}`, {
+    return ajax(`/s/admin/subscriptions/${this.id}`, {
       method: "delete"
     }).then(result => AdminSubscription.create(result));
   }
@@ -28,7 +28,7 @@ const AdminSubscription = Discourse.Model.extend({
 
 AdminSubscription.reopenClass({
   find() {
-    return ajax("/patrons/admin/subscriptions", {
+    return ajax("/s/admin/subscriptions", {
       method: "get"
     }).then(result =>
       result.data.map(subscription => AdminSubscription.create(subscription))

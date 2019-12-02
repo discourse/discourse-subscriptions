@@ -25,7 +25,7 @@ export default Ember.Controller.extend({
             source: result.token.id
           };
 
-          return ajax("/patrons/customers", {
+          return ajax("/s/customers", {
             method: "post",
             data: customerData
           }).then(customer => {

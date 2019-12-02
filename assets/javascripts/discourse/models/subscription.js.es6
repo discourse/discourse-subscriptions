@@ -13,13 +13,13 @@ const Subscription = Discourse.Model.extend({
       plan: this.plan
     };
 
-    return ajax("/patrons/subscriptions", { method: "post", data });
+    return ajax("/s/subscriptions", { method: "post", data });
   }
 });
 
 Subscription.reopenClass({
   findAll() {
-    return ajax("/patrons/subscriptions", { method: "get" }).then(result =>
+    return ajax("/s/subscriptions", { method: "get" }).then(result =>
       result.map(subscription => Subscription.create(subscription))
     );
   }

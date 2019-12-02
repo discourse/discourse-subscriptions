@@ -16,6 +16,7 @@ en:
   js:
     discourse_patrons:
       title: Discourse Subscriptions
+      admin_navigation: Subscriptions
       optional: Optional
       transactions:
         payment:

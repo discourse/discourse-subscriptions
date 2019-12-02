@@ -5,7 +5,7 @@ const AdminProduct = Discourse.Model.extend({
   metadata: {},
 
   destroy() {
-    return ajax(`/patrons/admin/products/${this.id}`, { method: "delete" });
+    return ajax(`/s/admin/products/${this.id}`, { method: "delete" });
   },
 
   save() {
@@ -16,7 +16,7 @@ const AdminProduct = Discourse.Model.extend({
       active: this.active
     };
 
-    return ajax("/patrons/admin/products", {
+    return ajax("/s/admin/products", {
       method: "post",
       data
     }).then(product => AdminProduct.create(product));
@@ -30,7 +30,7 @@ const AdminProduct = Discourse.Model.extend({
       active: this.active
     };
 
-    return ajax(`/patrons/admin/products/${this.id}`, {
+    return ajax(`/s/admin/products/${this.id}`, {
       method: "patch",
       data
     });
@@ -39,13 +39,13 @@ const AdminProduct = Discourse.Model.extend({
 
 AdminProduct.reopenClass({
   findAll() {
-    return ajax("/patrons/admin/products", { method: "get" }).then(result =>
+    return ajax("/s/admin/products", { method: "get" }).then(result =>
       result.map(product => AdminProduct.create(product))
     );
   },
 
   find(id) {
-    return ajax(`/patrons/admin/products/${id}`, {
+    return ajax(`/s/admin/products/${id}`, {
       method: "get"
     }).then(product => AdminProduct.create(product));
   }

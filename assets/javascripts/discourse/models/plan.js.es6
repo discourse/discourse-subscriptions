@@ -21,7 +21,7 @@ const Plan = Discourse.Model.extend({
 
 Plan.reopenClass({
   findAll(data) {
-    return ajax("/patrons/plans", { method: "get", data }).then(result =>
+    return ajax("/s/plans", { method: "get", data }).then(result =>
       result.map(plan => Plan.create(plan))
     );
   }

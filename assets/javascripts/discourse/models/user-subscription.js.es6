@@ -9,7 +9,7 @@ const UserSubscription = Discourse.Model.extend({
   },
 
   destroy() {
-    return ajax(`/patrons/user/subscriptions/${this.id}`, {
+    return ajax(`/s/user/subscriptions/${this.id}`, {
       method: "delete"
     }).then(result => UserSubscription.create(result));
   }
@@ -17,7 +17,7 @@ const UserSubscription = Discourse.Model.extend({
 
 UserSubscription.reopenClass({
   findAll() {
-    return ajax("/patrons/user/subscriptions", { method: "get" }).then(result =>
+    return ajax("/s/user/subscriptions", { method: "get" }).then(result =>
       result.map(subscription => {
         subscription.plan = Plan.create(subscription.plan);
         return UserSubscription.create(subscription);

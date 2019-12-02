@@ -24,7 +24,7 @@ extend_content_security_policy(
   script_src: ['https://js.stripe.com/v3/']
 )
 
-add_admin_route 'discourse_patrons.title', 'discourse-subscriptions.products'
+add_admin_route 'discourse_patrons.admin_navigation', 'discourse-subscriptions.products'
 
 Discourse::Application.routes.append do
   get '/admin/plugins/discourse-subscriptions' => 'admin/plugins#index'
@@ -69,6 +69,6 @@ after_initialize do
   ].each { |path| require File.expand_path(path, __FILE__) }
 
   Discourse::Application.routes.append do
-    mount ::DiscoursePatrons::Engine, at: 'patrons'
+    mount ::DiscoursePatrons::Engine, at: 's'
   end
 end

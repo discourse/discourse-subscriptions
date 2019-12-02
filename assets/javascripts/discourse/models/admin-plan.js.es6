@@ -20,7 +20,7 @@ const AdminPlan = Plan.extend({
   },
 
   destroy() {
-    return ajax(`/patrons/admin/plans/${this.id}`, { method: "delete" });
+    return ajax(`/s/admin/plans/${this.id}`, { method: "delete" });
   },
 
   save() {
@@ -35,7 +35,7 @@ const AdminPlan = Plan.extend({
       active: this.active
     };
 
-    return ajax("/patrons/admin/plans", { method: "post", data });
+    return ajax("/s/admin/plans", { method: "post", data });
   },
 
   update() {
@@ -46,19 +46,19 @@ const AdminPlan = Plan.extend({
       active: this.active
     };
 
-    return ajax(`/patrons/admin/plans/${this.id}`, { method: "patch", data });
+    return ajax(`/s/admin/plans/${this.id}`, { method: "patch", data });
   }
 });
 
 AdminPlan.reopenClass({
   findAll(data) {
-    return ajax("/patrons/admin/plans", { method: "get", data }).then(result =>
+    return ajax("/s/admin/plans", { method: "get", data }).then(result =>
       result.map(plan => AdminPlan.create(plan))
     );
   },
 
   find(id) {
-    return ajax(`/patrons/admin/plans/${id}`, { method: "get" }).then(plan =>
+    return ajax(`/s/admin/plans/${id}`, { method: "get" }).then(plan =>
       AdminPlan.create(plan)
     );
   }
