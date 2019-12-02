@@ -4,7 +4,7 @@
 
 The Discourse Subscriptions plugin allows you to set up a subscription based Discourse application. By integrating with the [Stripe](https://stripe.com) payment gateway and setting up this plugin to manage Subscriptions, you can start selling users access to content on your website.
 
-You can try it out here: https://discourse.rimian.com.au/patrons/subscribe
+You can try it out here: https://discourse.rimian.com.au/s/subscribe
 
 See [Screenshots](#screenshots) below.
 
@@ -24,7 +24,7 @@ A Plan is how you charge your users for the Product. Plans have *rates*, *billin
 
 Together, Products and Plans make up Subscriptions.
 
-It is **important to note** that untimately, your subscriptions are managed by the Stripe payment gateway. Stripe will handle the billing, etc at the required intervals and notify your Discourse Plugin when something happens. If you were to destroy your instance of Discourse, you will need to cancel all of your subscriptions manually with Stripe. Thankfully, Stripe has a [portal](https://dashboard.stripe.com) where you can manage all that.
+It is **important to note** that ultimately, your subscriptions are managed by the Stripe payment gateway. Stripe will handle the billing, etc at the required intervals and notify your Discourse Plugin when something happens. If you were to destroy your instance of Discourse, you will need to cancel all of your subscriptions manually with Stripe. Thankfully, Stripe has a [portal](https://dashboard.stripe.com) where you can manage all that.
 
 ## How to set up your Discourse app for subscriptions.
 
@@ -36,9 +36,9 @@ When you get a moment, take a look at Stripe's documentation. But for now, you c
 
 ### Set up your User Groups in Discourse
 
-When a user successfully subscribes to your Discourse application, after their credit card transation has been processed, they are added to a User Group. By assigning users to a User Group, you can manage what your users have access to on your website. User groups are a core functionality of Discourse and this plugin does nothing with them except and and remove users from the group you accociated with your Plan.
+When a user successfully subscribes to your Discourse application, after their credit card transaction has been processed, they are added to a User Group. By assigning users to a User Group, you can manage what your users have access to on your website. User groups are a core functionality of Discourse and this plugin does nothing with them except and and remove users from the group you associated with your Plan.
 
-After you have created a User Group and configured it correctly, you can move onto setting up Discouse Patrons.
+After you have created a User Group and configured it correctly, you can move onto setting up Discourse Subscriptions.
 
 ## Enter your configuration details
 
@@ -50,7 +50,7 @@ You can also toggle the Subscribe button on and off in case you want to hide the
 
 In the admin, add a new Product. Once you have a product saved, you can add plans to it. Keep in mind that the pricing and billing intervals of plans cannot be changed once you create them. This is to avoid confusion around subscription management.
 
-If you take a look at your [Stripe Dashboard](https://dashboard.stripe.com), you'll see all those products and plans are listed. Discourse Patrons does not create them locally. They are created in Stripe.
+If you take a look at your [Stripe Dashboard](https://dashboard.stripe.com), you'll see all those products and plans are listed. Discourse Subscriptions does not create them locally. They are created in Stripe.
 
 ## Testing
 
@@ -58,7 +58,7 @@ Test with these credit card numbers:
 
 * 4111 1111 1111 1111
 
-Visit `/patrons/subscribe` and enter a few test transcations.
+Visit `/s/subscribe` and enter a few test transactions.
 
 ## Warranty
 
