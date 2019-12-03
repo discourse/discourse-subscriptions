@@ -10,7 +10,7 @@
     {{#if currentUser}}
       <div class="pull-right">
         {{#link-to "s.subscribe.show" product.id disabled=product.subscribed class="btn btn-primary"}}
-          {{i18n 'discourse_patrons.subscribe.title'}}
+          {{i18n 'discourse_subscriptions.subscribe.title'}}
         {{/link-to}}
       </div>
     {{/if}}
@@ -19,6 +19,6 @@
 
 {{#unless currentUser}}
   <p>
-    {{i18n 'discourse_patrons.subscribe.unauthenticated'}}
+    {{i18n 'discourse_subscriptions.subscribe.unauthenticated'}}
   </p>
 {{/unless}}

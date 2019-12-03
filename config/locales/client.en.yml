@@ -14,7 +14,7 @@ en:
     errors:
       discourse_patrons_amount_must_be_currency: "Currency amounts must be currencies without dollar symbol (eg 1.50)"
   js:
-    discourse_patrons:
+    discourse_subscriptions:
       title: Discourse Subscriptions
       admin_navigation: Subscriptions
       optional: Optional

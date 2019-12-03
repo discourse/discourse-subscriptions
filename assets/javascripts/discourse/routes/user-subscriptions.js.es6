@@ -17,7 +17,7 @@ export default Discourse.Route.extend({
     cancelSubscription(subscription) {
       bootbox.confirm(
         I18n.t(
-          "discourse_patrons.user.subscriptions.operations.destroy.confirm"
+          "discourse_subscriptions.user.subscriptions.operations.destroy.confirm"
         ),
         I18n.t("no_value"),
         I18n.t("yes_value"),

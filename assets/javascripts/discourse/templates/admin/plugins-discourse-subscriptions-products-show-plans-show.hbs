@@ -1,27 +1,27 @@
 
-<h4>{{i18n 'discourse_patrons.admin.plans.title'}}</h4>
+<h4>{{i18n 'discourse_subscriptions.admin.plans.title'}}</h4>
 
 <form class="form-horizontal">
   <p>
-    <label for="product">{{i18n 'discourse_patrons.admin.products.product.name'}}</label>
+    <label for="product">{{i18n 'discourse_subscriptions.admin.products.product.name'}}</label>
     {{input type="text" name="product_name" value=model.product.name disabled=true}}
   </p>
   <p>
-    <label for="name">{{i18n 'discourse_patrons.admin.plans.plan.nickname'}}</label>
+    <label for="name">{{i18n 'discourse_subscriptions.admin.plans.plan.nickname'}}</label>
     {{input type="text" name="name" value=model.plan.nickname}}
     <div class="control-instructions">
-      {{i18n 'discourse_patrons.admin.plans.plan.nickname_help'}}
+      {{i18n 'discourse_subscriptions.admin.plans.plan.nickname_help'}}
     </div>
   </p>
   <p>
-    <label for="interval">{{i18n 'discourse_patrons.admin.plans.plan.group'}}</label>
+    <label for="interval">{{i18n 'discourse_subscriptions.admin.plans.plan.group'}}</label>
     {{combo-box valueAttribute="name" content=model.groups value=model.plan.metadata.group_name}}
     <div class="control-instructions">
-      {{i18n 'discourse_patrons.admin.plans.plan.group_help'}}
+      {{i18n 'discourse_subscriptions.admin.plans.plan.group_help'}}
     </div>
   </p>
   <p>
-    <label for="amount">{{i18n 'discourse_patrons.admin.plans.plan.amount'}}</label>
+    <label for="amount">{{i18n 'discourse_subscriptions.admin.plans.plan.amount'}}</label>
     {{#if planFieldDisabled}}
       {{input class="plan-amount plan-currency" disabled=true value=model.plan.currency}}
     {{else}}
@@ -31,23 +31,23 @@
   </p>
   <p>
     <label for="trial">
-      {{i18n 'discourse_patrons.admin.plans.plan.trial'}}
-      ({{i18n 'discourse_patrons.optional'}})
+      {{i18n 'discourse_subscriptions.admin.plans.plan.trial'}}
+      ({{i18n 'discourse_subscriptions.optional'}})
     </label>
     {{input type="text" name="trial" value=model.plan.trial_period_days}}
     <div class="control-instructions">
-      {{i18n 'discourse_patrons.admin.plans.plan.trial_help'}}
+      {{i18n 'discourse_subscriptions.admin.plans.plan.trial_help'}}
     </div>
   </p>
   <p>
     <label for="interval">
-      {{i18n 'discourse_patrons.admin.plans.plan.interval'}}
+      {{i18n 'discourse_subscriptions.admin.plans.plan.interval'}}
     </label>
     {{combo-box valueAttribute="value" content=model.plan.intervals value=model.plan.interval}}
   </p>
   <p>
     <label for="active">
-      {{i18n 'discourse_patrons.admin.plans.plan.active'}}
+      {{i18n 'discourse_subscriptions.admin.plans.plan.active'}}
     </label>
     {{input type="checkbox" name="active" checked=model.plan.active}}
   </p>
@@ -57,16 +57,16 @@
   <hr>
 
   <p class="control-instructions">
-    {{i18n 'discourse_patrons.admin.plans.operations.create_help'}}
+    {{i18n 'discourse_subscriptions.admin.plans.operations.create_help'}}
   </p>
 
   <div class="pull-right">
     {{d-button label="cancel" action=(action "cancelPlan" model.plan.product) icon="times"}}
 
     {{#if model.plan.isNew}}
-      {{d-button label="discourse_patrons.admin.plans.operations.create" action="createPlan" icon="plus" class="btn btn-primary"}}
+      {{d-button label="discourse_subscriptions.admin.plans.operations.create" action="createPlan" icon="plus" class="btn btn-primary"}}
     {{else}}
-      {{d-button label="discourse_patrons.admin.plans.operations.update" action="updatePlan" icon="check" class="btn btn-primary"}}
+      {{d-button label="discourse_subscriptions.admin.plans.operations.update" action="updatePlan" icon="check" class="btn btn-primary"}}
     {{/if}}
   </div>
 

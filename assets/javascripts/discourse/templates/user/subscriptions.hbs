@@ -1,14 +1,14 @@
 
-{{i18n 'discourse_patrons.user.subscriptions.title'}}
+{{i18n 'discourse_subscriptions.user.subscriptions.title'}}
 
 {{#if model}}
   <table class="table discourse-patrons-user-table">
     <thead>
-      <th>{{i18n 'discourse_patrons.user.subscriptions.id'}}</th>
-      <th>{{i18n 'discourse_patrons.user.plans.product'}}</th>
-      <th>{{i18n 'discourse_patrons.user.plans.rate'}}</th>
-      <th>{{i18n 'discourse_patrons.user.subscriptions.status'}}</th>
-      <th>{{i18n 'discourse_patrons.user.subscriptions.created_at'}}</th>
+      <th>{{i18n 'discourse_subscriptions.user.subscriptions.id'}}</th>
+      <th>{{i18n 'discourse_subscriptions.user.plans.product'}}</th>
+      <th>{{i18n 'discourse_subscriptions.user.plans.rate'}}</th>
+      <th>{{i18n 'discourse_subscriptions.user.subscriptions.status'}}</th>
+      <th>{{i18n 'discourse_subscriptions.user.subscriptions.created_at'}}</th>
       <th></th>
     </thead>
     {{#each model as |subscription|}}
@@ -29,5 +29,5 @@
     {{/each}}
   </table>
 {{else}}
-  <p>{{i18n 'discourse_patrons.user.subscriptions_help'}}</p>
+  <p>{{i18n 'discourse_subscriptions.user.subscriptions_help'}}</p>
 {{/if}}

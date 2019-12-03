@@ -24,7 +24,7 @@ extend_content_security_policy(
   script_src: ['https://js.stripe.com/v3/']
 )
 
-add_admin_route 'discourse_patrons.admin_navigation', 'discourse-subscriptions.products'
+add_admin_route 'discourse_subscriptions.admin_navigation', 'discourse-subscriptions.products'
 
 Discourse::Application.routes.append do
   get '/admin/plugins/discourse-subscriptions' => 'admin/plugins#index'

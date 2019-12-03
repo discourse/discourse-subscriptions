@@ -1,49 +1,49 @@
-<h4>{{i18n 'discourse_patrons.admin.products.title'}}</h4>
+<h4>{{i18n 'discourse_subscriptions.admin.products.title'}}</h4>
 
 <form class="form-horizontal">
   <p>
-    <label for="name">{{i18n 'discourse_patrons.admin.products.product.name'}}</label>
+    <label for="name">{{i18n 'discourse_subscriptions.admin.products.product.name'}}</label>
     {{input type="text" name="name" value=model.product.name}}
   </p>
   <p>
     <label for="description">
-      {{i18n 'discourse_patrons.admin.products.product.description'}}
+      {{i18n 'discourse_subscriptions.admin.products.product.description'}}
     </label>
     {{textarea name="description" value=model.product.metadata.description class="discourse-patrons-admin-textarea"}}
     <div class="control-instructions">
-      {{i18n 'discourse_patrons.admin.products.product.description_help'}}
+      {{i18n 'discourse_subscriptions.admin.products.product.description_help'}}
     </div>
   </p>
   <p>
     <label for="statement_descriptor">
-      {{i18n 'discourse_patrons.admin.products.product.statement_descriptor'}}
+      {{i18n 'discourse_subscriptions.admin.products.product.statement_descriptor'}}
     </label>
     {{input type="text" name="statement_descriptor" value=model.product.statement_descriptor}}
     <div class="control-instructions">
-      {{i18n 'discourse_patrons.admin.products.product.statement_descriptor_help'}}
+      {{i18n 'discourse_subscriptions.admin.products.product.statement_descriptor_help'}}
     </div>
   </p>
   <p>
-    <label for="active">{{i18n 'discourse_patrons.admin.products.product.active'}}</label>
+    <label for="active">{{i18n 'discourse_subscriptions.admin.products.product.active'}}</label>
     {{input type="checkbox" name="active" checked=model.product.active}}
   </p>
 </form>
 
 {{#unless model.product.isNew}}
-  <h4>{{i18n 'discourse_patrons.admin.plans.title'}}</h4>
+  <h4>{{i18n 'discourse_subscriptions.admin.plans.title'}}</h4>
 
   <p>
     <table class="table discourse-patrons-table">
       <thead>
-        <th>{{i18n 'discourse_patrons.admin.plans.plan.nickname'}}</th>
-        <th>{{i18n 'discourse_patrons.admin.plans.plan.interval'}}</th>
-        <th>{{i18n 'discourse_patrons.admin.plans.plan.created_at'}}</th>
-        <th>{{i18n 'discourse_patrons.admin.plans.plan.group'}}</th>
-        <th>{{i18n 'discourse_patrons.admin.plans.plan.active'}}</th>
-        <th class="td-right">{{i18n 'discourse_patrons.admin.plans.plan.amount'}}</th>
+        <th>{{i18n 'discourse_subscriptions.admin.plans.plan.nickname'}}</th>
+        <th>{{i18n 'discourse_subscriptions.admin.plans.plan.interval'}}</th>
+        <th>{{i18n 'discourse_subscriptions.admin.plans.plan.created_at'}}</th>
+        <th>{{i18n 'discourse_subscriptions.admin.plans.plan.group'}}</th>
+        <th>{{i18n 'discourse_subscriptions.admin.plans.plan.active'}}</th>
+        <th class="td-right">{{i18n 'discourse_subscriptions.admin.plans.plan.amount'}}</th>
         <th class="td-right">
           {{#link-to "adminPlugins.discourse-subscriptions.products.show.plans.show" model.product.id "new" class="btn"}}
-            {{i18n 'discourse_patrons.admin.plans.operations.add'}}
+            {{i18n 'discourse_subscriptions.admin.plans.operations.add'}}
           {{/link-to}}
         </th>
       </thead>
@@ -72,7 +72,7 @@
         <tr>
           <td colspan="8">
             <hr>
-            {{i18n 'discourse_patrons.admin.products.product.plan_help'}}
+            {{i18n 'discourse_subscriptions.admin.products.product.plan_help'}}
           </td>
         </tr>
       {{/unless}}
@@ -83,9 +83,9 @@
 <div class="pull-right">
   {{d-button label="cancel" action=(action "cancelProduct") icon="times"}}
   {{#if model.product.isNew}}
-    {{d-button label="discourse_patrons.admin.products.operations.create" action="createProduct" icon="plus" class="btn btn-primary"}}
+    {{d-button label="discourse_subscriptions.admin.products.operations.create" action="createProduct" icon="plus" class="btn btn-primary"}}
   {{else}}
-    {{d-button label="discourse_patrons.admin.products.operations.update" action="updateProduct" icon="check" class="btn btn-primary"}}
+    {{d-button label="discourse_subscriptions.admin.products.operations.update" action="updateProduct" icon="check" class="btn btn-primary"}}
   {{/if}}
 </div>
 

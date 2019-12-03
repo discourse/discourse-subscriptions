@@ -41,7 +41,7 @@ export default Ember.Controller.extend({
               .save()
               .then(() => {
                 bootbox.alert(
-                  I18n.t("discourse_patrons.transactions.payment.success")
+                  I18n.t("discourse_subscriptions.transactions.payment.success")
                 );
                 this.transitionToRoute(
                   "user.subscriptions",

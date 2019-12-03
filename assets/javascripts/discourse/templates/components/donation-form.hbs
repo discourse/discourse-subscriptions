@@ -1,20 +1,20 @@
 
 {{#if confirmation}}
-  {{#d-modal closeModal=(action "closeModal") modalStyle="inline-modal" title=(i18n "discourse_patrons.one_time.payment.payment_confirmation")}}
+  {{#d-modal closeModal=(action "closeModal") modalStyle="inline-modal" title=(i18n "discourse_subscriptions.one_time.payment.payment_confirmation")}}
     {{#d-modal-body}}
       <div class="discourse-patrons-section-columns">
         <div class="section-column discourse-patrons-confirmation-billing">
           <table class="discourse-patrons-confirmation">
             <tr>
-              <td>{{i18n 'discourse_patrons.billing.name'}}</td>
+              <td>{{i18n 'discourse_subscriptions.billing.name'}}</td>
               <td>{{billing.name}}</td>
             </tr>
             <tr>
-              <td>{{i18n 'discourse_patrons.billing.email'}}</td>
+              <td>{{i18n 'discourse_subscriptions.billing.email'}}</td>
               <td>{{billing.email}}</td>
             </tr>
             <tr>
-              <td>{{i18n 'discourse_patrons.billing.phone'}}</td>
+              <td>{{i18n 'discourse_subscriptions.billing.phone'}}</td>
               <td>{{billing.phone}}</td>
             </tr>
           </table>
@@ -22,11 +22,11 @@
         <div class="section-column">
           <table class="discourse-patrons-confirmation">
             <tr>
-              <td>{{i18n 'discourse_patrons.confirmation.amount'}}</td>
+              <td>{{i18n 'discourse_subscriptions.confirmation.amount'}}</td>
               <td class="discourse-donations-amount">{{format-curency amount}}</td>
             </tr>
             <tr>
-              <td>{{i18n 'discourse_patrons.confirmation.last4'}}</td>
+              <td>{{i18n 'discourse_subscriptions.confirmation.last4'}}</td>
               <td class="discourse-patrons-last4">.... .... .... {{last4}}</td>
             </tr>
           </table>
@@ -36,7 +36,7 @@
 
     <div class='modal-footer'>
       {{#d-button action="confirmStripeCard" class="btn btn-primary btn-payment btn-discourse-patrons"}}
-        {{i18n 'discourse_patrons.buttons.confirm_payment'}} {{format-curency amount}}
+        {{i18n 'discourse_subscriptions.buttons.confirm_payment'}} {{format-curency amount}}
       {{/d-button}}
     </div>
 
@@ -51,47 +51,47 @@
 {{else}}
   <div class="discourse-patrons-section-columns discourse-patrons-payment-details">
     <div class="section-column">
-      <h3>{{i18n 'discourse_patrons.one_time.payment.your_information'}}</h3>
+      <h3>{{i18n 'discourse_subscriptions.one_time.payment.your_information'}}</h3>
 
       <div class="user-controls discourse-patrons-fields discourse-patrons-billing">
         <div class="display-row">
           <div class="field">
-            {{i18n 'discourse_patrons.billing.name'}}
+            {{i18n 'discourse_subscriptions.billing.name'}}
           </div>
           <div class="value">
             {{input value=billing.name}}
-            <div class="desc">{{i18n 'discourse_patrons.one_time.payment.optional'}}</div>
+            <div class="desc">{{i18n 'discourse_subscriptions.one_time.payment.optional'}}</div>
           </div>
         </div>
         <div class="display-row">
           <div class="field">
-            {{i18n 'discourse_patrons.billing.email'}}
+            {{i18n 'discourse_subscriptions.billing.email'}}
           </div>
           <div class="value">
             {{input type="email" value=billing.email}}
-            <div class="desc">{{i18n 'discourse_patrons.one_time.payment.receipt_info'}}</div>
+            <div class="desc">{{i18n 'discourse_subscriptions.one_time.payment.receipt_info'}}</div>
           </div>
         </div>
         <div class="display-row">
           <div class="field">
-            {{i18n 'discourse_patrons.billing.phone'}}
+            {{i18n 'discourse_subscriptions.billing.phone'}}
           </div>
           <div class="value">
             {{input value=billing.phone}}
-            <div class="desc">{{i18n 'discourse_patrons.one_time.payment.optional'}}</div>
+            <div class="desc">{{i18n 'discourse_subscriptions.one_time.payment.optional'}}</div>
           </div>
         </div>
       </div>
 
     </div>
     <div class="section-column">
-      <h3>{{i18n 'discourse_patrons.one_time.payment.payment_information'}}</h3>
+      <h3>{{i18n 'discourse_subscriptions.one_time.payment.payment_information'}}</h3>
 
       <div class="user-controls discourse-patrons-fields">
         <div class="display-row">
           <div class="field">
-            {{i18n 'discourse_patrons.one_time.amount'}}
-            {{siteSettings.discourse_patrons_currency}}
+            {{i18n 'discourse_subscriptions.one_time.amount'}}
+            {{siteSettings.discourse_subscriptions_currency}}
           </div>
           <div class="value">
             {{combo-box valueAttribute="value" content=amounts value=amount}}
