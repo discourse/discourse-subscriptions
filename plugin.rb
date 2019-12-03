@@ -2,7 +2,7 @@
 
 # name: discourse-subscriptions
 # about: Integrates Stripe into Discourse to allow visitors to subscribe
-# version: 2.5.0
+# version: 2.5.1
 # url: https://github.com/rimian/discourse-subscriptions
 # authors: Rimian Perkins
 
@@ -44,7 +44,7 @@ after_initialize do
 
   ::Stripe.set_app_info(
     'Discourse Subscriptions',
-    version: '2.5.0',
+    version: '2.5.1',
     url: 'https://github.com/rimian/discourse-subscriptions'
   )
 

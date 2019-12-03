@@ -44,6 +44,8 @@ module DiscoursePatrons
     end
 
     def current_user_products
+      return [] if current_user.nil?
+
       ::DiscoursePatrons::Customer
         .select(:product_id)
         .where(user_id: current_user.id)
