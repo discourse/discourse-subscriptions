@@ -11,13 +11,13 @@ module DiscoursePatrons
     context 'unauthenticated' do
       it "does nothing" do
         ::Stripe::Subscription.expects(:list).never
-        get "/patrons/admin/subscriptions.json"
+        get "/s/admin/subscriptions.json"
         expect(response.status).to eq(403)
       end
 
       it "does not destroy a subscription" do
         ::Stripe::Subscription.expects(:delete).never
-        patch "/patrons/admin/subscriptions/sub_12345.json"
+        patch "/s/admin/subscriptions/sub_12345.json"
       end
     end
 
@@ -30,7 +30,7 @@ module DiscoursePatrons
       describe "index" do
         it "gets the subscriptions and products" do
           ::Stripe::Subscription.expects(:list).with(expand: ['data.plan.product'])
-          get "/patrons/admin/subscriptions.json"
+          get "/s/admin/subscriptions.json"
           expect(response.status).to eq(200)
         end
       end
@@ -58,7 +58,7 @@ module DiscoursePatrons
             )
 
           expect {
-            delete "/patrons/admin/subscriptions/sub_12345.json"
+            delete "/s/admin/subscriptions/sub_12345.json"
           }.to change { DiscoursePatrons::Customer.count }.by(-1)
         end
 
@@ -72,7 +72,7 @@ module DiscoursePatrons
             )
 
           expect {
-            delete "/patrons/admin/subscriptions/sub_12345.json"
+            delete "/s/admin/subscriptions/sub_12345.json"
           }.to change { user.groups.count }.by(-1)
         end
 
@@ -86,7 +86,7 @@ module DiscoursePatrons
             )
 
           expect {
-            delete "/patrons/admin/subscriptions/sub_12345.json"
+            delete "/s/admin/subscriptions/sub_12345.json"
           }.not_to change { user.groups.count }
         end
       end

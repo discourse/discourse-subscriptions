@@ -11,12 +11,12 @@ module DiscoursePatrons
     context "not authenticated" do
       it "does not get the subscriptions" do
         ::Stripe::Customer.expects(:list).never
-        get "/patrons/user/subscriptions.json"
+        get "/s/user/subscriptions.json"
       end
 
       it "does not destroy a subscription" do
         ::Stripe::Subscription.expects(:delete).never
-        patch "/patrons/user/subscriptions/sub_12345.json"
+        patch "/s/user/subscriptions/sub_12345.json"
       end
     end
 
@@ -67,7 +67,7 @@ module DiscoursePatrons
             expand: ['data.subscriptions']
           ).returns(customers)
 
-          get "/patrons/user/subscriptions.json"
+          get "/s/user/subscriptions.json"
 
           subscription = JSON.parse(response.body).first
 
@@ -105,7 +105,7 @@ module DiscoursePatrons
             .never
 
           expect {
-            delete "/patrons/user/subscriptions/sub_12345.json"
+            delete "/s/user/subscriptions/sub_12345.json"
           }.not_to change { DiscoursePatrons::Customer.count }
 
           expect(response.status).to eq 422
@@ -125,7 +125,7 @@ module DiscoursePatrons
             .never
 
           expect {
-            delete "/patrons/user/subscriptions/sub_12345.json"
+            delete "/s/user/subscriptions/sub_12345.json"
           }.not_to change { DiscoursePatrons::Customer.count }
 
           expect(response.status).to eq 422
@@ -144,7 +144,7 @@ module DiscoursePatrons
             .expects(:delete)
 
           expect {
-            delete "/patrons/user/subscriptions/sub_12345.json"
+            delete "/s/user/subscriptions/sub_12345.json"
           }.to change { user.groups.count }.by(-1)
         end
 
@@ -161,7 +161,7 @@ module DiscoursePatrons
             .expects(:delete)
 
           expect {
-            delete "/patrons/user/subscriptions/sub_12345.json"
+            delete "/s/user/subscriptions/sub_12345.json"
           }.not_to change { user.groups.count }
         end
 
@@ -179,7 +179,7 @@ module DiscoursePatrons
             .with('sub_12345')
 
           expect {
-            delete "/patrons/user/subscriptions/sub_12345.json"
+            delete "/s/user/subscriptions/sub_12345.json"
           }.to change { DiscoursePatrons::Customer.count }.by(-1)
 
           expect(response.status).to eq 200
@@ -199,7 +199,7 @@ module DiscoursePatrons
             .with('sub_12345')
 
           expect {
-            delete "/patrons/user/subscriptions/sub_12345.json"
+            delete "/s/user/subscriptions/sub_12345.json"
           }.to change { DiscoursePatrons::Customer.count }.by(-1)
 
           expect(response.status).to eq 200
@@ -219,7 +219,7 @@ module DiscoursePatrons
             .with('sub_12345')
 
           expect {
-            delete "/patrons/user/subscriptions/sub_12345.json"
+            delete "/s/user/subscriptions/sub_12345.json"
           }.to change { DiscoursePatrons::Customer.count }.by(-1)
 
           expect(response.status).to eq 200

@@ -14,7 +14,7 @@ module DiscoursePatrons
     end
 
     it "is ok" do
-      get "/patrons/admin.json"
+      get "/s/admin.json"
       expect(response.status).to eq(200)
     end
   end

@@ -18,14 +18,14 @@ module DiscoursePatrons
             source: 'tok_interesting'
           )
 
-          post "/patrons/customers.json", params: { source: 'tok_interesting' }
+          post "/s/customers.json", params: { source: 'tok_interesting' }
         end
 
         it "saves the customer" do
           ::Stripe::Customer.expects(:create).returns(id: 'cus_id23456')
 
           expect {
-            post "/patrons/customers.json", params: { source: 'tok_interesting' }
+            post "/s/customers.json", params: { source: 'tok_interesting' }
           }.to change { DiscoursePatrons::Customer.count }
         end
       end

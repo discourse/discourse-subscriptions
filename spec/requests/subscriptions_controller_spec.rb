@@ -8,7 +8,7 @@ module DiscoursePatrons
       it "does not create a subscription" do
         ::Stripe::Plan.expects(:retrieve).never
         ::Stripe::Subscription.expects(:create).never
-        post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
+        post "/s/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
       end
     end
 
@@ -33,7 +33,7 @@ module DiscoursePatrons
           ).returns(status: 'active')
 
           expect {
-            post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
+            post "/s/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
           }.to change { DiscoursePatrons::Customer.count }
         end
 
@@ -42,7 +42,7 @@ module DiscoursePatrons
           ::Stripe::Subscription.expects(:create).returns(status: 'active')
 
           expect {
-            post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
+            post "/s/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
           }.to change { DiscoursePatrons::Customer.count }
         end
       end
@@ -58,13 +58,13 @@ module DiscoursePatrons
 
           it "does not add the user to the admins group" do
             ::Stripe::Plan.expects(:retrieve).returns(metadata: { group_name: 'admins' })
-            post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
+            post "/s/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
             expect(user.admin).to eq false
           end
 
           it "does not add the user to other group" do
             ::Stripe::Plan.expects(:retrieve).returns(metadata: { group_name: 'other' })
-            post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
+            post "/s/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
             expect(user.groups).to be_empty
           end
         end
@@ -78,7 +78,7 @@ module DiscoursePatrons
             ::Stripe::Subscription.expects(:create).returns(status: 'failed')
 
             expect {
-              post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
+              post "/s/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
             }.not_to change { group.users.count }
 
             expect(user.groups).to be_empty
@@ -88,7 +88,7 @@ module DiscoursePatrons
             ::Stripe::Subscription.expects(:create).returns(status: 'active')
 
             expect {
-              post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
+              post "/s/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
             }.to change { group.users.count }
 
             expect(user.groups).not_to be_empty
@@ -98,7 +98,7 @@ module DiscoursePatrons
             ::Stripe::Subscription.expects(:create).returns(status: 'trialing')
 
             expect {
-              post "/patrons/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
+              post "/s/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
             }.to change { group.users.count }
 
             expect(user.groups).not_to be_empty

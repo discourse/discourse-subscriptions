@@ -8,7 +8,7 @@ module DiscoursePatrons
       describe "not authenticated" do
         it "does not list the invoices" do
           ::Stripe::Invoice.expects(:list).never
-          get "/patrons/invoices.json"
+          get "/s/invoices.json"
           expect(response.status).to eq 403
         end
       end
@@ -24,7 +24,7 @@ module DiscoursePatrons
         describe "other user invoices" do
           it "does not list the invoices" do
             ::Stripe::Invoice.expects(:list).never
-            get "/patrons/invoices.json", params: { user_id: 999999 }
+            get "/s/invoices.json", params: { user_id: 999999 }
           end
         end
 
@@ -32,7 +32,7 @@ module DiscoursePatrons
           context "stripe customer does not exist" do
             it "lists empty" do
               ::Stripe::Invoice.expects(:list).never
-              get "/patrons/invoices.json", params: { user_id: user.id }
+              get "/s/invoices.json", params: { user_id: user.id }
               expect(response.body).to eq "[]"
             end
           end
@@ -44,7 +44,7 @@ module DiscoursePatrons
 
             it "lists the invoices" do
               ::Stripe::Invoice.expects(:list).with(customer: 'cus_id4567')
-              get "/patrons/invoices.json", params: { user_id: user.id }
+              get "/s/invoices.json", params: { user_id: user.id }
             end
           end
         end

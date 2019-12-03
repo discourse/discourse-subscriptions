@@ -26,7 +26,7 @@ module DiscoursePatrons
         it "gets products" do
           ::Stripe::Product.expects(:list).with(active: true).returns(data: [product])
 
-          get "/patrons/products.json"
+          get "/s/products.json"
 
           expect(JSON.parse(response.body)).to eq([{
             "id" => "prodct_23456",
@@ -40,7 +40,7 @@ module DiscoursePatrons
           ::DiscoursePatrons::Customer.create(product_id: product[:id], user_id: user.id, customer_id: 'x')
           ::Stripe::Product.expects(:list).with(active: true).returns(data: [product])
 
-          get "/patrons/products.json"
+          get "/s/products.json"
           data = JSON.parse(response.body)
           expect(data.first["subscribed"]).to eq true
         end
@@ -49,7 +49,7 @@ module DiscoursePatrons
           ::DiscoursePatrons::Customer.delete_all
           ::Stripe::Product.expects(:list).with(active: true).returns(data: [product])
 
-          get "/patrons/products.json"
+          get "/s/products.json"
           data = JSON.parse(response.body)
           expect(data.first["subscribed"]).to eq false
         end
@@ -58,7 +58,7 @@ module DiscoursePatrons
       describe 'show' do
         it 'retrieves the product' do
           ::Stripe::Product.expects(:retrieve).with('prod_walterwhite').returns(product)
-          get "/patrons/products/prod_walterwhite.json"
+          get "/s/products/prod_walterwhite.json"
 
           expect(JSON.parse(response.body)).to eq(
             "id" => "prodct_23456",
