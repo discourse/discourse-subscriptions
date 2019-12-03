@@ -54,7 +54,7 @@ module DiscoursePatrons
 
             render_json_dump deleted
           else
-            render_json_error I18n.t('discourse_patrons.customer_not_found')
+            render_json_error I18n.t('discourse_subscriptions.customer_not_found')
           end
 
         rescue ::Stripe::InvalidRequestError => e
