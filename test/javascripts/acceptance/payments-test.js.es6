@@ -1,5 +1,5 @@
 import { acceptance } from "helpers/qunit-helpers";
-import { stubStripe } from "discourse/plugins/discourse-patrons/helpers/stripe";
+import { stubStripe } from "discourse/plugins/discourse-subscriptions/helpers/stripe";
 
 acceptance("Discourse Patrons", {
   settings: {
@@ -12,7 +12,7 @@ acceptance("Discourse Patrons", {
 });
 
 QUnit.skip("viewing the one-off payment page", async assert => {
-  await visit("/patrons");
+  await visit("/s");
 
   assert.ok($(".donations-page-payment").length, "has payment form class");
 });

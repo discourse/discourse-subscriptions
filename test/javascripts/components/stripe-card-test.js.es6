@@ -1,5 +1,5 @@
 import componentTest from "helpers/component-test";
-import { stubStripe } from "discourse/plugins/discourse-patrons/helpers/stripe";
+import { stubStripe } from "discourse/plugins/discourse-subscriptions/helpers/stripe";
 
 moduleForComponent("stripe-card", { integration: true });
 

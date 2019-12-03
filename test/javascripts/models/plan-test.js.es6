@@ -1,4 +1,4 @@
-import Plan from "discourse/plugins/discourse-patrons/discourse/models/plan";
+import Plan from "discourse/plugins/discourse-subscriptions/discourse/models/plan";
 
 QUnit.module("discourse-patrons:model:plan");
 
