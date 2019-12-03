@@ -8,7 +8,7 @@ module DiscoursePatrons
     let(:stripe_customer) { { id: 'cus_id4567' } }
 
     it "has a table name" do
-      expect(described_class.table_name).to eq "discourse_patrons_customers"
+      expect(described_class.table_name).to eq "discourse_subscriptions_customers"
     end
 
     it "creates" do
