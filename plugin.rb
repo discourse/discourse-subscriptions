@@ -49,7 +49,7 @@ after_initialize do
   )
 
   [
-    "../lib/discourse_patrons/engine",
+    "../lib/discourse_subscriptions/engine",
     "../config/routes",
     "../app/controllers/concerns/group",
     "../app/controllers/concerns/stripe",
