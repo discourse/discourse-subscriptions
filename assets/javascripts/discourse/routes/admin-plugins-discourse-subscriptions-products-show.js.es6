@@ -20,7 +20,9 @@ export default Discourse.Route.extend({
   actions: {
     destroyPlan(plan) {
       bootbox.confirm(
-        I18n.t("discourse_subscriptions.admin.plans.operations.destroy.confirm"),
+        I18n.t(
+          "discourse_subscriptions.admin.plans.operations.destroy.confirm"
+        ),
         I18n.t("no_value"),
         I18n.t("yes_value"),
         confirmed => {

@@ -12,7 +12,9 @@ export default Ember.Controller.extend({
     },
 
     paymentSuccessHandler(/* paymentIntentId */) {
-      bootbox.alert(I18n.t("discourse_subscriptions.transactions.payment.success"));
+      bootbox.alert(
+        I18n.t("discourse_subscriptions.transactions.payment.success")
+      );
       this.transitionToRoute(
         "user.billing",
         Discourse.User.current().username.toLowerCase()
