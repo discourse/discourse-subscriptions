@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateSubscriptionsCustomers < ActiveRecord::Migration[6.0]
   def change
     create_table :discourse_subscriptions_customers do |t|
