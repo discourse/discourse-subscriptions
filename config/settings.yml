@@ -1,13 +1,13 @@
 plugins:
-  discourse_patrons_enabled:
+  discourse_subscriptions_enabled:
     default: false
-  discourse_patrons_extra_nav_subscribe:
+  discourse_subscriptions_extra_nav_subscribe:
     default: false
     client: true
-  discourse_patrons_public_key:
+  discourse_subscriptions_public_key:
     default: ''
     client: true
-  discourse_patrons_secret_key:
+  discourse_subscriptions_secret_key:
     default: ''
     client: false
   discourse_patrons_payment_page:
@@ -25,7 +25,7 @@ plugins:
     default: '1.00|2.00|5.00|10.00|20.00|50.00|100.00'
     regex: "^([0-9]+.[0-9]{2}\\|)+[0-9]+.[0-9]{2}$"
     regex_error: "site_settings.errors.discourse_patrons_amount_must_be_currency"
-  discourse_patrons_currency:
+  discourse_subscriptions_currency:
     client: true
     default: "USD"
     type: enum

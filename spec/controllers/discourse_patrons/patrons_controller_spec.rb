@@ -42,8 +42,8 @@ module DiscourseSubscriptions
       end
 
       before do
-        SiteSetting.stubs(:discourse_patrons_currency).returns('AUD')
-        SiteSetting.stubs(:discourse_patrons_secret_key).returns('xyz-678')
+        SiteSetting.stubs(:discourse_subscriptions_currency).returns('AUD')
+        SiteSetting.stubs(:discourse_subscriptions_secret_key).returns('xyz-678')
         controller.stubs(:current_user).returns(current_user)
       end
 

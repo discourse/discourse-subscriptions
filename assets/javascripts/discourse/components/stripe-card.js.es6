@@ -8,7 +8,7 @@ export default Ember.Component.extend({
       cardError: false,
       color: jQuery("body").css("color"),
       backgroundColor: jQuery("body").css("background-color"),
-      stripe: Stripe(settings.discourse_patrons_public_key)
+      stripe: Stripe(settings.discourse_subscriptions_public_key)
     });
   },
 

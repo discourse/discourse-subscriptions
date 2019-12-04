@@ -5,7 +5,7 @@ export default Ember.Controller.extend({
     this._super(...arguments);
     this.set(
       "stripe",
-      Stripe(Discourse.SiteSettings.discourse_patrons_public_key)
+      Stripe(Discourse.SiteSettings.discourse_subscriptions_public_key)
     );
     const elements = this.get("stripe").elements();
 

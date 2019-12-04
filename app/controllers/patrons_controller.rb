@@ -22,7 +22,7 @@ module DiscourseSubscriptions
 
         response = ::Stripe::PaymentIntent.create(
           amount: param_currency_to_number,
-          currency: SiteSetting.discourse_patrons_currency,
+          currency: SiteSetting.discourse_subscriptions_currency,
           payment_method_types: ['card'],
           payment_method: params[:payment_method_id],
           description: SiteSetting.discourse_patrons_payment_description,

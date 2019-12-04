@@ -1,10 +1,10 @@
 en:
   site_settings:
-    discourse_patrons_enabled: Enable the Discourse Subscriptions plugin.
-    discourse_patrons_extra_nav_subscribe: Show the subscribe button in the primary navigation
-    discourse_patrons_public_key: Stripe Publishable Key
-    discourse_patrons_secret_key: Stripe Secret Key
-    discourse_patrons_currency: Default Currency Code. This can be overridden when creating a subscription plan
+    discourse_subscriptions_enabled: Enable the Discourse Subscriptions plugin.
+    discourse_subscriptions_extra_nav_subscribe: Show the subscribe button in the primary navigation
+    discourse_subscriptions_public_key: Stripe Publishable Key
+    discourse_subscriptions_secret_key: Stripe Secret Key
+    discourse_subscriptions_currency: Default Currency Code. This can be overridden when creating a subscription plan
     discourse_patrons_zip_code: "Show Zip Code"
     discourse_patrons_billing_address: "Collect billing address"
     discourse_patrons_payment_page: "Text to be added to enter payments page. Markdown is supported."

@@ -6,7 +6,7 @@
 # url: https://github.com/rimian/discourse-subscriptions
 # authors: Rimian Perkins
 
-enabled_site_setting :discourse_patrons_enabled
+enabled_site_setting :discourse_subscriptions_enabled
 
 gem 'stripe', '5.11.0'
 

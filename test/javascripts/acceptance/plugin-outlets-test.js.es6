@@ -2,7 +2,7 @@ import { acceptance } from "helpers/qunit-helpers";
 
 acceptance("Discourse Patrons", {
   settings: {
-    discourse_patrons_extra_nav_subscribe: true
+    discourse_subscriptions_extra_nav_subscribe: true
   }
 });
 
