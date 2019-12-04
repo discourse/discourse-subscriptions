@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module DiscoursePatrons
+module DiscourseSubscriptions
   module Stripe
     extend ActiveSupport::Concern
 

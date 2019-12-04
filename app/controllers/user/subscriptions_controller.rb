@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module DiscoursePatrons
+module DiscourseSubscriptions
   module User
     class SubscriptionsController < ::ApplicationController
-      include DiscoursePatrons::Stripe
-      include DiscoursePatrons::Group
+      include DiscourseSubscriptions::Stripe
+      include DiscourseSubscriptions::Group
       before_action :set_api_key
       requires_login
 

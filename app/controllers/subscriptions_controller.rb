@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module DiscoursePatrons
+module DiscourseSubscriptions
   class SubscriptionsController < ::ApplicationController
-    include DiscoursePatrons::Stripe
-    include DiscoursePatrons::Group
+    include DiscourseSubscriptions::Stripe
+    include DiscourseSubscriptions::Group
     before_action :set_api_key
     requires_login
 
@@ -41,7 +41,7 @@ module DiscoursePatrons
           group.add(current_user)
         end
 
-        DiscoursePatrons::Customer.create(
+        DiscourseSubscriptions::Customer.create(
           user_id: current_user.id,
           customer_id: params[:customer],
           product_id: plan[:product]

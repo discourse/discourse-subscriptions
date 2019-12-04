@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-DiscoursePatrons::Engine.routes.draw do
+DiscourseSubscriptions::Engine.routes.draw do
   # TODO: namespace this
   scope 'admin' do
     get '/' => 'admin#index'

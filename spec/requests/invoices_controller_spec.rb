@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module DiscoursePatrons
+module DiscourseSubscriptions
   RSpec.describe InvoicesController do
     describe "index" do
       describe "not authenticated" do
@@ -39,7 +39,7 @@ module DiscoursePatrons
 
           context "stripe customer exists" do
             before do
-              DiscoursePatrons::Customer.create_customer(user, stripe_customer)
+              DiscourseSubscriptions::Customer.create_customer(user, stripe_customer)
             end
 
             it "lists the invoices" do

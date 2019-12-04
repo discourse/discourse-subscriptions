@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-module DiscoursePatrons
+module DiscourseSubscriptions
   RSpec.describe User::SubscriptionsController do
     it 'is a subclass of ApplicationController' do
-      expect(DiscoursePatrons::User::SubscriptionsController < ::ApplicationController).to eq(true)
+      expect(DiscourseSubscriptions::User::SubscriptionsController < ::ApplicationController).to eq(true)
     end
 
     context "not authenticated" do
@@ -106,7 +106,7 @@ module DiscoursePatrons
 
           expect {
             delete "/s/user/subscriptions/sub_12345.json"
-          }.not_to change { DiscoursePatrons::Customer.count }
+          }.not_to change { DiscourseSubscriptions::Customer.count }
 
           expect(response.status).to eq 422
         end
@@ -126,7 +126,7 @@ module DiscoursePatrons
 
           expect {
             delete "/s/user/subscriptions/sub_12345.json"
-          }.not_to change { DiscoursePatrons::Customer.count }
+          }.not_to change { DiscourseSubscriptions::Customer.count }
 
           expect(response.status).to eq 422
         end
@@ -180,7 +180,7 @@ module DiscoursePatrons
 
           expect {
             delete "/s/user/subscriptions/sub_12345.json"
-          }.to change { DiscoursePatrons::Customer.count }.by(-1)
+          }.to change { DiscourseSubscriptions::Customer.count }.by(-1)
 
           expect(response.status).to eq 200
         end
@@ -200,7 +200,7 @@ module DiscoursePatrons
 
           expect {
             delete "/s/user/subscriptions/sub_12345.json"
-          }.to change { DiscoursePatrons::Customer.count }.by(-1)
+          }.to change { DiscourseSubscriptions::Customer.count }.by(-1)
 
           expect(response.status).to eq 200
         end
@@ -220,7 +220,7 @@ module DiscoursePatrons
 
           expect {
             delete "/s/user/subscriptions/sub_12345.json"
-          }.to change { DiscoursePatrons::Customer.count }.by(-1)
+          }.to change { DiscourseSubscriptions::Customer.count }.by(-1)
 
           expect(response.status).to eq 200
         end

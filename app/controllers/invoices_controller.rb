@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module DiscoursePatrons
+module DiscourseSubscriptions
   class InvoicesController < ::ApplicationController
-    include DiscoursePatrons::Stripe
+    include DiscourseSubscriptions::Stripe
     before_action :set_api_key
     requires_login
 
@@ -29,7 +29,7 @@ module DiscoursePatrons
     end
 
     def find_customer
-      DiscoursePatrons::Customer.find_user(current_user)
+      DiscourseSubscriptions::Customer.find_user(current_user)
     end
   end
 end

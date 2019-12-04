@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module DiscoursePatrons
+module DiscourseSubscriptions
   class Customer < ActiveRecord::Base
     self.table_name = "discourse_subscriptions_customers"
 

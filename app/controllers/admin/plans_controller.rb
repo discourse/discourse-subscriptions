@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module DiscoursePatrons
+module DiscourseSubscriptions
   module Admin
     class PlansController < ::Admin::AdminController
-      include DiscoursePatrons::Stripe
+      include DiscourseSubscriptions::Stripe
 
       before_action :set_api_key
 

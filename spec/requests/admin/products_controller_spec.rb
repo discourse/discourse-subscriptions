@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-module DiscoursePatrons
+module DiscourseSubscriptions
   module Admin
     RSpec.describe ProductsController do
       it 'is a subclass of AdminController' do
-        expect(DiscoursePatrons::Admin::ProductsController < ::Admin::AdminController).to eq(true)
+        expect(DiscourseSubscriptions::Admin::ProductsController < ::Admin::AdminController).to eq(true)
       end
 
       context 'unauthenticated' do

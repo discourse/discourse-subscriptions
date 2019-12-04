@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module ::DiscoursePatrons
+module ::DiscourseSubscriptions
   class Engine < ::Rails::Engine
-    engine_name 'discourse-patrons'
-    isolate_namespace DiscoursePatrons
+    engine_name 'discourse-subscriptions'
+    isolate_namespace DiscourseSubscriptions
   end
 end

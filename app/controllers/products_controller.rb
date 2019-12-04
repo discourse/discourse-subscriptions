@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module DiscoursePatrons
+module DiscourseSubscriptions
   class ProductsController < ::ApplicationController
-    include DiscoursePatrons::Stripe
+    include DiscourseSubscriptions::Stripe
 
     before_action :set_api_key
 
@@ -46,7 +46,7 @@ module DiscoursePatrons
     def current_user_products
       return [] if current_user.nil?
 
-      ::DiscoursePatrons::Customer
+      ::DiscourseSubscriptions::Customer
         .select(:product_id)
         .where(user_id: current_user.id)
         .map { |c| c.product_id }.compact

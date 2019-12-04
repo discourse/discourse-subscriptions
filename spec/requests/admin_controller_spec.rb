@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module DiscoursePatrons
+module DiscourseSubscriptions
   RSpec.describe AdminController do
 
     let(:admin) { Fabricate(:admin) }
@@ -10,7 +10,7 @@ module DiscoursePatrons
     before { sign_in(admin) }
 
     it 'is a subclass of AdminController' do
-      expect(DiscoursePatrons::AdminController < ::Admin::AdminController).to eq(true)
+      expect(DiscourseSubscriptions::AdminController < ::Admin::AdminController).to eq(true)
     end
 
     it "is ok" do

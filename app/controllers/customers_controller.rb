@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module DiscoursePatrons
+module DiscourseSubscriptions
   class CustomersController < ::ApplicationController
-    include DiscoursePatrons::Stripe
+    include DiscourseSubscriptions::Stripe
 
     before_action :set_api_key
 
@@ -13,7 +13,7 @@ module DiscoursePatrons
           source: params[:source]
         )
 
-        DiscoursePatrons::Customer.create_customer(
+        DiscourseSubscriptions::Customer.create_customer(
           current_user,
           customer
         )

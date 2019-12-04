@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-module DiscoursePatrons
+module DiscourseSubscriptions
   module Admin
     RSpec.describe PlansController do
       it 'is a subclass of AdminController' do
-        expect(DiscoursePatrons::Admin::PlansController < ::Admin::AdminController).to eq(true)
+        expect(DiscourseSubscriptions::Admin::PlansController < ::Admin::AdminController).to eq(true)
       end
 
       context 'not authenticated' do

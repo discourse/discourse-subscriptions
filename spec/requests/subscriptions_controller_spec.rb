@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module DiscoursePatrons
+module DiscourseSubscriptions
   RSpec.describe SubscriptionsController do
     context "not authenticated" do
       it "does not create a subscription" do
@@ -34,7 +34,7 @@ module DiscoursePatrons
 
           expect {
             post "/s/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
-          }.to change { DiscoursePatrons::Customer.count }
+          }.to change { DiscourseSubscriptions::Customer.count }
         end
 
         it "creates a customer model" do
@@ -43,7 +43,7 @@ module DiscoursePatrons
 
           expect {
             post "/s/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
-          }.to change { DiscoursePatrons::Customer.count }
+          }.to change { DiscourseSubscriptions::Customer.count }
         end
       end
 

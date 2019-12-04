@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module DiscoursePatrons
+module DiscourseSubscriptions
   RSpec.describe CustomersController do
     describe "create" do
       describe "authenticated" do
@@ -26,7 +26,7 @@ module DiscoursePatrons
 
           expect {
             post "/s/customers.json", params: { source: 'tok_interesting' }
-          }.to change { DiscoursePatrons::Customer.count }
+          }.to change { DiscourseSubscriptions::Customer.count }
         end
       end
     end

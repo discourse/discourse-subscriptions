@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module DiscoursePatrons
+module DiscourseSubscriptions
   RSpec.describe PlansController do
     describe "index" do
       it "lists the active plans" do

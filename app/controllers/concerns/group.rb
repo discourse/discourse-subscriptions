@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module DiscoursePatrons
+module DiscourseSubscriptions
   module Group
     extend ActiveSupport::Concern
 

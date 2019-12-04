@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module DiscoursePatrons
+module DiscourseSubscriptions
   module Admin
     class SubscriptionsController < ::Admin::AdminController
-      include DiscoursePatrons::Stripe
-      include DiscoursePatrons::Group
+      include DiscourseSubscriptions::Stripe
+      include DiscourseSubscriptions::Group
       before_action :set_api_key
 
       def index
@@ -21,7 +21,7 @@ module DiscoursePatrons
         begin
           subscription = ::Stripe::Subscription.delete(params[:id])
 
-          customer = DiscoursePatrons::Customer.find_by(
+          customer = DiscourseSubscriptions::Customer.find_by(
             product_id: subscription[:plan][:product],
             customer_id: subscription[:customer]
           )

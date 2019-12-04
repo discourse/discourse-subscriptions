@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-module DiscoursePatrons
+module DiscourseSubscriptions
   RSpec.describe PatronsController, type: :controller do
-    routes { DiscoursePatrons::Engine.routes }
+    routes { DiscourseSubscriptions::Engine.routes }
 
     describe 'index' do
       it 'responds ok' do

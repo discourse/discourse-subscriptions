@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module DiscoursePatrons
+module DiscourseSubscriptions
   RSpec.describe Customer do
     let(:user) { Fabricate(:user) }
     let(:stripe_customer) { { id: 'cus_id4567' } }

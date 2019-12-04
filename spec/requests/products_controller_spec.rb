@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module DiscoursePatrons
+module DiscourseSubscriptions
   RSpec.describe ProductsController do
     describe "products" do
       let(:product) do
@@ -53,7 +53,7 @@ module DiscoursePatrons
           end
 
           it "is subscribed" do
-            ::DiscoursePatrons::Customer.create(product_id: product[:id], user_id: user.id, customer_id: 'x')
+            ::DiscourseSubscriptions::Customer.create(product_id: product[:id], user_id: user.id, customer_id: 'x')
             ::Stripe::Product.expects(:list).with(active: true).returns(data: [product])
 
             get "/s/products.json"
@@ -62,7 +62,7 @@ module DiscoursePatrons
           end
 
           it "is not subscribed" do
-            ::DiscoursePatrons::Customer.delete_all
+            ::DiscourseSubscriptions::Customer.delete_all
             ::Stripe::Product.expects(:list).with(active: true).returns(data: [product])
 
             get "/s/products.json"

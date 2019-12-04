@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-module DiscoursePatrons
+module DiscourseSubscriptions
   RSpec.describe Admin::SubscriptionsController do
     it 'is a subclass of AdminController' do
-      expect(DiscoursePatrons::Admin::SubscriptionsController < ::Admin::AdminController).to eq(true)
+      expect(DiscourseSubscriptions::Admin::SubscriptionsController < ::Admin::AdminController).to eq(true)
     end
 
     context 'unauthenticated' do
@@ -39,7 +39,7 @@ module DiscoursePatrons
         let(:group) { Fabricate(:group, name: 'subscribers') }
 
         before do
-          DiscoursePatrons::Customer.create(
+          DiscourseSubscriptions::Customer.create(
             user_id: user.id,
             customer_id: 'c_123',
             product_id: 'pr_34578'
@@ -59,7 +59,7 @@ module DiscoursePatrons
 
           expect {
             delete "/s/admin/subscriptions/sub_12345.json"
-          }.to change { DiscoursePatrons::Customer.count }.by(-1)
+          }.to change { DiscourseSubscriptions::Customer.count }.by(-1)
         end
 
         it "removes the user from the group" do
