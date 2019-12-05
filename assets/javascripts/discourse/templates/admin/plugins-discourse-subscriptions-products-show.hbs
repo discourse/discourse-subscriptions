@@ -26,6 +26,9 @@
   <p>
     <label for="active">{{i18n 'discourse_subscriptions.admin.products.product.active'}}</label>
     {{input type="checkbox" name="active" checked=model.product.active}}
+    <div class="control-instructions">
+      {{i18n 'discourse_subscriptions.admin.products.product.active_help'}}
+    </div>
   </p>
 </form>
 
