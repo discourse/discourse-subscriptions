@@ -1,8 +1,8 @@
 
-<button class="btn btn-primary btn-discourse-subscriptions-subscribe">
+<button class="btn btn-primary">
   Purchase a subscription
 </button>
-<button class="btn btn-discourse-subscriptions-subscribe">
+<button class="btn">
   Make just one payment
 </button>
 
@@ -11,10 +11,14 @@
 <p>Select subscription period</p>
 
 <div id="subscribe-buttons">
-  {{#each plans as plan}}
-    <button class="btn btn-discourse-subscriptions-subscribe">
+  {{#each plans as |plan|}}
+    {{#d-button
+      action="clickPlan"
+      actionParam=plan
+      class="btn btn-discourse-subscriptions-subscribe"
+    }}
       <div>Monthly</div>
       AUD $5.00
-    </button>
+    {{/d-button}}
   {{/each}}
 </div>
