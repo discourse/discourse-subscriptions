@@ -14,19 +14,21 @@
         {{i18n 'discourse_subscriptions.subscribe.card.title'}}
       </h2>
 
+      {{payment-options plans=model.plans}}
+
+      <hr>
+
       {{subscribe-card cardElement=cardElement}}
 
       {{#if loading}}
         {{loading-spinner}}
       {{else}}
-        {{combo-box valueAttribute="id" content=model.plans value=model.product.plan}}
-
         {{#d-button
           disabled=loading
           action="stripePaymentHandler"
-          class="btn btn-primary btn-payment btn-discourse-patrons pull-right"}}
+          class="btn btn-primary btn-payment"}}
           {{i18n 'discourse_subscriptions.subscribe.buttons.subscribe'}}
-          {{/d-button}}
+        {{/d-button}}
       {{/if}}
 
     {{/unless}}

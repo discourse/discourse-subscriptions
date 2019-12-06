@@ -1,3 +1,20 @@
+
+#subscribe-buttons {
+  display: flex;
+  justify-content: space-around;
+
+  .btn-discourse-subscriptions-subscribe {
+    padding: 10px 20px;
+    div {
+      margin-bottom: 5px;
+    }
+  }
+}
+
+.btn-payment {
+  width: 100%;
+}
+
 .StripeElement {
   box-sizing: border-box;
 
