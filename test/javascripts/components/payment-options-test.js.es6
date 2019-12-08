@@ -20,7 +20,10 @@ componentTest("Discourse Subscriptions payment options has content", {
   template: `{{payment-options plans=plans}}`,
 
   async test(assert) {
-    this.set("plans", [1, 2]);
+    this.set("plans", [
+      { currency: 'AUD', interval: 'year', amountDollars: "44.99" },
+      { currency: 'GDP', interval: 'month', amountDollars: "9.99" },
+    ]);
 
     assert.equal(
       find(".btn-discourse-subscriptions-subscribe").length,
@@ -31,6 +34,16 @@ componentTest("Discourse Subscriptions payment options has content", {
       find("#subscribe-buttons .btn-primary").length,
       0,
       "The none are selected"
+    );
+    assert.equal(
+      find(".btn-discourse-subscriptions-subscribe:first-child .interval").text().trim(),
+      "year",
+      "The plan interval is shown"
+    );
+    assert.equal(
+      find(".btn-discourse-subscriptions-subscribe:first-child .amount").text().trim(),
+      "$AUD 44.99",
+      "The plan amount and currency is shown"
     );
   }
 });

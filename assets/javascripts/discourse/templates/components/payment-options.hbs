@@ -17,8 +17,12 @@
       actionParam=plan
       class="btn btn-discourse-subscriptions-subscribe"
     }}
-      <div>Monthly</div>
-      AUD $5.00
+      <div class="interval">
+        {{plan.interval}}
+      </div>
+      <span class="amount">
+        {{format-currency plan.currency plan.amountDollars}}
+      </span>
     {{/d-button}}
   {{/each}}
 </div>
