@@ -1,7 +1,8 @@
 export default Ember.Component.extend({
   actions: {
     clickPlan(plan) {
-      this.selectPlan(plan);
+      this.plans.map(p => p.set("selected", false));
+      plan.set("selected", true);
     }
   }
 });

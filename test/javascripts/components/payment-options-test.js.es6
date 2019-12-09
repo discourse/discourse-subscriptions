@@ -1,4 +1,5 @@
 import componentTest from "helpers/component-test";
+import EmberObject from "@ember/object";
 
 moduleForComponent("payment-options", { integration: true });
 
@@ -53,21 +54,21 @@ componentTest("Discourse Subscriptions payment options has content", {
 });
 
 componentTest("Discourse Subscriptions payment options plan is selected", {
-  template: `{{payment-options plans=plans selectPlan=selectPlan}}`,
+  template: `{{payment-options plans=plans}}`,
 
   beforeEach() {},
 
   async test(assert) {
-    assert.expect(1);
     this.set("plans", [
-      { currency: "aud", interval: "year", amountDollars: "44.99" },
-      { currency: "gdp", interval: "month", amountDollars: "9.99" }
+      EmberObject.create({
+        currency: "aud",
+        interval: "year",
+        amountDollars: "44.99"
+      })
     ]);
 
-    this.set("selectPlan", function(plan) {
-      assert.equal(plan, this.get('plans.firstObject'), "the plan is selected");
-    });
-
     await click(".btn-discourse-subscriptions-subscribe:first-child");
+
+    assert.ok(this.get("plans.firstObject.selected"), "it selected the plan");
   }
 });

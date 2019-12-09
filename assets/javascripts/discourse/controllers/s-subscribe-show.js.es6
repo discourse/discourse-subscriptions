@@ -9,10 +9,7 @@ export default Ember.Controller.extend({
     );
     const elements = this.get("stripe").elements();
 
-    this.set(
-      "cardElement",
-      elements.create("card", { hidePostalCode: true, disabled: true })
-    );
+    this.set("cardElement", elements.create("card", { hidePostalCode: true }));
   },
 
   actions: {

@@ -12,9 +12,10 @@
 
 <div id="subscribe-buttons">
   {{#each plans as |plan|}}
-    {{#d-button
+    {{#ds-button
       action="clickPlan"
       actionParam=plan
+      selected=plan.selected
       class="btn btn-discourse-subscriptions-subscribe"
     }}
       <div class="interval">
@@ -23,6 +24,6 @@
       <span class="amount">
         {{format-currency plan.currency plan.amountDollars}}
       </span>
-    {{/d-button}}
+    {{/ds-button}}
   {{/each}}
 </div>
