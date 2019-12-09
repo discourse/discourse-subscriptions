@@ -1,14 +1,16 @@
 
 <button class="btn btn-primary">
-  Purchase a subscription
+  {{i18n "discourse_subscriptions.plans.purchase"}}
 </button>
-<button class="btn">
+{{!-- <button class="btn">
   Make just one payment
-</button>
+</button> --}}
 
 <hr>
 
-<p>Select subscription period</p>
+<p>
+  {{i18n "discourse_subscriptions.plans.select"}}
+</p>
 
 <div id="subscribe-buttons">
   {{#each plans as |plan|}}

@@ -15,6 +15,20 @@ export default Ember.Controller.extend({
   actions: {
     stripePaymentHandler() {
       this.set("loading", true);
+      const plan = this.get("model.plans")
+        .filterBy("selected")
+        .get("firstObject");
+
+      if (!plan) {
+        bootbox.alert(
+          I18n.t(
+            "discourse_subscriptions.transactions.payment.validate.plan.required"
+          )
+        );
+
+        this.set("loading", false);
+        return;
+      }
 
       this.stripe.createToken(this.get("cardElement")).then(result => {
         if (result.error) {
@@ -31,11 +45,10 @@ export default Ember.Controller.extend({
           }).then(customer => {
             const subscription = this.get("model.subscription");
 
-            subscription.set("customer", customer.id);
-
-            if (subscription.get("plan") === undefined) {
-              subscription.set("plan", this.get("model.plans.firstObject.id"));
-            }
+            subscription.setProperties({
+              customer: customer.id,
+              plan: plan.get("id")
+            });
 
             subscription
               .save()

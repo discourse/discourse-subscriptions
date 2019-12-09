@@ -21,11 +21,16 @@ en:
       transactions:
         payment:
           success: Your payment was successful
+          validate:
+            plan:
+              required: Please select a subscription plan.
       navigation:
         subscriptions: Subscriptions
         subscribe: Subscribe
         billing: Billing
       plans:
+        select: Select subscription period
+        purchase: Purchase a subscription
         interval:
           adverb:
             week: Weekly
