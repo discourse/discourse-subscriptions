@@ -21,8 +21,8 @@ componentTest("Discourse Subscriptions payment options has content", {
 
   async test(assert) {
     this.set("plans", [
-      { currency: 'AUD', interval: 'year', amountDollars: "44.99" },
-      { currency: 'GDP', interval: 'month', amountDollars: "9.99" },
+      { currency: "aud", interval: "year", amountDollars: "44.99" },
+      { currency: "gdp", interval: "month", amountDollars: "9.99" }
     ]);
 
     assert.equal(
@@ -36,12 +36,16 @@ componentTest("Discourse Subscriptions payment options has content", {
       "The none are selected"
     );
     assert.equal(
-      find(".btn-discourse-subscriptions-subscribe:first-child .interval").text().trim(),
-      "year",
+      find(".btn-discourse-subscriptions-subscribe:first-child .interval")
+        .text()
+        .trim(),
+      "Yearly",
       "The plan interval is shown"
     );
     assert.equal(
-      find(".btn-discourse-subscriptions-subscribe:first-child .amount").text().trim(),
+      find(".btn-discourse-subscriptions-subscribe:first-child .amount")
+        .text()
+        .trim(),
       "$AUD 44.99",
       "The plan amount and currency is shown"
     );
@@ -55,10 +59,13 @@ componentTest("Discourse Subscriptions payment options plan is selected", {
 
   async test(assert) {
     assert.expect(1);
-    this.set("plans", [1, 2]);
+    this.set("plans", [
+      { currency: "aud", interval: "year", amountDollars: "44.99" },
+      { currency: "gdp", interval: "month", amountDollars: "9.99" }
+    ]);
 
     this.set("selectPlan", function(plan) {
-      assert.equal(plan, 1, "the plan is selected");
+      assert.equal(plan, this.get('plans.firstObject'), "the plan is selected");
     });
 
     await click(".btn-discourse-subscriptions-subscribe:first-child");

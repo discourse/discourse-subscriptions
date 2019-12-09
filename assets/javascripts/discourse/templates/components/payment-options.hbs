@@ -18,7 +18,7 @@
       class="btn btn-discourse-subscriptions-subscribe"
     }}
       <div class="interval">
-        {{plan.interval}}
+        {{i18n (concat "discourse_subscriptions.plans.interval.adverb." plan.interval)}}
       </div>
       <span class="amount">
         {{format-currency plan.currency plan.amountDollars}}

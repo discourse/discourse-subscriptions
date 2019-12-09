@@ -25,6 +25,12 @@ en:
         subscriptions: Subscriptions
         subscribe: Subscribe
         billing: Billing
+      plans:
+        interval:
+          adverb:
+            week: Weekly
+            month: Monthly
+            year: Yearly
       user:
         plans:
           rate: Rate
