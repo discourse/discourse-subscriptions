@@ -17,7 +17,7 @@ module DiscourseSubscriptions
         render_json_dump products
 
       rescue ::Stripe::InvalidRequestError => e
-        return render_json_error e.message
+        render_json_error e.message
       end
     end
 
@@ -28,7 +28,7 @@ module DiscourseSubscriptions
         render_json_dump serialize(product)
 
       rescue ::Stripe::InvalidRequestError => e
-        return render_json_error e.message
+        render_json_error e.message
       end
     end
 

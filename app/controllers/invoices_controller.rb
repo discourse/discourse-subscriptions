@@ -18,7 +18,7 @@ module DiscourseSubscriptions
           render_json_dump []
         end
       rescue ::Stripe::InvalidRequestError => e
-        return render_json_error e.message
+        render_json_error e.message
       end
     end
 

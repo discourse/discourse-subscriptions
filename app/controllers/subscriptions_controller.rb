@@ -21,7 +21,7 @@ module DiscourseSubscriptions
         render_json_dump subscriptions
 
       rescue ::Stripe::InvalidRequestError => e
-        return render_json_error e.message
+        render_json_error e.message
       end
     end
 
@@ -50,7 +50,7 @@ module DiscourseSubscriptions
         render_json_dump @subscription
 
       rescue ::Stripe::InvalidRequestError => e
-        return render_json_error e.message
+        render_json_error e.message
       end
     end
 
