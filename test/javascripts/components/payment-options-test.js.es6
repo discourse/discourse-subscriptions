@@ -27,6 +27,26 @@ componentTest("Discourse Subscriptions payment options has content", {
     ]);
 
     assert.equal(
+      find(".btn-discourse-subscriptions-payment-type").length,
+      2,
+      "The payment type buttons are shown"
+    );
+    assert.equal(
+      find("#discourse-subscriptions-payment-type-plan.btn-primary").length,
+      1,
+      "The plan payment type button is selected"
+    );
+    assert.equal(
+      find("#discourse-subscriptions-payment-type-payment.btn-primary").length,
+      0,
+      "The single payment type button is not selected"
+    );
+    assert.equal(
+      find(".btn-discourse-subscriptions-payment-type").length,
+      2,
+      "The payment type buttons are shown"
+    );
+    assert.equal(
       find(".btn-discourse-subscriptions-subscribe").length,
       2,
       "The plan buttons are shown"
@@ -34,7 +54,7 @@ componentTest("Discourse Subscriptions payment options has content", {
     assert.equal(
       find("#subscribe-buttons .btn-primary").length,
       0,
-      "The none are selected"
+      "No plan buttons are selected by default"
     );
     assert.equal(
       find(".btn-discourse-subscriptions-subscribe:first-child .interval")

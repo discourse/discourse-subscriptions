@@ -1,10 +1,19 @@
 
-<button class="btn btn-primary">
+{{#ds-button
+  id="discourse-subscriptions-payment-type-plan"
+  selected=true
+  class="btn-discourse-subscriptions-payment-type"
+}}
   {{i18n "discourse_subscriptions.plans.purchase"}}
-</button>
-{{!-- <button class="btn">
-  Make just one payment
-</button> --}}
+{{/ds-button}}
+
+{{#ds-button
+  id="discourse-subscriptions-payment-type-payment"
+  selected=false
+  class="btn-discourse-subscriptions-payment-type"
+}}
+  {{i18n "discourse_subscriptions.payment.purchase"}}
+{{/ds-button}}
 
 <hr>
 
@@ -18,7 +27,7 @@
       action="clickPlan"
       actionParam=plan
       selected=plan.selected
-      class="btn btn-discourse-subscriptions-subscribe"
+      class="btn-discourse-subscriptions-subscribe"
     }}
       <div class="interval">
         {{i18n (concat "discourse_subscriptions.plans.interval.adverb." plan.interval)}}

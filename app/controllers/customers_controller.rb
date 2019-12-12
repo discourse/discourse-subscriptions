@@ -13,11 +13,6 @@ module DiscourseSubscriptions
           source: params[:source]
         )
 
-        DiscourseSubscriptions::Customer.create_customer(
-          current_user,
-          customer
-        )
-
         render_json_dump customer
 
       rescue ::Stripe::InvalidRequestError => e

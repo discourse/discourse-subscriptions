@@ -1,4 +1,5 @@
-import { ajax } from "discourse/lib/ajax";
+import Customer from "discourse/plugins/discourse-subscriptions/discourse/models/customer";
+import Subscription from "discourse/plugins/discourse-subscriptions/discourse/models/subscription";
 
 export default Ember.Controller.extend({
   init() {
@@ -35,17 +36,10 @@ export default Ember.Controller.extend({
           bootbox.alert(result.error.message);
           this.set("loading", false);
         } else {
-          const customerData = {
-            source: result.token.id
-          };
+          const customer = Customer.create({ source: result.token.id });
 
-          return ajax("/s/customers", {
-            method: "post",
-            data: customerData
-          }).then(customer => {
-            const subscription = this.get("model.subscription");
-
-            subscription.setProperties({
+          customer.save().then(customer => {
+            const subscription = Subscription.create({
               customer: customer.id,
               plan: plan.get("id")
             });

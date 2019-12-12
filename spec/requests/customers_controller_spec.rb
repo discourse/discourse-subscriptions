@@ -20,14 +20,6 @@ module DiscourseSubscriptions
 
           post "/s/customers.json", params: { source: 'tok_interesting' }
         end
-
-        it "saves the customer" do
-          ::Stripe::Customer.expects(:create).returns(id: 'cus_id23456')
-
-          expect {
-            post "/s/customers.json", params: { source: 'tok_interesting' }
-          }.to change { DiscourseSubscriptions::Customer.count }
-        end
       end
     end
   end
