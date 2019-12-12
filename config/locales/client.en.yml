@@ -18,26 +18,35 @@ en:
       title: Discourse Subscriptions
       admin_navigation: Subscriptions
       optional: Optional
-      transactions:
-        payment:
-          success: Your payment was successful
-          validate:
-            plan:
-              required: Please select a subscription plan.
       navigation:
         subscriptions: Subscriptions
         subscribe: Subscribe
         billing: Billing
       plans:
-        select: Select subscription plan
         purchase: Purchase a subscription
+        select: Select subscription plan
         interval:
           adverb:
             week: Weekly
             month: Monthly
             year: Yearly
+        payment_button:
+          Subscribe
+        success: Thank you! Your subscription has been created.
+        validate:
+          payment_options:
+            required: Please select a subscription plan.
       payment:
         purchase: Make just one payment
+        select: Select a payment option
+        interval:
+          One payment
+        payment_button:
+          Pay Once
+        success: Thank you!
+        validate:
+          payment_options:
+            required: Please select a payment option.
       one_time:
         heading:
           payment: Make a Payment

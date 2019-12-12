@@ -1,4 +1,4 @@
-import computed from "ember-addons/ember-computed-decorators";
+import computed from "discourse-common/utils/decorators";
 import User from "discourse/models/user";
 
 export default Ember.Component.extend({

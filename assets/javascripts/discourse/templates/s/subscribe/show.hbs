@@ -14,7 +14,10 @@
         {{i18n 'discourse_subscriptions.subscribe.card.title'}}
       </h2>
 
-      {{payment-options plans=model.plans}}
+      {{payment-options
+        plans=model.plans
+        planTypeIsSelected=planTypeIsSelected
+      }}
 
       <hr>
 
@@ -27,7 +30,7 @@
           disabled=loading
           action="stripePaymentHandler"
           class="btn btn-primary btn-payment"}}
-          {{i18n 'discourse_subscriptions.subscribe.buttons.subscribe'}}
+          {{buttonText}}
         {{/d-button}}
       {{/if}}
 

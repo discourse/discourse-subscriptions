@@ -1,27 +1,35 @@
 
-{{#ds-button
-  id="discourse-subscriptions-payment-type-plan"
-  selected=true
-  class="btn-discourse-subscriptions-payment-type"
-}}
-  {{i18n "discourse_subscriptions.plans.purchase"}}
-{{/ds-button}}
+<div class="subscribe-buttons">
+  {{#ds-button
+    id="discourse-subscriptions-payment-type-plan"
+    selected=planButtonSelected
+    action="selectPlans"
+    class="btn-discourse-subscriptions-payment-type"
+  }}
+    {{i18n "discourse_subscriptions.plans.purchase"}}
+  {{/ds-button}}
 
-{{#ds-button
-  id="discourse-subscriptions-payment-type-payment"
-  selected=false
-  class="btn-discourse-subscriptions-payment-type"
-}}
-  {{i18n "discourse_subscriptions.payment.purchase"}}
-{{/ds-button}}
+  {{#ds-button
+    id="discourse-subscriptions-payment-type-payment"
+    selected=paymentButtonSelected
+    action="selectPayments"
+    class="btn-discourse-subscriptions-payment-type"
+  }}
+    {{i18n "discourse_subscriptions.payment.purchase"}}
+  {{/ds-button}}
+</div>
 
 <hr>
 
 <p>
-  {{i18n "discourse_subscriptions.plans.select"}}
+  {{#if planTypeIsSelected}}
+    {{i18n "discourse_subscriptions.plans.select"}}
+  {{else}}
+    {{i18n "discourse_subscriptions.payment.select"}}
+  {{/if}}
 </p>
 
-<div id="subscribe-buttons">
+<div class="subscribe-buttons">
   {{#each plans as |plan|}}
     {{#ds-button
       action="clickPlan"
@@ -30,7 +38,11 @@
       class="btn-discourse-subscriptions-subscribe"
     }}
       <div class="interval">
-        {{i18n (concat "discourse_subscriptions.plans.interval.adverb." plan.interval)}}
+        {{#if planTypeIsSelected}}
+          {{i18n (concat "discourse_subscriptions.plans.interval.adverb." plan.interval)}}
+        {{else}}
+          {{i18n "discourse_subscriptions.payment.interval"}}
+        {{/if}}
       </div>
       <span class="amount">
         {{format-currency plan.currency plan.amountDollars}}

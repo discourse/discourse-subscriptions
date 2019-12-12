@@ -62,6 +62,7 @@ after_initialize do
     "../app/controllers/invoices_controller",
     "../app/controllers/patrons_controller",
     "../app/controllers/plans_controller",
+    "../app/controllers/payments_controller",
     "../app/controllers/products_controller",
     "../app/controllers/subscriptions_controller",
     "../app/models/customer",

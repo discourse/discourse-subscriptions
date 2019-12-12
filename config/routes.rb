@@ -18,6 +18,7 @@ DiscourseSubscriptions::Engine.routes.draw do
 
   resources :customers, only: [:create]
   resources :invoices, only: [:index]
+  resources :payments, only: [:create]
   resources :patrons, only: [:index, :create]
   resources :plans, only: [:index]
   resources :products, only: [:index, :show]
