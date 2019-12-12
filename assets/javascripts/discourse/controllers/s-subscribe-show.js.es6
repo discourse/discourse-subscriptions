@@ -38,9 +38,9 @@ export default Ember.Controller.extend({
         } else {
           const customer = Customer.create({ source: result.token.id });
 
-          customer.save().then(customer => {
+          customer.save().then(c => {
             const subscription = Subscription.create({
-              customer: customer.id,
+              customer: c.id,
               plan: plan.get("id")
             });
 
