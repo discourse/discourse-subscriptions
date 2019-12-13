@@ -1,6 +1,7 @@
+import Route from "@ember/routing/route";
 import UserSubscription from "discourse/plugins/discourse-subscriptions/discourse/models/user-subscription";
 
-export default Discourse.Route.extend({
+export default Route.extend({
   model() {
     return UserSubscription.findAll();
   },

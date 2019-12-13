@@ -7,7 +7,12 @@ module DiscourseSubscriptions
     context "not authenticated" do
       it "does not create a payment intent" do
         ::Stripe::PaymentIntent.expects(:create).never
-        post "/s/payments.json", params: { }
+
+        post "/s/payments.json", params: {
+          payment_method: 'pm_123',
+          amount: 999,
+          currency: 'gdp'
+        }
       end
     end
 

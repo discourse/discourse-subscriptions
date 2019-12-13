@@ -1,6 +1,7 @@
+import Route from "@ember/routing/route";
 import Invoice from "discourse/plugins/discourse-subscriptions/discourse/models/invoice";
 
-export default Discourse.Route.extend({
+export default Route.extend({
   model() {
     return Invoice.findAll();
   },

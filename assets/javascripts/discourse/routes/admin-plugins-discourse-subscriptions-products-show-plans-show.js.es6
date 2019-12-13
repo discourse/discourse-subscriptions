@@ -1,7 +1,8 @@
+import Route from "@ember/routing/route";
 import AdminPlan from "discourse/plugins/discourse-subscriptions/discourse/models/admin-plan";
 import Group from "discourse/models/group";
 
-export default Discourse.Route.extend({
+export default Route.extend({
   model(params) {
     const id = params["plan-id"];
     const product = this.modelFor(

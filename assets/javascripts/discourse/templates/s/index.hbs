@@ -1,14 +1,4 @@
 
-<h3>{{i18n 'discourse_subscriptions.one_time.heading.payment' site_name=siteSettings.title}}</h3>
-
-<p>
-  {{cook-text siteSettings.discourse_subscriptions_payment_page}}
-</p>
-
-<div class="donations-page-payment">
-  {{donation-form
-    billing=model
-    paymentSuccessHandler=(action "paymentSuccessHandler")
-    stripePaymentHandler=(action "stripePaymentHandler")
-  }}
+<div id="product-list">
+  {{product-list products=model}}
 </div>

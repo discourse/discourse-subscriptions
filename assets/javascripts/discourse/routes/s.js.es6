@@ -1,22 +1,3 @@
-import { ajax } from "discourse/lib/ajax";
+import Route from "@ember/routing/route";
 
-export default Discourse.Route.extend({
-  model() {
-    const user = Ember.Object.create({
-      name: "",
-      email: "",
-      phone: ""
-    });
-
-    return ajax("/s", {
-      method: "get"
-    })
-      .then(result => {
-        user.set("email", result.email);
-        return user;
-      })
-      .catch(() => {
-        return user;
-      });
-  }
-});
+export default Route.extend();

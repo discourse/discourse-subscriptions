@@ -1,6 +1,7 @@
+import Route from "@ember/routing/route";
 import AdminProduct from "discourse/plugins/discourse-subscriptions/discourse/models/admin-product";
 
-export default Discourse.Route.extend({
+export default Route.extend({
   model() {
     return AdminProduct.findAll();
   },
