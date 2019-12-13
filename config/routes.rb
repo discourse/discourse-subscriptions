@@ -24,7 +24,5 @@ DiscourseSubscriptions::Engine.routes.draw do
   resources :products, only: [:index, :show]
   resources :subscriptions, only: [:create]
 
-  get '/' => 'patrons#index'
-  get '/subscribe' => 'patrons#index'
-  get '/subscribe/:id' => 'patrons#index'
+  get '/:id' => 'patrons#index'
 end
