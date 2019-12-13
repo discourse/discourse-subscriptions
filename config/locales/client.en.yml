@@ -21,7 +21,8 @@ en:
       navigation:
         subscriptions: Subscriptions
         subscribe: Subscribe
-        billing: Billing
+        user_activity:
+          payments: Payments
       plans:
         purchase: Purchase a subscription
         select: Select subscription plan

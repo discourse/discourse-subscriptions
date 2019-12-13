@@ -1,5 +1,4 @@
 import componentTest from "helpers/component-test";
-import EmberObject from "@ember/object";
 
 moduleForComponent("payment-options", { integration: true });
 

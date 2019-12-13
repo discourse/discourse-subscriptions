@@ -92,8 +92,13 @@ export default Ember.Controller.extend({
             bootbox.alert(result.error.message || result.error);
           } else {
             this.alert(`${type}.success`);
+
+            const success_route = this.planTypeIsSelected
+              ? "user.subscriptions"
+              : "userActivity.payments";
+
             this.transitionToRoute(
-              "user.subscriptions",
+              success_route,
               Discourse.User.current().username.toLowerCase()
             );
           }
