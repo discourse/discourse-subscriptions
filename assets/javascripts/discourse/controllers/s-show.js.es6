@@ -94,8 +94,8 @@ export default Ember.Controller.extend({
             this.alert(`${type}.success`);
 
             const success_route = this.planTypeIsSelected
-              ? "user.subscriptions"
-              : "userActivity.payments";
+              ? "user.billing.subscriptions"
+              : "user.billing.payments";
 
             this.transitionToRoute(
               success_route,
