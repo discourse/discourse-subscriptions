@@ -2,16 +2,10 @@ import Route from "@ember/routing/route";
 import UserSubscription from "discourse/plugins/discourse-subscriptions/discourse/models/user-subscription";
 
 export default Route.extend({
+  templateName: "user/billing/subscriptions",
+
   model() {
     return UserSubscription.findAll();
-  },
-
-  setupController(controller, model) {
-    if (this.currentUser.id !== this.modelFor("user").id) {
-      this.replaceWith("userActivity");
-    } else {
-      controller.setProperties({ model });
-    }
   },
 
   actions: {

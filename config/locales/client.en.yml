@@ -19,6 +19,8 @@ en:
       admin_navigation: Subscriptions
       optional: Optional
       navigation:
+        billing: Billing
+        payments: Payments
         subscriptions: Subscriptions
         subscribe: Subscribe
         user_activity:
@@ -61,12 +63,12 @@ en:
         amount: Amount
         payment_intent_id: Payment ID
       user:
+        payments_help: There are no payments
         plans:
           rate: Rate
           product: Name
-        subscriptions_help: You have no subscriptions.
+        subscriptions_help: You have no active subscriptions.
         subscriptions:
-          title: Subscriptions
           id: Subscription ID
           status: Status
           created_at: Created

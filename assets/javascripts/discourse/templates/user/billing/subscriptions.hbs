@@ -1,7 +1,4 @@
-
 {{#d-section pageClass="user-subscriptions" class="user-content"}}
-  <h2>{{i18n 'discourse_subscriptions.user.subscriptions.title'}}</h2>
-
   {{#if model}}
     <table class="table discourse-subscriptions-user-table">
       <thead>
@@ -30,6 +27,8 @@
       {{/each}}
     </table>
   {{else}}
-    <p>{{i18n 'discourse_subscriptions.user.subscriptions_help'}}</p>
+    <div class="alert alert-info">
+      {{i18n 'discourse_subscriptions.user.subscriptions_help'}}
+    </div>
   {{/if}}
 {{/d-section}}

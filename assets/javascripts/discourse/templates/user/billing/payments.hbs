@@ -1,6 +1,4 @@
 
-<h3>{{i18n 'discourse_subscriptions.user.billing.title'}}</h3>
-
 {{#if model}}
   <table class="topic-list">
     <thead>
@@ -23,5 +21,7 @@
     {{/each}}
   </table>
 {{else}}
-  <p>{{i18n 'discourse_subscriptions.user.billing_help'}}</p>
+  <div class="alert alert-info">
+    {{i18n 'discourse_subscriptions.user.payments_help'}}
+  </div>
 {{/if}}

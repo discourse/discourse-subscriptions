@@ -1,10 +1,7 @@
 import Route from "@ember/routing/route";
-import Invoice from "discourse/plugins/discourse-subscriptions/discourse/models/invoice";
 
 export default Route.extend({
-  model() {
-    return Invoice.findAll();
-  },
+  templateName: "user/billing",
 
   setupController(controller, model) {
     if (this.currentUser.id !== this.modelFor("user").id) {
