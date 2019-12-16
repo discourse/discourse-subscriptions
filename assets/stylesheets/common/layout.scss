@@ -1,6 +1,9 @@
-.discourse-patrons-section-columns {
+.discourse-subscriptions-section-columns {
   display: flex;
   justify-content: space-between;
+
+  margin: 20px;
+  padding: 20px;
 
   @include breakpoint(medium) {
     flex-direction: column;

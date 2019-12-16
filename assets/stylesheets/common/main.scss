@@ -62,20 +62,6 @@ table.discourse-subscriptions-user-table {
   background-color: $primary-low;
 }
 
-.discourse-patrons-section-columns {
-  margin: 20px;
-  padding: 20px;
-
-  .discourse-patrons-billing {
-    .ember-text-field {
-      margin-bottom: 0;
-    }
-    .field {
-      margin-bottom: 10px;
-    }
-  }
-}
-
 .discourse-patrons-fields {
   .field {
     width: 25%;
