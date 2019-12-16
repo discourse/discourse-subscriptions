@@ -25,12 +25,17 @@ module DiscourseSubscriptions
 
       describe "create" do
         it "creates a payment intent" do
+          ::Stripe::Customer.expects(:create).with(
+            email: user.email
+          ).returns(id: 'cus_87653')
+
           ::Stripe::PaymentIntent.expects(:create).with(
             payment_method_types: ['card'],
             payment_method: 'pm_123',
             amount: '999',
             currency: 'gdp',
-            confirm: true
+            confirm: true,
+            customer: 'cus_87653'
           )
 
           post "/s/payments.json", params: {

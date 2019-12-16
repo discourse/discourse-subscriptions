@@ -11,12 +11,22 @@ module DiscourseSubscriptions
 
     def create
       begin
+        customer = ::Stripe::Customer.create(
+          email: current_user.email,
+        )
+
+        DiscourseSubscriptions::Customer.create(
+          user_id: current_user.id,
+          customer_id: customer[:id],
+        )
+
         payment = ::Stripe::PaymentIntent.create(
           payment_method_types: ['card'],
           payment_method: params[:payment_method],
           amount: params[:amount],
           currency: params[:currency],
-          confirm: true
+          confirm: true,
+          customer: customer[:id],
         )
 
         render_json_dump payment
