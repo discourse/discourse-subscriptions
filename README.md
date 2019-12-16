@@ -42,7 +42,7 @@ After you have created a User Group and configured it correctly, you can move on
 
 ## Enter your configuration details
 
-When you create an account with Stripe, you'll get a public and private key. These are entered in the Discourse Patrons admin so your subscriptions can integrate with Stripe. There are different keys for testing and production environments.
+When you create an account with Stripe, you'll get a public and private key. These are entered in the Discourse Subscriptions admin so your subscriptions can integrate with Stripe. There are different keys for testing and production environments.
 
 You can also toggle the Subscribe button on and off in case you want to hide the link while you're setting up.
 
@@ -58,7 +58,7 @@ Test with these credit card numbers:
 
 * 4111 1111 1111 1111
 
-Visit `/s/subscribe` and enter a few test transactions.
+Visit `/s` and enter a few test transactions.
 
 ## Warranty
 
