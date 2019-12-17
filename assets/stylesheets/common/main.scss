@@ -10,7 +10,7 @@ textarea[readonly] {
   border-color: #e9e9e9;
 }
 
-#discourse-patrons-admin {
+#discourse-subscriptions-admin {
   .btn-right {
     text-align: right;
   }
@@ -47,7 +47,7 @@ table.discourse-subscriptions-user-table {
   font-size: 0.8em;
 }
 
-.discourse-patrons-admin-textarea {
+.discourse-subscriptions-admin-textarea {
   width: 80%;
 }
 
@@ -57,30 +57,10 @@ table.discourse-subscriptions-user-table {
   background-color: $primary-very-low;
 }
 
-.discourse-patrons-payment-details {
-  border: 1px $primary-low-mid solid;
-  background-color: $primary-low;
-}
-
-.discourse-patrons-fields {
-  .field {
-    width: 25%;
-  }
-}
-
 #card-action {
   margin: 20px 0;
 }
 
-.discourse-patrons-confirmation-billing {
+.discourse-subscriptions-confirmation-billing {
   margin-right: 40px;
-}
-
-.discourse-patrons-confirmation {
-  width: 100%;
-
-  td {
-    padding: 10px;
-    white-space: nowrap;
-  }
 }
