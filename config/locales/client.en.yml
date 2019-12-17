@@ -50,19 +50,11 @@ en:
         validate:
           payment_options:
             required: Please select a payment option.
-      one_time:
-        heading:
-          payment: Make a Payment
-          success: Thank you!
-        payment:
-          optional: Optional
-          receipt_info: A receipt is sent to this email address
-          your_information: Your information
-          payment_information: Payment information
-          payment_confirmation: Confirm information
-        amount: Amount
-        payment_intent_id: Payment ID
       user:
+        payments:
+          id: Payment ID
+          amount: Amount
+          created_at: Created
         payments_help: There are no payments
         plans:
           rate: Rate

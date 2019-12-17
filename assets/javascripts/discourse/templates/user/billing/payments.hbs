@@ -1,22 +1,15 @@
-
 {{#if model}}
-  <table class="topic-list">
+  <table class="table discourse-subscriptions-user-table">
     <thead>
-      <th>{{i18n 'discourse_subscriptions.user.billing.invoices.amount'}}</th>
-      <th>{{i18n 'discourse_subscriptions.user.billing.invoices.number'}}</th>
-      <th>{{i18n 'discourse_subscriptions.user.billing.invoices.created_at'}}</th>
-      <th></th>
+      <th>{{i18n 'discourse_subscriptions.user.payments.id'}}</th>
+      <th>{{i18n 'discourse_subscriptions.user.payments.amount'}}</th>
+      <th>{{i18n 'discourse_subscriptions.user.payments.created_at'}}</th>
     </thead>
-    {{#each model as |invoice|}}
+    {{#each model as |payment|}}
       <tr>
-        <td>{{invoice.amount_paid}}</td>
-        <td>{{invoice.number}}</td>
-        <td>{{format-unix-date invoice.created}}</td>
-        <td class="td-right">
-          <a href="{{invoice.invoice_pdf}}" class="btn btn-icon">
-            {{d-icon "download"}}
-          </a>
-        </td>
+        <td>{{payment.id}}</td>
+        <td>{{format-currency payment.currency payment.amountDollars}}</td>
+        <td>{{format-unix-date payment.created}}</td>
       </tr>
     {{/each}}
   </table>

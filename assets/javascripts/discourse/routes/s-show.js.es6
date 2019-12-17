@@ -7,7 +7,7 @@ export default Route.extend({
     const product_id = params["subscription-id"];
 
     const product = Product.find(product_id);
-    const plans = Plan.findAll({ product_id: product_id });
+    const plans = Plan.findAll({ product_id });
 
     return Ember.RSVP.hash({ plans, product });
   }
