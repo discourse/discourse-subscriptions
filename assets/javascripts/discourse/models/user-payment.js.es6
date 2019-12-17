@@ -4,7 +4,7 @@ import { ajax } from "discourse/lib/ajax";
 
 const UserPayment = EmberObject.extend({
   @computed("amount")
-  amountDollars(amount){
+  amountDollars(amount) {
     return parseFloat(amount / 100).toFixed(2);
   }
 });
