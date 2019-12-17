@@ -10,21 +10,9 @@ plugins:
   discourse_subscriptions_secret_key:
     default: ''
     client: false
-  discourse_patrons_payment_page:
+  discourse_subscriptions_allow_payments:
+    default: false
     client: true
-    default: ''
-  discourse_patrons_success_page:
-    client: true
-    default: ''
-  discourse_patrons_payment_description:
-    client: true
-    default: ''
-  discourse_patrons_amounts:
-    client: true
-    type: list
-    default: '1.00|2.00|5.00|10.00|20.00|50.00|100.00'
-    regex: "^([0-9]+.[0-9]{2}\\|)+[0-9]+.[0-9]{2}$"
-    regex_error: "site_settings.errors.discourse_patrons_amount_must_be_currency"
   discourse_subscriptions_currency:
     client: true
     default: "USD"

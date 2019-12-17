@@ -4,13 +4,8 @@ en:
     discourse_subscriptions_extra_nav_subscribe: Show the subscribe button in the primary navigation
     discourse_subscriptions_public_key: Stripe Publishable Key
     discourse_subscriptions_secret_key: Stripe Secret Key
-    discourse_subscriptions_currency: Default Currency Code. This can be overridden when creating a subscription plan
-    discourse_patrons_zip_code: "Show Zip Code"
-    discourse_patrons_billing_address: "Collect billing address"
-    discourse_patrons_payment_page: "Text to be added to enter payments page. Markdown is supported."
-    discourse_patrons_success_page: "Text to be added to success page. Markdown is supported."
-    discourse_patrons_payment_description: "This is sent to Stripe and shows in the payment information"
-    discourse_patrons_amounts: "Payment amounts a user can select"
+    discourse_subscriptions_currency: Default Currency Code. This can be overridden when creating a subscription plan.
+    discourse_subscriptions_allow_payments: Allow single payments
     errors:
       discourse_patrons_amount_must_be_currency: "Currency amounts must be currencies without dollar symbol (eg 1.50)"
   js:

@@ -1,23 +1,25 @@
 
-<div class="subscribe-buttons">
-  {{#ds-button
-    id="discourse-subscriptions-payment-type-plan"
-    selected=planButtonSelected
-    action="selectPlans"
-    class="btn-discourse-subscriptions-payment-type"
-  }}
-    {{i18n "discourse_subscriptions.plans.purchase"}}
-  {{/ds-button}}
+{{#if paymentsAllowed}}
+  <div class="subscribe-buttons">
+    {{#ds-button
+      id="discourse-subscriptions-payment-type-plan"
+      selected=planButtonSelected
+      action="selectPlans"
+      class="btn-discourse-subscriptions-payment-type"
+    }}
+      {{i18n "discourse_subscriptions.plans.purchase"}}
+    {{/ds-button}}
 
-  {{#ds-button
-    id="discourse-subscriptions-payment-type-payment"
-    selected=paymentButtonSelected
-    action="selectPayments"
-    class="btn-discourse-subscriptions-payment-type"
-  }}
-    {{i18n "discourse_subscriptions.payment.purchase"}}
-  {{/ds-button}}
-</div>
+    {{#ds-button
+      id="discourse-subscriptions-payment-type-payment"
+      selected=paymentButtonSelected
+      action="selectPayments"
+      class="btn-discourse-subscriptions-payment-type"
+    }}
+      {{i18n "discourse_subscriptions.payment.purchase"}}
+    {{/ds-button}}
+  </div>
+{{/if}}
 
 <hr>
 

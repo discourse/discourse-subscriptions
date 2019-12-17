@@ -19,6 +19,10 @@ export default Ember.Controller.extend({
   init() {
     this._super(...arguments);
     this.set(
+      "paymentsAllowed",
+      Discourse.SiteSettings.discourse_subscriptions_allow_payments
+    );
+    this.set(
       "stripe",
       Stripe(Discourse.SiteSettings.discourse_subscriptions_public_key)
     );
