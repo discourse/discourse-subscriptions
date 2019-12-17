@@ -1,6 +1,7 @@
+import EmberObject from "@ember/object";
 import { ajax } from "discourse/lib/ajax";
 
-const Payment = Discourse.Model.extend({
+const Payment = EmberObject.extend({
   save() {
     const data = {
       payment_method: this.payment_method,

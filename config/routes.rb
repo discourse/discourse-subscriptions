@@ -13,6 +13,7 @@ DiscourseSubscriptions::Engine.routes.draw do
   end
 
   namespace :user do
+    resources :payments, only: [:index]
     resources :subscriptions, only: [:index, :destroy]
   end
 

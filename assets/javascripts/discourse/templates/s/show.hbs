@@ -4,6 +4,9 @@
     <h2>
       {{model.product.name}}
     </h2>
+
+    <hr>
+
     <p>
       {{model.product.description}}
     </p>
@@ -14,8 +17,11 @@
         {{i18n 'discourse_subscriptions.subscribe.card.title'}}
       </h2>
 
+      <hr>
+
       {{payment-options
         plans=model.plans
+        paymentsAllowed=paymentsAllowed
         planTypeIsSelected=planTypeIsSelected
       }}
 

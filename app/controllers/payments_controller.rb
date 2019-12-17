@@ -11,22 +11,21 @@ module DiscourseSubscriptions
 
     def create
       begin
-        customer = ::Stripe::Customer.create(
-          email: current_user.email,
-        )
+        customer = DiscourseSubscriptions::Customer.where(user_id: current_user.id, product_id: nil).first_or_create do |c|
+          new_customer = ::Stripe::Customer.create(
+            email: current_user.email
+          )
 
-        DiscourseSubscriptions::Customer.create(
-          user_id: current_user.id,
-          customer_id: customer[:id],
-        )
+          c.customer_id = new_customer[:id]
+        end
 
         payment = ::Stripe::PaymentIntent.create(
           payment_method_types: ['card'],
           payment_method: params[:payment_method],
           amount: params[:amount],
           currency: params[:currency],
-          confirm: true,
-          customer: customer[:id],
+          customer: customer[:customer_id],
+          confirm: true
         )
 
         render_json_dump payment
@@ -34,7 +33,7 @@ module DiscourseSubscriptions
       rescue ::Stripe::InvalidRequestError => e
         render_json_error e.message
       rescue ::Stripe::CardError => e
-        render_json_error 'Card Declined'
+        render_json_error I18n.t('discourse_subscriptions.card.declined')
       end
     end
   end

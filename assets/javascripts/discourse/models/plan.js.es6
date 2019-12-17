@@ -1,7 +1,8 @@
-import computed from "ember-addons/ember-computed-decorators";
+import EmberObject from "@ember/object";
+import computed from "discourse-common/utils/decorators";
 import { ajax } from "discourse/lib/ajax";
 
-const Plan = Discourse.Model.extend({
+const Plan = EmberObject.extend({
   amountDollars: Ember.computed("amount", {
     get() {
       return parseFloat(this.get("amount") / 100).toFixed(2);
