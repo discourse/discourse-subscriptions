@@ -2,7 +2,7 @@
 
 # name: discourse-subscriptions
 # about: Integrates Stripe into Discourse to allow visitors to subscribe
-# version: 2.7.0
+# version: 2.7.1
 # url: https://github.com/rimian/discourse-subscriptions
 # authors: Rimian Perkins
 
@@ -44,7 +44,7 @@ after_initialize do
 
   ::Stripe.set_app_info(
     'Discourse Subscriptions',
-    version: '2.7.0',
+    version: '2.7.1',
     url: 'https://github.com/rimian/discourse-subscriptions'
   )
 
@@ -60,6 +60,7 @@ after_initialize do
     "../app/controllers/user/payments_controller",
     "../app/controllers/user/subscriptions_controller",
     "../app/controllers/customers_controller",
+    "../app/controllers/hooks_controller",
     "../app/controllers/invoices_controller",
     "../app/controllers/plans_controller",
     "../app/controllers/payments_controller",

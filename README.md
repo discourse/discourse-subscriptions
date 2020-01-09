@@ -52,6 +52,12 @@ In the admin, add a new Product. Once you have a product saved, you can add plan
 
 If you take a look at your [Stripe Dashboard](https://dashboard.stripe.com), you'll see all those products and plans are listed. Discourse Subscriptions does not create them locally. They are created in Stripe.
 
+## Enable Webhooks
+
+You'll need to tell Stripe where your end points are. You can enter this in your Stripe dashboard.
+
+The address for webhooks is: `/s/hooks`
+
 ## Testing
 
 Test with these credit card numbers:

@@ -18,6 +18,7 @@ DiscourseSubscriptions::Engine.routes.draw do
   end
 
   resources :customers, only: [:create]
+  resources :hooks, only: [:create]
   resources :invoices, only: [:index]
   resources :payments, only: [:create]
   resources :plans, only: [:index]
