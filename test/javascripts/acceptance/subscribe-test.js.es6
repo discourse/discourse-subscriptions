@@ -12,6 +12,10 @@ acceptance("Discourse Subscriptions", {
 QUnit.test("subscribing", async assert => {
   await visit("/s");
 
-  assert.ok($("#product-list").length, "has product page");
-  assert.ok($(".product:first-child a").length, "has a link");
+  await click(".product:first-child a");
+
+  assert.ok(
+    $(".discourse-subscriptions-section-columns").length,
+    "has a the sections for billing"
+  );
 });

@@ -19,4 +19,23 @@ export default function(helpers) {
 
     return response(products);
   });
+
+  this.get("/s/products/:id", () => {
+    const product = {};
+
+    return response(product);
+  });
+
+  this.get("/s/plans", () => {
+    const plans = [
+      {
+        id: "plan_GHGHSHS8654G",
+        amount: 200,
+        currency: "usd",
+        interval: "month"
+      }
+    ];
+
+    return response(plans);
+  });
 }
