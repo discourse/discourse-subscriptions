@@ -1,6 +1,6 @@
 import { acceptance } from "helpers/qunit-helpers";
 
-acceptance("Discourse Patrons", {
+acceptance("Discourse Subscriptions", {
   settings: {
     discourse_patrons_subscription_group: "plan-id"
   },

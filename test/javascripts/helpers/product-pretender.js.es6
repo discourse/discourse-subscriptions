@@ -1,7 +1,7 @@
 export default function(helpers) {
   const { response } = helpers;
 
-  this.get("/patrons/products", () => {
+  this.get("/s/products", () => {
     const products = [
       {
         id: "prod_23o8I7tU4g56",
