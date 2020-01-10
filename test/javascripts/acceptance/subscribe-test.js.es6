@@ -1,14 +1,17 @@
 import { acceptance } from "helpers/qunit-helpers";
+import { stubStripe } from "discourse/plugins/discourse-subscriptions/helpers/stripe";
 
 acceptance("Discourse Subscriptions", {
-  settings: {
-    discourse_patrons_subscription_group: "plan-id"
+  beforeEach() {
+    stubStripe();
   },
+
   loggedIn: true
 });
 
-QUnit.skip("subscribing", async assert => {
-  await visit("/patrons/subscribe");
+QUnit.test("subscribing", async assert => {
+  await visit("/s");
 
-  assert.ok($("h3").length, "has a heading");
+  assert.ok($("#product-list").length, "has product page");
+  assert.ok($(".product:first-child a").length, "has a link");
 });
