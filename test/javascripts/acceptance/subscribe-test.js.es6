@@ -16,6 +16,8 @@ QUnit.test("subscribing", async assert => {
 
   assert.ok(
     $(".discourse-subscriptions-section-columns").length,
-    "has a the sections for billing"
+    "has the sections for billing"
   );
+
+  assert.ok($(".subscribe-buttons button").length, "has buttons for subscribe");
 });
