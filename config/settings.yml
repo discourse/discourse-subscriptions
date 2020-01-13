@@ -10,6 +10,9 @@ plugins:
   discourse_subscriptions_secret_key:
     default: ''
     client: false
+  discourse_subscriptions_webhook_secret:
+    default: ''
+    client: false
   discourse_subscriptions_allow_payments:
     default: false
     client: true
