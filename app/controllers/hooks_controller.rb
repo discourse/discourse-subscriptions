@@ -21,7 +21,6 @@ module DiscourseSubscriptions
         return
       end
 
-      # Handle the event
       case event[:type]
       when 'customer.subscription.deleted'
 
@@ -32,16 +31,13 @@ module DiscourseSubscriptions
 
         if customer
           customer.delete
-
-          user = ::User.find(customer.user_id)
-          group = plan_group(event[:plan])
-          group.remove(user) if group
+          #
+          # binding.pry
+          #
+          # user = ::User.find(customer.user_id)
+          # group = plan_group(event[:plan])
+          # group.remove(user) if group
         end
-
-      else
-        # Unexpected event type
-        status 400
-        return
       end
 
       head 200
