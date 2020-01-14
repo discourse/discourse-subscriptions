@@ -31,12 +31,10 @@ module DiscourseSubscriptions
 
         if customer
           customer.delete
-          #
-          # binding.pry
-          #
-          # user = ::User.find(customer.user_id)
-          # group = plan_group(event[:plan])
-          # group.remove(user) if group
+
+          user = ::User.find(customer.user_id)
+          group = plan_group(event[:plan])
+          group.remove(user) if group
         end
       end
 
