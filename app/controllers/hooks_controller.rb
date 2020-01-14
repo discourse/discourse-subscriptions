@@ -2,6 +2,7 @@
 
 module DiscourseSubscriptions
   class HooksController < ::ApplicationController
+    include DiscourseSubscriptions::Group
     skip_before_action :verify_authenticity_token, only: [:create]
 
     def create
@@ -17,6 +18,29 @@ module DiscourseSubscriptions
         return
       rescue Stripe::SignatureVerificationError => e
         render_json_error e.message
+        return
+      end
+
+      # Handle the event
+      case event[:type]
+      when 'customer.subscription.deleted'
+
+        customer = Customer.find_by(
+          customer_id: event[:customer],
+          product_id: event[:plan][:product]
+        )
+
+        if customer
+          customer.delete
+
+          user = ::User.find(customer.user_id)
+          group = plan_group(event[:plan])
+          group.remove(user) if group
+        end
+
+      else
+        # Unexpected event type
+        status 400
         return
       end
 
