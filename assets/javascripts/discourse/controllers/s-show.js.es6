@@ -95,10 +95,9 @@ export default Ember.Controller.extend({
           if (result.error) {
             bootbox.alert(result.error.message || result.error);
           } else {
-            if(result.status === "incomplete") {
+            if (result.status === "incomplete") {
               this.alert(`${type}.incomplete`);
-            }
-            else {
+            } else {
               this.alert(`${type}.success`);
             }
 
