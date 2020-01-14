@@ -4,17 +4,19 @@ require 'rails_helper'
 
 module DiscourseSubscriptions
   RSpec.describe HooksController do
+    before do
+      SiteSetting.discourse_subscriptions_webhook_secret = 'zascharoo'
+    end
+
     it "contructs a webhook event" do
+      payload = 'we-want-a-shrubbery'
+      headers = { 'HTTP_STRIPE_SIGNATURE' => 'stripe-webhook-signature' }
+
       ::Stripe::Webhook
         .expects(:construct_event)
-        .with({}, 'stripe-webhook-signature', 'endpoint_secret')
-        .returns(true)
+        .with('we-want-a-shrubbery', 'stripe-webhook-signature', 'zascharoo')
 
-      headers = {
-        'HTTP_STRIPE_SIGNATURE' => 'stripe-webhook-signature'
-      }
-
-      post "/s/hooks.json"
+      post "/s/hooks.json", params: payload, headers: headers
 
       expect(response.status).to eq 200
     end
