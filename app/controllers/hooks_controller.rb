@@ -13,12 +13,10 @@ module DiscourseSubscriptions
         event = ::Stripe::Webhook.construct_event(payload, sig_header, webhook_secret)
 
       rescue JSON::ParserError => e
-        # Invalid payload
-        status 400
+        render_json_error e.message
         return
       rescue Stripe::SignatureVerificationError => e
-        # Invalid signature
-        status 400
+        render_json_error e.message
         return
       end
 

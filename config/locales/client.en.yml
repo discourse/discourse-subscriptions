@@ -32,6 +32,7 @@ en:
         payment_button:
           Subscribe
         success: Thank you! Your subscription has been created.
+        incomplete: The payment is incomplete. Your subscription will be updated when payment is complete.
         validate:
           payment_options:
             required: Please select a subscription plan.
@@ -43,6 +44,7 @@ en:
         payment_button:
           Pay Once
         success: Thank you!
+        incomplete: Payment is incomplete.
         validate:
           payment_options:
             required: Please select a payment option.
