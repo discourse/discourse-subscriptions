@@ -22,18 +22,19 @@ module DiscourseSubscriptions
       end
 
       case event[:type]
+      when 'customer.subscription.updated'
       when 'customer.subscription.deleted'
 
         customer = Customer.find_by(
-          customer_id: event[:customer],
-          product_id: event[:plan][:product]
+          customer_id: event[:data][:object][:customer],
+          product_id: event[:data][:object][:plan][:product]
         )
 
         if customer
           customer.delete
 
           user = ::User.find(customer.user_id)
-          group = plan_group(event[:plan])
+          group = plan_group(event[:data][:object][:plan])
           group.remove(user) if group
         end
       end

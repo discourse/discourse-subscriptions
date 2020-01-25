@@ -22,39 +22,66 @@ module DiscourseSubscriptions
       expect(response.status).to eq 200
     end
 
-    describe "canceling a subscription" do
+    describe "event types" do
       let(:user) { Fabricate(:user) }
-      let(:group) { Fabricate(:group, name: 'subscribers-group') }
       let(:customer) { Fabricate(:customer, customer_id: 'c_575768', product_id: 'p_8654', user_id: user.id) }
 
-      before do
-        event = {
-          type: 'customer.subscription.deleted',
-          customer: customer.customer_id,
-          plan: { product: customer.product_id, metadata: { group_name: group.name } }
-        }
+      describe "customer.subscription.updated" do
+        before do
+          event = {
+            type: 'customer.subscription.updated',
+            data: {
+              object: {}
+            }
+          }
 
-        ::Stripe::Webhook
-          .stubs(:construct_event)
-          .returns(event)
+          ::Stripe::Webhook
+            .stubs(:construct_event)
+            .returns(event)
+        end
 
-        group.add(user)
+        it 'is successfull' do
+          post "/s/hooks.json"
+          expect(response.status).to eq 200
+        end
       end
 
-      it "deletes the customer" do
-        expect {
-          post "/s/hooks.json"
-        }.to change { DiscourseSubscriptions::Customer.count }.by(-1)
+      describe "customer.subscription.deleted" do
+        let(:group) { Fabricate(:group, name: 'subscribers-group') }
 
-        expect(response.status).to eq 200
-      end
+        before do
+          event = {
+            type: 'customer.subscription.deleted',
+            data: {
+              object: {
+                customer: customer.customer_id,
+                plan: { product: customer.product_id, metadata: { group_name: group.name } }
+              }
+            }
+          }
 
-      it "removes the user from the group" do
-        expect {
-          post "/s/hooks.json"
-        }.to change { user.groups.count }.by(-1)
+          ::Stripe::Webhook
+            .stubs(:construct_event)
+            .returns(event)
 
-        expect(response.status).to eq 200
+          group.add(user)
+        end
+
+        it "deletes the customer" do
+          expect {
+            post "/s/hooks.json"
+          }.to change { DiscourseSubscriptions::Customer.count }.by(-1)
+
+          expect(response.status).to eq 200
+        end
+
+        it "removes the user from the group" do
+          expect {
+            post "/s/hooks.json"
+          }.to change { user.groups.count }.by(-1)
+
+          expect(response.status).to eq 200
+        end
       end
     end
   end

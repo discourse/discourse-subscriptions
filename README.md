@@ -46,10 +46,14 @@ When you get a moment, take a look at Stripe's documentation. But for now, you c
 ### Enable Webhooks in your Stripe account
 
 You'll need to tell Stripe where your end points are. You can enter this in your Stripe dashboard.
+Also: Add the webhook secret in settings (above).
 
 The address for webhooks is: `[your server address]/s/hooks`
 
-Also: Add the webhook secret in settings (above).
+Discourse Subscriptions responds to the following events:
+
+* `customer.subscription.deleted`
+* `customer.subscription.updated`
 
 ### Set up your User Groups in Discourse
 
