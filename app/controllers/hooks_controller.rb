@@ -23,6 +23,17 @@ module DiscourseSubscriptions
 
       case event[:type]
       when 'customer.subscription.updated'
+        customer = Customer.find_by(
+          customer_id: event[:data][:object][:customer],
+          product_id: event[:data][:object][:plan][:product]
+        )
+
+        if customer && subscription_completion?(event)
+          user = ::User.find(customer.user_id)
+          group = plan_group(event[:data][:object][:plan])
+          group.add(user) if group
+        end
+
       when 'customer.subscription.deleted'
 
         customer = Customer.find_by(
@@ -40,6 +51,20 @@ module DiscourseSubscriptions
       end
 
       head 200
+    end
+
+    private
+
+    def subscription_completion?(event)
+      subscription_complete?(event) && previously_incomplete?(event)
+    end
+
+    def subscription_complete?(event)
+      event.dig(:data, :object, :status) == 'complete'
+    end
+
+    def previously_incomplete?(event)
+      event.dig(:data, :previous_attributes, :status) == 'incomplete'
     end
   end
 end

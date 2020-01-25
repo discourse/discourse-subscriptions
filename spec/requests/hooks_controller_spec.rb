@@ -25,14 +25,22 @@ module DiscourseSubscriptions
     describe "event types" do
       let(:user) { Fabricate(:user) }
       let(:customer) { Fabricate(:customer, customer_id: 'c_575768', product_id: 'p_8654', user_id: user.id) }
+      let(:group) { Fabricate(:group, name: 'subscribers-group') }
+
+      let(:event_data) do
+        {
+          object: {
+            customer: customer.customer_id,
+            plan: { product: customer.product_id, metadata: { group_name: group.name } }
+          }
+        }
+      end
 
       describe "customer.subscription.updated" do
         before do
           event = {
             type: 'customer.subscription.updated',
-            data: {
-              object: {}
-            }
+            data: event_data
           }
 
           ::Stripe::Webhook
@@ -44,20 +52,48 @@ module DiscourseSubscriptions
           post "/s/hooks.json"
           expect(response.status).to eq 200
         end
+
+        describe 'completing the subscription' do
+          it 'does not add the user to the group' do
+            event_data[:object][:status] = 'incomplete'
+            event_data[:previous_attributes] = { status: 'incomplete' }
+
+            expect {
+              post "/s/hooks.json"
+            }.not_to change { user.groups.count }
+
+            expect(response.status).to eq 200
+          end
+
+          it 'does not add the user to the group' do
+            event_data[:object][:status] = 'incomplete'
+            event_data[:previous_attributes] = { status: 'something-else' }
+
+            expect {
+              post "/s/hooks.json"
+            }.not_to change { user.groups.count }
+
+            expect(response.status).to eq 200
+          end
+
+          it 'adds the user to the group when completing the transaction' do
+            event_data[:object][:status] = 'complete'
+            event_data[:previous_attributes] = { status: 'incomplete' }
+
+            expect {
+              post "/s/hooks.json"
+            }.to change { user.groups.count }.by(1)
+
+            expect(response.status).to eq 200
+          end
+        end
       end
 
       describe "customer.subscription.deleted" do
-        let(:group) { Fabricate(:group, name: 'subscribers-group') }
-
         before do
           event = {
             type: 'customer.subscription.deleted',
-            data: {
-              object: {
-                customer: customer.customer_id,
-                plan: { product: customer.product_id, metadata: { group_name: group.name } }
-              }
-            }
+            data: event_data
           }
 
           ::Stripe::Webhook
