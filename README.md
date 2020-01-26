@@ -12,7 +12,16 @@ See [Screenshots](#screenshots) below.
 
 * Be sure your site is enforcing https.
 * Follow the install instructions here: https://meta.discourse.org/t/install-a-plugin/19157
-* Add your Stripe public and private keys in settings and set the currency to your local value.
+
+##Settings:
+
+You'll need to get some info from your Stripe account to complete the steps below: https://dashboard.stripe.com/
+
+* Add your Stripe public and private keys
+* Set the currency to your local value.
+* Add your Stripe webhook secret.
+
+See webhook info below.
 
 ## What are Subscriptions?
 
@@ -34,6 +43,18 @@ Firstly, you'll need an account with the [Stripe](https://stripe.com) payment ga
 
 When you get a moment, take a look at Stripe's documentation. But for now, you can set up an account in test mode and see how it all works without making any real transactions. Then, if you're happy with how everything works, you can start taking real transactions. See below for test credit card numbers.
 
+### Enable Webhooks in your Stripe account
+
+You'll need to tell Stripe where your end points are. You can enter this in your Stripe dashboard.
+Also: Add the webhook secret in settings (above).
+
+The address for webhooks is: `[your server address]/s/hooks`
+
+Discourse Subscriptions responds to the following events:
+
+* `customer.subscription.deleted`
+* `customer.subscription.updated`
+
 ### Set up your User Groups in Discourse
 
 When a user successfully subscribes to your Discourse application, after their credit card transaction has been processed, they are added to a User Group. By assigning users to a User Group, you can manage what your users have access to on your website. User groups are a core functionality of Discourse and this plugin does nothing with them except and and remove users from the group you associated with your Plan.
@@ -52,17 +73,14 @@ In the admin, add a new Product. Once you have a product saved, you can add plan
 
 If you take a look at your [Stripe Dashboard](https://dashboard.stripe.com), you'll see all those products and plans are listed. Discourse Subscriptions does not create them locally. They are created in Stripe.
 
-## Enable Webhooks
-
-You'll need to tell Stripe where your end points are. You can enter this in your Stripe dashboard.
-
-The address for webhooks is: `/s/hooks`
-
 ## Testing
 
 Test with these credit card numbers:
 
-* 4111 1111 1111 1111
+* 4111 1111 1111 1111 (no authentication required)
+* 4000 0027 6000 3184 (authentication required)
+
+For more test card numbers: https://stripe.com/docs/testing
 
 Visit `/s` and enter a few test transactions.
 

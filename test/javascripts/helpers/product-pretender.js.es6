@@ -1,7 +1,7 @@
 export default function(helpers) {
   const { response } = helpers;
 
-  this.get("/patrons/products", () => {
+  this.get("/s/products", () => {
     const products = [
       {
         id: "prod_23o8I7tU4g56",
@@ -18,5 +18,24 @@ export default function(helpers) {
     ];
 
     return response(products);
+  });
+
+  this.get("/s/products/:id", () => {
+    const product = {};
+
+    return response(product);
+  });
+
+  this.get("/s/plans", () => {
+    const plans = [
+      {
+        id: "plan_GHGHSHS8654G",
+        amount: 200,
+        currency: "usd",
+        interval: "month"
+      }
+    ];
+
+    return response(plans);
   });
 }

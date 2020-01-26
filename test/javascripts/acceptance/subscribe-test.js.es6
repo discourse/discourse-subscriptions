@@ -1,14 +1,23 @@
 import { acceptance } from "helpers/qunit-helpers";
+import { stubStripe } from "discourse/plugins/discourse-subscriptions/helpers/stripe";
 
-acceptance("Discourse Patrons", {
-  settings: {
-    discourse_patrons_subscription_group: "plan-id"
+acceptance("Discourse Subscriptions", {
+  beforeEach() {
+    stubStripe();
   },
+
   loggedIn: true
 });
 
-QUnit.skip("subscribing", async assert => {
-  await visit("/patrons/subscribe");
+QUnit.test("subscribing", async assert => {
+  await visit("/s");
 
-  assert.ok($("h3").length, "has a heading");
+  await click(".product:first-child a");
+
+  assert.ok(
+    $(".discourse-subscriptions-section-columns").length,
+    "has the sections for billing"
+  );
+
+  assert.ok($(".subscribe-buttons button").length, "has buttons for subscribe");
 });

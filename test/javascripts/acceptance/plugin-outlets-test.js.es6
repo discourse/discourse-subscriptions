@@ -1,6 +1,6 @@
 import { acceptance } from "helpers/qunit-helpers";
 
-acceptance("Discourse Patrons", {
+acceptance("Discourse Subscriptions", {
   settings: {
     discourse_subscriptions_extra_nav_subscribe: true
   }

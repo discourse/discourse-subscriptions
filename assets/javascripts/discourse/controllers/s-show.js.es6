@@ -49,7 +49,7 @@ export default Ember.Controller.extend({
       });
   },
 
-  createSubsciption(plan) {
+  createSubscription(plan) {
     return this.stripe.createToken(this.get("cardElement")).then(result => {
       if (result.error) {
         return result;
@@ -85,7 +85,7 @@ export default Ember.Controller.extend({
       let transaction;
 
       if (this.planTypeIsSelected) {
-        transaction = this.createSubsciption(plan);
+        transaction = this.createSubscription(plan);
       } else {
         transaction = this.createPayment(plan);
       }
@@ -95,7 +95,11 @@ export default Ember.Controller.extend({
           if (result.error) {
             bootbox.alert(result.error.message || result.error);
           } else {
-            this.alert(`${type}.success`);
+            if (result.status === "incomplete") {
+              this.alert(`${type}.incomplete`);
+            } else {
+              this.alert(`${type}.success`);
+            }
 
             const success_route = this.planTypeIsSelected
               ? "user.billing.subscriptions"

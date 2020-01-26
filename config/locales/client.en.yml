@@ -4,6 +4,7 @@ en:
     discourse_subscriptions_extra_nav_subscribe: Show the subscribe button in the primary navigation
     discourse_subscriptions_public_key: Stripe Publishable Key
     discourse_subscriptions_secret_key: Stripe Secret Key
+    discourse_subscriptions_webhook_secret: Stripe Webhook Secret
     discourse_subscriptions_currency: Default Currency Code. This can be overridden when creating a subscription plan.
     discourse_subscriptions_allow_payments: Allow single payments
     errors:
@@ -31,6 +32,7 @@ en:
         payment_button:
           Subscribe
         success: Thank you! Your subscription has been created.
+        incomplete: The payment is incomplete. Your subscription will be updated when payment is complete.
         validate:
           payment_options:
             required: Please select a subscription plan.
@@ -42,6 +44,7 @@ en:
         payment_button:
           Pay Once
         success: Thank you!
+        incomplete: Payment is incomplete.
         validate:
           payment_options:
             required: Please select a payment option.

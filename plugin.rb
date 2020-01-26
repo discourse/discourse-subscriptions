@@ -8,7 +8,7 @@
 
 enabled_site_setting :discourse_subscriptions_enabled
 
-gem 'stripe', '5.13.0'
+gem 'stripe', '5.14.0'
 
 register_asset "stylesheets/common/main.scss"
 register_asset "stylesheets/common/layout.scss"
