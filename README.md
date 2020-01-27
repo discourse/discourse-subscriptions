@@ -8,7 +8,7 @@ You can try it out here: https://discourse.rimian.com.au/s/subscribe
 
 ## Sponsorship
 
-This project is partly funded by (discourse.org)[https://discourse.org]. Many thanks!
+This project is partly funded by [discourse.org](https://discourse.org). Many thanks!
 
 If you too would like to sponsor this project, I'd really appreciate it. You can help with development, admin costs or just coffee budget. See here: https://github.com/sponsors/rimian
 
