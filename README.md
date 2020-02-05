@@ -16,9 +16,15 @@ If you too would like to sponsor this project, I'd really appreciate it. You can
 
 ## Core concepts
 
+### Your Stripe Account
+
+**It is important to note:** that ultimately, your subscriptions are managed by the Stripe payment gateway. Stripe will handle the billing, etc at the required intervals and notify your Discourse Plugin when specific transactions happen on Stripe. If you were to shut down your instance of Discourse, Stripe with continue to bill your customers for your subscriptions.
+
+Stripe has a [portal](https://dashboard.stripe.com) where you can manage all your customers and subscriptions.
+
 ### Subscriptions
 
-Subscriptions are how you manage access to your website's content. There are two core components to make Subscriptions work for your Discourse application. These are **Products** and **Plans**.
+Subscriptions are how you manage access to your website's content. There are two core components to make Subscriptions work for your Discourse application. These are *Products* and *Plans*.
 
 ### Products
 
@@ -29,10 +35,6 @@ A Product describes what the user gets when they subscribe. It has a *name* and 
 A Plan is how you charge your users for the Product. Plans have *rates*, *billing intervals* and *trial periods*. A Product may have multiple Plans. For example: a yearly and a monthly Plan with different pricing. You can't change plans much once they are created but you can archive them and create new ones.
 
 Together, Products and Plans make up Subscriptions.
-
-**It is important to note** that ultimately, your subscriptions are managed by the Stripe payment gateway. Stripe will handle the billing, etc at the required intervals and notify your Discourse Plugin when specific transactions happen on Stripe. If you were to shut down your instance of Discourse, Stripe with continue to bill your customers for your subscriptions.
-
-Stripe has a [portal](https://dashboard.stripe.com) where you can manage all your customers and subscriptions.
 
 ## Installation
 
