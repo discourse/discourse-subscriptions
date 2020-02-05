@@ -4,7 +4,7 @@
 
 The Discourse Subscriptions plugin allows you to set up a subscription based Discourse application. By integrating with the [Stripe](https://stripe.com) payment gateway and setting up this plugin to manage Subscriptions, you can start selling users access to content on your website.
 
-You can test it here: https://discourse.rimian.com.au/s/subscribe
+You can test it here: https://discourse.rimian.com.au/s/subscribe. See [below](#testing) for test credit card numbers.
 
 See [Screenshots](#screenshots) below.
 
@@ -19,7 +19,7 @@ If you too would like to sponsor this project, I'd really appreciate it. You can
 * Be sure your site is enforcing https.
 * Follow the install instructions here: https://meta.discourse.org/t/install-a-plugin/19157
 
-##Settings:
+## Settings:
 
 You'll need to get some info from your Stripe account to complete the steps below: https://dashboard.stripe.com/
 
