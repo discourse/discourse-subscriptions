@@ -96,7 +96,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” 
 
 ## Credits
 
-Many thanks to Chris Beach and Angus McLeod who helped on the [previous version](https://github.com/chrisbeach/discourse-donations) of this plugin. Many thanks to the Discourse team who sponsored this plugin! You guys rock.
+Many thanks to Chris Beach and Angus McLeod who helped on the [previous version](https://github.com/chrisbeach/discourse-donations) of this plugin. Many thanks to the Discourse team who sponsor this plugin! You guys rock. If you would like to contribute vis sponsorship to this project see: https://github.com/sponsors/rimian
 
 ## Screenshots
 
@@ -114,3 +114,5 @@ Many thanks to Chris Beach and Angus McLeod who helped on the [previous version]
 ![Admin Subscriptions](doc/user-payments.png)
 ### Subscribe
 ![Admin Subscriptions](doc/subscribe.png)
+### Settings
+![Admin Settings](doc/settings.png)
