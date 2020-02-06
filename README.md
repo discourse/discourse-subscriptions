@@ -47,7 +47,7 @@ Stripe has a [portal](https://dashboard.stripe.com) where you can manage all you
 
 ### Subscriptions
 
-Subscriptions are how you manage access to your website's content. There are two core components to make Subscriptions work for your Discourse application. These are *Products* and *Plans*.
+Suscriptions are major feature of Stripe and this plugin's primary function is to leverage this feature by assigning Subscriptions to Discourse *user groups*. Subscriptions allow you to take payments and controll access to content on your website.
 
 When a subscription is created or deleted, a user is added or removed from the user group you associate with your subscription. Please note: If you manually remove or add users to a user group via Discourse admin, you'll need to manage subscriptions for those users manually.
 
