@@ -98,9 +98,7 @@ In your Stripe account settings, see:
 
 ### Set up your User Groups in Discourse
 
-When a user successfully subscribes to your Discourse application, after their credit card transaction has been processed, they are added to a User Group. By assigning users to a User Group, you can manage what your users have access to on your website. User groups are a core functionality of Discourse and this plugin does nothing with them except and and remove users from the group you associated with your Plan.
-
-After you have created a User Group and configured it correctly, you can move onto setting up Discourse Subscriptions.
+When a user successfully subscribes to your Discourse application, after their credit card transaction has been processed, they are added to a User Group. By assigning users to a User Group, you can manage what your users have access to on your website. User groups are a core functionality of Discourse and this plugin does nothing with them except add and remove users from the group you associated with your Plan.
 
 ## Enter your configuration details
 
@@ -127,7 +125,7 @@ Visit `/s` and enter a few test transactions.
 
 ## Credits
 
-Many thanks to Chris Beach and Angus McLeod who helped on the [previous version](https://github.com/chrisbeach/discourse-donations) of this plugin. Many thanks to the Discourse team who sponsor this plugin! You guys rock. If you would like to contribute vis sponsorship to this project see: https://github.com/sponsors/rimian
+Many thanks to the Discourse team who sponsor this plugin! You guys rock. Also thanks to Chris Beach and Angus McLeod who helped on the previous version of this plugin. If you would like to contribute vis sponsorship to this project see: https://github.com/sponsors/rimian
 
 ## Screenshots
 
