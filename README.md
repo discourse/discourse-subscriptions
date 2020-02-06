@@ -6,6 +6,8 @@ The Discourse Subscriptions plugin allows you to set up a subscription based Dis
 
 You can test this plugin here: https://discourse.rimian.com.au/s/subscribe. See testing section below for test credit card numbers.
 
+This software offers [no warranty](https://github.com/rimian/discourse-subscriptions/blob/master/WARRANTY.md) of any kind.
+
 ### Features
 
 Discourse Subscriptions supports the following features:
@@ -41,7 +43,7 @@ This plugin does not store Stripe transaction or subscription details in your da
 
 Be very careful to keep your Stripe private keys safe and secure at all times.
 
-**It is important to note** that if you were to shut down your instance of Discourse, uninstall this plugin or your site were to go offline, Stripe will continue to bill your customers for your service. It is your responsibility to manage your customers and provide the service they are paying for. This software offers no warranty of any kind.
+**It is important to note** that if you were to shut down your instance of Discourse, uninstall this plugin or your site were to go offline, Stripe will continue to bill your customers for your service. It is your responsibility to manage your customers and provide the service they are paying for.
 
 Stripe has a [portal](https://dashboard.stripe.com) where you can manage all your customer's, payments and subscriptions.
 
@@ -145,7 +147,3 @@ Many thanks to the Discourse team who sponsor this plugin! You guys rock. Also t
 ![Admin Subscriptions](https://raw.githubusercontent.com/rimian/discourse-subscriptions/master/doc/subscribe.png)
 ### Settings
 ![Admin Settings](https://raw.githubusercontent.com/rimian/discourse-subscriptions/master/doc/settings.png)
-
-## No warranty of any kind
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
