@@ -86,7 +86,7 @@ Currently, Discourse Subscriptions responds to the following events:
 * `customer.subscription.deleted`
 * `customer.subscription.updated`
 
-**Warning:** This may change in the future as new features are added to this plugin.
+**Warning:** Events supported by this plugin may change, in the future as new features are added to this plugin.
 
 ### Add the Stripe API and Webhook keys to your plugin settings
 
