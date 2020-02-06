@@ -4,7 +4,7 @@
 
 The Discourse Subscriptions plugin allows you to set up a subscription based Discourse application. By integrating with the [Stripe](https://stripe.com) payment gateway and setting up this plugin to manage Subscriptions, you can start allowing users access to content on your website on a user pays basis.
 
-You can test this plugin here: https://discourse.rimian.com.au/s/subscribe. See [below](#testing) for test credit card numbers.
+You can test this plugin here: https://discourse.rimian.com.au/s/subscribe. See testing section below for test credit card numbers.
 
 ### Features
 
@@ -19,7 +19,7 @@ Discourse Subscriptions supports the following features:
 * Allows the user to cancel their subscription in their user profile.
 * Webhooks that update your website when an event occurs on Stripe.
 
-See [Screenshots](#screenshots) below.
+See screenshots below.
 
 ### Sponsorship
 
@@ -35,7 +35,7 @@ Follow the [plugin](https://github.com/rimian/discourse-subscriptions) install i
 
 ### Managing your Stripe Account
 
-Ultimately, your Subscriptions are managed by the Stripe subscription portal. Stripe will handle the recurring billing, invoices, etc at the required intervals and notify your [Discourse Subscriptions](https://github.com/rimian/discourse-subscriptions) plugin when specific transactions happen. 
+Ultimately, your Subscriptions are managed by the Stripe subscription portal. Stripe will handle the recurring billing, invoices, etc at the required intervals and notify your [Discourse Subscriptions](https://github.com/rimian/discourse-subscriptions) plugin when specific transactions happen.
 
 This plugin does not store Stripe transaction or subscription details in your database other than the customer and product identifiers associated with those transactions. User group management is not stored in the stripe Portal.
 
@@ -75,7 +75,7 @@ Firstly, you'll need an account with the [Stripe](https://stripe.com) payment ga
 
 Once you have an account on Stripe, you'll need to [tell Stripe your website's address](https://dashboard.stripe.com/test/webhooks) so it can notify you about certain transactions. You can enter this in your Stripe dashboard under **Endpoints > URL**.
 
-The address for webhooks is: `[your server address]/s/hooks` where [your server address] is the URL of your discourse install. 
+The address for webhooks is: `[your server address]/s/hooks` where [your server address] is the URL of your discourse install.
 
 You'll also need to tell Stripe which events it should notify you about via the webhook URL. You can select specific events or all of them. By allowing all events to be sent to your server, you don't have to worry about which events are important to you, but it will significantly load up your server and could cause problems with your site's availability. If you're concerned about this, only add the events below under **Webhook details**.
 
@@ -130,21 +130,21 @@ Many thanks to the Discourse team who sponsor this plugin! You guys rock. Also t
 ## Screenshots
 
 ### Products Admin
-![Admin Products](doc/admin-products.png)
+![Admin Products](https://raw.githubusercontent.com/rimian/discourse-subscriptions/master/doc/admin-products.png)
 ### Product Admin
-![Admin Product](doc/admin-product.png)
+![Admin Product](https://raw.githubusercontent.com/rimian/discourse-subscriptions/master/doc/admin-product.png)
 ### Plan Admin
-![Admin Plan](doc/admin-plan.png)
+![Admin Plan](https://raw.githubusercontent.com/rimian/discourse-subscriptions/master/doc/admin-plan.png)
 ### Subscription Admin
-![Admin Subscriptions](doc/admin-subscriptions.png)
+![Admin Subscriptions](https://raw.githubusercontent.com/rimian/discourse-subscriptions/master/doc/admin-subscriptions.png)
 ### Subscription User
-![Admin Subscriptions](doc/user-subscriptions.png)
+![Admin Subscriptions](https://raw.githubusercontent.com/rimian/discourse-subscriptions/master/doc/user-subscriptions.png)
 ### Payments User
-![Admin Subscriptions](doc/user-payments.png)
+![Admin Subscriptions](https://raw.githubusercontent.com/rimian/discourse-subscriptions/master/doc/user-payments.png)
 ### Subscribe
-![Admin Subscriptions](doc/subscribe.png)
+![Admin Subscriptions](https://raw.githubusercontent.com/rimian/discourse-subscriptions/master/doc/subscribe.png)
 ### Settings
-![Admin Settings](doc/settings.png)
+![Admin Settings](https://raw.githubusercontent.com/rimian/discourse-subscriptions/master/doc/settings.png)
 
 ## No warranty of any kind
 
