@@ -35,9 +35,13 @@ Follow the [plugin](https://github.com/rimian/discourse-subscriptions) install i
 
 ### Managing your Stripe Account
 
-**It is important to note** that ultimately, your Subscriptions are managed by the Stripe subscription portal. Stripe will handle the recurring billing, invoices, etc at the required intervals and notify your [Discourse Subscriptions](https://github.com/rimian/discourse-subscriptions) plugin when specific transactions happen. 
+Ultimately, your Subscriptions are managed by the Stripe subscription portal. Stripe will handle the recurring billing, invoices, etc at the required intervals and notify your [Discourse Subscriptions](https://github.com/rimian/discourse-subscriptions) plugin when specific transactions happen. 
 
-If you were to shut down your instance of Discourse, uninstall this plugin or your site were to go offline, Stripe will continue to bill your customers for your service. It is your responsibility to manage your customers and provide the service they are paying for. This software offers no warranty of any kind.
+This plugin does not store transaction or subscription details in your database other than the customer and product identifiers associated with those transactions.
+
+Be very careful to keep your Stripe private keys safe and secure at all times.
+
+**It is important to note** that if you were to shut down your instance of Discourse, uninstall this plugin or your site were to go offline, Stripe will continue to bill your customers for your service. It is your responsibility to manage your customers and provide the service they are paying for. This software offers no warranty of any kind.
 
 Stripe has a [portal](https://dashboard.stripe.com) where you can manage all your customer's, payments and subscriptions.
 
