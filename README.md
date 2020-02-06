@@ -2,44 +2,62 @@
 
 [![Build Status](https://travis-ci.org/rimian/discourse-subscriptions.svg?branch=master)](https://travis-ci.org/rimian/discourse-subscriptions)
 
-The Discourse Subscriptions plugin allows you to set up a subscription based Discourse application. By integrating with the [Stripe](https://stripe.com) payment gateway and setting up this plugin to manage Subscriptions, you can start selling users access to content on your website.
+The Discourse Subscriptions plugin allows you to set up a subscription based Discourse application. By integrating with the [Stripe](https://stripe.com) payment gateway and setting up this plugin to manage Subscriptions, you can start allowing users access to content on your website on a user pays basis.
 
 You can test this plugin here: https://discourse.rimian.com.au/s/subscribe. See [below](#testing) for test credit card numbers.
 
 See [Screenshots](#screenshots) below.
 
-## Sponsorship
+### Features
+
+Discourse Subscriptions supports the following features:
+
+* A credit card payment page.
+* A settings page to manage Stripe configuration.
+* Administration to create, update and view *products*, *plans* and *subscriptions*.
+* Setting the user group associated with the subscription.
+* Cancelling a subscription from admin.
+* Adds and removes users from user groups when subscriptions are created or deleted.
+* Allows the user to cancel their subscription in their user profile.
+* Webhooks that update your website when an event occurs on Stripe.
+
+### Sponsorship
 
 This project is partly funded by [discourse.org](https://discourse.org). Many thanks!
 
 If you too would like to sponsor this project, I'd really appreciate it. You can help with development, admin costs or just coffee budget. See here: https://github.com/sponsors/rimian
 
+## Plugin Installation
+
+Follow the [plugin](https://github.com/rimian/discourse-subscriptions) install instructions here: https://meta.discourse.org/t/install-a-plugin/19157
+
 ## Core concepts
 
-### Your Stripe Account
+### Managing your Stripe Account
 
-**It is important to note:** that ultimately, your subscriptions are managed by the Stripe payment gateway. Stripe will handle the billing, etc at the required intervals and notify your Discourse Plugin when specific transactions happen on Stripe. If you were to shut down your instance of Discourse, Stripe with continue to bill your customers for your subscriptions.
+**It is important to note** that ultimately, your Subscriptions are managed by the Stripe payment gateway. Stripe will handle the recurring billing, invoices, etc at the required intervals and notify your Discourse Plugin when specific transactions happen. 
 
-Stripe has a [portal](https://dashboard.stripe.com) where you can manage all your customers and subscriptions.
+If you were to shut down your instance of Discourse or it were to go offline, Stripe with continue to bill your customers for your service. It is your responsibility to manage your customers and provide the service they are paying for. This software offers no warranty of any kind.
+
+Stripe has a [portal](https://dashboard.stripe.com) where you can manage all your customer's, payments and subscriptions.
 
 ### Subscriptions
 
 Subscriptions are how you manage access to your website's content. There are two core components to make Subscriptions work for your Discourse application. These are *Products* and *Plans*.
 
+When a subscription is created or deleted, a user is added or removed from the user group you associate with your subscription. Please note: If you manually remove or add users to a user group via Discourse admin, you'll need to manage subscriptions for those users manually.
+
 ### Products
 
-A Product describes what the user gets when they subscribe. It has a *name* and *description* and most importantly, it is associated with a Discourse User Group. A product can have one or more plans.
+A Product describes what the user gets when they subscribe. It has a *name* and *description* and most importantly, it is associated with a Discourse User Group.
+
+A product can have one or more *plans*.
 
 ### Plans
 
 A Plan is how you charge your users for the Product. Plans have *rates*, *billing intervals* and *trial periods*. A Product may have multiple Plans. For example: a yearly and a monthly Plan with different pricing. You can't change plans much once they are created but you can archive them and create new ones.
 
 Together, Products and Plans make up Subscriptions.
-
-## Installation
-
-* Be sure your site is enforcing https.
-* Follow the plugin install instructions here: https://meta.discourse.org/t/install-a-plugin/19157
 
 ## Getting started with Discourse Subscriptions
 
@@ -51,9 +69,9 @@ Firstly, you'll need an account with the [Stripe](https://stripe.com) payment ga
 
 Once you have an account on Stripe, you'll need to [tell Stripe your website's address](https://dashboard.stripe.com/test/webhooks) so it can notify you about certain transactions. You can enter this in your Stripe dashboard under **Endpoints > URL**.
 
-The address for webhooks is: `[your server address]/s/hooks` where [your server address] is the URL of your discourse install.
+The address for webhooks is: `[your server address]/s/hooks` where [your server address] is the URL of your discourse install. 
 
-You'll also need to tell Stripe which events to notify you about. You can select specific events or all of them. By allowing all events to be sent to your server, you don't have to worry about which events are important to you, but it will load up your server and possibly slow it down. If you're concerned about this, add the events below under **Webhook details**.
+You'll also need to tell Stripe which events it should notify you about via the webhook URL. You can select specific events or all of them. By allowing all events to be sent to your server, you don't have to worry about which events are important to you, but it will significantly load up your server and could cause problems with your site's availability. If you're concerned about this, only add the events below under **Webhook details**.
 
 Currently, Discourse Subscriptions responds to the following events:
 
@@ -62,9 +80,15 @@ Currently, Discourse Subscriptions responds to the following events:
 
 **Warning:** This may change in the future as new features are added to this plugin.
 
-### Add the Stripe keys to your settings
+### Add the Stripe API and Webhook keys to your plugin settings
 
 Stripe needs to be authorised to communicate with your website. To do this, it publishes a pair of private and public *API keys* and a *signing secret* for your web hooks.
+
+To authorise webhooks, add the API keys and webhook secret from Stripe to your settings page (under Developers).
+
+In your Stripe account settings, see:
+* https://dashboard.stripe.com/test/apikeys
+* https://dashboard.stripe.com/test/webhooks
 
 ### Set up your User Groups in Discourse
 
@@ -118,6 +142,6 @@ Many thanks to Chris Beach and Angus McLeod who helped on the [previous version]
 ### Settings
 ![Admin Settings](doc/settings.png)
 
-## Warranty
+## No warranty of any kind
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
