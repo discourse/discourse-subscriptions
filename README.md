@@ -35,9 +35,9 @@ Follow the [plugin](https://github.com/rimian/discourse-subscriptions) install i
 
 ### Managing your Stripe Account
 
-**It is important to note** that ultimately, your Subscriptions are managed by the Stripe payment gateway. Stripe will handle the recurring billing, invoices, etc at the required intervals and notify your Discourse Plugin when specific transactions happen. 
+**It is important to note** that ultimately, your Subscriptions are managed by the Stripe subscription portal. Stripe will handle the recurring billing, invoices, etc at the required intervals and notify your [Discourse Subscriptions](https://github.com/rimian/discourse-subscriptions) plugin when specific transactions happen. 
 
-If you were to shut down your instance of Discourse or it were to go offline, Stripe with continue to bill your customers for your service. It is your responsibility to manage your customers and provide the service they are paying for. This software offers no warranty of any kind.
+If you were to shut down your instance of Discourse, uninstall this plugin or your site were to go offline, Stripe will continue to bill your customers for your service. It is your responsibility to manage your customers and provide the service they are paying for. This software offers no warranty of any kind.
 
 Stripe has a [portal](https://dashboard.stripe.com) where you can manage all your customer's, payments and subscriptions.
 
@@ -49,17 +49,19 @@ When a subscription is created or deleted, a user is added or removed from the u
 
 ### Products
 
-A Product describes what the user gets when they subscribe. It has a *name* and *description* and most importantly, it is associated with a Discourse User Group.
+A Product describes what the user gets when they subscribe. It is basically a user group on your website. A product has a *name* and *description* and most importantly, it is associated with a Discourse User Group.
 
 A product can have one or more *plans*.
 
 ### Plans
 
-A Plan is how you charge your users for the Product. Plans have *rates*, *billing intervals* and *trial periods*. A Product may have multiple Plans. For example: a yearly and a monthly Plan with different pricing. You can't change plans much once they are created but you can archive them and create new ones.
+A Plan determines how and when you charge your users for the Product. Plans have *rates*, *billing intervals* and *trial periods*. A Product may have multiple Plans. For example: a yearly and a monthly Plan with different pricing. You can't change plans much once they are created but you can archive them and create new ones.
 
 Together, Products and Plans make up Subscriptions.
 
 ## Getting started with Discourse Subscriptions
+
+To begin, you can install this plugin and try it out in test mode. You can disable the navigation link in settings while you're testing.
 
 ### Set up your Payment Gateway.
 
