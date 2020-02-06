@@ -6,8 +6,6 @@ The Discourse Subscriptions plugin allows you to set up a subscription based Dis
 
 You can test this plugin here: https://discourse.rimian.com.au/s/subscribe. See [below](#testing) for test credit card numbers.
 
-See [Screenshots](#screenshots) below.
-
 ### Features
 
 Discourse Subscriptions supports the following features:
@@ -20,6 +18,8 @@ Discourse Subscriptions supports the following features:
 * Adds and removes users from user groups when subscriptions are created or deleted.
 * Allows the user to cancel their subscription in their user profile.
 * Webhooks that update your website when an event occurs on Stripe.
+
+See [Screenshots](#screenshots) below.
 
 ### Sponsorship
 
