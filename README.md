@@ -37,7 +37,7 @@ Follow the [plugin](https://github.com/rimian/discourse-subscriptions) install i
 
 Ultimately, your Subscriptions are managed by the Stripe subscription portal. Stripe will handle the recurring billing, invoices, etc at the required intervals and notify your [Discourse Subscriptions](https://github.com/rimian/discourse-subscriptions) plugin when specific transactions happen. 
 
-This plugin does not store transaction or subscription details in your database other than the customer and product identifiers associated with those transactions.
+This plugin does not store Stripe transaction or subscription details in your database other than the customer and product identifiers associated with those transactions. User group management is not stored in the stripe Portal.
 
 Be very careful to keep your Stripe private keys safe and secure at all times.
 
