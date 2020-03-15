@@ -1,0 +1,150 @@
+fr:
+  site_settings:
+    discourse_subscriptions_enabled: Activer le plugin Discourse Subscription
+    discourse_subscriptions_extra_nav_subscribe: Afficher le bouton Souscrire dans le menu de navigation.
+    discourse_subscriptions_public_key: Clé publique Stripe
+    discourse_subscriptions_secret_key: Clé secrète Stripe
+    discourse_subscriptions_webhook_secret: Clé Webhook Stripe
+    discourse_subscriptions_currency: Monnaie par défaut. Cette option peut être remplacée lors de la création d'un plan.
+    discourse_subscriptions_allow_payments: Autoriser paiement unique
+    errors:
+      discourse_patrons_amount_must_be_currency: "Le montant doit être indiqué sans le symbole de la monnaie (ex. 1.50)"
+  js:
+    discourse_subscriptions:
+      title: Discourse Subscriptions
+      admin_navigation: Souscriptions
+      optional: Optionnel
+      navigation:
+        billing: Facturation
+        payments: Paiements
+        subscriptions: Souscriptions
+        subscribe: Souscrire
+        user_activity:
+          payments: Paiements
+      plans:
+        purchase: Souscrire
+        select: Choisir une formule
+        interval:
+          adverb:
+            week: Hebdomadaire
+            month: Mensuel
+            year: Annuel
+        payment_button:
+          Souscrire
+        success: Merci ! Votre souscription a été validée.
+        incomplete: Le paiement n'a pas fonctionné. Votre souscription sera activée lorsque le paiement aura été validé.
+        validate:
+          payment_options:
+            required: Merci de sélectionner une option de paiement
+      payment:
+        purchase: Payer en une fois
+        select: Sélectionner une option de paiement
+        interval:
+          Un paiement
+        payment_button:
+          Payer en une fois
+        success: Merci !
+        incomplete: Le paiement n'a pas fonctionné.
+        validate:
+          payment_options:
+            required: Merci de sélectionner une option de paiement.
+      user:
+        payments:
+          id: Code du paiement
+          amount: Montant
+          created_at: Création
+        payments_help: Il n'y a pas de paiements
+        plans:
+          rate: Taux
+          product: Nom
+        subscriptions_help: Vous n'avez pas de souscriptions active
+        subscriptions:
+          id: Code de la souscription
+          status: Statut
+          created_at: Création
+          operations:
+            destroy:
+              confirm: Êtes-vous sûrs de vouloir annuler cette souscription ?
+      subscribe:
+        title: Souscrire
+        unauthenticated: Vous devez créer un compte utilisateur pour pouvoir soucrire.
+        card:
+          title: Paiement
+        customer:
+          title: Informations client
+        buttons:
+          subscribe: Souscrire
+      billing:
+        name: Nom
+        email: Courriel
+        phone: Téléphone
+      confirmation:
+        amount: Amount
+        last4: Card number
+      buttons:
+        make_payment: Payer
+        confirm_payment: Confirmer le paiement
+        success: Retour
+      admin:
+        dashboard:
+          title: Tableau de bord
+          table:
+            head:
+              user: Utilisateur
+              payment_intent: Code du paiement
+              receipt_email: Reçu email
+              amount: Montant
+        products:
+          title: Produits
+          operations:
+            create: Créer nouveau produit
+            update: Modifier produit
+            new: Nouveau produit
+            destroy:
+                confirm: Êtes-vous sûrs de vouloir supprimer ce produit ?
+          product:
+            product_id: Code produit
+            name: Product Nom
+            statement_descriptor: Intitulé
+            statement_descriptor_help: Information sur le produit qui apparaîtra sur le reçu de carte bancaire.
+            plan_help: Créer une grille tarifaire pour souscrire à ce produit.
+            description: Description
+            description_help: Description de la souscription du produit.
+            active: Actif
+            active_help: N'activez le produit que s'il est prêt à être rendu public.
+            created_at: Création
+            updated_at: Modification
+          product_help: Avant que les utilisateurs puissent souscrire, vous devez créer au moins un produit et un plan tarifaire associé.
+        plans:
+          title: Grille tarifaire
+          operations:
+            add: Ajouter un plan
+            create: Créer un plan
+            update: Modifier un plan
+            create_help: Une fois le plan tarifaire créé, seuls son surnom, la période d'essai et le groupe associé peuvent être modifiés.
+            new: Nouveau plan
+            destroy:
+              confirm: Êtes-vous sûrs de vouloir supprimer ce plan ?
+          plan:
+            nickname: Surnom
+            nickname_help: Ceci ne sera pas visible à tous mais vous servira à retrouver ce plan
+            plan_id: ID Plan
+            product: Produit
+            interval: Intervalle de paiement
+            amount: Montant
+            trial: Jours d'essais
+            trial_help: Les souscriptions à ce plan auront automatiquement droit à cette période d'essai
+            group: Groupe d'utilisateurs
+            group_help: L'utilisateur aura accès à ce groupe quand il aura souscrit à ce produit.
+            active: Actif
+            created_at: Création
+        subscriptions:
+          title: Souscriptions
+          subscription:
+            user: Utilisateur
+            subscription_id: Code souscription
+            customer: Client
+            product: Produit
+            plan: Plan
+            status: Statut
+            created_at: Création
