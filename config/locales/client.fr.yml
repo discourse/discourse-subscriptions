@@ -22,7 +22,7 @@ fr:
         user_activity:
           payments: Paiements
       plans:
-        purchase: Souscrire
+        purchase: Abonnement
         select: Choisir une formule
         interval:
           adverb:
@@ -30,14 +30,14 @@ fr:
             month: Mensuel
             year: Annuel
         payment_button:
-          Souscrire
+          Valider
         success: Merci ! Votre souscription a été validée.
         incomplete: Le paiement n'a pas fonctionné. Votre souscription sera activée lorsque le paiement aura été validé.
         validate:
           payment_options:
             required: Merci de sélectionner une option de paiement
       payment:
-        purchase: Payer en une fois
+        purchase: Paiement unique
         select: Sélectionner une option de paiement
         interval:
           Un paiement
