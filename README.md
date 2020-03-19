@@ -4,7 +4,7 @@
 
 The Discourse Subscriptions plugin allows you to set up a subscription based Discourse application. By integrating with the [Stripe](https://stripe.com) payment gateway and setting up this plugin to manage Subscriptions, you can start allowing users access to content on your website on a user pays basis.
 
-You can test this plugin here: https://discourse.rimian.com.au/s/subscribe. See testing section below for test credit card numbers.
+You can test this plugin here: https://discourse.rimian.com.au/s. See testing section below for test credit card numbers.
 
 This software offers [no warranty](https://github.com/rimian/discourse-subscriptions/blob/master/WARRANTY.md) of any kind.
 
@@ -86,7 +86,7 @@ Currently, Discourse Subscriptions responds to the following events:
 * `customer.subscription.deleted`
 * `customer.subscription.updated`
 
-**Warning:** This may change in the future as new features are added to this plugin.
+**Warning:** Events supported by this plugin may change, in the future as new features are added to this plugin.
 
 ### Add the Stripe API and Webhook keys to your plugin settings
 
