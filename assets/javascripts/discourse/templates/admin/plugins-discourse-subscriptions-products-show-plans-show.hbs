@@ -43,7 +43,11 @@
     <label for="interval">
       {{i18n 'discourse_subscriptions.admin.plans.plan.interval'}}
     </label>
-    {{combo-box valueAttribute="value" content=model.plan.intervals value=model.plan.interval}}
+    {{#if planFieldDisabled}}
+      {{input disabled=true value=model.plan.interval}}
+    {{else}}
+      {{combo-box valueAttribute="value" content=model.plan.intervals value=model.plan.interval}}
+    {{/if}}
   </p>
   <p>
     <label for="active">
