@@ -1,0 +1,5 @@
+fr:
+  discourse_subscriptions:
+    customer_not_found: Client non trouvé
+    card:
+      declined: Carte refusée
