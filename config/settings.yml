@@ -5,13 +5,13 @@ plugins:
     default: false
     client: true
   discourse_subscriptions_public_key:
-    default: ''
+    default: ""
     client: true
   discourse_subscriptions_secret_key:
-    default: ''
+    default: ""
     client: false
   discourse_subscriptions_webhook_secret:
-    default: ''
+    default: ""
     client: false
   discourse_subscriptions_allow_payments:
     default: false
@@ -27,3 +27,4 @@ plugins:
       - GBP
       - USD
       - NZD
+      - INR

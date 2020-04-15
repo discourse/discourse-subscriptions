@@ -3,7 +3,7 @@ import DiscourseURL from "discourse/lib/url";
 
 export default Ember.Controller.extend({
   // Also defined in settings.
-  currencies: ["AUD", "CAD", "EUR", "GBP", "USD"],
+  currencies: ["AUD", "CAD", "EUR", "GBP", "USD", "INR"],
 
   @computed("model.plan.isNew")
   planFieldDisabled(isNew) {
