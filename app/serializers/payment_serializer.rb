@@ -29,9 +29,11 @@ class PaymentSerializer < ApplicationSerializer
   private
 
   def user
-    User.find(object.user_id)
-  rescue StandardError
-    nil
+    begin
+      User.find(object.user_id)
+    rescue StandardError
+      nil
+    end
   end
 
   def currency_unit

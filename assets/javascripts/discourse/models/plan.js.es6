@@ -16,7 +16,7 @@ const Plan = EmberObject.extend({
 
   @computed("amountDollars", "currency", "interval")
   subscriptionRate(amountDollars, currency, interval) {
-    return `$${amountDollars} ${currency.toUpperCase()} / ${interval}`;
+    return `${amountDollars} ${currency.toUpperCase()} / ${interval}`;
   }
 });
 

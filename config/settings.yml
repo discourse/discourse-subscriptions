@@ -5,20 +5,20 @@ plugins:
     default: false
     client: true
   discourse_subscriptions_public_key:
-    default: ""
+    default: ''
     client: true
   discourse_subscriptions_secret_key:
-    default: ""
+    default: ''
     client: false
   discourse_subscriptions_webhook_secret:
-    default: ""
+    default: ''
     client: false
   discourse_subscriptions_allow_payments:
     default: false
     client: true
   discourse_subscriptions_currency:
     client: true
-    default: "USD"
+    default: 'USD'
     type: enum
     choices:
       - AUD
