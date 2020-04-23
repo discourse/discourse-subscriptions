@@ -31,7 +31,7 @@ class PaymentSerializer < ApplicationSerializer
   def user
     begin
       User.find(object.user_id)
-    rescue StandardError
+    rescue
       nil
     end
   end

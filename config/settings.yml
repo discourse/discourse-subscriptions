@@ -18,7 +18,7 @@ plugins:
     client: true
   discourse_subscriptions_currency:
     client: true
-    default: 'USD'
+    default: "USD"
     type: enum
     choices:
       - AUD

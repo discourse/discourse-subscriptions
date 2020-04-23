@@ -1,6 +1,6 @@
 // TODO: typo in this helper name: currency not curency.
-export default Ember.Helper.helper(function (params) {
-  let currencySign
+export default Ember.Helper.helper(function(params) {
+  let currencySign;
 
   switch (Discourse.SiteSettings.discourse_subscriptions_currency) {
     case "EUR":
@@ -17,4 +17,4 @@ export default Ember.Helper.helper(function (params) {
   }
 
   return [currencySign, params[0]].join("");
-})
+});
