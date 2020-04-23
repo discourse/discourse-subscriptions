@@ -5,15 +5,15 @@ export default Ember.Helper.helper(function(params) {
     case "EUR":
     case "eur":
       currencySign = "€";
-      break
+      break;
     case "GBP":
     case "gbp":
       currencySign = "£";
-      break
+      break;
     case "INR":
     case "inr":
       currencySign = "₹";
-      break
+      break;
     default:
       currencySign = "$";
   }

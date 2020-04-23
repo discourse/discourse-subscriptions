@@ -5,13 +5,13 @@ export default Ember.Helper.helper(function(params) {
   switch (Discourse.SiteSettings.discourse_subscriptions_currency) {
     case "EUR":
       currencySign = "€";
-      break
+      break;
     case "GBP":
       currencySign = "£";
-      break
+      break;
     case "INR":
       currencySign = "₹";
-      break
+      break;
     default:
       currencySign = "$";
   }
