@@ -9,6 +9,9 @@ export default Ember.Helper.helper(function(params) {
     case "GBP":
       currencySign = "£";
       break;
+    case "INR":
+      currencySign = "₹";
+      break;
     default:
       currencySign = "$";
   }
