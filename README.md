@@ -118,21 +118,22 @@ Visit `/s` and enter a few test transactions.
 ## Credits
 
 Many thanks to [Rimian Perkins](https://github.com/rimian/) for his work on this plugin! Also thanks to Chris Beach and Angus McLeod who helped with the previous version of this plugin.
+
 ## Screenshots
 
 ### Products Admin
-![Admin Products](https://raw.githubusercontent.com/rimian/discourse-subscriptions/master/doc/admin-products.png)
+![Admin Products](https://raw.githubusercontent.com/discourse/discourse-subscriptions/master/doc/admin-products.png)
 ### Product Admin
-![Admin Product](https://raw.githubusercontent.com/rimian/discourse-subscriptions/master/doc/admin-product.png)
+![Admin Product](https://raw.githubusercontent.com/discourse/discourse-subscriptions/master/doc/admin-product.png)
 ### Plan Admin
-![Admin Plan](https://raw.githubusercontent.com/rimian/discourse-subscriptions/master/doc/admin-plan.png)
+![Admin Plan](https://raw.githubusercontent.com/discourse/discourse-subscriptions/master/doc/admin-plan.png)
 ### Subscription Admin
-![Admin Subscriptions](https://raw.githubusercontent.com/rimian/discourse-subscriptions/master/doc/admin-subscriptions.png)
+![Admin Subscriptions](https://raw.githubusercontent.com/discourse/discourse-subscriptions/master/doc/admin-subscriptions.png)
 ### Subscription User
-![Admin Subscriptions](https://raw.githubusercontent.com/rimian/discourse-subscriptions/master/doc/user-subscriptions.png)
+![Admin Subscriptions](https://raw.githubusercontent.com/discourse/discourse-subscriptions/master/doc/user-subscriptions.png)
 ### Payments User
-![Admin Subscriptions](https://raw.githubusercontent.com/rimian/discourse-subscriptions/master/doc/user-payments.png)
+![Admin Subscriptions](https://raw.githubusercontent.com/discourse/discourse-subscriptions/master/doc/user-payments.png)
 ### Subscribe
-![Admin Subscriptions](https://raw.githubusercontent.com/rimian/discourse-subscriptions/master/doc/subscribe.png)
+![Admin Subscriptions](https://raw.githubusercontent.com/discourse/discourse-subscriptions/master/doc/subscribe.png)
 ### Settings
-![Admin Settings](https://raw.githubusercontent.com/rimian/discourse-subscriptions/master/doc/settings.png)
+![Admin Settings](https://raw.githubusercontent.com/discourse/discourse-subscriptions/master/doc/settings.png)
