@@ -1,12 +1,8 @@
 # Discourse Subscriptions
 
-[![Build Status](https://travis-ci.org/rimian/discourse-subscriptions.svg?branch=master)](https://travis-ci.org/rimian/discourse-subscriptions)
-
 The Discourse Subscriptions plugin allows you to set up a subscription based Discourse application. By integrating with the [Stripe](https://stripe.com) payment gateway and setting up this plugin to manage Subscriptions, you can start allowing users access to content on your website on a user pays basis.
 
 You can test this plugin here: https://discourse.rimian.com.au/s. See testing section below for test credit card numbers.
-
-This software offers [no warranty](https://github.com/rimian/discourse-subscriptions/blob/master/WARRANTY.md) of any kind.
 
 ### Features
 
@@ -23,21 +19,15 @@ Discourse Subscriptions supports the following features:
 
 See screenshots below.
 
-### Sponsorship
-
-This project is partly funded by [discourse.org](https://discourse.org). Many thanks!
-
-If you too would like to sponsor this project, I'd really appreciate it. You can help with development, admin costs or just coffee budget. See here: https://github.com/sponsors/rimian
-
 ## Plugin Installation
 
-Follow the [plugin](https://github.com/rimian/discourse-subscriptions) install instructions here: https://meta.discourse.org/t/install-a-plugin/19157
+Follow the [plugin](https://github.com/discourse/discourse-subscriptions/) install instructions here: https://meta.discourse.org/t/install-a-plugin/19157
 
 ## Core concepts
 
 ### Managing your Stripe Account
 
-Ultimately, your Subscriptions are managed by the Stripe subscription portal. Stripe will handle the recurring billing, invoices, etc at the required intervals and notify your [Discourse Subscriptions](https://github.com/rimian/discourse-subscriptions) plugin when specific transactions happen.
+Ultimately, your Subscriptions are managed by the Stripe subscription portal. Stripe will handle the recurring billing, invoices, etc at the required intervals and notify your [Discourse Subscriptions](https://github.com/discourse/discourse-subscriptions/) plugin when specific transactions happen.
 
 This plugin does not store Stripe transaction or subscription details in your database other than the customer and product identifiers associated with those transactions. User group management is not stored in the stripe Portal.
 
@@ -127,8 +117,7 @@ Visit `/s` and enter a few test transactions.
 
 ## Credits
 
-Many thanks to the Discourse team who sponsor this plugin! You guys rock. Also thanks to Chris Beach and Angus McLeod who helped on the previous version of this plugin. If you would like to contribute vis sponsorship to this project see: https://github.com/sponsors/rimian
-
+Many thanks to [Rimian Perkins](https://github.com/rimian/) for his work on this plugin! Also thanks to Chris Beach and Angus McLeod who helped with the previous version of this plugin.
 ## Screenshots
 
 ### Products Admin
