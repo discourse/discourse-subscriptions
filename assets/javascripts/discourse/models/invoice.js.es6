@@ -1,6 +1,7 @@
 import { ajax } from "discourse/lib/ajax";
+import EmberObject from "@ember/object";
 
-const Invoice = Discourse.Model.extend({});
+const Invoice = EmberObject.extend({});
 
 Invoice.reopenClass({
   findAll() {
