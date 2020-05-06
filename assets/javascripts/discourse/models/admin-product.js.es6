@@ -1,6 +1,7 @@
 import { ajax } from "discourse/lib/ajax";
+import EmberObject from "@ember/object";
 
-const AdminProduct = Discourse.Model.extend({
+const AdminProduct = EmberObject.extend({
   isNew: false,
   metadata: {},
 

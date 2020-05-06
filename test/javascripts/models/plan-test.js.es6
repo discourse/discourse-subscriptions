@@ -11,7 +11,7 @@ QUnit.test("subscriptionRate", assert => {
 
   assert.equal(
     plan.get("subscriptionRate"),
-    "$23.99 AUD / month",
+    "23.99 AUD / month",
     "it returns the formatted subscription rate"
   );
 });

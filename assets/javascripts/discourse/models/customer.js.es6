@@ -1,6 +1,7 @@
 import { ajax } from "discourse/lib/ajax";
+import EmberObject from "@ember/object";
 
-const Customer = Discourse.Model.extend({
+const Customer = EmberObject.extend({
   save() {
     const data = {
       source: this.source

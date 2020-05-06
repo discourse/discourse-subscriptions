@@ -1,7 +1,8 @@
 import computed from "ember-addons/ember-computed-decorators";
 import { ajax } from "discourse/lib/ajax";
+import EmberObject from "@ember/object";
 
-const Subscription = Discourse.Model.extend({
+const Subscription = EmberObject.extend({
   @computed("status")
   canceled(status) {
     return status === "canceled";
