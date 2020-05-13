@@ -7,7 +7,7 @@ function initialize(api, container) {
   if (isNavLinkEnabled) {
     api.addNavigationBarItem({
       name: "subscribe",
-      displayName: "Subscribe",
+      displayName: I18n.t("discourse_subscriptions.navigation.subscribe"),
       href: "/s"
     });
   }
