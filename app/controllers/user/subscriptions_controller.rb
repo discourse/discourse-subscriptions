@@ -10,6 +10,8 @@ module DiscourseSubscriptions
 
       def index
         begin
+          subscription_ids = Customer.find_by(user_id: current_user.id).subscriptions.pluck(:external_id)
+
           plans = ::Stripe::Plan.list(
             expand: ['data.product']
           )
@@ -27,6 +29,8 @@ module DiscourseSubscriptions
             plan = plans[:data].find { |p| p[:id] == subscription[:plan][:id] }
             subscription.to_h.merge(product: plan[:product].to_h.slice(:id, :name))
           end
+
+          subscriptions = subscriptions.select { |sub| subscription_ids.include?(sub[:id]) }
 
           render_json_dump subscriptions
 
@@ -46,8 +50,15 @@ module DiscourseSubscriptions
           )
 
           if customer.present?
+            sub_model = Subscription.find_by(
+              customer_id: customer.id,
+              external_id: params[:id]
+            )
+
             deleted = ::Stripe::Subscription.delete(params[:id])
             customer.delete
+
+            sub_model.delete if sub_model
 
             group = plan_group(subscription[:plan])
             group.remove(current_user) if group

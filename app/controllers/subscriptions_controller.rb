@@ -41,10 +41,15 @@ module DiscourseSubscriptions
           group.add(current_user)
         end
 
-        DiscourseSubscriptions::Customer.create(
+        customer = Customer.create(
           user_id: current_user.id,
           customer_id: params[:customer],
           product_id: plan[:product]
+        )
+
+        Subscription.create(
+          customer_id: customer.id,
+          external_id: @subscription[:id]
         )
 
         render_json_dump @subscription

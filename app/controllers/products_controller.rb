@@ -8,10 +8,18 @@ module DiscourseSubscriptions
 
     def index
       begin
-        response = ::Stripe::Product.list(active: true)
+        product_ids = Product.all.pluck(:external_id)
+        products = []
 
-        products = response[:data].map do |p|
-          serialize(p)
+        if product_ids.present?
+          response = ::Stripe::Product.list({
+            ids: product_ids,
+            active: true
+          })
+
+          products = response[:data].map do |p|
+            serialize(p)
+          end
         end
 
         render_json_dump products
@@ -46,7 +54,7 @@ module DiscourseSubscriptions
     def current_user_products
       return [] if current_user.nil?
 
-      ::DiscourseSubscriptions::Customer
+      Customer
         .select(:product_id)
         .where(user_id: current_user.id)
         .map { |c| c.product_id }.compact

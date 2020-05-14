@@ -9,13 +9,19 @@ module DiscourseSubscriptions
 
       def index
         begin
-          customer = DiscourseSubscriptions::Customer.find_by(user_id: current_user.id, product_id: nil)
+          customer = Customer.find_by(user_id: current_user.id)
+          products = Product.all.pluck(:external_id)
 
           data = []
 
-          if customer.present?
+          if customer.present? && products.present?
+            # lots of matching because the Stripe API doesn't make it easy to match products => payments except from invoices
+            invoices = ::Stripe::Invoice.list(customer: customer[:customer_id])
+            invoices = invoices[:data].select { |invoice| products.include?(invoice[:lines][:data][0][:plan][:product]) }
+            invoices = invoices.map { |invoice| invoice[:id] }
             payments = ::Stripe::PaymentIntent.list(customer: customer[:customer_id])
-            data = payments[:data]
+            payments = payments[:data].select { |payment| invoices.include?(payment[:invoice]) }
+            data = payments
           end
 
           render_json_dump data

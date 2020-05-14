@@ -32,7 +32,7 @@ AdminSubscription.reopenClass({
     return ajax("/s/admin/subscriptions", {
       method: "get"
     }).then(result =>
-      result.data.map(subscription => AdminSubscription.create(subscription))
+      result.map(subscription => AdminSubscription.create(subscription))
     );
   }
 });

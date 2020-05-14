@@ -11,7 +11,7 @@ module DiscourseSubscriptions
 
     def create
       begin
-        customer = DiscourseSubscriptions::Customer.where(user_id: current_user.id, product_id: nil).first_or_create do |c|
+        customer = Customer.where(user_id: current_user.id, product_id: nil).first_or_create do |c|
           new_customer = ::Stripe::Customer.create(
             email: current_user.email
           )
