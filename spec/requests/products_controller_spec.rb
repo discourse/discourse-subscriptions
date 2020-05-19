@@ -15,14 +15,19 @@ module DiscourseSubscriptions
           otherstuff: true,
         }
       end
+      let(:product_ids) { ["prodct_23456"] }
+
+      before do
+        Fabricate(:product, external_id: "prodct_23456")
+      end
 
       context "unauthenticated" do
         it "gets products" do
-          ::Stripe::Product.expects(:list).with(active: true).returns(data: [product])
+          ::Stripe::Product.expects(:list).with(ids: product_ids, active: true).returns(data: [product])
 
           get "/s/products.json"
 
-          expect(JSON.parse(response.body)).to eq([{
+          expect(response.parsed_body).to eq([{
             "id" => "prodct_23456",
             "name" => "Very Special Product",
             "description" => "Many people listened to my phone call with the Ukrainian President while it was being made",
@@ -40,11 +45,11 @@ module DiscourseSubscriptions
 
         describe "index" do
           it "gets products" do
-            ::Stripe::Product.expects(:list).with(active: true).returns(data: [product])
+            ::Stripe::Product.expects(:list).with(ids: product_ids, active: true).returns(data: [product])
 
             get "/s/products.json"
 
-            expect(JSON.parse(response.body)).to eq([{
+            expect(response.parsed_body).to eq([{
               "id" => "prodct_23456",
               "name" => "Very Special Product",
               "description" => "Many people listened to my phone call with the Ukrainian President while it was being made",
@@ -53,20 +58,20 @@ module DiscourseSubscriptions
           end
 
           it "is subscribed" do
-            ::DiscourseSubscriptions::Customer.create(product_id: product[:id], user_id: user.id, customer_id: 'x')
-            ::Stripe::Product.expects(:list).with(active: true).returns(data: [product])
+            Fabricate(:customer, product_id: product[:id], user_id: user.id, customer_id: 'x')
+            ::Stripe::Product.expects(:list).with(ids: product_ids, active: true).returns(data: [product])
 
             get "/s/products.json"
-            data = JSON.parse(response.body)
+            data = response.parsed_body
             expect(data.first["subscribed"]).to eq true
           end
 
           it "is not subscribed" do
             ::DiscourseSubscriptions::Customer.delete_all
-            ::Stripe::Product.expects(:list).with(active: true).returns(data: [product])
+            ::Stripe::Product.expects(:list).with(ids: product_ids, active: true).returns(data: [product])
 
             get "/s/products.json"
-            data = JSON.parse(response.body)
+            data = response.parsed_body
             expect(data.first["subscribed"]).to eq false
           end
         end
@@ -76,7 +81,7 @@ module DiscourseSubscriptions
             ::Stripe::Product.expects(:retrieve).with('prod_walterwhite').returns(product)
             get "/s/products/prod_walterwhite.json"
 
-            expect(JSON.parse(response.body)).to eq(
+            expect(response.parsed_body).to eq(
               "id" => "prodct_23456",
               "name" => "Very Special Product",
               "description" => "Many people listened to my phone call with the Ukrainian President while it was being made",

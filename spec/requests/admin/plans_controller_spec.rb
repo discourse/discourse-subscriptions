@@ -98,7 +98,7 @@ module DiscourseSubscriptions
           it "upcases the currency" do
             ::Stripe::Plan.expects(:retrieve).with('plan_12345').returns(currency: 'aud')
             get "/s/admin/plans/plan_12345.json"
-            expect(response.body).to eq '{"currency":"AUD"}'
+            expect(response.parsed_body["currency"]).to eq 'AUD'
           end
         end
 

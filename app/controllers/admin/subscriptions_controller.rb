@@ -32,16 +32,14 @@ module DiscourseSubscriptions
             customer_id: subscription[:customer]
           )
 
-          sub_model = Subscription.find_by(external_id: params[:id])
-          if customer
-            customer.delete
+          Subscription.delete_by(external_id: params[:id])
 
+          if customer
             user = ::User.find(customer.user_id)
+            customer.delete
             group = plan_group(subscription[:plan])
             group.remove(user) if group
           end
-
-          sub_model.delete if sub_model
 
           render_json_dump subscription
 

@@ -8,6 +8,13 @@ module DiscourseSubscriptions
       expect(DiscourseSubscriptions::Admin::SubscriptionsController < ::Admin::AdminController).to eq(true)
     end
 
+    let(:user) { Fabricate(:user) }
+    let(:customer) { Fabricate(:customer, user_id: user.id, customer_id: 'c_123', product_id: 'pr_34578') }
+
+    before do
+      Fabricate(:subscription, external_id: "sub_12345", customer_id: customer.id)
+    end
+
     context 'unauthenticated' do
       it "does nothing" do
         ::Stripe::Subscription.expects(:list).never
@@ -22,16 +29,23 @@ module DiscourseSubscriptions
     end
 
     context 'authenticated' do
-      let(:user) { Fabricate(:user) }
       let(:admin) { Fabricate(:admin) }
 
       before { sign_in(admin) }
 
       describe "index" do
         it "gets the subscriptions and products" do
-          ::Stripe::Subscription.expects(:list).with(expand: ['data.plan.product'])
+          ::Stripe::Subscription.expects(:list).with(expand: ['data.plan.product']).returns(
+            [
+              { id: "sub_12345" },
+              { id: "sub_nope" }
+            ]
+          )
           get "/s/admin/subscriptions.json"
+          subscriptions = response.parsed_body[0]["id"]
+
           expect(response.status).to eq(200)
+          expect(subscriptions).to eq("sub_12345")
         end
       end
 
@@ -39,12 +53,6 @@ module DiscourseSubscriptions
         let(:group) { Fabricate(:group, name: 'subscribers') }
 
         before do
-          DiscourseSubscriptions::Customer.create(
-            user_id: user.id,
-            customer_id: 'c_123',
-            product_id: 'pr_34578'
-          )
-
           group.add(user)
         end
 

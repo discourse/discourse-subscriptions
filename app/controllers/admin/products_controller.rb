@@ -13,7 +13,7 @@ module DiscourseSubscriptions
           products = []
 
           if product_ids.present?
-            products = ::Stripe::Product.list({ ids: product_ids }) 
+            products = ::Stripe::Product.list({ ids: product_ids })
             products = products[:data]
           end
 
@@ -71,13 +71,11 @@ module DiscourseSubscriptions
 
       def destroy
         begin
-          external_product = ::Stripe::Product.delete(params[:id])
+          product = ::Stripe::Product.delete(params[:id])
 
-          product = Product.find_by(external_id: params[:id])
+          Product.delete_by(external_id: params[:id])
 
-          product.delete if product
-
-          render_json_dump external_product
+          render_json_dump product
 
         rescue ::Stripe::InvalidRequestError => e
           render_json_error e.message

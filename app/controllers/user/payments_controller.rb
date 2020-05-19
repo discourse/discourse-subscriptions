@@ -10,18 +10,18 @@ module DiscourseSubscriptions
       def index
         begin
           customer = Customer.find_by(user_id: current_user.id)
-          products = Product.all.pluck(:external_id)
+          product_ids = Product.all.pluck(:external_id)
 
           data = []
 
-          if customer.present? && products.present?
+          if customer.present? && product_ids.present?
             # lots of matching because the Stripe API doesn't make it easy to match products => payments except from invoices
-            invoices = ::Stripe::Invoice.list(customer: customer[:customer_id])
-            invoices = invoices[:data].select { |invoice| products.include?(invoice[:lines][:data][0][:plan][:product]) }
-            invoices = invoices.map { |invoice| invoice[:id] }
+            all_invoices = ::Stripe::Invoice.list(customer: customer[:customer_id])
+            invoices_with_products = all_invoices[:data].select { |invoice| product_ids.include?(invoice.dig(:lines, :data, 0, :plan, :product)) }
+            invoice_ids = invoices_with_products.map { |invoice| invoice[:id] }
             payments = ::Stripe::PaymentIntent.list(customer: customer[:customer_id])
-            payments = payments[:data].select { |payment| invoices.include?(payment[:invoice]) }
-            data = payments
+            payments_from_invoices = payments[:data].select { |payment| invoice_ids.include?(payment[:invoice]) }
+            data = payments_from_invoices
           end
 
           render_json_dump data

@@ -2,6 +2,7 @@ import Customer from "discourse/plugins/discourse-subscriptions/discourse/models
 import Payment from "discourse/plugins/discourse-subscriptions/discourse/models/payment";
 import Subscription from "discourse/plugins/discourse-subscriptions/discourse/models/subscription";
 import computed from "discourse-common/utils/decorators";
+import I18n from "I18n";
 
 export default Ember.Controller.extend({
   planTypeIsSelected: true,

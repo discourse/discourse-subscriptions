@@ -10,27 +10,32 @@ module DiscourseSubscriptions
 
       def index
         begin
-          subscription_ids = Customer.find_by(user_id: current_user.id).subscriptions.pluck(:external_id)
+          customer = Customer.find_by(user_id: current_user.id)
+          subscription_ids = Subscription.where(customer_id: customer.id).pluck(:external_id) if customer
 
-          plans = ::Stripe::Plan.list(
-            expand: ['data.product']
-          )
+          subscriptions = []
 
-          customers = ::Stripe::Customer.list(
-            email: current_user.email,
-            expand: ['data.subscriptions']
-          )
+          if subscription_ids
+            plans = ::Stripe::Plan.list(
+              expand: ['data.product']
+            )
 
-          subscriptions = customers[:data].map do |customer|
-            customer[:subscriptions][:data]
-          end.flatten(1)
+            customers = ::Stripe::Customer.list(
+              email: current_user.email,
+              expand: ['data.subscriptions']
+            )
 
-          subscriptions.map! do |subscription|
-            plan = plans[:data].find { |p| p[:id] == subscription[:plan][:id] }
-            subscription.to_h.merge(product: plan[:product].to_h.slice(:id, :name))
+            subscriptions = customers[:data].map do |sub_customer|
+              sub_customer[:subscriptions][:data]
+            end.flatten(1)
+
+            subscriptions = subscriptions.select { |sub| subscription_ids.include?(sub[:id]) }
+
+            subscriptions.map! do |subscription|
+              plan = plans[:data].find { |p| p[:id] == subscription[:plan][:id] }
+              subscription.to_h.merge(product: plan[:product].to_h.slice(:id, :name))
+            end
           end
-
-          subscriptions = subscriptions.select { |sub| subscription_ids.include?(sub[:id]) }
 
           render_json_dump subscriptions
 
