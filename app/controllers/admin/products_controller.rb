@@ -9,9 +9,15 @@ module DiscourseSubscriptions
 
       def index
         begin
-          products = ::Stripe::Product.list
+          product_ids = Product.all.pluck(:external_id)
+          products = []
 
-          render_json_dump products.data
+          if product_ids.present?
+            products = ::Stripe::Product.list({ ids: product_ids })
+            products = products[:data]
+          end
+
+          render_json_dump products
         rescue ::Stripe::InvalidRequestError => e
           render_json_error e.message
         end
@@ -26,6 +32,10 @@ module DiscourseSubscriptions
           end
 
           product = ::Stripe::Product.create(create_params)
+
+          Product.create(
+            external_id: product[:id]
+          )
 
           render_json_dump product
 
@@ -62,6 +72,8 @@ module DiscourseSubscriptions
       def destroy
         begin
           product = ::Stripe::Product.delete(params[:id])
+
+          Product.delete_by(external_id: params[:id])
 
           render_json_dump product
 

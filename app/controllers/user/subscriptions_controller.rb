@@ -10,22 +10,31 @@ module DiscourseSubscriptions
 
       def index
         begin
-          plans = ::Stripe::Plan.list(
-            expand: ['data.product']
-          )
+          customer = Customer.find_by(user_id: current_user.id)
+          subscription_ids = Subscription.where(customer_id: customer.id).pluck(:external_id) if customer
 
-          customers = ::Stripe::Customer.list(
-            email: current_user.email,
-            expand: ['data.subscriptions']
-          )
+          subscriptions = []
 
-          subscriptions = customers[:data].map do |customer|
-            customer[:subscriptions][:data]
-          end.flatten(1)
+          if subscription_ids
+            plans = ::Stripe::Plan.list(
+              expand: ['data.product']
+            )
 
-          subscriptions.map! do |subscription|
-            plan = plans[:data].find { |p| p[:id] == subscription[:plan][:id] }
-            subscription.to_h.merge(product: plan[:product].to_h.slice(:id, :name))
+            customers = ::Stripe::Customer.list(
+              email: current_user.email,
+              expand: ['data.subscriptions']
+            )
+
+            subscriptions = customers[:data].map do |sub_customer|
+              sub_customer[:subscriptions][:data]
+            end.flatten(1)
+
+            subscriptions = subscriptions.select { |sub| subscription_ids.include?(sub[:id]) }
+
+            subscriptions.map! do |subscription|
+              plan = plans[:data].find { |p| p[:id] == subscription[:plan][:id] }
+              subscription.to_h.merge(product: plan[:product].to_h.slice(:id, :name))
+            end
           end
 
           render_json_dump subscriptions
@@ -46,8 +55,15 @@ module DiscourseSubscriptions
           )
 
           if customer.present?
+            sub_model = Subscription.find_by(
+              customer_id: customer.id,
+              external_id: params[:id]
+            )
+
             deleted = ::Stripe::Subscription.delete(params[:id])
             customer.delete
+
+            sub_model.delete if sub_model
 
             group = plan_group(subscription[:plan])
             group.remove(current_user) if group

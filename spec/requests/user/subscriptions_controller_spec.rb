@@ -22,9 +22,11 @@ module DiscourseSubscriptions
 
     context "authenticated" do
       let(:user) { Fabricate(:user, email: 'beanie@example.com') }
+      let(:customer) { Fabricate(:customer, user_id: user.id, customer_id: "cus_23456", product_id: "prod_123") }
 
       before do
         sign_in(user)
+        Fabricate(:subscription, customer_id: customer.id, external_id: "sub_1234")
       end
 
       describe "index" do
@@ -69,7 +71,7 @@ module DiscourseSubscriptions
 
           get "/s/user/subscriptions.json"
 
-          subscription = JSON.parse(response.body).first
+          subscription = response.parsed_body.first
 
           expect(subscription).to eq(
             "id" => "sub_1234",

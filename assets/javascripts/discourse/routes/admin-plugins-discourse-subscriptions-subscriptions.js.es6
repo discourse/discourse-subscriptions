@@ -1,5 +1,6 @@
 import Route from "@ember/routing/route";
 import AdminSubscription from "discourse/plugins/discourse-subscriptions/discourse/models/admin-subscription";
+import I18n from "I18n";
 
 export default Route.extend({
   model() {

@@ -29,7 +29,7 @@ module DiscourseSubscriptions
     end
 
     def find_customer
-      DiscourseSubscriptions::Customer.find_user(current_user)
+      Customer.find_user(current_user)
     end
   end
 end

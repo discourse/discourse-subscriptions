@@ -48,8 +48,8 @@ module DiscourseSubscriptions
 
         describe 'index' do
           it "gets the empty products" do
-            ::Stripe::Product.expects(:list)
             get "/s/admin/products.json"
+            expect(response.parsed_body).to be_empty
           end
         end
 

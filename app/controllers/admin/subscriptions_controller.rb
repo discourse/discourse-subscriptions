@@ -9,7 +9,13 @@ module DiscourseSubscriptions
 
       def index
         begin
-          subscriptions = ::Stripe::Subscription.list(expand: ['data.plan.product'])
+          subscription_ids = Subscription.all.pluck(:external_id)
+          subscriptions = []
+
+          if subscription_ids.present?
+            subscriptions = ::Stripe::Subscription.list(expand: ['data.plan.product'])
+            subscriptions = subscriptions.select { |sub| subscription_ids.include?(sub[:id]) }
+          end
 
           render_json_dump subscriptions
         rescue ::Stripe::InvalidRequestError => e
@@ -21,15 +27,16 @@ module DiscourseSubscriptions
         begin
           subscription = ::Stripe::Subscription.delete(params[:id])
 
-          customer = DiscourseSubscriptions::Customer.find_by(
+          customer = Customer.find_by(
             product_id: subscription[:plan][:product],
             customer_id: subscription[:customer]
           )
 
-          if customer
-            customer.delete
+          Subscription.delete_by(external_id: params[:id])
 
+          if customer
             user = ::User.find(customer.user_id)
+            customer.delete
             group = plan_group(subscription[:plan])
             group.remove(user) if group
           end

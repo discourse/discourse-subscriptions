@@ -4,7 +4,7 @@
 # about: Integrates Stripe into Discourse to allow visitors to subscribe
 # version: 2.8.1
 # url: https://github.com/discourse/discourse-subscriptions
-# authors: Rimian Perkins
+# authors: Rimian Perkins, Justin DiRose
 
 enabled_site_setting :discourse_subscriptions_enabled
 
@@ -45,7 +45,7 @@ after_initialize do
   ::Stripe.set_app_info(
     'Discourse Subscriptions',
     version: '2.8.1',
-    url: 'https://github.com/rimian/discourse-subscriptions'
+    url: 'https://github.com/discourse/discourse-subscriptions'
   )
 
   [
@@ -67,6 +67,8 @@ after_initialize do
     "../app/controllers/products_controller",
     "../app/controllers/subscriptions_controller",
     "../app/models/customer",
+    "../app/models/product",
+    "../app/models/subscription",
     "../app/serializers/payment_serializer",
   ].each { |path| require File.expand_path(path, __FILE__) }
 

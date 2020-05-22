@@ -12,6 +12,7 @@ module DiscourseSubscriptions
       it "does not get the payment intents" do
         ::Stripe::PaymentIntent.expects(:list).never
         get "/s/user/payments.json"
+        expect(response.status).to eq(403)
       end
     end
 
@@ -21,14 +22,40 @@ module DiscourseSubscriptions
       before do
         sign_in(user)
         Fabricate(:customer, customer_id: 'c_345678', user_id: user.id)
+        Fabricate(:product, external_id: 'prod_8675309')
       end
 
       it "gets payment intents" do
-        ::Stripe::PaymentIntent.expects(:list).with(
+        ::Stripe::Invoice.expects(:list).with(
           customer: 'c_345678'
+        ).returns(
+          data: [
+            id: "inv_900007",
+            lines: {
+              data: [
+                plan: {
+                  product: "prod_8675309"
+                }
+              ]
+            },
+          ]
+        )
+
+        ::Stripe::PaymentIntent.expects(:list).with(
+          customer: 'c_345678',
+        ).returns(
+          data: [
+            { invoice: "inv_900007" },
+            { invoice: "inv_007" }
+          ]
         )
 
         get "/s/user/payments.json"
+
+        invoice = response.parsed_body[0]["invoice"]
+
+        expect(invoice).to eq("inv_900007")
+
       end
 
     end
