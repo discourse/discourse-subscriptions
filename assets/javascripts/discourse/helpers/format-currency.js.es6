@@ -1,4 +1,6 @@
-export default Ember.Helper.helper(function(params) {
+import Helper from "@ember/component/helper";
+
+export default Helper.helper(function(params) {
   let currencySign;
 
   switch (params[0]) {

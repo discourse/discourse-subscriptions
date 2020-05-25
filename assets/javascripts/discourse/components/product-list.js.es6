@@ -1,9 +1,10 @@
 import discourseComputed from "discourse-common/utils/decorators";
 import User from "discourse/models/user";
+import Component from "@ember/component";
 
-export default Ember.Component.extend({
+export default Component.extend({
   @discourseComputed()
-  currentUser() {
+  isLoggedIn() {
     return User.current();
   }
 });

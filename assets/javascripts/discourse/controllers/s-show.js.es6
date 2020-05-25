@@ -1,10 +1,11 @@
+import Controller from "@ember/controller";
 import Customer from "discourse/plugins/discourse-subscriptions/discourse/models/customer";
 import Payment from "discourse/plugins/discourse-subscriptions/discourse/models/payment";
 import Subscription from "discourse/plugins/discourse-subscriptions/discourse/models/subscription";
 import discourseComputed from "discourse-common/utils/decorators";
 import I18n from "I18n";
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   planTypeIsSelected: true,
 
   @discourseComputed("planTypeIsSelected")

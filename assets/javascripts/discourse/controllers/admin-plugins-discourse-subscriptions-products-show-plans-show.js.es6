@@ -1,7 +1,8 @@
 import discourseComputed from "discourse-common/utils/decorators";
 import DiscourseURL from "discourse/lib/url";
+import Controller from "@ember/controller";
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   // Also defined in settings.
   currencies: ["AUD", "CAD", "EUR", "GBP", "USD", "INR"],
 

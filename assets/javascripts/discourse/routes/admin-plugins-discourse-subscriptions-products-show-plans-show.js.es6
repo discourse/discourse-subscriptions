@@ -1,6 +1,7 @@
 import Route from "@ember/routing/route";
 import AdminPlan from "discourse/plugins/discourse-subscriptions/discourse/models/admin-plan";
 import Group from "discourse/models/group";
+import { hash } from "rsvp";
 
 export default Route.extend({
   model(params) {
@@ -23,7 +24,7 @@ export default Route.extend({
 
     const groups = Group.findAll({ ignore_automatic: true });
 
-    return Ember.RSVP.hash({ plan, product, groups });
+    return hash({ plan, product, groups });
   },
 
   renderTemplate() {
