@@ -1,5 +1,5 @@
 import EmberObject from "@ember/object";
-import computed from "discourse-common/utils/decorators";
+import discourseComputed from "discourse-common/utils/decorators";
 import { ajax } from "discourse/lib/ajax";
 
 const Plan = EmberObject.extend({
@@ -14,7 +14,7 @@ const Plan = EmberObject.extend({
     }
   }),
 
-  @computed("amountDollars", "currency", "interval")
+  @discourseComputed("amountDollars", "currency", "interval")
   subscriptionRate(amountDollars, currency, interval) {
     return `${amountDollars} ${currency.toUpperCase()} / ${interval}`;
   }

@@ -1,16 +1,16 @@
-import computed from "ember-addons/ember-computed-decorators";
+import discourseComputed from "discourse-common/utils/decorators";
 import DiscourseURL from "discourse/lib/url";
 
 export default Ember.Controller.extend({
   // Also defined in settings.
   currencies: ["AUD", "CAD", "EUR", "GBP", "USD", "INR"],
 
-  @computed("model.plan.isNew")
+  @discourseComputed("model.plan.isNew")
   planFieldDisabled(isNew) {
     return !isNew;
   },
 
-  @computed("model.product.id")
+  @discourseComputed("model.product.id")
   productId(id) {
     return id;
   },

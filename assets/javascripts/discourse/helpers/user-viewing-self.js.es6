@@ -1,10 +1,10 @@
 import { registerUnbound } from "discourse-common/lib/helpers";
+import User from "discourse/models/user";
 
 export default registerUnbound("user-viewing-self", function(model) {
-  if (Discourse.User.current()) {
+  if (User.current()) {
     return (
-      Discourse.User.current().username.toLowerCase() ===
-      model.username.toLowerCase()
+      User.current().username.toLowerCase() === model.username.toLowerCase()
     );
   }
 

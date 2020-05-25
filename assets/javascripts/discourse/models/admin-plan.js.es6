@@ -1,5 +1,5 @@
 import Plan from "discourse/plugins/discourse-subscriptions/discourse/models/plan";
-import computed from "ember-addons/ember-computed-decorators";
+import discourseComputed from "discourse-common/utils/decorators";
 import { ajax } from "discourse/lib/ajax";
 
 const AdminPlan = Plan.extend({
@@ -10,7 +10,7 @@ const AdminPlan = Plan.extend({
   intervals: ["day", "week", "month", "year"],
   metadata: {},
 
-  @computed("trial_period_days")
+  @discourseComputed("trial_period_days")
   parseTrialPeriodDays(trial_period_days) {
     if (trial_period_days) {
       return parseInt(0 + trial_period_days, 10);

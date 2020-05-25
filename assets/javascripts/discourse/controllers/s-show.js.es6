@@ -1,18 +1,18 @@
 import Customer from "discourse/plugins/discourse-subscriptions/discourse/models/customer";
 import Payment from "discourse/plugins/discourse-subscriptions/discourse/models/payment";
 import Subscription from "discourse/plugins/discourse-subscriptions/discourse/models/subscription";
-import computed from "discourse-common/utils/decorators";
+import discourseComputed from "discourse-common/utils/decorators";
 import I18n from "I18n";
 
 export default Ember.Controller.extend({
   planTypeIsSelected: true,
 
-  @computed("planTypeIsSelected")
+  @discourseComputed("planTypeIsSelected")
   type(planTypeIsSelected) {
     return planTypeIsSelected ? "plans" : "payment";
   },
 
-  @computed("type")
+  @discourseComputed("type")
   buttonText(type) {
     return I18n.t(`discourse_subscriptions.${type}.payment_button`);
   },

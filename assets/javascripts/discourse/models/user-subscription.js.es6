@@ -1,10 +1,10 @@
 import EmberObject from "@ember/object";
-import computed from "ember-addons/ember-computed-decorators";
+import discourseComputed from "discourse-common/utils/decorators";
 import { ajax } from "discourse/lib/ajax";
 import Plan from "discourse/plugins/discourse-subscriptions/discourse/models/plan";
 
 const UserSubscription = EmberObject.extend({
-  @computed("status")
+  @discourseComputed("status")
   canceled(status) {
     return status === "canceled";
   },
