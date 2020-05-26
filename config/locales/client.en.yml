@@ -67,6 +67,7 @@ en:
               confirm: Are you sure you want to cancel this subscription?
       subscribe:
         title: Subscribe
+        no_products: There are currently no products available.
         unauthenticated: You need to create an account to subscribe.
         card:
           title: Payment

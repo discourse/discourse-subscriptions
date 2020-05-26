@@ -11,7 +11,7 @@ module DiscourseSubscriptions
         product_ids = Product.all.pluck(:external_id)
         products = []
 
-        if product_ids.present?
+        if product_ids.present? && is_stripe_configured?
           response = ::Stripe::Product.list({
             ids: product_ids,
             active: true

@@ -1,24 +1,27 @@
+{{#if emptyProducts}}
+  <p>{{i18n 'discourse_subscriptions.subscribe.no_products'}}</p>
+{{else}}
+  {{#each products as |product|}}
+    <div class="product">
+      <h2>{{product.name}}</h2>
 
-{{#each products as |product|}}
-  <div class="product">
-    <h2>{{product.name}}</h2>
+      <p>
+        {{product.description}}
+      </p>
 
+      {{#if isLoggedIn}}
+        <div class="pull-right">
+          {{#link-to "s.show" product.id disabled=product.subscribed class="btn btn-primary"}}
+            {{i18n 'discourse_subscriptions.subscribe.title'}}
+          {{/link-to}}
+        </div>
+      {{/if}}
+    </div>
+  {{/each}}
+
+  {{#unless isLoggedIn}}
     <p>
-      {{product.description}}
+      {{i18n 'discourse_subscriptions.subscribe.unauthenticated'}}
     </p>
-
-    {{#if isLoggedIn}}
-      <div class="pull-right">
-        {{#link-to "s.show" product.id disabled=product.subscribed class="btn btn-primary"}}
-          {{i18n 'discourse_subscriptions.subscribe.title'}}
-        {{/link-to}}
-      </div>
-    {{/if}}
-  </div>
-{{/each}}
-
-{{#unless isLoggedIn}}
-  <p>
-    {{i18n 'discourse_subscriptions.subscribe.unauthenticated'}}
-  </p>
-{{/unless}}
+  {{/unless}}
+{{/if}}
