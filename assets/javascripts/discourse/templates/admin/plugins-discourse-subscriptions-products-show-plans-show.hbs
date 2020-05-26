@@ -15,7 +15,12 @@
   </p>
   <p>
     <label for="interval">{{i18n 'discourse_subscriptions.admin.plans.plan.group'}}</label>
-    {{combo-box valueAttribute="name" content=model.groups value=model.plan.metadata.group_name}}
+    {{combo-box 
+      valueProperty="name"
+      content=model.groups 
+      value=model.plan.metadata.group_name 
+      onChange=(action (mut model.plan.metadata.group_name))
+    }}
     <div class="control-instructions">
       {{i18n 'discourse_subscriptions.admin.plans.plan.group_help'}}
     </div>
@@ -25,7 +30,12 @@
     {{#if planFieldDisabled}}
       {{input class="plan-amount plan-currency" disabled=true value=model.plan.currency}}
     {{else}}
-      {{combo-box disabled=planFieldDisabled content=currencies value=model.plan.currency}}
+      {{combo-box 
+        disabled=planFieldDisabled 
+        content=currencies 
+        value=model.plan.currency 
+        onChange=(action (mut model.plan.currency))
+      }}
     {{/if}}
     {{input class="plan-amount" type="text" name="name" value=model.plan.amountDollars disabled=planFieldDisabled}}
   </p>
@@ -44,9 +54,14 @@
       {{i18n 'discourse_subscriptions.admin.plans.plan.interval'}}
     </label>
     {{#if planFieldDisabled}}
-      {{input disabled=true value=model.plan.interval}}
+      {{input disabled=true value=selectedInterval}}
     {{else}}
-      {{combo-box valueAttribute="value" content=model.plan.intervals value=model.plan.interval}}
+      {{combo-box 
+        valueProperty="name"
+        content=availableIntervals 
+        value=selectedInterval 
+        onChange=(action (mut selectedInterval))
+      }}
     {{/if}}
   </p>
   <p>

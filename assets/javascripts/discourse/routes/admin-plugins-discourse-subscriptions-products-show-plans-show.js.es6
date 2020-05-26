@@ -15,6 +15,7 @@ export default Route.extend({
       plan = AdminPlan.create({
         active: true,
         isNew: true,
+        interval: "month",
         currency: Discourse.SiteSettings.discourse_subscriptions_currency,
         product: product.get("id")
       });
