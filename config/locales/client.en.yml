@@ -87,6 +87,7 @@ en:
         confirm_payment: Confirm payment
         success: Go back
       admin:
+        unconfigured: 'Stripe is not configured correctly. Please see Discourse Meta for information.'
         dashboard:
           title: Dashboard
           table:
