@@ -31,9 +31,12 @@ AdminSubscription.reopenClass({
   find() {
     return ajax("/s/admin/subscriptions", {
       method: "get"
-    }).then(result =>
-      result.map(subscription => AdminSubscription.create(subscription))
-    );
+    }).then(result => {
+      if (result === null) {
+        return { unconfigured: true };
+      }
+      result.map(subscription => AdminSubscription.create(subscription));
+    });
   }
 });
 

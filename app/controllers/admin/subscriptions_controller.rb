@@ -12,9 +12,11 @@ module DiscourseSubscriptions
           subscription_ids = Subscription.all.pluck(:external_id)
           subscriptions = []
 
-          if subscription_ids.present?
+          if subscription_ids.present? && is_stripe_configured?
             subscriptions = ::Stripe::Subscription.list(expand: ['data.plan.product'])
             subscriptions = subscriptions.select { |sub| subscription_ids.include?(sub[:id]) }
+          elsif !is_stripe_configured?
+            subscriptions = nil
           end
 
           render_json_dump subscriptions
