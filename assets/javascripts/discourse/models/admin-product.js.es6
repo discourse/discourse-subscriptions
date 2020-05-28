@@ -40,9 +40,12 @@ const AdminProduct = EmberObject.extend({
 
 AdminProduct.reopenClass({
   findAll() {
-    return ajax("/s/admin/products", { method: "get" }).then(result =>
-      result.map(product => AdminProduct.create(product))
-    );
+    return ajax("/s/admin/products", { method: "get" }).then(result => {
+      if (result === null) {
+        return { unconfigured: true };
+      }
+      result.map(product => AdminProduct.create(product));
+    });
   },
 
   find(id) {

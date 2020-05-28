@@ -1,6 +1,7 @@
 import { equal } from "@ember/object/computed";
+import Component from "@ember/component";
 
-export default Ember.Component.extend({
+export default Component.extend({
   planButtonSelected: equal("planTypeIsSelected", true),
   paymentButtonSelected: equal("planTypeIsSelected", false),
 

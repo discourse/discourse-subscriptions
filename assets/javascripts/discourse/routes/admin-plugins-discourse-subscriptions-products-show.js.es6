@@ -2,6 +2,7 @@ import Route from "@ember/routing/route";
 import AdminProduct from "discourse/plugins/discourse-subscriptions/discourse/models/admin-product";
 import AdminPlan from "discourse/plugins/discourse-subscriptions/discourse/models/admin-plan";
 import I18n from "I18n";
+import { hash } from "rsvp";
 
 export default Route.extend({
   model(params) {
@@ -16,7 +17,7 @@ export default Route.extend({
       plans = AdminPlan.findAll({ product_id });
     }
 
-    return Ember.RSVP.hash({ plans, product });
+    return hash({ plans, product });
   },
 
   actions: {

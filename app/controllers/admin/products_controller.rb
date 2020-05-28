@@ -12,9 +12,11 @@ module DiscourseSubscriptions
           product_ids = Product.all.pluck(:external_id)
           products = []
 
-          if product_ids.present?
+          if product_ids.present? && is_stripe_configured?
             products = ::Stripe::Product.list({ ids: product_ids })
             products = products[:data]
+          elsif !is_stripe_configured?
+            products = nil
           end
 
           render_json_dump products

@@ -1,6 +1,7 @@
+import Controller from "@ember/controller";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   actions: {
     createPlan() {
       if (this.get("model.plan.product_id") === undefined) {

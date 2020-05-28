@@ -67,6 +67,7 @@ en:
               confirm: Are you sure you want to cancel this subscription?
       subscribe:
         title: Subscribe
+        no_products: There are currently no products available.
         unauthenticated: You need to create an account to subscribe.
         card:
           title: Payment
@@ -86,6 +87,7 @@ en:
         confirm_payment: Confirm payment
         success: Go back
       admin:
+        unconfigured: 'Stripe is not configured correctly. Please see Discourse Meta for information.'
         dashboard:
           title: Dashboard
           table:
