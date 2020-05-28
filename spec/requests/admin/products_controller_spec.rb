@@ -48,6 +48,8 @@ module DiscourseSubscriptions
 
         describe 'index' do
           it "gets the empty products" do
+            SiteSetting.discourse_subscriptions_public_key = "public-key"
+            SiteSetting.discourse_subscriptions_secret_key = "secret-key"
             get "/s/admin/products.json"
             expect(response.parsed_body).to be_empty
           end

@@ -19,6 +19,8 @@ module DiscourseSubscriptions
 
       before do
         Fabricate(:product, external_id: "prodct_23456")
+        SiteSetting.discourse_subscriptions_public_key = "public-key"
+        SiteSetting.discourse_subscriptions_secret_key = "secret-key"
       end
 
       context "unauthenticated" do

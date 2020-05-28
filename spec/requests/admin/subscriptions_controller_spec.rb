@@ -35,6 +35,8 @@ module DiscourseSubscriptions
 
       describe "index" do
         it "gets the subscriptions and products" do
+          SiteSetting.discourse_subscriptions_public_key = "public-key"
+          SiteSetting.discourse_subscriptions_secret_key = "secret-key"
           ::Stripe::Subscription.expects(:list).with(expand: ['data.plan.product']).returns(
             [
               { id: "sub_12345" },
