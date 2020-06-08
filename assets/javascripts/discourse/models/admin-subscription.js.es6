@@ -35,7 +35,7 @@ AdminSubscription.reopenClass({
       if (result === null) {
         return { unconfigured: true };
       }
-      result.map(subscription => AdminSubscription.create(subscription));
+      return result.map(subscription => AdminSubscription.create(subscription));
     });
   }
 });

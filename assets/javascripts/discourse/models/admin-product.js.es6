@@ -44,7 +44,7 @@ AdminProduct.reopenClass({
       if (result === null) {
         return { unconfigured: true };
       }
-      result.map(product => AdminProduct.create(product));
+      return result.map(product => AdminProduct.create(product));
     });
   },
 
