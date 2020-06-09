@@ -10,14 +10,16 @@ module DiscourseSubscriptions
 
       def index
         begin
-          customer = Customer.find_by(user_id: current_user.id)
-          subscription_ids = Subscription.where(customer_id: customer.id).pluck(:external_id) if customer
+          customer = Customer.where(user_id: current_user.id)
+          customer_ids = customer.map { |c| c.id } if customer
+          subscription_ids = Subscription.where("customer_id in (?)", customer_ids).pluck(:external_id) if customer_ids
 
           subscriptions = []
 
           if subscription_ids
             plans = ::Stripe::Plan.list(
-              expand: ['data.product']
+              expand: ['data.product'],
+              limit: 100
             )
 
             customers = ::Stripe::Customer.list(
