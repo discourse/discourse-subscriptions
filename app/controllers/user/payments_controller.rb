@@ -19,7 +19,7 @@ module DiscourseSubscriptions
             customer_ids.each do |customer_id|
               # lots of matching because the Stripe API doesn't make it easy to match products => payments except from invoices
               all_invoices = ::Stripe::Invoice.list(customer: customer_id)
-              invoices_with_products = all_invoices[:data].select do |invoice| 
+              invoices_with_products = all_invoices[:data].select do |invoice|
                 # i cannot dig it so we must get iffy with it
                 if invoice[:lines] && invoice[:lines][:data] && invoice[:lines][:data][0] && invoice[:lines][:data][0][:plan] && invoice[:lines][:data][0][:plan][:product]
                   product_ids.include?(invoice[:lines][:data][0][:plan][:product])
