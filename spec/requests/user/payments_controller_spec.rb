@@ -45,8 +45,14 @@ module DiscourseSubscriptions
           customer: 'c_345678',
         ).returns(
           data: [
-            { invoice: "inv_900007" },
-            { invoice: "inv_007" }
+            { 
+              invoice: "inv_900007",
+              created: Time.now
+            },
+            { 
+              invoice: "inv_007",
+              created: Time.now
+            }
           ]
         )
 

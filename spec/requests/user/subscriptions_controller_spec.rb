@@ -61,7 +61,8 @@ module DiscourseSubscriptions
 
         it "gets subscriptions" do
           ::Stripe::Plan.expects(:list).with(
-            expand: ['data.product']
+            expand: ['data.product'],
+            limit: 100
           ).returns(plans)
 
           ::Stripe::Customer.expects(:list).with(

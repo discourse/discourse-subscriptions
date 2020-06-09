@@ -9,20 +9,30 @@ module DiscourseSubscriptions
 
       def index
         begin
-          customer = Customer.find_by(user_id: current_user.id)
+          customer = Customer.where(user_id: current_user.id)
+          customer_ids = customer.map { |c| c.customer_id } if customer
           product_ids = Product.all.pluck(:external_id)
 
           data = []
 
-          if customer.present? && product_ids.present?
-            # lots of matching because the Stripe API doesn't make it easy to match products => payments except from invoices
-            all_invoices = ::Stripe::Invoice.list(customer: customer[:customer_id])
-            invoices_with_products = all_invoices[:data].select { |invoice| product_ids.include?(invoice.dig(:lines, :data, 0, :plan, :product)) }
-            invoice_ids = invoices_with_products.map { |invoice| invoice[:id] }
-            payments = ::Stripe::PaymentIntent.list(customer: customer[:customer_id])
-            payments_from_invoices = payments[:data].select { |payment| invoice_ids.include?(payment[:invoice]) }
-            data = payments_from_invoices
+          if customer_ids.present? && product_ids.present?
+            customer_ids.each do |customer_id|
+              # lots of matching because the Stripe API doesn't make it easy to match products => payments except from invoices
+              all_invoices = ::Stripe::Invoice.list(customer: customer_id)
+              invoices_with_products = all_invoices[:data].select do |invoice| 
+                # i cannot dig it so we must get iffy with it
+                if invoice[:lines] && invoice[:lines][:data] && invoice[:lines][:data][0] && invoice[:lines][:data][0][:plan] && invoice[:lines][:data][0][:plan][:product]
+                  product_ids.include?(invoice[:lines][:data][0][:plan][:product])
+                end
+              end
+              invoice_ids = invoices_with_products.map { |invoice| invoice[:id] }
+              payments = ::Stripe::PaymentIntent.list(customer: customer_id)
+              payments_from_invoices = payments[:data].select { |payment| invoice_ids.include?(payment[:invoice]) }
+              data.concat(payments_from_invoices)
+            end
           end
+
+          data = data.sort_by { |pmt| pmt[:created] }.reverse
 
           render_json_dump data
 
