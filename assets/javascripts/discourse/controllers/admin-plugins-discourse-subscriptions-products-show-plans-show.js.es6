@@ -15,7 +15,8 @@ export default Controller.extend({
       { id: "EUR", name: "EUR" },
       { id: "GBP", name: "GBP" },
       { id: "USD", name: "USD" },
-      { id: "INR", name: "INR" }
+      { id: "INR", name: "INR" },
+      { id: "BRL", name: "BRL" }
     ];
   },
 

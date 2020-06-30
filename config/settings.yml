@@ -22,9 +22,10 @@ plugins:
     type: enum
     choices:
       - AUD
+      - BRL
       - CAD
       - EUR
       - GBP
-      - USD
-      - NZD
       - INR
+      - NZD
+      - USD

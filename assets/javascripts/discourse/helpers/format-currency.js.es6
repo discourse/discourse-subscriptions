@@ -16,6 +16,10 @@ export default Helper.helper(function(params) {
     case "inr":
       currencySign = "₹";
       break;
+    case "BRL":
+    case "brl":
+      currencySign = "R$";
+      break;
     default:
       currencySign = "$";
   }

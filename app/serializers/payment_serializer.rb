@@ -44,6 +44,8 @@ class PaymentSerializer < ApplicationSerializer
       "£"
     when "inr"
       "₹"
+    when "brl"
+      "R$"
     else
       "$"
     end
