@@ -1,4 +1,4 @@
-pt:
+pt_br:
   site_settings:
     discourse_subscriptions_enabled: Habilitar o plugin de Assinaturas Discourse
     discourse_subscriptions_extra_nav_subscribe: Mostrar o botão de assinatura na navegação principal
