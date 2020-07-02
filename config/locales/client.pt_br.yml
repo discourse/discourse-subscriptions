@@ -67,6 +67,7 @@ pt:
               confirm: Tem certeza que deseja cancelar essa assinatura?
       subscribe:
         title: Assinar
+        no_products: No momento não existem produtos disponíveis.
         unauthenticated: Para assinar é necessário criar uma conta.
         card:
           title: Pagamentos
@@ -86,6 +87,7 @@ pt:
         confirm_payment: Confirmar pagamento
         success: Voltar
       admin:
+      unconfigured: 'Stripe não está configurado correntamente. Por favor acesse meta.discourse.org para mais informações.'
         dashboard:
           title: Painel
           table:
