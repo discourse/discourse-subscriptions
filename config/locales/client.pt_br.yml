@@ -1,0 +1,150 @@
+pt:
+  site_settings:
+    discourse_subscriptions_enabled: Habilitar o plugin de Assinaturas Discourse
+    discourse_subscriptions_extra_nav_subscribe: Mostrar o botão de assinatura na navegação principal
+    discourse_subscriptions_public_key: Stripe Publishable Key
+    discourse_subscriptions_secret_key: Stripe Secret Key
+    discourse_subscriptions_webhook_secret: Stripe Webhook Secret
+    discourse_subscriptions_currency: Código da moeda escolhido. Isso pode ser cancelado ao criar um plano de assinatura.
+    discourse_subscriptions_allow_payments: Permitir pagamentos únicos
+    errors:
+      discourse_patrons_amount_must_be_currency: "As quantias no valor devem ser escritas sem o símbolo de dólar (ex 1.50)"
+  js:
+    discourse_subscriptions:
+      title: Assinaturas Discourse
+      admin_navigation: Assinaturas
+      optional: Opcional
+      navigation:
+        billing: Cobrança
+        payments: Pagamentos
+        subscriptions: Assinaturas
+        subscribe: Assinar
+        user_activity:
+          payments: Pagamentos
+      plans:
+        purchase: Adquirir uma assinatura
+        select: Selecionar um plano de assinatura
+        interval:
+          adverb:
+            week: Semanal
+            month: Mensal
+            year: Anual
+        payment_button:
+          Assinar
+        success: Obrigado! Sua assinatura foi criada com sucesso!
+        incomplete: O pagamento está incompleto. Sua assinatura será atualizada quando o pagamento for aceito.
+        validate:
+          payment_options:
+            required: Por favor selecione um plano de assinatura.
+      payment:
+        purchase: Há somente um pagamento
+        select: Selecione uma opção de pagamento
+        interval:
+          Pagamento único
+        payment_button:
+          Pagar uma vez
+        success: Muito Obrigado!
+        incomplete: Pagamento incompleto.
+        validate:
+          payment_options:
+            required: Por favor selecione uma opção de pagamento.
+      user:
+        payments:
+          id: ID do Pagamento
+          amount: Quantia
+          created_at: Criado
+        payments_help: Não existem pagamentos
+        plans:
+          rate: Taxa
+          product: Nome
+        subscriptions_help: Não possui assinaturas ativas.
+        subscriptions:
+          id: ID de Assinatura
+          status: Situação
+          created_at: Criado
+          operations:
+            destroy:
+              confirm: Tem certeza que deseja cancelar essa assinatura?
+      subscribe:
+        title: Assinar
+        unauthenticated: Para assinar é necessário criar uma conta.
+        card:
+          title: Pagamentos
+        customer:
+          title: Detalhes do cliente
+        buttons:
+          subscribe: Assinar
+      billing:
+        name: Nome completo
+        email: Email
+        phone: Número de celular
+      confirmation:
+        amount: Quantia
+        last4: Número do cartão
+      buttons:
+        make_payment: Fazer o pagamento
+        confirm_payment: Confirmar pagamento
+        success: Voltar
+      admin:
+        dashboard:
+          title: Painel
+          table:
+            head:
+              user: Usuário
+              payment_intent: ID do pagamento
+              receipt_email: Email de Recibo
+              amount: Quantia
+        products:
+          title: Produtos
+          operations:
+            create: Criar novo produto
+            update: Atualizar produto
+            new: Novo Produto
+            destroy:
+                confirm: Tem certeza que deseja eliminar este produto?
+          product:
+            product_id: ID do Produto
+            name: Nome do Produto
+            statement_descriptor: Descrição de declaração
+            statement_descriptor_help: Informação adicional sobre o produto que aparecerá no extrato do cartão de crédito do seu cliente.
+            plan_help: Crie um plano de preços para assinar clientes neste produto.
+            description: Descrição
+            description_help: Isso descreve o seu produto de assinatura.
+            active: Ativo
+            active_help: Desative isso até que seu produto esteja pronto para os consumidores.
+            created_at: Crido
+            updated_at: Atualizado
+          product_help: Antes que os clientes possam assinar em seu site, deve criar pelo menos um produto e um plano associado.
+        plans:
+          title: Precificando os planos
+          operations:
+            add: Adicionar Novo Plano
+            create: Criar Plano
+            update: Atualizar Plano.
+            create_help: Uma vez precificado o plano, somente o apelido, período de avaliação e grupo de usuários podem ser atualizados.
+            new: Novo Plano
+            destroy:
+              confirm: Tem certeza que deseja excluir esse plano?
+          plan:
+            nickname: Apelido do Plano
+            nickname_help: Isso não será visível para os clientes, porém o ajudará a encontrar esse plano depois.
+            plan_id: ID do Plano
+            product: Produto
+            interval: Intervalo de Cobrança
+            amount: Quantia
+            trial: Período (em dias) da avaliação
+            trial_help: As inscrições a esse plano iniciarão automaticamente com a avaliação gratuita com essa duração.
+            group: Grupo de usuários
+            group_help: Esse é o grupo de usuários em que o Discourse adicionará o cliente ao realizar uma assinatura.
+            active: Ativo
+            created_at: Criado
+        subscriptions:
+          title: Assinaturas
+          subscription:
+            user: Usuário
+            subscription_id: ID da Assinatura
+            customer: Cliente
+            product: Produto
+            plan: Plano
+            status: Situação
+            created_at: Criado
