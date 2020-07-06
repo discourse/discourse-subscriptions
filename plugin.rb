@@ -39,6 +39,10 @@ Discourse::Application.routes.append do
   get 'u/:username/billing/:id' => 'users#show', constraints: { username: USERNAME_ROUTE_FORMAT }
 end
 
+load File.expand_path('lib/discourse_subscriptions/engine.rb', __dir__)
+load File.expand_path('app/controllers/concerns/stripe.rb', __dir__)
+load File.expand_path('app/controllers/concerns/group.rb', __dir__)
+
 after_initialize do
   ::Stripe.api_version = "2019-12-03"
 
@@ -47,30 +51,6 @@ after_initialize do
     version: '2.8.1',
     url: 'https://github.com/discourse/discourse-subscriptions'
   )
-
-  [
-    "../lib/discourse_subscriptions/engine",
-    "../config/routes",
-    "../app/controllers/concerns/group",
-    "../app/controllers/concerns/stripe",
-    "../app/controllers/admin_controller",
-    "../app/controllers/admin/plans_controller",
-    "../app/controllers/admin/products_controller",
-    "../app/controllers/admin/subscriptions_controller",
-    "../app/controllers/user/payments_controller",
-    "../app/controllers/user/subscriptions_controller",
-    "../app/controllers/customers_controller",
-    "../app/controllers/hooks_controller",
-    "../app/controllers/invoices_controller",
-    "../app/controllers/plans_controller",
-    "../app/controllers/payments_controller",
-    "../app/controllers/products_controller",
-    "../app/controllers/subscriptions_controller",
-    "../app/models/customer",
-    "../app/models/product",
-    "../app/models/subscription",
-    "../app/serializers/payment_serializer",
-  ].each { |path| require File.expand_path(path, __FILE__) }
 
   Discourse::Application.routes.append do
     mount ::DiscourseSubscriptions::Engine, at: 's'
