@@ -4,6 +4,12 @@ require 'rails_helper'
 
 module DiscourseSubscriptions
   RSpec.describe PlansController do
+    let(:user) { Fabricate(:user) }
+
+    before do
+      sign_in(user)
+    end
+
     describe "index" do
       it "lists the active plans" do
         ::Stripe::Plan.expects(:list).with(active: true)

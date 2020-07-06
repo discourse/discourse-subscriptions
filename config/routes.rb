@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require_dependency "subscriptions_user_constraint"
 
 DiscourseSubscriptions::Engine.routes.draw do
   # TODO: namespace this
@@ -21,10 +22,10 @@ DiscourseSubscriptions::Engine.routes.draw do
   resources :hooks, only: [:create]
   resources :invoices, only: [:index]
   resources :payments, only: [:create]
-  resources :plans, only: [:index]
+  resources :plans, only: [:index], constraints: SubscriptionsUserConstraint.new
   resources :products, only: [:index, :show]
   resources :subscriptions, only: [:create]
 
-  get '/' => 'subscriptions#index'
-  get '/:id' => 'subscriptions#index'
+  get '/' => 'subscriptions#index', constraints: SubscriptionsUserConstraint.new
+  get '/:id' => 'subscriptions#index', constraints: SubscriptionsUserConstraint.new
 end
