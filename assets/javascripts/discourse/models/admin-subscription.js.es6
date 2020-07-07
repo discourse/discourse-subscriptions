@@ -1,6 +1,7 @@
 import discourseComputed from "discourse-common/utils/decorators";
 import { ajax } from "discourse/lib/ajax";
 import EmberObject from "@ember/object";
+import getURL from "discourse-common/lib/get-url";
 
 const AdminSubscription = EmberObject.extend({
   @discourseComputed("status")
@@ -15,7 +16,7 @@ const AdminSubscription = EmberObject.extend({
 
   @discourseComputed("metadata")
   subscriptionUserPath(metadata) {
-    return Discourse.getURL(
+    return getURL(
       `/admin/users/${metadata.user_id}/${metadata.username}`
     );
   },
