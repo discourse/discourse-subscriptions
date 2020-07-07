@@ -17,7 +17,7 @@ module DiscourseSubscriptions
           subscriptions = []
 
           if subscription_ids
-            plans = ::Stripe::Plan.list(
+            plans = ::Stripe::Price.list(
               expand: ['data.product'],
               limit: 100
             )
@@ -34,8 +34,9 @@ module DiscourseSubscriptions
             subscriptions = subscriptions.select { |sub| subscription_ids.include?(sub[:id]) }
 
             subscriptions.map! do |subscription|
-              plan = plans[:data].find { |p| p[:id] == subscription[:plan][:id] }
-              subscription.to_h.merge(product: plan[:product].to_h.slice(:id, :name))
+              plan = plans[:data].find { |p| p[:id] == subscription[:items][:data][0][:price][:id] }
+              subscription.to_h.except!(:plan)
+              subscription.to_h.merge(plan: plan, product: plan[:product].to_h.slice(:id, :name))
             end
           end
 

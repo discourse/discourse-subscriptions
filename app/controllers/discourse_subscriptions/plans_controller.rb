@@ -9,13 +9,13 @@ module DiscourseSubscriptions
     def index
       begin
         if params[:product_id].present?
-          plans = ::Stripe::Plan.list(active: true, product: params[:product_id])
+          plans = ::Stripe::Price.list(active: true, product: params[:product_id])
         else
-          plans = ::Stripe::Plan.list(active: true)
+          plans = ::Stripe::Price.list(active: true)
         end
 
         serialized = plans[:data].map do |plan|
-          plan.to_h.slice(:id, :amount, :currency, :interval)
+          plan.to_h.slice(:id, :unit_amount, :currency, :recurring)
         end.sort_by { |plan| plan[:amount] }
 
         render_json_dump serialized

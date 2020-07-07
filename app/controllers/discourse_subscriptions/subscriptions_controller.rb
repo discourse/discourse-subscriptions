@@ -27,12 +27,18 @@ module DiscourseSubscriptions
 
     def create
       begin
-        plan = ::Stripe::Plan.retrieve(params[:plan])
+        plan = ::Stripe::Price.retrieve(params[:plan])
 
+        if plan[:metadata] && plan[:metadata][:trial_period_days]
+          trial_days = plan[:metadata][:trial_period_days]
+        elsif plan[:recurring] && plan[:recurring][:trial_period_days]
+          trial_days = plan[:recurring][:trial_period_days]
+        end
         @subscription = ::Stripe::Subscription.create(
           customer: params[:customer],
-          items: [ { plan: params[:plan] } ],
+          items: [ { price: params[:plan] } ],
           metadata: metadata_user,
+          trial_period_days: trial_days
         )
 
         group = plan_group(plan)

@@ -44,7 +44,7 @@
       {{i18n 'discourse_subscriptions.admin.plans.plan.trial'}}
       ({{i18n 'discourse_subscriptions.optional'}})
     </label>
-    {{input type="text" name="trial" value=model.plan.trial_period_days}}
+    {{input type="text" name="trial" value=model.plan.trialPeriodDays}}
     <div class="control-instructions">
       {{i18n 'discourse_subscriptions.admin.plans.plan.trial_help'}}
     </div>
@@ -80,7 +80,6 @@
   </p>
 
   <div class="pull-right">
-    {{d-button label="cancel" action=(action "cancelPlan" model.plan.product) icon="times"}}
 
     {{#if model.plan.isNew}}
       {{d-button label="discourse_subscriptions.admin.plans.operations.create" action="createPlan" icon="plus" class="btn btn-primary"}}

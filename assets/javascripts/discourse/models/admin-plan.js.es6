@@ -6,7 +6,7 @@ const AdminPlan = Plan.extend({
   isNew: false,
   name: "",
   interval: "month",
-  amount: 0,
+  unit_amount: 0,
   intervals: ["day", "week", "month", "year"],
   metadata: {},
 
@@ -17,10 +17,6 @@ const AdminPlan = Plan.extend({
     } else {
       return 0;
     }
-  },
-
-  destroy() {
-    return ajax(`/s/admin/plans/${this.id}`, { method: "delete" });
   },
 
   save() {
