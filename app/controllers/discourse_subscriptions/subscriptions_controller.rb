@@ -31,9 +31,8 @@ module DiscourseSubscriptions
 
         if plan[:metadata] && plan[:metadata][:trial_period_days]
           trial_days = plan[:metadata][:trial_period_days]
-        elsif plan[:recurring] && plan[:recurring][:trial_period_days]
-          trial_days = plan[:recurring][:trial_period_days]
         end
+
         @subscription = ::Stripe::Subscription.create(
           customer: params[:customer],
           items: [ { price: params[:plan] } ],

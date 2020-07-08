@@ -11,9 +11,9 @@ const AdminPlan = Plan.extend({
   metadata: {},
 
   @discourseComputed("trial_period_days")
-  parseTrialPeriodDays(trial_period_days) {
-    if (trial_period_days) {
-      return parseInt(0 + trial_period_days, 10);
+  parseTrialPeriodDays(trialDays) {
+    if (trialDays) {
+      return parseInt(0 + trialDays, 10);
     } else {
       return 0;
     }
@@ -23,7 +23,7 @@ const AdminPlan = Plan.extend({
     const data = {
       nickname: this.nickname,
       interval: this.interval,
-      amount: this.amount,
+      amount: this.unit_amount,
       currency: this.currency,
       trial_period_days: this.parseTrialPeriodDays,
       product: this.product,

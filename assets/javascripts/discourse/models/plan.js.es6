@@ -22,13 +22,6 @@ const Plan = EmberObject.extend({
   subscriptionRate(amountDollars, currency, interval) {
     return `${amountDollars} ${currency.toUpperCase()} / ${interval}`;
   },
-  
-  @discourseComputed("trial_period_days", "metadata")
-  trialPeriodDays(trialAttr, metadata) {
-    if (trialAttr) return trialAttr;
-    else if (metadata.trial_period_days) return metadata.trial_period_days;
-    else return null;
-  }
 });
 
 Plan.reopenClass({
