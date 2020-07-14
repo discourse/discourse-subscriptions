@@ -21,7 +21,7 @@ const Plan = EmberObject.extend({
   @discourseComputed("amountDollars", "currency", "billingInterval")
   subscriptionRate(amountDollars, currency, interval) {
     return `${amountDollars} ${currency.toUpperCase()} / ${interval}`;
-  },
+  }
 });
 
 Plan.reopenClass({

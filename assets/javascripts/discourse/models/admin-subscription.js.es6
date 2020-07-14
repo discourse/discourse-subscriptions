@@ -16,9 +16,7 @@ const AdminSubscription = EmberObject.extend({
 
   @discourseComputed("metadata")
   subscriptionUserPath(metadata) {
-    return getURL(
-      `/admin/users/${metadata.user_id}/${metadata.username}`
-    );
+    return getURL(`/admin/users/${metadata.user_id}/${metadata.username}`);
   },
 
   destroy() {
