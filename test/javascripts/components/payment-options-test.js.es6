@@ -24,8 +24,8 @@ componentTest("Discourse Subscriptions payment options has content", {
 
   beforeEach() {
     this.set("plans", [
-      { currency: "aud", interval: "year", amountDollars: "44.99" },
-      { currency: "gdp", interval: "month", amountDollars: "9.99" }
+      { currency: "aud", recurring: { interval: "year" }, amountDollars: "44.99" },
+      { currency: "gdp", recurring: { interval: "month" }, amountDollars: "9.99" }
     ]);
 
     this.set("planTypeIsSelected", true);
