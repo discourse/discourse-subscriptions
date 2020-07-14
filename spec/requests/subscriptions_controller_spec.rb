@@ -23,7 +23,7 @@ module DiscourseSubscriptions
         it "creates a subscription" do
           ::Stripe::Price.expects(:retrieve).returns(
             product: 'product_12345',
-            metadata: { 
+            metadata: {
               group_name: 'awesome',
               trial_period_days: 0
             }
@@ -36,7 +36,6 @@ module DiscourseSubscriptions
             trial_period_days: 0
           ).returns(status: 'active')
 
-      
           expect {
             post "/s/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
           }.to change { DiscourseSubscriptions::Customer.count }

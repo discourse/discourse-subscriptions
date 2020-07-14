@@ -29,7 +29,7 @@ module DiscourseSubscriptions
             product: params[:product],
             currency: params[:currency],
             active: params[:active],
-            metadata: { 
+            metadata: {
               group_name: params[:metadata][:group_name],
               trial_period_days: params[:trial_period_days]
             }
@@ -45,7 +45,7 @@ module DiscourseSubscriptions
       def show
         begin
           plan = ::Stripe::Price.retrieve(params[:id])
-          
+
           if plan[:metadata] && plan[:metadata][:trial_period_days]
             trial_days = plan[:metadata][:trial_period_days]
           elsif plan[:recurring] && plan[:recurring][:trial_period_days]
@@ -67,7 +67,7 @@ module DiscourseSubscriptions
             params[:id],
             nickname: params[:nickname],
             active: params[:active],
-            metadata: { 
+            metadata: {
               group_name: params[:metadata][:group_name],
               trial_period_days: params[:trial_period_days]
             }
