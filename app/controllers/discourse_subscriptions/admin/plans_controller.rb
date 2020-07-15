@@ -25,7 +25,6 @@ module DiscourseSubscriptions
             product: params[:product],
             currency: params[:currency],
             active: params[:active],
-            type: params[:type],
             metadata: {
               group_name: params[:metadata][:group_name],
               trial_period_days: params[:trial_period_days]

@@ -50,20 +50,37 @@
     </div>
   </p>
   <p>
-    <label for="interval">
-      {{i18n 'discourse_subscriptions.admin.plans.plan.interval'}}
+    <label for="recurring">
+      {{i18n 'discourse_subscriptions.admin.plans.plan.recurring'}}
     </label>
     {{#if planFieldDisabled}}
-      {{input disabled=true value=selectedInterval}}
+      {{input disabled=true value=model.plan.isRecurring}}
     {{else}}
-      {{combo-box 
-        valueProperty="name"
-        content=availableIntervals 
-        value=selectedInterval 
-        onChange=(action (mut selectedInterval))
+      {{input 
+        type="checkbox" 
+        name="recurring" 
+        checked=model.plan.isRecurring
+        change=(action 'changeRecurring')
       }}
     {{/if}}
   </p>
+  {{#if model.plan.isRecurring}}
+    <p>
+      <label for="interval">
+        {{i18n 'discourse_subscriptions.admin.plans.plan.interval'}}
+      </label>
+      {{#if planFieldDisabled}}
+        {{input disabled=true value=selectedInterval}}
+      {{else}}
+        {{combo-box 
+          valueProperty="name"
+          content=availableIntervals 
+          value=selectedInterval 
+          onChange=(action (mut selectedInterval))
+        }}
+      {{/if}}
+    </p>
+  {{/if}}
   <p>
     <label for="active">
       {{i18n 'discourse_subscriptions.admin.plans.plan.active'}}

@@ -47,6 +47,17 @@ export default Controller.extend({
   },
 
   actions: {
+    changeRecurring() {
+      if (this.get("model.plan.isRecurring")) {
+        this.set("model.plan.type", "one_time");
+        this.set("model.plan.isRecurring", false);
+      }
+      else {
+        this.set("model.plan.type", "recurring");
+        this.set("model.plan.isRecurring", true);
+      }
+    },
+
     createPlan() {
       // TODO: set default group name beforehand
       if (this.get("model.plan.metadata.group_name") === undefined) {
