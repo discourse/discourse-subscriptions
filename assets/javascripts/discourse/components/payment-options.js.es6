@@ -15,8 +15,7 @@ export default Component.extend({
     },
 
     clickPlan(plan) {
-      this.plans.map(p => p.set("selected", false));
-      plan.set("selected", true);
+      this.set("selectedPlan", plan.id);
     }
   }
 });

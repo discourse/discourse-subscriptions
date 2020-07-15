@@ -7,6 +7,7 @@ import I18n from "I18n";
 
 export default Controller.extend({
   planTypeIsSelected: true,
+  selectedPlan: null,
 
   @discourseComputed("planTypeIsSelected")
   type(planTypeIsSelected) {
@@ -75,9 +76,10 @@ export default Controller.extend({
       this.set("loading", true);
       const type = this.get("type");
       const plan = this.get("model.plans")
-        .filterBy("selected")
+        .filterBy("id", this.selectedPlan)
         .get("firstObject");
 
+      debugger;
       if (!plan) {
         this.alert(`${type}.validate.payment_options.required`);
         this.set("loading", false);
