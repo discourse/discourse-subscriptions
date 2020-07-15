@@ -19,7 +19,6 @@ module DiscourseSubscriptions
         end
 
         render_json_dump subscriptions
-
       rescue ::Stripe::InvalidRequestError => e
         render_json_error e.message
       end
@@ -29,22 +28,18 @@ module DiscourseSubscriptions
       begin
         plan = ::Stripe::Price.retrieve(params[:plan])
 
-        if plan[:metadata] && plan[:metadata][:trial_period_days]
-          trial_days = plan[:metadata][:trial_period_days]
-        end
+        trial_days = plan[:metadata][:trial_period_days] if plan[:metadata] && plan[:metadata][:trial_period_days]
 
         @subscription = ::Stripe::Subscription.create(
           customer: params[:customer],
-          items: [ { price: params[:plan] } ],
+          items: [{ price: params[:plan] }],
           metadata: metadata_user,
           trial_period_days: trial_days
         )
 
         group = plan_group(plan)
 
-        if subscription_ok && group
-          group.add(current_user)
-        end
+        group.add(current_user) if subscription_ok && group
 
         customer = Customer.create(
           user_id: current_user.id,
@@ -58,7 +53,6 @@ module DiscourseSubscriptions
         )
 
         render_json_dump @subscription
-
       rescue ::Stripe::InvalidRequestError => e
         render_json_error e.message
       end
