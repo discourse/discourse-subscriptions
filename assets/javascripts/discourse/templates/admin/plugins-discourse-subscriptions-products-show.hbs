@@ -62,11 +62,6 @@
             {{#link-to "adminPlugins.discourse-subscriptions.products.show.plans.show" model.product.id plan.id class="btn no-text btn-icon"}}
               {{d-icon "far-edit"}}
             {{/link-to}}
-            {{d-button
-              action=(route-action "destroyPlan")
-              actionParam=plan
-              icon="trash-alt"
-              class="btn-danger btn no-text btn-icon"}}
           </td>
         </tr>
       {{/each}}

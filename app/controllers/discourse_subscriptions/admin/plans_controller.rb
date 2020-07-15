@@ -9,7 +9,7 @@ module DiscourseSubscriptions
 
       def index
         begin
-          plans = ::Stripe::Plan.list(product_params)
+          plans = ::Stripe::Price.list(product_params)
 
           render_json_dump plans.data
 
@@ -20,15 +20,19 @@ module DiscourseSubscriptions
 
       def create
         begin
-          plan = ::Stripe::Plan.create(
+          plan = ::Stripe::Price.create(
             nickname: params[:nickname],
-            amount: params[:amount],
-            interval: params[:interval],
+            unit_amount: params[:amount],
+            recurring: {
+              interval: params[:interval],
+            },
             product: params[:product],
-            trial_period_days: params[:trial_period_days],
             currency: params[:currency],
             active: params[:active],
-            metadata: { group_name: params[:metadata][:group_name] }
+            metadata: {
+              group_name: params[:metadata][:group_name],
+              trial_period_days: params[:trial_period_days]
+            }
           )
 
           render_json_dump plan
@@ -40,9 +44,15 @@ module DiscourseSubscriptions
 
       def show
         begin
-          plan = ::Stripe::Plan.retrieve(params[:id])
+          plan = ::Stripe::Price.retrieve(params[:id])
 
-          serialized = plan.to_h.merge(currency: plan[:currency].upcase)
+          if plan[:metadata] && plan[:metadata][:trial_period_days]
+            trial_days = plan[:metadata][:trial_period_days]
+          elsif plan[:recurring] && plan[:recurring][:trial_period_days]
+            trial_days = plan[:recurring][:trial_period_days]
+          end
+
+          serialized = plan.to_h.merge(trial_period_days: trial_days, currency: plan[:currency].upcase)
 
           render_json_dump serialized
 
@@ -53,24 +63,15 @@ module DiscourseSubscriptions
 
       def update
         begin
-          plan = ::Stripe::Plan.update(
+          plan = ::Stripe::Price.update(
             params[:id],
             nickname: params[:nickname],
-            trial_period_days: params[:trial_period_days],
             active: params[:active],
-            metadata: { group_name: params[:metadata][:group_name] }
+            metadata: {
+              group_name: params[:metadata][:group_name],
+              trial_period_days: params[:trial_period_days]
+            }
           )
-
-          render_json_dump plan
-
-        rescue ::Stripe::InvalidRequestError => e
-          render_json_error e.message
-        end
-      end
-
-      def destroy
-        begin
-          plan = ::Stripe::Plan.delete(params[:id])
 
           render_json_dump plan
 

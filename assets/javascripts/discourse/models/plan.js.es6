@@ -3,18 +3,22 @@ import discourseComputed from "discourse-common/utils/decorators";
 import { ajax } from "discourse/lib/ajax";
 
 const Plan = EmberObject.extend({
-  amountDollars: Ember.computed("amount", {
+  amountDollars: Ember.computed("unit_amount", {
     get() {
-      return parseFloat(this.get("amount") / 100).toFixed(2);
+      return parseFloat(this.get("unit_amount") / 100).toFixed(2);
     },
     set(key, value) {
       const decimal = parseFloat(value) * 100;
-      this.set("amount", decimal);
+      this.set("unit_amount", decimal);
       return value;
     }
   }),
+  @discourseComputed("recurring.interval")
+  billingInterval(interval) {
+    return interval || "one-time";
+  },
 
-  @discourseComputed("amountDollars", "currency", "interval")
+  @discourseComputed("amountDollars", "currency", "billingInterval")
   subscriptionRate(amountDollars, currency, interval) {
     return `${amountDollars} ${currency.toUpperCase()} / ${interval}`;
   }

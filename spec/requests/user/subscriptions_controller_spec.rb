@@ -51,8 +51,8 @@ module DiscourseSubscriptions
               id: "cus_23456",
               subscriptions: {
                 data: [
-                  { id: "sub_1234", plan: { id: "plan_1" } },
-                  { id: "sub_4567", plan: { id: "plan_2" } }
+                  { id: "sub_1234", items: { data: [price: { id: "plan_1" }] } },
+                  { id: "sub_4567", items: { data: [price: { id: "plan_2" }] } }
                 ]
               },
             }]
@@ -60,7 +60,7 @@ module DiscourseSubscriptions
         end
 
         it "gets subscriptions" do
-          ::Stripe::Plan.expects(:list).with(
+          ::Stripe::Price.expects(:list).with(
             expand: ['data.product'],
             limit: 100
           ).returns(plans)
@@ -76,7 +76,8 @@ module DiscourseSubscriptions
 
           expect(subscription).to eq(
             "id" => "sub_1234",
-            "plan" => { "id" => "plan_1" },
+            "items" => { "data" => [{ "price" => { "id" => "plan_1" } }] },
+            "plan" => { "id" => "plan_1", "product" => { "name" => "ACME Subscriptions" } },
             "product" => { "name" => "ACME Subscriptions" }
           )
         end

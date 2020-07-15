@@ -47,10 +47,6 @@ export default Controller.extend({
   },
 
   actions: {
-    cancelPlan(product_id) {
-      this.redirect(product_id);
-    },
-
     createPlan() {
       // TODO: set default group name beforehand
       if (this.get("model.plan.metadata.group_name") === undefined) {
