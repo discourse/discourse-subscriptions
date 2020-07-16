@@ -28,31 +28,48 @@ module DiscourseSubscriptions
       begin
         plan = ::Stripe::Price.retrieve(params[:plan])
 
-        trial_days = plan[:metadata][:trial_period_days] if plan[:metadata] && plan[:metadata][:trial_period_days]
+        recurring_plan = plan[:type] == 'recurring'
 
-        @subscription = ::Stripe::Subscription.create(
-          customer: params[:customer],
-          items: [{ price: params[:plan] }],
-          metadata: metadata_user,
-          trial_period_days: trial_days
-        )
+        if recurring_plan
+          trial_days = plan[:metadata][:trial_period_days] if plan[:metadata] && plan[:metadata][:trial_period_days]
 
-        group = plan_group(plan)
+          transaction = ::Stripe::Subscription.create(
+            customer: params[:customer],
+            items: [{ price: params[:plan] }],
+            metadata: metadata_user,
+            trial_period_days: trial_days
+          )
+        else
+          invoice_item = ::Stripe::InvoiceItem.create(
+            customer: params[:customer],
+            price: params[:plan]
+          )
+          invoice = ::Stripe::Invoice.create(
+            customer: params[:customer]
+          )
+          transaction = ::Stripe::Invoice.pay(invoice[:id])
+        end
 
-        group.add(current_user) if subscription_ok && group
+        if transaction_ok(transaction)
+          group = plan_group(plan)
 
-        customer = Customer.create(
-          user_id: current_user.id,
-          customer_id: params[:customer],
-          product_id: plan[:product]
-        )
+          group.add(current_user) if group
 
-        Subscription.create(
-          customer_id: customer.id,
-          external_id: @subscription[:id]
-        )
+          customer = Customer.create(
+            user_id: current_user.id,
+            customer_id: params[:customer],
+            product_id: plan[:product]
+          )
 
-        render_json_dump @subscription
+          if transaction[:object] == 'subscription'
+            Subscription.create(
+              customer_id: customer.id,
+              external_id: transaction[:id]
+            )
+          end
+        end
+
+        render_json_dump transaction
       rescue ::Stripe::InvalidRequestError => e
         render_json_error e.message
       end
@@ -64,8 +81,8 @@ module DiscourseSubscriptions
       { user_id: current_user.id, username: current_user.username_lower }
     end
 
-    def subscription_ok
-      ['active', 'trialing'].include?(@subscription[:status])
+    def transaction_ok(transaction)
+      %w[active trialing paid].include?(transaction[:status])
     end
   end
 end
