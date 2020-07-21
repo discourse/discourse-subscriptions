@@ -32,7 +32,6 @@ componentTest("Payment plan subscription button rendered", {
       "The plan interval is shown -- Yearly"
     );
 
-
     assert.equal(
       find(".btn-discourse-subscriptions-subscribe:first-child .amount")
         .text()
@@ -40,7 +39,6 @@ componentTest("Payment plan subscription button rendered", {
       "$AUD 44.99",
       "The plan amount and currency is shown"
     );
-
   }
 });
 
@@ -67,5 +65,4 @@ componentTest("Payment plan one-time-payment button rendered", {
       "Shown as one time payment"
     );
   }
-  
 });

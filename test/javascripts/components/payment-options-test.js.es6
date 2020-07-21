@@ -38,10 +38,6 @@ componentTest("Discourse Subscriptions payment options has content", {
   },
 
   async test(assert) {
-    assert.equal(
-      this.selectedPlan, 
-      null, 
-      "No plans are selected by default"
-    );
+    assert.equal(this.selectedPlan, null, "No plans are selected by default");
   }
 });

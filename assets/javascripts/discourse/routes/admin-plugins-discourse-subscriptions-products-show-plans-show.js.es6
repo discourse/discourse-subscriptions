@@ -25,8 +25,7 @@ export default Route.extend({
       plan = AdminPlan.find(id);
       if (plan.type === "recurring") {
         plan.isRecurring = true;
-      }
-      else {
+      } else {
         plan.isRecurring = false;
       }
     }

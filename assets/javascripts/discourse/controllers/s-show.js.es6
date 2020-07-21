@@ -1,7 +1,6 @@
 import Controller from "@ember/controller";
 import Customer from "discourse/plugins/discourse-subscriptions/discourse/models/customer";
 import Subscription from "discourse/plugins/discourse-subscriptions/discourse/models/subscription";
-import discourseComputed from "discourse-common/utils/decorators";
 import I18n from "I18n";
 
 export default Controller.extend({
@@ -44,13 +43,12 @@ export default Controller.extend({
   actions: {
     stripePaymentHandler() {
       this.set("loading", true);
-      const type = this.get("type");
       const plan = this.get("model.plans")
         .filterBy("id", this.selectedPlan)
         .get("firstObject");
 
       if (!plan) {
-        this.alert('plans.validate.payment_options.required');
+        this.alert("plans.validate.payment_options.required");
         this.set("loading", false);
         return;
       }
@@ -63,16 +61,15 @@ export default Controller.extend({
             bootbox.alert(result.error.message || result.error);
           } else {
             if (result.status === "incomplete") {
-              this.alert('plans.incomplete');
+              this.alert("plans.incomplete");
             } else {
-              this.alert('plans.success');
+              this.alert("plans.success");
             }
 
             let success_route;
             if (plan.type === "recurring") {
               success_route = "user.billing.subscriptions";
-            }
-            else {
+            } else {
               success_route = "user.billing.payments";
             }
 

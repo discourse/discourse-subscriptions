@@ -51,8 +51,7 @@ export default Controller.extend({
       if (this.get("model.plan.isRecurring")) {
         this.set("model.plan.type", "one_time");
         this.set("model.plan.isRecurring", false);
-      }
-      else {
+      } else {
         this.set("model.plan.type", "recurring");
         this.set("model.plan.isRecurring", true);
       }
