@@ -128,6 +128,7 @@ en:
             group_help: This is the discourse user group the customer gets added to when the subscription is created.
             active: Active
             created_at: Created
+            recurring: Recurring Plan?
         subscriptions:
           title: Subscriptions
           subscription:

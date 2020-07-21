@@ -40,16 +40,6 @@
     {{input class="plan-amount" type="text" name="name" value=model.plan.amountDollars disabled=planFieldDisabled}}
   </p>
   <p>
-    <label for="trial">
-      {{i18n 'discourse_subscriptions.admin.plans.plan.trial'}}
-      ({{i18n 'discourse_subscriptions.optional'}})
-    </label>
-    {{input type="text" name="trial" value=model.plan.trial_period_days}}
-    <div class="control-instructions">
-      {{i18n 'discourse_subscriptions.admin.plans.plan.trial_help'}}
-    </div>
-  </p>
-  <p>
     <label for="recurring">
       {{i18n 'discourse_subscriptions.admin.plans.plan.recurring'}}
     </label>
@@ -79,6 +69,16 @@
           onChange=(action (mut selectedInterval))
         }}
       {{/if}}
+    </p>
+    <p>
+      <label for="trial">
+        {{i18n 'discourse_subscriptions.admin.plans.plan.trial'}}
+        ({{i18n 'discourse_subscriptions.optional'}})
+      </label>
+      {{input type="text" name="trial" value=model.plan.trial_period_days}}
+      <div class="control-instructions">
+        {{i18n 'discourse_subscriptions.admin.plans.plan.trial_help'}}
+      </div>
     </p>
   {{/if}}
   <p>
