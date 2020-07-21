@@ -27,14 +27,14 @@ extend_content_security_policy(
 add_admin_route 'discourse_subscriptions.admin_navigation', 'discourse-subscriptions.products'
 
 Discourse::Application.routes.append do
-  get '/admin/plugins/discourse-subscriptions' => 'admin/plugins#index'
-  get '/admin/plugins/discourse-subscriptions/products' => 'admin/plugins#index'
-  get '/admin/plugins/discourse-subscriptions/products/:product_id' => 'admin/plugins#index'
-  get '/admin/plugins/discourse-subscriptions/products/:product_id/plans' => 'admin/plugins#index'
-  get '/admin/plugins/discourse-subscriptions/products/:product_id/plans/:plan_id' => 'admin/plugins#index'
-  get '/admin/plugins/discourse-subscriptions/subscriptions' => 'admin/plugins#index'
-  get '/admin/plugins/discourse-subscriptions/plans' => 'admin/plugins#index'
-  get '/admin/plugins/discourse-subscriptions/plans/:plan_id' => 'admin/plugins#index'
+  get '/admin/plugins/discourse-subscriptions' => 'admin/plugins#index', constraints: AdminConstraint.new
+  get '/admin/plugins/discourse-subscriptions/products' => 'admin/plugins#index', constraints: AdminConstraint.new
+  get '/admin/plugins/discourse-subscriptions/products/:product_id' => 'admin/plugins#index', constraints: AdminConstraint.new
+  get '/admin/plugins/discourse-subscriptions/products/:product_id/plans' => 'admin/plugins#index', constraints: AdminConstraint.new
+  get '/admin/plugins/discourse-subscriptions/products/:product_id/plans/:plan_id' => 'admin/plugins#index', constraints: AdminConstraint.new
+  get '/admin/plugins/discourse-subscriptions/subscriptions' => 'admin/plugins#index', constraints: AdminConstraint.new
+  get '/admin/plugins/discourse-subscriptions/plans' => 'admin/plugins#index', constraints: AdminConstraint.new
+  get '/admin/plugins/discourse-subscriptions/plans/:plan_id' => 'admin/plugins#index', constraints: AdminConstraint.new
   get 'u/:username/billing' => 'users#show', constraints: { username: USERNAME_ROUTE_FORMAT }
   get 'u/:username/billing/:id' => 'users#show', constraints: { username: USERNAME_ROUTE_FORMAT }
 end

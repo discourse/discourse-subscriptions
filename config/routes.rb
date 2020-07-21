@@ -20,8 +20,6 @@ DiscourseSubscriptions::Engine.routes.draw do
 
   resources :customers, only: [:create]
   resources :hooks, only: [:create]
-  resources :invoices, only: [:index]
-  resources :payments, only: [:create]
   resources :plans, only: [:index], constraints: SubscriptionsUserConstraint.new
   resources :products, only: [:index, :show]
   resources :subscriptions, only: [:create]

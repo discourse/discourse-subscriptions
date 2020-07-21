@@ -1,34 +1,5 @@
-
-{{#if paymentsAllowed}}
-  <div class="subscribe-buttons">
-    {{#ds-button
-      id="discourse-subscriptions-payment-type-plan"
-      selected=planButtonSelected
-      action="selectPlans"
-      class="btn-discourse-subscriptions-payment-type"
-    }}
-      {{i18n "discourse_subscriptions.plans.purchase"}}
-    {{/ds-button}}
-
-    {{#ds-button
-      id="discourse-subscriptions-payment-type-payment"
-      selected=paymentButtonSelected
-      action="selectPayments"
-      class="btn-discourse-subscriptions-payment-type"
-    }}
-      {{i18n "discourse_subscriptions.payment.purchase"}}
-    {{/ds-button}}
-  </div>
-{{/if}}
-
-<hr>
-
 <p>
-  {{#if planTypeIsSelected}}
-    {{i18n "discourse_subscriptions.plans.select"}}
-  {{else}}
-    {{i18n "discourse_subscriptions.payment.select"}}
-  {{/if}}
+  {{i18n "discourse_subscriptions.plans.select"}}
 </p>
 
 <div class="subscribe-buttons">

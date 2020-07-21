@@ -22,7 +22,6 @@
       {{payment-options
         plans=model.plans
         paymentsAllowed=paymentsAllowed
-        planTypeIsSelected=planTypeIsSelected
         selectedPlan=selectedPlan
       }}
 
@@ -33,12 +32,12 @@
       {{#if loading}}
         {{loading-spinner}}
       {{else}}
-        {{#d-button
+        {{d-button
           disabled=loading
           action="stripePaymentHandler"
-          class="btn btn-primary btn-payment"}}
-          {{buttonText}}
-        {{/d-button}}
+          class="btn btn-primary btn-payment"
+          label="discourse_subscriptions.plans.payment_button"
+        }}
       {{/if}}
 
     {{/unless}}
