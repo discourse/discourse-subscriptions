@@ -20,6 +20,7 @@ en:
         subscribe: Subscribe
         user_activity:
           payments: Payments
+      one_time_payment: One-Time Payment
       plans:
         purchase: Purchase a subscription
         select: Select subscription plan
