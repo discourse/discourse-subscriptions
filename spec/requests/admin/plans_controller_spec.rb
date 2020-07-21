@@ -101,6 +101,11 @@ module DiscourseSubscriptions
             post "/s/admin/plans.json", params: { type: 'recurring', interval: 'week', metadata: { group_name: '' } }
           end
 
+          it "creates a plan as a one-time purchase" do
+            ::Stripe::Price.expects(:create).with(Not(has_key(:recurring)))
+            post "/s/admin/plans.json", params: { metadata: { group_name: '' } }
+          end
+
           it "creates a plan with an amount" do
             ::Stripe::Price.expects(:create).with(has_entry(:unit_amount, '102'))
             post "/s/admin/plans.json", params: { amount: '102', metadata: { group_name: '' } }
