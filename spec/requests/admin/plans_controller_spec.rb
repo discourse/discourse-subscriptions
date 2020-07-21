@@ -98,7 +98,7 @@ module DiscourseSubscriptions
 
           it "creates a plan with an interval" do
             ::Stripe::Price.expects(:create).with(has_entry(recurring: { interval: 'week' }))
-            post "/s/admin/plans.json", params: { interval: 'week', metadata: { group_name: '' } }
+            post "/s/admin/plans.json", params: { type: 'recurring', interval: 'week', metadata: { group_name: '' } }
           end
 
           it "creates a plan with an amount" do
