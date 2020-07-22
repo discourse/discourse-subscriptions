@@ -12,7 +12,6 @@ module DiscourseSubscriptions
         webhook_secret = SiteSetting.discourse_subscriptions_webhook_secret
 
         event = ::Stripe::Webhook.construct_event(payload, sig_header, webhook_secret)
-
       rescue JSON::ParserError => e
         render_json_error e.message
         return

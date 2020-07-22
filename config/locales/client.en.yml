@@ -6,7 +6,6 @@ en:
     discourse_subscriptions_secret_key: Stripe Secret Key
     discourse_subscriptions_webhook_secret: Stripe Webhook Secret
     discourse_subscriptions_currency: Default Currency Code. This can be overridden when creating a subscription plan.
-    discourse_subscriptions_allow_payments: Allow single payments
     errors:
       discourse_patrons_amount_must_be_currency: "Currency amounts must be currencies without dollar symbol (eg 1.50)"
   js:
@@ -21,6 +20,7 @@ en:
         subscribe: Subscribe
         user_activity:
           payments: Payments
+      one_time_payment: One-Time Payment
       plans:
         purchase: Purchase a subscription
         select: Select subscription plan
@@ -36,18 +36,6 @@ en:
         validate:
           payment_options:
             required: Please select a subscription plan.
-      payment:
-        purchase: Make just one payment
-        select: Select a payment option
-        interval:
-          One payment
-        payment_button:
-          Pay Once
-        success: Thank you!
-        incomplete: Payment is incomplete.
-        validate:
-          payment_options:
-            required: Please select a payment option.
       user:
         payments:
           id: Payment ID
@@ -140,6 +128,7 @@ en:
             group_help: This is the discourse user group the customer gets added to when the subscription is created.
             active: Active
             created_at: Created
+            recurring: Recurring Plan?
         subscriptions:
           title: Subscriptions
           subscription:

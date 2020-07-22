@@ -22,6 +22,7 @@ module DiscourseSubscriptions
       describe "create" do
         it "creates a subscription" do
           ::Stripe::Price.expects(:retrieve).returns(
+            type: 'recurring',
             product: 'product_12345',
             metadata: {
               group_name: 'awesome',
@@ -41,8 +42,29 @@ module DiscourseSubscriptions
           }.to change { DiscourseSubscriptions::Customer.count }
         end
 
+        it "creates a one time payment subscription" do
+          ::Stripe::Price.expects(:retrieve).returns(
+            type: 'one_time',
+            product: 'product_12345',
+            metadata: {
+              group_name: 'awesome'
+            }
+          )
+
+          ::Stripe::InvoiceItem.expects(:create)
+
+          ::Stripe::Invoice.expects(:create).returns(id: 'in_123')
+
+          ::Stripe::Invoice.expects(:pay).returns(status: 'paid')
+
+          expect {
+            post '/s/subscriptions.json', params: { plan: 'plan_1234', customer: 'cus_1234' }
+          }.to change { DiscourseSubscriptions::Customer.count }
+
+        end
+
         it "creates a customer model" do
-          ::Stripe::Price.expects(:retrieve).returns(metadata: {})
+          ::Stripe::Price.expects(:retrieve).returns(type: 'recurring', metadata: {})
           ::Stripe::Subscription.expects(:create).returns(status: 'active')
 
           expect {
@@ -61,13 +83,13 @@ module DiscourseSubscriptions
           end
 
           it "does not add the user to the admins group" do
-            ::Stripe::Price.expects(:retrieve).returns(metadata: { group_name: 'admins' })
+            ::Stripe::Price.expects(:retrieve).returns(type: 'recurring', metadata: { group_name: 'admins' })
             post "/s/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
             expect(user.admin).to eq false
           end
 
           it "does not add the user to other group" do
-            ::Stripe::Price.expects(:retrieve).returns(metadata: { group_name: 'other' })
+            ::Stripe::Price.expects(:retrieve).returns(type: 'recurring', metadata: { group_name: 'other' })
             post "/s/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
             expect(user.groups).to be_empty
           end
@@ -75,7 +97,7 @@ module DiscourseSubscriptions
 
         context "plan has group in metadata" do
           before do
-            ::Stripe::Price.expects(:retrieve).returns(metadata: { group_name: group_name })
+            ::Stripe::Price.expects(:retrieve).returns(type: 'recurring', metadata: { group_name: group_name })
           end
 
           it "does not add the user to the group when subscription fails" do

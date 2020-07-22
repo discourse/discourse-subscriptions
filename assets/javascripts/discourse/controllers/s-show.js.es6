@@ -1,29 +1,13 @@
 import Controller from "@ember/controller";
 import Customer from "discourse/plugins/discourse-subscriptions/discourse/models/customer";
-import Payment from "discourse/plugins/discourse-subscriptions/discourse/models/payment";
 import Subscription from "discourse/plugins/discourse-subscriptions/discourse/models/subscription";
-import discourseComputed from "discourse-common/utils/decorators";
 import I18n from "I18n";
 
 export default Controller.extend({
-  planTypeIsSelected: true,
-
-  @discourseComputed("planTypeIsSelected")
-  type(planTypeIsSelected) {
-    return planTypeIsSelected ? "plans" : "payment";
-  },
-
-  @discourseComputed("type")
-  buttonText(type) {
-    return I18n.t(`discourse_subscriptions.${type}.payment_button`);
-  },
+  selectedPlan: null,
 
   init() {
     this._super(...arguments);
-    this.set(
-      "paymentsAllowed",
-      Discourse.SiteSettings.discourse_subscriptions_allow_payments
-    );
     this.set(
       "stripe",
       Stripe(Discourse.SiteSettings.discourse_subscriptions_public_key)
@@ -35,20 +19,6 @@ export default Controller.extend({
 
   alert(path) {
     bootbox.alert(I18n.t(`discourse_subscriptions.${path}`));
-  },
-
-  createPayment(plan) {
-    return this.stripe
-      .createPaymentMethod("card", this.get("cardElement"))
-      .then(result => {
-        const payment = Payment.create({
-          payment_method: result.paymentMethod.id,
-          amount: plan.get("amount"),
-          currency: plan.get("currency")
-        });
-
-        return payment.save();
-      });
   },
 
   createSubscription(plan) {
@@ -73,24 +43,17 @@ export default Controller.extend({
   actions: {
     stripePaymentHandler() {
       this.set("loading", true);
-      const type = this.get("type");
       const plan = this.get("model.plans")
-        .filterBy("selected")
+        .filterBy("id", this.selectedPlan)
         .get("firstObject");
 
       if (!plan) {
-        this.alert(`${type}.validate.payment_options.required`);
+        this.alert("plans.validate.payment_options.required");
         this.set("loading", false);
         return;
       }
 
-      let transaction;
-
-      if (this.planTypeIsSelected) {
-        transaction = this.createSubscription(plan);
-      } else {
-        transaction = this.createPayment(plan);
-      }
+      let transaction = this.createSubscription(plan);
 
       transaction
         .then(result => {
@@ -98,17 +61,15 @@ export default Controller.extend({
             bootbox.alert(result.error.message || result.error);
           } else {
             if (result.status === "incomplete") {
-              this.alert(`${type}.incomplete`);
+              this.alert("plans.incomplete");
             } else {
-              this.alert(`${type}.success`);
+              this.alert("plans.success");
             }
 
-            const success_route = this.planTypeIsSelected
-              ? "user.billing.subscriptions"
-              : "user.billing.payments";
-
             this.transitionToRoute(
-              success_route,
+              plan.type === "recurring"
+                ? "user.billing.subscriptions"
+                : "user.billing.payments",
               Discourse.User.current().username.toLowerCase()
             );
           }

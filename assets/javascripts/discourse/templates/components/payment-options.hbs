@@ -1,54 +1,9 @@
-
-{{#if paymentsAllowed}}
-  <div class="subscribe-buttons">
-    {{#ds-button
-      id="discourse-subscriptions-payment-type-plan"
-      selected=planButtonSelected
-      action="selectPlans"
-      class="btn-discourse-subscriptions-payment-type"
-    }}
-      {{i18n "discourse_subscriptions.plans.purchase"}}
-    {{/ds-button}}
-
-    {{#ds-button
-      id="discourse-subscriptions-payment-type-payment"
-      selected=paymentButtonSelected
-      action="selectPayments"
-      class="btn-discourse-subscriptions-payment-type"
-    }}
-      {{i18n "discourse_subscriptions.payment.purchase"}}
-    {{/ds-button}}
-  </div>
-{{/if}}
-
-<hr>
-
 <p>
-  {{#if planTypeIsSelected}}
-    {{i18n "discourse_subscriptions.plans.select"}}
-  {{else}}
-    {{i18n "discourse_subscriptions.payment.select"}}
-  {{/if}}
+  {{i18n "discourse_subscriptions.plans.select"}}
 </p>
 
 <div class="subscribe-buttons">
   {{#each plans as |plan|}}
-    {{#ds-button
-      action="clickPlan"
-      actionParam=plan
-      selected=plan.selected
-      class="btn-discourse-subscriptions-subscribe"
-    }}
-      <div class="interval">
-        {{#if planTypeIsSelected}}
-          {{i18n (concat "discourse_subscriptions.plans.interval.adverb." plan.recurring.interval)}}
-        {{else}}
-          {{i18n "discourse_subscriptions.payment.interval"}}
-        {{/if}}
-      </div>
-      <span class="amount">
-        {{format-currency plan.currency plan.amountDollars}}
-      </span>
-    {{/ds-button}}
+    {{payment-plan plan=plan selectedPlan=selectedPlan clickPlan=(action "clickPlan")}}
   {{/each}}
 </div>

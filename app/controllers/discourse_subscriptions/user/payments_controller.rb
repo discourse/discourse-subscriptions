@@ -21,9 +21,10 @@ module DiscourseSubscriptions
               all_invoices = ::Stripe::Invoice.list(customer: customer_id)
               invoices_with_products = all_invoices[:data].select do |invoice|
                 # i cannot dig it so we must get iffy with it
-                if invoice[:lines] && invoice[:lines][:data] && invoice[:lines][:data][0] && invoice[:lines][:data][0][:plan] && invoice[:lines][:data][0][:plan][:product]
-                  product_ids.include?(invoice[:lines][:data][0][:plan][:product])
-                end
+                invoice_lines = invoice[:lines][:data][0] if invoice[:lines] && invoice[:lines][:data]
+                invoice_product_id = invoice_lines[:price][:product] if invoice_lines[:price] && invoice_lines[:price][:product]
+                invoice_product_id = invoice_lines[:plan][:product] if invoice_lines[:plan] && invoice_lines[:plan][:product]
+                product_ids.include?(invoice_product_id)
               end
               invoice_ids = invoices_with_products.map { |invoice| invoice[:id] }
               payments = ::Stripe::PaymentIntent.list(customer: customer_id)

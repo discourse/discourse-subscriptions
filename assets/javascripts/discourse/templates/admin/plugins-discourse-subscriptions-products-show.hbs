@@ -53,7 +53,7 @@
       {{#each model.plans as |plan|}}
         <tr>
           <td>{{plan.nickname}}</td>
-          <td>{{plan.interval}}</td>
+          <td>{{plan.recurring.interval}}</td>
           <td>{{format-unix-date plan.created}}</td>
           <td>{{plan.metadata.group_name}}</td>
           <td>{{plan.active}}</td>

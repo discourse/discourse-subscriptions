@@ -2,6 +2,9 @@ import discourseComputed from "discourse-common/utils/decorators";
 import DiscourseURL from "discourse/lib/url";
 import Controller from "@ember/controller";
 
+const RECURRING = "recurring";
+const ONE_TIME = "one_time";
+
 export default Controller.extend({
   // Also defined in settings.
   selectedCurrency: Ember.computed.alias("model.plan.currency"),
@@ -47,6 +50,12 @@ export default Controller.extend({
   },
 
   actions: {
+    changeRecurring() {
+      const recurring = this.get("model.plan.isRecurring");
+      this.set("model.plan.type", recurring ? ONE_TIME : RECURRING);
+      this.set("model.plan.isRecurring", !recurring);
+    },
+
     createPlan() {
       // TODO: set default group name beforehand
       if (this.get("model.plan.metadata.group_name") === undefined) {

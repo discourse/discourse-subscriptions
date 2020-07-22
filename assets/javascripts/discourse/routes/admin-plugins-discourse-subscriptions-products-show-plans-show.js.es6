@@ -16,11 +16,14 @@ export default Route.extend({
         active: true,
         isNew: true,
         interval: "month",
+        type: "recurring",
+        isRecurring: true,
         currency: Discourse.SiteSettings.discourse_subscriptions_currency,
         product: product.get("id")
       });
     } else {
       plan = AdminPlan.find(id);
+      plan.isRecurring = plan.type === "recurring";
     }
 
     const groups = Group.findAll({ ignore_automatic: true });

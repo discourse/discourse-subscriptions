@@ -12,7 +12,6 @@ module DiscourseSubscriptions
           plans = ::Stripe::Price.list(product_params)
 
           render_json_dump plans.data
-
         rescue ::Stripe::InvalidRequestError => e
           render_json_error e.message
         end
@@ -20,12 +19,9 @@ module DiscourseSubscriptions
 
       def create
         begin
-          plan = ::Stripe::Price.create(
+          price_object = {
             nickname: params[:nickname],
             unit_amount: params[:amount],
-            recurring: {
-              interval: params[:interval],
-            },
             product: params[:product],
             currency: params[:currency],
             active: params[:active],
@@ -33,10 +29,17 @@ module DiscourseSubscriptions
               group_name: params[:metadata][:group_name],
               trial_period_days: params[:trial_period_days]
             }
-          )
+          }
+
+          if params[:type] == 'recurring'
+            price_object[:recurring] = {
+              interval: params[:interval]
+            }
+          end
+
+          plan = ::Stripe::Price.create(price_object)
 
           render_json_dump plan
-
         rescue ::Stripe::InvalidRequestError => e
           render_json_error e.message
         end
@@ -74,7 +77,6 @@ module DiscourseSubscriptions
           )
 
           render_json_dump plan
-
         rescue ::Stripe::InvalidRequestError => e
           render_json_error e.message
         end

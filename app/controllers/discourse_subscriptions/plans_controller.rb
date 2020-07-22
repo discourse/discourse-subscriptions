@@ -15,11 +15,10 @@ module DiscourseSubscriptions
         end
 
         serialized = plans[:data].map do |plan|
-          plan.to_h.slice(:id, :unit_amount, :currency, :recurring)
+          plan.to_h.slice(:id, :unit_amount, :currency, :type, :recurring)
         end.sort_by { |plan| plan[:amount] }
 
         render_json_dump serialized
-
       rescue ::Stripe::InvalidRequestError => e
         render_json_error e.message
       end
