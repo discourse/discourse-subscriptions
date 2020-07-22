@@ -66,15 +66,10 @@ export default Controller.extend({
               this.alert("plans.success");
             }
 
-            let success_route;
-            if (plan.type === "recurring") {
-              success_route = "user.billing.subscriptions";
-            } else {
-              success_route = "user.billing.payments";
-            }
-
             this.transitionToRoute(
-              success_route,
+              plan.type === "recurring"
+                ? "user.billing.subscriptions"
+                : "user.billing.payments",
               Discourse.User.current().username.toLowerCase()
             );
           }
