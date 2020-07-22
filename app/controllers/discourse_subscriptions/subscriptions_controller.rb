@@ -39,6 +39,8 @@ module DiscourseSubscriptions
             metadata: metadata_user,
             trial_period_days: trial_days
           )
+
+          payment_intent = retrieve_payment_intent(transaction[:latest_invoice]) if transaction[:status] == 'incomplete'
         else
           invoice_item = ::Stripe::InvoiceItem.create(
             customer: params[:customer],
@@ -48,26 +50,12 @@ module DiscourseSubscriptions
             customer: params[:customer]
           )
           transaction = ::Stripe::Invoice.pay(invoice[:id])
+          payment_intent = retrieve_payment_intent(transaction[:id]) if transaction[:status] == 'incomplete'
         end
 
-        if transaction_ok(transaction)
-          group = plan_group(plan)
+        finalize_transaction(transaction, plan) if transaction_ok(transaction)
 
-          group.add(current_user) if group
-
-          customer = Customer.create(
-            user_id: current_user.id,
-            customer_id: params[:customer],
-            product_id: plan[:product]
-          )
-
-          if transaction[:object] == 'subscription'
-            Subscription.create(
-              customer_id: customer.id,
-              external_id: transaction[:id]
-            )
-          end
-        end
+        transaction = transaction.to_h.merge(transaction, payment_intent: payment_intent)
 
         render_json_dump transaction
       rescue ::Stripe::InvalidRequestError => e
@@ -75,6 +63,37 @@ module DiscourseSubscriptions
       end
     end
 
+    def finalize
+      byebug
+      finalize_transaction(params[:transaction], params[:plan]) if transaction_ok(params[:transaction])
+
+      render_json_dump params[:transaction]
+    end
+
+    def retrieve_payment_intent(invoice_id)
+      invoice = ::Stripe::Invoice.retrieve(invoice_id)
+      ::Stripe::PaymentIntent.retrieve(invoice[:payment_intent])
+    end
+
+    def finalize_transaction(transaction, plan)
+      group = plan_group(plan)
+
+      group.add(current_user) if group
+
+      customer = Customer.create(
+        user_id: current_user.id,
+        customer_id: params[:customer],
+        product_id: plan[:product]
+      )
+
+      if transaction[:object] == 'subscription'
+        Subscription.create(
+          customer_id: customer.id,
+          external_id: transaction[:id]
+        )
+      end
+    end
+      
     private
 
     def metadata_user

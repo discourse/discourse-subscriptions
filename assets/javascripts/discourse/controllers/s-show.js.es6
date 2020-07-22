@@ -40,6 +40,29 @@ export default Controller.extend({
     });
   },
 
+  handleAuthentication(plan, transaction) {
+    this.set("loading", true);
+    return this.stripe.confirmCardPayment(transaction.payment_intent.client_secret).then(result => {
+      if (result.paymentIntent.status === 'succeeded'){
+        return Subscription.finalize(plan, transaction);
+      }
+      else {
+        bootbox.alert(result.error.message || result.error);
+      }
+    });
+  },
+
+  _advanceSuccessfulTransaction(plan) {
+    this.alert("plans.success");
+
+    this.transitionToRoute(
+      plan.type === "recurring"
+        ? "user.billing.subscriptions"
+        : "user.billing.payments",
+      Discourse.User.current().username.toLowerCase()
+    );
+  },
+
   actions: {
     stripePaymentHandler() {
       this.set("loading", true);
@@ -59,19 +82,15 @@ export default Controller.extend({
         .then(result => {
           if (result.error) {
             bootbox.alert(result.error.message || result.error);
-          } else {
-            if (result.status === "incomplete") {
-              this.alert("plans.incomplete");
-            } else {
-              this.alert("plans.success");
-            }
-
-            this.transitionToRoute(
-              plan.type === "recurring"
-                ? "user.billing.subscriptions"
-                : "user.billing.payments",
-              Discourse.User.current().username.toLowerCase()
-            );
+          } 
+          else if (result.status === "incomplete") {
+            this.handleAuthentication(plan, result).then(result => {
+              debugger;
+              this._advanceSuccessfulTransaction(plan);
+            });
+          }
+          else {
+            this._advanceSuccessfulTransaction(plan);
           }
         })
         .catch(result => {

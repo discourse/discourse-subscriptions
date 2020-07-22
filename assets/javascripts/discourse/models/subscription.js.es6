@@ -23,6 +23,15 @@ Subscription.reopenClass({
     return ajax("/s/subscriptions", { method: "get" }).then(result =>
       result.map(subscription => Subscription.create(subscription))
     );
+  },
+
+  finalize(plan, transaction) {
+    const data = {
+      plan: plan,
+      transaction: transaction
+    };
+
+    return ajax("/s/subscriptions/finalize", { method: "post", data });
   }
 });
 
