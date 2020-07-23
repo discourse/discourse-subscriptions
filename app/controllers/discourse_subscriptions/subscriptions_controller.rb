@@ -27,7 +27,7 @@ module DiscourseSubscriptions
     def create
       begin
         plan = ::Stripe::Price.retrieve(params[:plan])
-
+        
         recurring_plan = plan[:type] == 'recurring'
 
         if recurring_plan

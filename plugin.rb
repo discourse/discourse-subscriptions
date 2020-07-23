@@ -21,7 +21,7 @@ register_html_builder('server:before-head-close') do
 end
 
 extend_content_security_policy(
-  script_src: ['https://js.stripe.com/v3/']
+  script_src: ['https://js.stripe.com/v3/', 'https://hooks.stripe.com']
 )
 
 add_admin_route 'discourse_subscriptions.admin_navigation', 'discourse-subscriptions.products'

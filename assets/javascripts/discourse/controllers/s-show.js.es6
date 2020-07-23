@@ -1,6 +1,7 @@
 import Controller from "@ember/controller";
 import Customer from "discourse/plugins/discourse-subscriptions/discourse/models/customer";
 import Subscription from "discourse/plugins/discourse-subscriptions/discourse/models/subscription";
+import Transaction from "discourse/plugins/discourse-subscriptions/discourse/models/transaction";
 import I18n from "I18n";
 
 export default Controller.extend({
@@ -41,10 +42,9 @@ export default Controller.extend({
   },
 
   handleAuthentication(plan, transaction) {
-    this.set("loading", true);
     return this.stripe.confirmCardPayment(transaction.payment_intent.client_secret).then(result => {
-      if (result.paymentIntent.status === 'succeeded'){
-        return Subscription.finalize(plan, transaction);
+      if (result.paymentIntent && result.paymentIntent.status === 'succeeded'){
+        return result;
       }
       else {
         bootbox.alert(result.error.message || result.error);
@@ -85,8 +85,12 @@ export default Controller.extend({
           } 
           else if (result.status === "incomplete") {
             this.handleAuthentication(plan, result).then(result => {
-              debugger;
-              this._advanceSuccessfulTransaction(plan);
+              if (result && result.paymentIntent) {
+                return Transaction.finalize(plan, result.paymentIntent).then(result => {
+                  this._advanceSuccessfulTransaction(plan);
+                });
+              }
+              else { return result; }
             });
           }
           else {
