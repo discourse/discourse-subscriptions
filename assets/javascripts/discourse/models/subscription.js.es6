@@ -24,7 +24,6 @@ Subscription.reopenClass({
       result.map(subscription => Subscription.create(subscription))
     );
   }
-
 });
 
 export default Subscription;

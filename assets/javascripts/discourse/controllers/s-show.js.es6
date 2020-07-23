@@ -42,15 +42,19 @@ export default Controller.extend({
   },
 
   handleAuthentication(plan, transaction) {
-    return this.stripe.confirmCardPayment(transaction.payment_intent.client_secret).then(result => {
-      if (result.paymentIntent && result.paymentIntent.status === 'succeeded'){
-        return result;
-      }
-      else {
-        this.set("loading", false);
-        bootbox.alert(result.error.message || result.error);
-      }
-    });
+    return this.stripe
+      .confirmCardPayment(transaction.payment_intent.client_secret)
+      .then(result => {
+        if (
+          result.paymentIntent &&
+          result.paymentIntent.status === "succeeded"
+        ) {
+          return result;
+        } else {
+          this.set("loading", false);
+          bootbox.alert(result.error.message || result.error);
+        }
+      });
   },
 
   _advanceSuccessfulTransaction(plan) {
@@ -84,24 +88,25 @@ export default Controller.extend({
         .then(result => {
           if (result.error) {
             bootbox.alert(result.error.message || result.error);
-          } 
-          else if (result.status === "incomplete" || result.status === "open") {
+          } else if (
+            result.status === "incomplete" ||
+            result.status === "open"
+          ) {
             const transactionId = result.id;
             const planId = this.selectedPlan;
             this.handleAuthentication(plan, result).then(() => {
-              return Transaction.finalize(transactionId, planId).then(result => {
+              return Transaction.finalize(transactionId, planId).then(() => {
                 this._advanceSuccessfulTransaction(plan);
               });
             });
-          }
-          else {
+          } else {
             this._advanceSuccessfulTransaction(plan);
           }
         })
         .catch(result => {
           bootbox.alert(result.errorThrown);
           this.set("loading", false);
-        })
+        });
     }
   }
 });

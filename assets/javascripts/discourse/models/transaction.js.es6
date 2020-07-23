@@ -5,7 +5,7 @@ export default {
     const data = {
       transaction: transaction,
       plan: plan
-    }
+    };
 
     return ajax("/s/subscriptions/finalize", { method: "post", data });
   }
