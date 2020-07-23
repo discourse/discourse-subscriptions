@@ -47,6 +47,7 @@ export default Controller.extend({
         return result;
       }
       else {
+        this.set("loading", false);
         bootbox.alert(result.error.message || result.error);
       }
     });
@@ -54,6 +55,7 @@ export default Controller.extend({
 
   _advanceSuccessfulTransaction(plan) {
     this.alert("plans.success");
+    this.set("loading", false);
 
     this.transitionToRoute(
       plan.type === "recurring"
@@ -89,7 +91,6 @@ export default Controller.extend({
             this.handleAuthentication(plan, result).then(() => {
               return Transaction.finalize(transactionId, planId).then(result => {
                 this._advanceSuccessfulTransaction(plan);
-
               });
             });
           }
@@ -99,10 +100,8 @@ export default Controller.extend({
         })
         .catch(result => {
           bootbox.alert(result.errorThrown);
-        })
-        .finally(() => {
           this.set("loading", false);
-        });
+        })
     }
   }
 });
