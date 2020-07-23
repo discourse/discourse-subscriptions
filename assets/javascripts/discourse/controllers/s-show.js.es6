@@ -53,6 +53,7 @@ export default Controller.extend({
         } else {
           this.set("loading", false);
           bootbox.alert(result.error.message || result.error);
+          return result;
         }
       });
   },
@@ -94,11 +95,17 @@ export default Controller.extend({
           ) {
             const transactionId = result.id;
             const planId = this.selectedPlan;
-            this.handleAuthentication(plan, result).then(() => {
-              return Transaction.finalize(transactionId, planId).then(() => {
-                this._advanceSuccessfulTransaction(plan);
-              });
-            });
+            this.handleAuthentication(plan, result).then(
+              authenticationResult => {
+                if (authenticationResult && !authenticationResult.error) {
+                  return Transaction.finalize(transactionId, planId).then(
+                    () => {
+                      this._advanceSuccessfulTransaction(plan);
+                    }
+                  );
+                }
+              }
+            );
           } else {
             this._advanceSuccessfulTransaction(plan);
           }
