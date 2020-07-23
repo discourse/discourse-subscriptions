@@ -83,7 +83,7 @@ export default Controller.extend({
           if (result.error) {
             bootbox.alert(result.error.message || result.error);
           } 
-          else if (result.status === "incomplete") {
+          else if (result.status === "incomplete" || result.status === "open") {
             const transactionId = result.id;
             const planId = this.selectedPlan;
             this.handleAuthentication(plan, result).then(() => {

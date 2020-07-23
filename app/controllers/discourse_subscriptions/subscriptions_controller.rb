@@ -49,8 +49,9 @@ module DiscourseSubscriptions
           invoice = ::Stripe::Invoice.create(
             customer: params[:customer]
           )
-          transaction = ::Stripe::Invoice.pay(invoice[:id])
-          payment_intent = retrieve_payment_intent(transaction[:id]) if transaction[:status] == 'incomplete'
+          transaction = ::Stripe::Invoice.finalize_invoice(invoice[:id])
+          payment_intent = retrieve_payment_intent(transaction[:id]) if transaction[:status] == 'open'
+          transaction = ::Stripe::Invoice.pay(invoice[:id]) if payment_intent[:status] == 'successful'
         end
 
         finalize_transaction(transaction, plan) if transaction_ok(transaction)
