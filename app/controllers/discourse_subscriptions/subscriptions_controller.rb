@@ -64,10 +64,28 @@ module DiscourseSubscriptions
     end
 
     def finalize
-      byebug
-      finalize_transaction(params[:transaction], params[:plan]) if transaction_ok(params[:transaction])
+      begin
+        price = ::Stripe::Price.retrieve(params[:plan])
+        transaction = retrieve_transaction(params[:transaction])
+        finalize_transaction(transaction, price) if transaction_ok(transaction)
 
-      render_json_dump params[:transaction]
+        render_json_dump params[:transaction]
+      rescue ::Stripe::InvalidRequestError => e
+        render_json_error e.message
+      end
+    end
+
+    def retrieve_transaction(transaction)
+      begin
+        case transaction
+        when /^sub_/
+          ::Stripe::Subscription.retrieve(transaction)
+        when /^in_/
+          ::Stripe::Invoice.retrieve(transaction)
+        end
+      rescue ::Stripe::InvalidRequestError => e
+        e.message
+      end
     end
 
     def retrieve_payment_intent(invoice_id)
@@ -82,7 +100,7 @@ module DiscourseSubscriptions
 
       customer = Customer.create(
         user_id: current_user.id,
-        customer_id: params[:customer],
+        customer_id: transaction[:customer],
         product_id: plan[:product]
       )
 

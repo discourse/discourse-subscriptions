@@ -1,11 +1,12 @@
 import { ajax } from "discourse/lib/ajax";
 
 export default {
-  finalize(plan, transaction) {
+  finalize(transaction, plan) {
     const data = {
-      plan: plan,
-      transaction: transaction
-    };
+      transaction: transaction,
+      plan: plan
+    }
+
     return ajax("/s/subscriptions/finalize", { method: "post", data });
   }
 };

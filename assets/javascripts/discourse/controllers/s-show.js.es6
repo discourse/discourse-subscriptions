@@ -84,13 +84,13 @@ export default Controller.extend({
             bootbox.alert(result.error.message || result.error);
           } 
           else if (result.status === "incomplete") {
-            this.handleAuthentication(plan, result).then(result => {
-              if (result && result.paymentIntent) {
-                return Transaction.finalize(plan, result.paymentIntent).then(result => {
-                  this._advanceSuccessfulTransaction(plan);
-                });
-              }
-              else { return result; }
+            const transactionId = result.id;
+            const planId = this.selectedPlan;
+            this.handleAuthentication(plan, result).then(() => {
+              return Transaction.finalize(transactionId, planId).then(result => {
+                this._advanceSuccessfulTransaction(plan);
+
+              });
             });
           }
           else {
