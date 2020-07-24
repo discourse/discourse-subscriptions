@@ -1,6 +1,7 @@
 import Controller from "@ember/controller";
 import Customer from "discourse/plugins/discourse-subscriptions/discourse/models/customer";
 import Subscription from "discourse/plugins/discourse-subscriptions/discourse/models/subscription";
+import Transaction from "discourse/plugins/discourse-subscriptions/discourse/models/transaction";
 import I18n from "I18n";
 
 export default Controller.extend({
@@ -40,6 +41,35 @@ export default Controller.extend({
     });
   },
 
+  handleAuthentication(plan, transaction) {
+    return this.stripe
+      .confirmCardPayment(transaction.payment_intent.client_secret)
+      .then(result => {
+        if (
+          result.paymentIntent &&
+          result.paymentIntent.status === "succeeded"
+        ) {
+          return result;
+        } else {
+          this.set("loading", false);
+          bootbox.alert(result.error.message || result.error);
+          return result;
+        }
+      });
+  },
+
+  _advanceSuccessfulTransaction(plan) {
+    this.alert("plans.success");
+    this.set("loading", false);
+
+    this.transitionToRoute(
+      plan.type === "recurring"
+        ? "user.billing.subscriptions"
+        : "user.billing.payments",
+      Discourse.User.current().username.toLowerCase()
+    );
+  },
+
   actions: {
     stripePaymentHandler() {
       this.set("loading", true);
@@ -59,25 +89,29 @@ export default Controller.extend({
         .then(result => {
           if (result.error) {
             bootbox.alert(result.error.message || result.error);
-          } else {
-            if (result.status === "incomplete") {
-              this.alert("plans.incomplete");
-            } else {
-              this.alert("plans.success");
-            }
-
-            this.transitionToRoute(
-              plan.type === "recurring"
-                ? "user.billing.subscriptions"
-                : "user.billing.payments",
-              Discourse.User.current().username.toLowerCase()
+          } else if (
+            result.status === "incomplete" ||
+            result.status === "open"
+          ) {
+            const transactionId = result.id;
+            const planId = this.selectedPlan;
+            this.handleAuthentication(plan, result).then(
+              authenticationResult => {
+                if (authenticationResult && !authenticationResult.error) {
+                  return Transaction.finalize(transactionId, planId).then(
+                    () => {
+                      this._advanceSuccessfulTransaction(plan);
+                    }
+                  );
+                }
+              }
             );
+          } else {
+            this._advanceSuccessfulTransaction(plan);
           }
         })
         .catch(result => {
           bootbox.alert(result.errorThrown);
-        })
-        .finally(() => {
           this.set("loading", false);
         });
     }

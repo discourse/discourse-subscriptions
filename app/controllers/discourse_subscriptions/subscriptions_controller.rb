@@ -39,6 +39,8 @@ module DiscourseSubscriptions
             metadata: metadata_user,
             trial_period_days: trial_days
           )
+
+          payment_intent = retrieve_payment_intent(transaction[:latest_invoice]) if transaction[:status] == 'incomplete'
         else
           invoice_item = ::Stripe::InvoiceItem.create(
             customer: params[:customer],
@@ -47,31 +49,67 @@ module DiscourseSubscriptions
           invoice = ::Stripe::Invoice.create(
             customer: params[:customer]
           )
-          transaction = ::Stripe::Invoice.pay(invoice[:id])
+          transaction = ::Stripe::Invoice.finalize_invoice(invoice[:id])
+          payment_intent = retrieve_payment_intent(transaction[:id]) if transaction[:status] == 'open'
+          transaction = ::Stripe::Invoice.pay(invoice[:id]) if payment_intent[:status] == 'successful'
         end
 
-        if transaction_ok(transaction)
-          group = plan_group(plan)
+        finalize_transaction(transaction, plan) if transaction_ok(transaction)
 
-          group.add(current_user) if group
-
-          customer = Customer.create(
-            user_id: current_user.id,
-            customer_id: params[:customer],
-            product_id: plan[:product]
-          )
-
-          if transaction[:object] == 'subscription'
-            Subscription.create(
-              customer_id: customer.id,
-              external_id: transaction[:id]
-            )
-          end
-        end
+        transaction = transaction.to_h.merge(transaction, payment_intent: payment_intent)
 
         render_json_dump transaction
       rescue ::Stripe::InvalidRequestError => e
         render_json_error e.message
+      end
+    end
+
+    def finalize
+      begin
+        price = ::Stripe::Price.retrieve(params[:plan])
+        transaction = retrieve_transaction(params[:transaction])
+        finalize_transaction(transaction, price) if transaction_ok(transaction)
+
+        render_json_dump params[:transaction]
+      rescue ::Stripe::InvalidRequestError => e
+        render_json_error e.message
+      end
+    end
+
+    def retrieve_transaction(transaction)
+      begin
+        case transaction
+        when /^sub_/
+          ::Stripe::Subscription.retrieve(transaction)
+        when /^in_/
+          ::Stripe::Invoice.retrieve(transaction)
+        end
+      rescue ::Stripe::InvalidRequestError => e
+        e.message
+      end
+    end
+
+    def retrieve_payment_intent(invoice_id)
+      invoice = ::Stripe::Invoice.retrieve(invoice_id)
+      ::Stripe::PaymentIntent.retrieve(invoice[:payment_intent])
+    end
+
+    def finalize_transaction(transaction, plan)
+      group = plan_group(plan)
+
+      group.add(current_user) if group
+
+      customer = Customer.create(
+        user_id: current_user.id,
+        customer_id: transaction[:customer],
+        product_id: plan[:product]
+      )
+
+      if transaction[:object] == 'subscription'
+        Subscription.create(
+          customer_id: customer.id,
+          external_id: transaction[:id]
+        )
       end
     end
 

@@ -35,7 +35,7 @@ module DiscourseSubscriptions
             items: [ price: 'plan_1234' ],
             metadata: { user_id: user.id, username: user.username_lower },
             trial_period_days: 0
-          ).returns(status: 'active')
+          ).returns(status: 'active', customer: 'cus_1234')
 
           expect {
             post "/s/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
@@ -53,9 +53,15 @@ module DiscourseSubscriptions
 
           ::Stripe::InvoiceItem.expects(:create)
 
-          ::Stripe::Invoice.expects(:create).returns(id: 'in_123')
+          ::Stripe::Invoice.expects(:create).returns(status: 'open', id: 'in_123')
 
-          ::Stripe::Invoice.expects(:pay).returns(status: 'paid')
+          ::Stripe::Invoice.expects(:finalize_invoice).returns(id: 'in_123', status: 'open', payment_intent: 'pi_123')
+
+          ::Stripe::Invoice.expects(:retrieve).returns(id: 'in_123', status: 'open', payment_intent: 'pi_123')
+
+          ::Stripe::PaymentIntent.expects(:retrieve).returns(status: 'successful')
+
+          ::Stripe::Invoice.expects(:pay).returns(status: 'paid', customer: 'cus_1234')
 
           expect {
             post '/s/subscriptions.json', params: { plan: 'plan_1234', customer: 'cus_1234' }
@@ -65,11 +71,35 @@ module DiscourseSubscriptions
 
         it "creates a customer model" do
           ::Stripe::Price.expects(:retrieve).returns(type: 'recurring', metadata: {})
-          ::Stripe::Subscription.expects(:create).returns(status: 'active')
+          ::Stripe::Subscription.expects(:create).returns(status: 'active', customer: 'cus_1234')
 
           expect {
             post "/s/subscriptions.json", params: { plan: 'plan_1234', customer: 'cus_1234' }
           }.to change { DiscourseSubscriptions::Customer.count }
+        end
+      end
+
+      describe "strong customer authenticated transaction" do
+        context "with subscription" do
+          it "finalizes the subscription" do
+            ::Stripe::Price.expects(:retrieve).returns(id: "plan_1234", product: "prod_1234", metadata: {})
+            ::Stripe::Subscription.expects(:retrieve).returns(id: "sub_123", customer: 'cus_1234', status: "active")
+
+            expect {
+              post "/s/subscriptions/finalize.json", params: { plan: 'plan_1234', transaction: 'sub_1234' }
+            }.to change { DiscourseSubscriptions::Customer.count }
+          end
+        end
+
+        context "with one-time payment" do
+          it "finalizes the one-time payment" do
+            ::Stripe::Price.expects(:retrieve).returns(id: "plan_1234", product: "prod_1234", metadata: {})
+            ::Stripe::Invoice.expects(:retrieve).returns(id: "in_123", customer: 'cus_1234', status: "paid")
+
+            expect {
+              post "/s/subscriptions/finalize.json", params: { plan: 'plan_1234', transaction: 'in_1234' }
+            }.to change { DiscourseSubscriptions::Customer.count }
+          end
         end
       end
 

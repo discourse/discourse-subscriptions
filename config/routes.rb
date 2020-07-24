@@ -24,6 +24,8 @@ DiscourseSubscriptions::Engine.routes.draw do
   resources :products, only: [:index, :show]
   resources :subscriptions, only: [:create]
 
+  post '/subscriptions/finalize' => 'subscriptions#finalize'
+
   get '/' => 'subscriptions#index', constraints: SubscriptionsUserConstraint.new
   get '/:id' => 'subscriptions#index', constraints: SubscriptionsUserConstraint.new
 end
