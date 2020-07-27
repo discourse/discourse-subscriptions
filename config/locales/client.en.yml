@@ -26,6 +26,7 @@ en:
         select: Select subscription plan
         interval:
           adverb:
+            day: Daily
             week: Weekly
             month: Monthly
             year: Yearly
