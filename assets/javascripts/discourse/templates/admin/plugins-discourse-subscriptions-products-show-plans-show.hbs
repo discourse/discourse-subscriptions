@@ -44,7 +44,12 @@
       {{i18n 'discourse_subscriptions.admin.plans.plan.recurring'}}
     </label>
     {{#if planFieldDisabled}}
-      {{input disabled=true value=model.plan.isRecurring}}
+      {{input 
+        type="checkbox" 
+        name="recurring" 
+        checked=model.plan.isRecurring
+        disabled=true
+      }}
     {{else}}
       {{input 
         type="checkbox" 

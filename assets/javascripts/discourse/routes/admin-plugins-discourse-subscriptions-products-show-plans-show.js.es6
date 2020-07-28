@@ -22,8 +22,11 @@ export default Route.extend({
         product: product.get("id")
       });
     } else {
-      plan = AdminPlan.find(id);
-      plan.isRecurring = plan.type === "recurring";
+      plan = AdminPlan.find(id).then(result => {
+        result.isRecurring = result.type === "recurring";
+
+        return result;
+      });
     }
 
     const groups = Group.findAll({ ignore_automatic: true });
