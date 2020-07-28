@@ -14,6 +14,14 @@ textarea[readonly] {
   .btn-right {
     text-align: right;
   }
+  .align-buttons {
+    display: flex;
+    justify-content: flex-end;
+
+    .btn {
+      margin-right: 5px;
+    }
+  }
 }
 
 .plan-amount {

@@ -25,6 +25,7 @@
           <td>{{format-unix-date product.updated}}</td>
           <td class="td-right">{{product.active}}</td>
           <td class="td-right">
+            <div class="align-buttons">
             {{#link-to "adminPlugins.discourse-subscriptions.products.show" product.id class="btn no-text btn-icon"}}
               {{d-icon "far-edit"}}
             {{/link-to}}
@@ -33,6 +34,7 @@
               actionParam=product
               icon="trash-alt"
               class="btn-danger btn no-text btn-icon"}}
+            </div>
           </td>
         </tr>
       {{/each}}
