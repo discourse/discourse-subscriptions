@@ -5,15 +5,20 @@
     <div class="product">
       <h2>{{product.name}}</h2>
 
-      <p>
+      <p class="product-description">
         {{product.description}}
       </p>
 
       {{#if isLoggedIn}}
-        <div class="pull-right">
-          {{#link-to "s.show" product.id disabled=product.subscribed class="btn btn-primary"}}
-            {{i18n 'discourse_subscriptions.subscribe.title'}}
-          {{/link-to}}
+        <div class="product-purchase">
+          {{#if product.subscribed}}
+            <span class="purchased">&#x2713; {{i18n 'discourse_subscriptions.subscribe.purchased'}}</span>
+            <a class="billing-link" href="/my/billing">{{I18n 'discourse_subscriptions.subscribe.go_to_billing'}}</a> 
+          {{else}}
+            {{#link-to "s.show" product.id disabled=product.subscribed class="btn btn-primary"}}
+              {{i18n 'discourse_subscriptions.subscribe.title'}}
+            {{/link-to}}
+          {{/if}}
         </div>
       {{/if}}
     </div>

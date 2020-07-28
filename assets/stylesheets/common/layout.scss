@@ -35,9 +35,32 @@
   }
 }
 
-#product-list {
-  padding: 40px 120px;
+.product-list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+
   .product {
-    margin-bottom: 60px;
+    display: flex;
+    flex-flow: column nowrap;
+    border: 1px solid $primary-low;
+    padding: 1.5rem;
+    margin: 1rem;
+    width: calc(50% - 240px);
+
+    .product-description {
+      flex-grow: 1;
+    }
+    .product-purchase {
+      align-self: baseline;
+      display: flex;
+      flex-flow: column nowrap;
+      .purchased {
+        color: $success;
+      }
+      .billing-link {
+        font-size: $font-down-1;
+      }
+    }
   }
 }
