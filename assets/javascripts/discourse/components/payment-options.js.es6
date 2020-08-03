@@ -1,7 +1,7 @@
 import Component from "@ember/component";
 
 export default Component.extend({
-  init() {
+  didInsertElement() {
     this._super(...arguments);
     if (this.plans && this.plans.length === 1) {
       this.set("selectedPlan", this.plans[0].id);
