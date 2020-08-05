@@ -1,0 +1,46 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+vi:
+  js:
+    discourse_subscriptions:
+      optional: Tuỳ chọn
+      plans:
+        interval:
+          adverb:
+            week: Hàng tuần
+            month: Hàng tháng
+            year: Hàng năm
+      user:
+        payments:
+          created_at: Tạo bởi
+        plans:
+          product: Tên
+        subscriptions:
+          status: Trạng thái
+          created_at: Tạo bởi
+      billing:
+        email: Email
+      admin:
+        dashboard:
+          title: Bảng điều khiển
+          table:
+            head:
+              user: Người dùng
+        products:
+          product:
+            description: Mô tả
+            active: Kích hoạt
+            created_at: Tạo bởi
+        plans:
+          plan:
+            active: Kích hoạt
+            created_at: Tạo bởi
+        subscriptions:
+          subscription:
+            user: Người dùng
+            status: Trạng thái
+            created_at: Tạo bởi

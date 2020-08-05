@@ -1,0 +1,59 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+it:
+  site_settings:
+    discourse_subscriptions_enabled: Abilita il plug-in Subscriptions
+  js:
+    discourse_subscriptions:
+      optional: Opzionale
+      plans:
+        interval:
+          adverb:
+            week: Settimanale
+            month: Mensile
+            year: Annuale
+      user:
+        payments:
+          created_at: Creazione
+        plans:
+          product: Nome
+        subscriptions:
+          status: Stato
+          created_at: Creazione
+      subscribe:
+        customer:
+          title: Dettagli Cliente
+      billing:
+        email: Email
+      admin:
+        dashboard:
+          title: Cruscotto
+          table:
+            head:
+              user: Utente
+        products:
+          product:
+            description: Descrizione
+            active: Attivi
+            created_at: Creazione
+            updated_at: Aggiornato
+        plans:
+          operations:
+            add: Aggiungi nuovo Piano
+            create: Crea Piano
+            update: Aggiorna Piano
+            new: Nuovo Piano
+          plan:
+            active: Attivo
+            created_at: Creato
+        subscriptions:
+          subscription:
+            user: Utente
+            customer: Cliente
+            plan: Piano
+            status: Stato
+            created_at: Creato

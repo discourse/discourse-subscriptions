@@ -1,0 +1,149 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+he:
+  site_settings:
+    discourse_subscriptions_enabled: הפעלת תוסף המינויים של Discourse.
+    discourse_subscriptions_extra_nav_subscribe: להציג את כפתור הרישום בניווט הראשי
+    discourse_subscriptions_public_key: מפתח מופץ של Stripe
+    discourse_subscriptions_secret_key: מפתח סודי של Stripe
+    discourse_subscriptions_webhook_secret: סוד התלייה של Stripe
+    discourse_subscriptions_currency: קוד מדינה כבררת מחדל. ניתן לדרוס את זה בעת יצירת תכנית מינוי.
+    errors:
+      discourse_patrons_amount_must_be_currency: "סכומי המטבעות אמורים להיות מטבעות בלי סימן דולר (למשל: 1.50)"
+  js:
+    discourse_subscriptions:
+      title: מינויי Discourse
+      admin_navigation: מינויים
+      optional: רשות
+      navigation:
+        billing: חיוב
+        payments: תשלומים
+        subscriptions: מינויים
+        subscribe: הרשמה
+        user_activity:
+          payments: תשלומים
+      one_time_payment: תשלום חד־פעמי
+      plans:
+        purchase: רכישת מינוי
+        select: בחירת תכנית מינוי
+        interval:
+          adverb:
+            day: יומי
+            week: שבועי
+            month: חודשי
+            year: שנתי
+        payment_button: הרשמה
+        success: תודה לך! המינוי של נוצר.
+        incomplete: התשלום הושלם. המינוי שלך יתעדכן עם סיום תהליך התשלום.
+        validate:
+          payment_options:
+            required: נא לבחור תכנית מינוי.
+      user:
+        payments:
+          id: מזהה תשלום
+          amount: סכום
+          created_at: נוצר
+        payments_help: אין תשלומים
+        plans:
+          rate: תעריף
+          product: שם
+        subscriptions_help: אין לך מינויים פעילים.
+        subscriptions:
+          id: מזהה מינוי
+          status: מצב
+          created_at: נוצר
+          operations:
+            destroy:
+              confirm: לבטל את המינוי הזה?
+      subscribe:
+        title: הרשמה
+        no_products: אין מוצרים זמינים.
+        unauthenticated: עליך ליצור חשבון כדי להירשם.
+        card:
+          title: תשלום
+        customer:
+          title: פרטי הלקו
+        buttons:
+          subscribe: הרשמה
+        purchased: נרכשה
+        go_to_billing: מעבר לחיוב
+      billing:
+        name: שם מלא
+        email: כתובת דוא״ל
+        phone: מספר טלפון
+      confirmation:
+        amount: סכום
+        last4: מספר כרטיס
+      buttons:
+        make_payment: ביצוע תשלום
+        confirm_payment: אישור תשלום
+        success: חזרה
+      admin:
+        unconfigured: 'Stripe לא מוגדר נכון. נא לעיין ב־Discourse Meta למידע נוסף.'
+        dashboard:
+          title: לוח בקרה
+          table:
+            head:
+              user: משתמש
+              payment_intent: מזהה תשלום
+              receipt_email: דוא״ל הנמען
+              amount: סכום
+        products:
+          title: מוצרים
+          operations:
+            create: יצירת מוצר חדש
+            update: עדכון מוצר
+            new: מוצר חדש
+            destroy:
+              confirm: להשמיד את המוצר הזה?
+          product:
+            product_id: מזהה מוצר
+            name: שם מוצר
+            statement_descriptor: תיאור עסקה
+            statement_descriptor_help: מידע נוסף על המוצר שיופיע בשורה בתדפיס בכרטיס האשראי של הלקוח שלך.
+            plan_help: יצירת תכנית תשלום לרישום לקוחות למוצר הזה.
+            description: תיאור
+            description_help: מתאר את מוצר המינוי שלך.
+            active: פעיל
+            active_help: יש לכבות את זה עד שהמוצר שלך מוכן לקבל לקוחות.
+            created_at: נוצר
+            updated_at: עודכן
+          product_help: לפני שללקוחות יתאפשר להירשם לאתר שלך, עליך ליצור לפחות מוצר אחד ותכנית שיוך.
+        plans:
+          title: תכניות תמחור
+          operations:
+            add: הוספת תכנית חדשה
+            create: יצירת תכנית
+            update: עדכון תכנית
+            create_help: לאחר יצירת תכנית תמחור, ניתן לעדכן אך ורק את הכינוי, תקופת הניסוי וקבוצת המשתמשים שלה.
+            new: תכנית חדשה
+            destroy:
+              confirm: להשמיד את התכנית הזאת?
+          plan:
+            nickname: כינוי התכנית
+            nickname_help: לא יופיע בפני הלקוחות אך יסייע לך למצוא את התכנית הזאת בהמשך
+            plan_id: מזהה תכנית
+            product: מוצר
+            interval: הפרשי חיוב
+            amount: סכום
+            trial: ימי תקופת ניסיון
+            trial_help: מינויים לתכנית זו יתחילו אוטומטית עם תקופת ניסיון באורך זה
+            group: קבוצת משתמשים
+            group_help: זו קבוצת המשתמשים ב־Discourse אליה יתווסף הלקוח בעת יצירת המינוי.
+            active: פעיל
+            created_at: נוצר
+            recurring: תכנית מתחדשת?
+        subscriptions:
+          title: מינויים
+          subscription:
+            user: משתמש
+            subscription_id: מזהה מינוי
+            customer: לקו
+            product: מוצר
+            plan: תכנית
+            status: מצב
+            created_at: נוצר

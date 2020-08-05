@@ -1,0 +1,109 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+pt:
+  site_settings:
+    errors:
+      discourse_patrons_amount_must_be_currency: "Os valores das moedas devem ser moedas sem o símbolo do dólar (por exemplo, 1.50)"
+  js:
+    discourse_subscriptions:
+      title: Discourse - Subscrições
+      admin_navigation: Subscrições
+      optional: Opcional
+      navigation:
+        billing: Faturação
+        payments: Pagamentos
+        subscriptions: Subscrições
+        subscribe: Subscrever
+        user_activity:
+          payments: Pagamentos
+      plans:
+        purchase: Comprar uma subscrição
+        select: Selecionar plano de subscrição
+        interval:
+          adverb:
+            week: Semanalmente
+            month: Mensalmente
+            year: Anualmente
+        payment_button: Subscrever
+        success: Obrigado! A sua subscrição foi criada.
+        validate:
+          payment_options:
+            required: Por favor, selecione um plano de subscrição.
+      user:
+        payments:
+          id: Id. de Pagamento
+          created_at: Criado
+        payments_help: Não existem pagamentos
+        plans:
+          rate: Taxa
+          product: Nome
+        subscriptions_help: Não tem subscrições ativas.
+        subscriptions:
+          id: Id. da Subscrição
+          status: Estado
+          created_at: Criado
+      subscribe:
+        title: Subscrever
+        card:
+          title: Pagamento
+        customer:
+          title: Detalhes do Cliente
+        buttons:
+          subscribe: Subscrever
+      billing:
+        name: Nome completo
+        email: E-mail
+        phone: Número de Telefone
+      confirmation:
+        last4: Número do cartão
+      buttons:
+        make_payment: Efetuar pagamento
+        confirm_payment: Confirmar pagamento
+        success: Anterior
+      admin:
+        dashboard:
+          title: Painel
+          table:
+            head:
+              user: Utilizador
+              payment_intent: Id. de Pagamento
+        products:
+          title: Produtos
+          operations:
+            create: Criar Novo Produto
+            update: Atualizar Produto
+            new: Novo Produto
+          product:
+            product_id: Id. do Produto
+            name: Nome do Produto
+            statement_descriptor: Descritor do Extrato
+            statement_descriptor_help: Informação extra cerca do produto que irá aparecer no extrato do cartão de crédito do seu cliente.
+            description: Descrição
+            active: Ativo
+            created_at: Criado
+        plans:
+          title: Planos de Preço
+          operations:
+            add: Adicionar Novo Plano
+            create: Criar Plano
+            update: Atualizar Plano
+            new: Novo Plano
+          plan:
+            plan_id: Id. do Plano
+            product: Produto
+            active: Ativo
+            created_at: Criado
+        subscriptions:
+          title: Subscrições
+          subscription:
+            user: Utilizador
+            subscription_id: Id. da Subscrição
+            customer: Cliente
+            product: Produto
+            plan: Plano
+            status: Estado
+            created_at: Criado

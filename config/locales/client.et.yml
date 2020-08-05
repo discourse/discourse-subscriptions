@@ -1,0 +1,44 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+et:
+  js:
+    discourse_subscriptions:
+      optional: Valikuline
+      plans:
+        interval:
+          adverb:
+            week: Iganädalaselt
+            month: Igakuiselt
+            year: Iga-aastaselt
+      user:
+        payments:
+          created_at: Loodud
+        plans:
+          product: Nimi
+        subscriptions:
+          created_at: Loodud
+      billing:
+        email: E-post
+      admin:
+        dashboard:
+          title: Armatuurlaud
+          table:
+            head:
+              user: Kasutaja
+        products:
+          product:
+            description: Kirjeldus
+            active: Aktiivne
+            created_at: Loodud
+        plans:
+          plan:
+            active: Aktiivne
+            created_at: Loodud
+        subscriptions:
+          subscription:
+            user: Kasutaja
+            created_at: Loodud

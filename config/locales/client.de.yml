@@ -1,0 +1,102 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+de:
+  site_settings:
+    discourse_subscriptions_secret_key: Geheimer Stripe-Schlüssel
+  js:
+    discourse_subscriptions:
+      admin_navigation: Abonnements
+      optional: Optional
+      navigation:
+        billing: Abrechnung
+        payments: Zahlungen
+        subscriptions: Abonnements
+        subscribe: Abonnieren
+        user_activity:
+          payments: Zahlungen
+      plans:
+        interval:
+          adverb:
+            week: Wöchentlich
+            month: Monatlich
+            year: Jährlich
+        payment_button: Abonnieren
+      user:
+        payments:
+          id: Zahlungs-Kennung
+          amount: Betrag
+          created_at: Erstellt
+        payments_help: Es gibt keine Zahlungen
+        plans:
+          product: Name
+        subscriptions_help: Du hast keine aktiven Abonnements.
+        subscriptions:
+          id: Abonnement-Kennung
+          status: Status
+          created_at: Erstellt
+      subscribe:
+        title: Abonnieren
+        card:
+          title: Zahlung
+        buttons:
+          subscribe: Abonnieren
+      billing:
+        name: Vollständiger Name
+        email: E-Mail
+        phone: Telefonnummer
+      confirmation:
+        amount: Betrag
+        last4: Kartennummer
+      buttons:
+        make_payment: Zahlung vornehmen
+        confirm_payment: Zahlung bestätigen
+      admin:
+        dashboard:
+          title: Dashboard
+          table:
+            head:
+              user: Benutzer
+              payment_intent: Zahlungs-Kennung
+              amount: Betrag
+        products:
+          title: Produkte
+          operations:
+            create: Neues Produkt erstellen
+            update: Produkt aktualisieren
+            new: Neues Produkt
+          product:
+            product_id: Produkt-Kennung
+            name: Produktname
+            description: Beschreibung
+            active: Aktiv
+            created_at: Erstellt
+            updated_at: Aktualisiert
+        plans:
+          title: Preispläne
+          operations:
+            add: Neuen Plan hinzufügen
+            create: Plan erstellen
+            update: Plan aktualisieren
+            new: Neuer Plan
+          plan:
+            plan_id: Plan-Kennung
+            product: Produkt
+            interval: Abrechnungsintervall
+            amount: Betrag
+            group: Benutzergruppe
+            active: Aktiv
+            created_at: Erstellt
+        subscriptions:
+          title: Abonnements
+          subscription:
+            user: Benutzer
+            subscription_id: Abonnement-Kennung
+            customer: Kunde
+            product: Produkt
+            plan: Plan
+            status: Status
+            created_at: Erstellt

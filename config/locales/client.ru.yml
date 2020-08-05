@@ -1,0 +1,144 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+ru:
+  site_settings:
+    discourse_subscriptions_enabled: Включить плагин Discourse Subscription.
+    discourse_subscriptions_extra_nav_subscribe: Показать кнопку подписки в основной навигации
+    discourse_subscriptions_public_key: Публичный ключ сервиса Stripe
+    discourse_subscriptions_secret_key: Секретный ключ сервиса Stripe
+    discourse_subscriptions_webhook_secret: Секретный вебхук сервиса Stripe
+    discourse_subscriptions_currency: Код валюты по умолчанию. Может быть переопределён при создании плана подписки.
+    errors:
+      discourse_patrons_amount_must_be_currency: "Сумма должна быть без символа доллара (например, 1,50)"
+  js:
+    discourse_subscriptions:
+      title: Подписки
+      admin_navigation: Подписки
+      optional: Опционально
+      navigation:
+        billing: Биллинг
+        payments: Платежи
+        subscriptions: Подписки
+        subscribe: Подписаться
+        user_activity:
+          payments: Платежи
+      plans:
+        purchase: Купить подписку
+        select: Выберите тарифный план
+        interval:
+          adverb:
+            week: За неделю
+            month: За месяц
+            year: За год
+        payment_button: Подписаться
+        success: Спасибо! Подписка была создана.
+        incomplete: Оплата не завершена. Ваша подписка будет обновлена после завершения оплаты.
+        validate:
+          payment_options:
+            required: Пожалуйста, выберите план подписки.
+      user:
+        payments:
+          id: Идентификатор платежа
+          amount: Количество
+          created_at: Создано
+        payments_help: Платежи отсутствуют
+        plans:
+          rate: Ставка
+          product: Имя
+        subscriptions_help: У вас нет активных подписок.
+        subscriptions:
+          id: ID подписки
+          status: Статус
+          created_at: Создано
+          operations:
+            destroy:
+              confirm: Вы действительно хотите отменить эту подписку?
+      subscribe:
+        title: Подписаться
+        no_products: В настоящее время нет доступных предложений.
+        unauthenticated: Вы должны создать учетную запись, чтобы подписаться.
+        card:
+          title: Оплата
+        customer:
+          title: Данные клиента
+        buttons:
+          subscribe: Подписаться
+      billing:
+        name: ФИО
+        email: Email
+        phone: Телефонный номер
+      confirmation:
+        amount: Количество
+        last4: Номер карты
+      buttons:
+        make_payment: Совершить платеж
+        confirm_payment: Подтвердить оплату
+        success: Назад
+      admin:
+        unconfigured: 'Сервис Stripe настроен неправильно. За дополнительной информацией обратитесь к описанию плагина: meta.discourse.org/t/discourse-subscriptions'
+        dashboard:
+          title: Админка
+          table:
+            head:
+              user: Пользователь
+              payment_intent: Идентификатор платежа
+              receipt_email: Электронная почта квитанции
+              amount: Количество
+        products:
+          title: Товары
+          operations:
+            create: Создать новый продукт
+            update: Обновить продукт
+            new: Новый продукт
+            destroy:
+              confirm: Вы действительно хотите удалить этот продукт?
+          product:
+            product_id: Код товара
+            name: Наименование товара
+            statement_descriptor: Дескриптор оператора
+            statement_descriptor_help: Дополнительная информация о продукте, которая появится в выписке по кредитной карте вашего клиента.
+            plan_help: Создайте тарифный план, чтобы подписать клиентов на этот продукт.
+            description: Описание
+            description_help: Описание подписки.
+            active: Активный
+            active_help: Отключите это, пока ваш продукт не будет готов для потребителей.
+            created_at: Создано
+            updated_at: Обновлено
+          product_help: Прежде чем клиенты смогут подписаться на ваш сайт, вам нужно создать хотя бы один продукт и соответствующий план.
+        plans:
+          title: Планы ценообразования
+          operations:
+            add: Добавить новый план
+            create: Создать план
+            update: Обновить план
+            create_help: После создания тарифного плана можно обновить только его псевдоним, пробный период и группу пользователей.
+            new: Новый план
+            destroy:
+              confirm: Вы действительно хотите удалить этот план?
+          plan:
+            nickname: Название плана
+            nickname_help: Название не будет видно для клиентов, но поможет вам найти этот план позже
+            plan_id: ID плана
+            product: Товар
+            interval: Интервал выставления счетов
+            amount: Количество
+            trial: Дни пробного периода
+            trial_help: Подписки на этот план автоматически начнутся с бесплатной пробной версии
+            group: Группа пользователей
+            group_help: Это группа пользователей, к которой добавляется клиент при создании подписки.
+            active: Активный
+            created_at: Создано
+        subscriptions:
+          title: Подписки
+          subscription:
+            user: Пользователь
+            subscription_id: ID подписки
+            customer: Клиент
+            product: Товар
+            plan: План
+            status: Статус
+            created_at: Создано

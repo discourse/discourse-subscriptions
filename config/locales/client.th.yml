@@ -1,0 +1,47 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+th:
+  js:
+    discourse_subscriptions:
+      optional: ทางเลือก
+      plans:
+        interval:
+          adverb:
+            week: รายสัปดาห์
+            month: รายเดือน
+            year: รายปี
+      user:
+        payments:
+          created_at: สร้างแล้ว
+        plans:
+          product: ชื่อ
+        subscriptions:
+          status: สถานะ
+          created_at: สร้างแล้ว
+      billing:
+        email: อีเมล
+      admin:
+        dashboard:
+          title: แดชบอร์ด
+          table:
+            head:
+              user: ผู้ใช้
+        products:
+          product:
+            description: รายละเอียด
+            active: ใช้งานอยู่
+            created_at: สร้างแล้ว
+            updated_at: อัปเดตแล้ว
+        plans:
+          plan:
+            active: ใช้งานอยู่
+            created_at: สร้างแล้ว
+        subscriptions:
+          subscription:
+            user: ผู้ใช้
+            status: สถานะ
+            created_at: สร้างแล้ว

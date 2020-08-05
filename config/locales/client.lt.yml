@@ -1,0 +1,44 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+lt:
+  js:
+    discourse_subscriptions:
+      optional: Pasirinktinai
+      plans:
+        interval:
+          adverb:
+            week: Kas savaitę
+            month: Kas mėnesį
+            year: Kasmet
+      user:
+        payments:
+          created_at: Sukurta
+        plans:
+          product: Vardas
+        subscriptions:
+          created_at: Sukurta
+      billing:
+        email: Epaštas
+      admin:
+        dashboard:
+          title: Apžvalga
+          table:
+            head:
+              user: Narys
+        products:
+          product:
+            description: Aprašymas
+            active: Aktyvus
+            created_at: Sukurta
+        plans:
+          plan:
+            active: Aktyvus
+            created_at: Sukurta
+        subscriptions:
+          subscription:
+            user: Narys
+            created_at: Sukurta

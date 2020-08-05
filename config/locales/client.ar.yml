@@ -1,0 +1,44 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+ar:
+  js:
+    discourse_subscriptions:
+      optional: اختياري
+      plans:
+        interval:
+          adverb:
+            week: اسبوع
+            month: شهر
+            year: سنة
+      user:
+        payments:
+          created_at: أُنشئ في
+        plans:
+          product: الإسم
+        subscriptions:
+          created_at: أُنشئ في
+      billing:
+        email: البريد الإلكتروني
+      admin:
+        dashboard:
+          title: لوحة التحكم
+          table:
+            head:
+              user: مستخدم
+        products:
+          product:
+            description: الوصف
+            active: فعل
+            created_at: أُنشئ في
+        plans:
+          plan:
+            active: فعل
+            created_at: أُنشئ في
+        subscriptions:
+          subscription:
+            user: مستخدم
+            created_at: أُنشئ في

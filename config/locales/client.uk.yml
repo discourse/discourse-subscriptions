@@ -1,0 +1,47 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+uk:
+  js:
+    discourse_subscriptions:
+      optional: Опціонально
+      plans:
+        interval:
+          adverb:
+            week: Щотижня
+            month: Щомісяця
+            year: Щорічно
+      user:
+        payments:
+          created_at: Створено
+        plans:
+          product: Назва
+        subscriptions:
+          status: Статус
+          created_at: Створено
+      billing:
+        email: Електронна пошта
+      admin:
+        dashboard:
+          title: Майстерня
+          table:
+            head:
+              user: Користувач
+        products:
+          product:
+            description: Опис
+            active: Активний
+            created_at: Створено
+            updated_at: Оновлено
+        plans:
+          plan:
+            active: Активний
+            created_at: Створено
+        subscriptions:
+          subscription:
+            user: Користувач
+            status: Статус
+            created_at: Створено

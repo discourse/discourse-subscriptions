@@ -1,3 +1,9 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
 es:
   site_settings:
     discourse_subscriptions_enabled: Habilitar el plugin Discourse Suscripciones.
@@ -6,7 +12,6 @@ es:
     discourse_subscriptions_secret_key: Stripe Secret Key
     discourse_subscriptions_webhook_secret: Stripe Webhook Secret
     discourse_subscriptions_currency: Código de Moneda Predeterminado. Esto puede anularse al crear un plan de suscripción.
-    discourse_subscriptions_allow_payments: Permitir pagos únicos
     errors:
       discourse_patrons_amount_must_be_currency: "Las cantidades de moneda deben ser monedas sin símbolo de dólar (ej 1.50)"
   js:
@@ -29,25 +34,12 @@ es:
             week: Semanal
             month: Mensual
             year: Anual
-        payment_button:
-          Subscribe
-        success: ¡Gracias! Su suscripción ha sido creada.
+        payment_button: Subscribe
+        success: '¡Gracias! Su suscripción ha sido creada.'
         incomplete: El pago está incompleto. Su suscripción se actualizará cuando se complete el pago.
         validate:
           payment_options:
             required: Por favor seleccione un plan de suscripción.
-      payment:
-        purchase: Haz un solo pago
-        select: Selecciona una opción de pago
-        interval:
-          One payment
-        payment_button:
-          Pay Once
-        success: ¡Muchas gracias!
-        incomplete: Pago incompleto.
-        validate:
-          payment_options:
-            required: Por favor selecciona una opción de pago.
       user:
         payments:
           id: ID de pago
@@ -64,7 +56,7 @@ es:
           created_at: Creado
           operations:
             destroy:
-              confirm: ¿Seguro que quieres cancelar esta suscripción?
+              confirm: '¿Seguro que quieres cancelar esta suscripción?'
       subscribe:
         title: Suscribir
         unauthenticated: Necesitas crear una cuenta para suscribirte
@@ -101,7 +93,7 @@ es:
             update: Actualizar producto
             new: Nuevo producto
             destroy:
-                confirm: ¿Estás seguro que quieres eliminar este producto?
+              confirm: '¿Estás seguro que quieres eliminar este producto?'
           product:
             product_id: ID de Producto
             name: Nombre del Producto
@@ -124,7 +116,7 @@ es:
             create_help: Una vez que se crea un plan de precios, solo se puede actualizar su apodo, período de prueba y grupo de usuarios.
             new: Nuevo Plan
             destroy:
-              confirm: ¿Estás seguro de que quieres destruir este plan?
+              confirm: '¿Estás seguro de que quieres destruir este plan?'
           plan:
             nickname: Apodo del plan
             nickname_help: Esto no será visible para los clientes, pero lo ayudará a encontrar este plan más adelante

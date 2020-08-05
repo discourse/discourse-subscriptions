@@ -1,0 +1,47 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+fi:
+  js:
+    discourse_subscriptions:
+      optional: Ei pakollinen
+      plans:
+        interval:
+          adverb:
+            week: Viikoittain
+            month: Kuukausittain
+            year: Vuosittain
+      user:
+        payments:
+          created_at: Luotu
+        plans:
+          product: Nimi
+        subscriptions:
+          status: Tila
+          created_at: Luotu
+      billing:
+        email: Sähköposti
+      admin:
+        dashboard:
+          title: Hallintapaneeli
+          table:
+            head:
+              user: Käyttäjä
+        products:
+          product:
+            description: Kuvaus
+            active: Aktiiviset
+            created_at: Luotu
+            updated_at: Päivitetty
+        plans:
+          plan:
+            active: Aktiiviset
+            created_at: Luotu
+        subscriptions:
+          subscription:
+            user: Käyttäjä
+            status: Tila
+            created_at: Luotu

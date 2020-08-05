@@ -1,0 +1,144 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+sv:
+  site_settings:
+    discourse_subscriptions_enabled: Aktivera tillägget för Discourse prenumerationer.
+    discourse_subscriptions_extra_nav_subscribe: Visa prenumerationsknappen i den primära navigeringen
+    discourse_subscriptions_public_key: Stripe publiceringsnyckel
+    discourse_subscriptions_secret_key: Stripe hemlig nyckel
+    discourse_subscriptions_webhook_secret: Stripe Webhook-hemlighet
+    discourse_subscriptions_currency: Standardiserad valutakod. Detta kan åsidosättas vid skapandet av en prenumerationsplan.
+    errors:
+      discourse_patrons_amount_must_be_currency: "Valutasumman måste vara utan valutasymbol (ex 1.50)"
+  js:
+    discourse_subscriptions:
+      title: Discourse prenumerationer
+      admin_navigation: Prenumerationer
+      optional: Valfria
+      navigation:
+        billing: Fakturering
+        payments: Betalningar
+        subscriptions: Prenumerationer
+        subscribe: Prenumerera
+        user_activity:
+          payments: Betalningar
+      plans:
+        purchase: Köp en prenumeration
+        select: Välj en prenumerationsplan
+        interval:
+          adverb:
+            week: Veckovis
+            month: Månadsvis
+            year: Årsvis
+        payment_button: Prenumerera
+        success: Tack så mycket! Din prenumeration har skapats.
+        incomplete: Din betalning är ofullständig. Din prenumeration kommer att uppdateras när din betalning är fullständig.
+        validate:
+          payment_options:
+            required: Vänligen välj en prenumerationsplan.
+      user:
+        payments:
+          id: Betalnings-ID
+          amount: Summa
+          created_at: Skapad
+        payments_help: Det finns inga betalningar
+        plans:
+          rate: Frekvens
+          product: Namn
+        subscriptions_help: Du har inga aktiva prenumerationer
+        subscriptions:
+          id: Prenumerations-ID
+          status: Status
+          created_at: Skapad
+          operations:
+            destroy:
+              confirm: Är du säker på att du vill avbryta denna prenumeration?
+      subscribe:
+        title: Prenumerera
+        no_products: Det finns för tillfället inga produkter tillgängliga.
+        unauthenticated: Du behöver skapa ett konto för att prenumerera.
+        card:
+          title: Betalning
+        customer:
+          title: Kunddetaljer
+        buttons:
+          subscribe: Prenumerera
+      billing:
+        name: Fullständigt namn
+        email: E-post
+        phone: Telefonnummer
+      confirmation:
+        amount: Summa
+        last4: Kortnummer
+      buttons:
+        make_payment: Genomför betalning
+        confirm_payment: Bekräfta betalning
+        success: Gå tillbaka
+      admin:
+        unconfigured: 'Stripe är inte korrekt konfigurerat. Vänligen se Discourse Meta för information.'
+        dashboard:
+          title: Översiktspanel
+          table:
+            head:
+              user: Användare
+              payment_intent: Betalnings-ID
+              receipt_email: Kvitto e-post
+              amount: Summa
+        products:
+          title: Produkter
+          operations:
+            create: Skapa ny produkt
+            update: Uppdatera produkt
+            new: Ny produkt
+            destroy:
+              confirm: Är du säker på att du vill ta bort denna produkt?
+          product:
+            product_id: Produkt-ID
+            name: Produktnamn
+            statement_descriptor: Transaktionsbeskrivning
+            statement_descriptor_help: Extra information om en produkt vilken kommer att visas på din kunds kreditkortsutdrag.
+            plan_help: Skapa en prislista för prenumeranter för denna produkt.
+            description: Beskrivning
+            description_help: Detta beskriver din prenumerationsprodukt.
+            active: Aktiv
+            active_help: Avaktivera denna tills dess att din produkt är redo för kunder.
+            created_at: Skapad
+            updated_at: Uppdaterad
+          product_help: Innan kunder kan prenumerera på din webbplats måste du skapa minst en produkt och en associerad plan.
+        plans:
+          title: Prisplan
+          operations:
+            add: Lägg till ny plan
+            create: Skapa plan
+            update: Uppdatera plan
+            create_help: När en prisplan väl är skapad kan enbart smeknamn, testperiod och användargrupp uppdateras.
+            new: Ny plan
+            destroy:
+              confirm: Är du säker på att du vill ta bort denna plan?
+          plan:
+            nickname: Smeknamn för plan
+            nickname_help: Detta kommer inte visas för kunder utan kommer enbart hjälpa dig att hitta planen senare
+            plan_id: Plan-ID
+            product: Produkt
+            interval: Betalningsintervall
+            amount: Summa
+            trial: Testperiod i antal dagar
+            trial_help: Prenumerationer för denna plan kommer automatiskt börja med en gratis testperiod med denna längd
+            group: Användargrupp
+            group_help: Detta är den användargrupp som kunden läggs till i när deras prenumeration skapas.
+            active: Aktiv
+            created_at: Skapad
+        subscriptions:
+          title: Prenumerationer
+          subscription:
+            user: Användare
+            subscription_id: Prenumerations-ID
+            customer: Kund
+            product: Produkt
+            plan: Plan
+            status: Status
+            created_at: Skapad

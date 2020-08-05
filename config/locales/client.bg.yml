@@ -1,0 +1,45 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+bg:
+  js:
+    discourse_subscriptions:
+      plans:
+        interval:
+          adverb:
+            week: Седмично
+            month: Месечно
+            year: Годишно
+      user:
+        payments:
+          created_at: Създадени
+        plans:
+          product: Име
+        subscriptions:
+          status: Статус
+          created_at: Създадени
+      billing:
+        email: Имейл
+      admin:
+        dashboard:
+          title: Работен плот
+          table:
+            head:
+              user: Потребител
+        products:
+          product:
+            description: Описание
+            active: Активни
+            created_at: Създадени
+        plans:
+          plan:
+            active: Активни
+            created_at: Създадени
+        subscriptions:
+          subscription:
+            user: Потребител
+            status: Статус
+            created_at: Създадени

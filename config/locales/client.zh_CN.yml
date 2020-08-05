@@ -1,0 +1,47 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+zh_CN:
+  js:
+    discourse_subscriptions:
+      optional: 可选
+      plans:
+        interval:
+          adverb:
+            week: 每周
+            month: 月度
+            year: 年度
+      user:
+        payments:
+          created_at: 创建日期
+        plans:
+          product: 名称
+        subscriptions:
+          status: 状态
+          created_at: 创建日期
+      billing:
+        email: 邮箱
+      admin:
+        dashboard:
+          title: 仪表盘
+          table:
+            head:
+              user: 用户
+        products:
+          product:
+            description: 描述
+            active: 启用
+            created_at: 创建日期
+            updated_at: 已更新
+        plans:
+          plan:
+            active: 启用
+            created_at: 创建日期
+        subscriptions:
+          subscription:
+            user: 用户
+            status: 状态
+            created_at: 创建日期

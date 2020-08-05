@@ -4,8 +4,8 @@
 # To work with us on translations, join this project:
 # https://translate.discourse.org/
 
-fr:
+sv:
   discourse_subscriptions:
-    customer_not_found: Client non trouvé
+    customer_not_found: Kunden hittades inte
     card:
-      declined: Carte refusée
+      declined: Kort avvisat

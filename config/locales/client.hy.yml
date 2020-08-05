@@ -1,0 +1,47 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+hy:
+  js:
+    discourse_subscriptions:
+      optional: Ընտրովի
+      plans:
+        interval:
+          adverb:
+            week: Շաբաթվա Ընթացքում
+            month: Ամսվա Ընթացքում
+            year: Տարվա Ընթացքում
+      user:
+        payments:
+          created_at: Ստեղծված
+        plans:
+          product: Անուն
+        subscriptions:
+          status: Ստատուս
+          created_at: Ստեղծված
+      billing:
+        email: Էլ. հասցե
+      admin:
+        dashboard:
+          title: Կառավարման Հարթակ
+          table:
+            head:
+              user: Օգտատեր
+        products:
+          product:
+            description: Նկարագրություն
+            active: Ակտիվ
+            created_at: Ստեղծված
+            updated_at: Թարմացված
+        plans:
+          plan:
+            active: Ակտիվ
+            created_at: Ստեղծված
+        subscriptions:
+          subscription:
+            user: Օգտատեր
+            status: Ստատուս
+            created_at: Ստեղծված

@@ -1,0 +1,46 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+nb_NO:
+  js:
+    discourse_subscriptions:
+      optional: Valgfritt
+      plans:
+        interval:
+          adverb:
+            week: Ukentlig
+            month: Månedlig
+            year: Årlig
+      user:
+        payments:
+          created_at: Opprettet
+        plans:
+          product: Navn
+        subscriptions:
+          status: Status
+          created_at: Opprettet
+      billing:
+        email: E-post
+      admin:
+        dashboard:
+          title: Dashbord
+          table:
+            head:
+              user: Bruker
+        products:
+          product:
+            description: Beskrivelse
+            active: Aktiv
+            created_at: Opprettet
+        plans:
+          plan:
+            active: Aktiv
+            created_at: Opprettet
+        subscriptions:
+          subscription:
+            user: Bruker
+            status: Status
+            created_at: Opprettet

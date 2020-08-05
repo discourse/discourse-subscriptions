@@ -1,0 +1,46 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+ja:
+  js:
+    discourse_subscriptions:
+      optional: 任意
+      plans:
+        interval:
+          adverb:
+            week: 毎週
+            month: 月ごと
+            year: 年ごと
+      user:
+        payments:
+          created_at: 作成者
+        plans:
+          product: 名前
+        subscriptions:
+          status: ステータス
+          created_at: 作成者
+      billing:
+        email: Eメール
+      admin:
+        dashboard:
+          title: ダッシュボード
+          table:
+            head:
+              user: ユーザー
+        products:
+          product:
+            description: 説明
+            active: アクティブ
+            created_at: 作成者
+        plans:
+          plan:
+            active: アクティブ
+            created_at: 作成者
+        subscriptions:
+          subscription:
+            user: ユーザー
+            status: ステータス
+            created_at: 作成者

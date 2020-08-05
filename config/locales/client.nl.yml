@@ -1,0 +1,144 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+nl:
+  site_settings:
+    discourse_subscriptions_enabled: De Discourse Subscriptions-plug-in inschakelen.
+    discourse_subscriptions_extra_nav_subscribe: De abonneerknop in de primaire navigatie tonen
+    discourse_subscriptions_public_key: Publiceerbare sleutel van Stripe
+    discourse_subscriptions_secret_key: Geheime sleutel van Stripe
+    discourse_subscriptions_webhook_secret: Webhookgeheim van Stripe
+    discourse_subscriptions_currency: Standaard valutacode. Deze kan worden overschreven bij het aanmaken van een abonnementsvorm.
+    errors:
+      discourse_patrons_amount_must_be_currency: "Valutabedragen moeten valuta zonder dollarsymbool zijn (bv. 1.50)"
+  js:
+    discourse_subscriptions:
+      title: Discourse-abonnementen
+      admin_navigation: Abonnementen
+      optional: Optioneel
+      navigation:
+        billing: Facturering
+        payments: Betalingen
+        subscriptions: Abonnementen
+        subscribe: Abonneren
+        user_activity:
+          payments: Betalingen
+      plans:
+        purchase: Een abonnement aanschaffen
+        select: Abonnementsvorm selecteren
+        interval:
+          adverb:
+            week: Wekelijks
+            month: Maandelijks
+            year: Jaarlijks
+        payment_button: Abonneren
+        success: Bedankt! Uw abonnement is aangemaakt.
+        incomplete: De betaling is onvolledig. Uw abonnement wordt bijgewerkt zodra de betaling is voltooid.
+        validate:
+          payment_options:
+            required: Selecteer een abonnementsvorm.
+      user:
+        payments:
+          id: Betalings-ID
+          amount: Bedrag
+          created_at: Gemaakt
+        payments_help: Er zijn geen betalingen
+        plans:
+          rate: Tarief
+          product: Naam
+        subscriptions_help: U hebt geen actieve abonnementen.
+        subscriptions:
+          id: Abonnements-ID
+          status: Status
+          created_at: Gemaakt
+          operations:
+            destroy:
+              confirm: Weet u zeker dat u dit abonnement wilt annuleren?
+      subscribe:
+        title: Abonneren
+        no_products: Er zijn momenteel geen producten beschikbaar.
+        unauthenticated: U dient een account aan te maken om u te abonneren.
+        card:
+          title: Betaling
+        customer:
+          title: Klantgegevens
+        buttons:
+          subscribe: Abonneren
+      billing:
+        name: Volledige naam
+        email: E-mailadres
+        phone: Telefoonnummer
+      confirmation:
+        amount: Bedrag
+        last4: Kaartnummer
+      buttons:
+        make_payment: Betaling doen
+        confirm_payment: Betaling bevestigen
+        success: Terug
+      admin:
+        unconfigured: 'Stripe is niet goed geconfigureerd. Bekijk Discourse Meta voor informatie.'
+        dashboard:
+          title: Dashboard
+          table:
+            head:
+              user: Gebruiker
+              payment_intent: Betalings-ID
+              receipt_email: E-mailadres voor ontvangstbewijs
+              amount: Bedrag
+        products:
+          title: Producten
+          operations:
+            create: Nieuw product maken
+            update: Product bijwerken
+            new: Nieuw product
+            destroy:
+              confirm: Weet u zeker dat u dit product wilt verwijderen?
+          product:
+            product_id: Product-ID
+            name: Productnaam
+            statement_descriptor: Afschriftomschrijving
+            statement_descriptor_help: Extra informatie over een product die in het afschrift van de creditcard van uw klant verschijnt.
+            plan_help: Een tariefvorm maken om klanten op dit product te abonneren.
+            description: Omschrijving
+            description_help: Dit beschrijft uw abonnementsproduct.
+            active: Actief
+            active_help: Schakel dit uit totdat uw product gereed is voor consumenten.
+            created_at: Gemaakt
+            updated_at: Bijgewerkt
+          product_help: Voordat klanten zich op uw website kunnen abonneren, dient u minstens één product en een gekoppelde abonnementsvorm aan te maken.
+        plans:
+          title: Tariefvormen
+          operations:
+            add: Nieuwe vorm toevoegen
+            create: Vorm aanmaken
+            update: Vorm bijwerken
+            create_help: Zodra een tariefvorm is aangemaakt, kunnen alleen de bijnaam, proefperiode en gebruikersgroep ervan worden bijgewerkt.
+            new: Nieuwe vorm
+            destroy:
+              confirm: Weet u zeker dat u deze vorm wilt verwijderen?
+          plan:
+            nickname: Bijnaam van vorm
+            nickname_help: Dit is niet zichtbaar voor klanten, maar helpt u deze vorm later te vinden
+            plan_id: Vorm-ID
+            product: Product
+            interval: Factureringsinterval
+            amount: Bedrag
+            trial: Dagen voor proefperiode
+            trial_help: Abonnementen op deze vorm beginnen automatisch met een gratis proefperiode van deze lengte
+            group: Gebruikersgroep
+            group_help: Dit is de discourse-gebruikersgroep waaraan de gebruiker wordt toegevoegd wanneer het abonnement wordt aangemaakt.
+            active: Actief
+            created_at: Gemaakt
+        subscriptions:
+          title: Abonnementen
+          subscription:
+            user: Gebruiker
+            subscription_id: Abonnements-ID
+            customer: Klant
+            product: Product
+            plan: Vorm
+            status: Status
+            created_at: Gemaakt

@@ -4,8 +4,8 @@
 # To work with us on translations, join this project:
 # https://translate.discourse.org/
 
-fr:
+pt:
   discourse_subscriptions:
-    customer_not_found: Client non trouvé
+    customer_not_found: Cliente não encontrado
     card:
-      declined: Carte refusée
+      declined: Cartão Recusado

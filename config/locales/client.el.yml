@@ -1,0 +1,44 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+el:
+  js:
+    discourse_subscriptions:
+      optional: Προαιρετικό
+      plans:
+        interval:
+          adverb:
+            week: Εβδομαδιαία
+            month: Μηνιαία
+            year: Ετήσια
+      user:
+        payments:
+          created_at: Δημιουργήθηκε
+        plans:
+          product: Όνομα
+        subscriptions:
+          created_at: Δημιουργήθηκε
+      billing:
+        email: Διεύθυνση Email
+      admin:
+        dashboard:
+          title: Πίνακας ελέγχου
+          table:
+            head:
+              user: Χρήστης
+        products:
+          product:
+            description: Περιγραφή
+            active: Ενεργοί
+            created_at: Δημιουργήθηκε
+        plans:
+          plan:
+            active: Ενεργοί
+            created_at: Δημιουργήθηκε
+        subscriptions:
+          subscription:
+            user: Χρήστης
+            created_at: Δημιουργήθηκε

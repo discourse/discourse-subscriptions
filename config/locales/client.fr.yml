@@ -1,3 +1,9 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
 fr:
   site_settings:
     discourse_subscriptions_enabled: Activer le plugin Discourse Subscription
@@ -6,7 +12,6 @@ fr:
     discourse_subscriptions_secret_key: Clé secrète Stripe
     discourse_subscriptions_webhook_secret: Clé Webhook Stripe
     discourse_subscriptions_currency: Monnaie par défaut. Cette option peut être remplacée lors de la création d'un plan.
-    discourse_subscriptions_allow_payments: Autoriser paiement unique
     errors:
       discourse_patrons_amount_must_be_currency: "Le montant doit être indiqué sans le symbole de la monnaie (ex. 1.50)"
   js:
@@ -29,25 +34,12 @@ fr:
             week: Hebdomadaire
             month: Mensuel
             year: Annuel
-        payment_button:
-          Valider
+        payment_button: Valider
         success: Merci ! Votre souscription a été validée.
         incomplete: Le paiement n'a pas fonctionné. Votre souscription sera activée lorsque le paiement aura été validé.
         validate:
           payment_options:
             required: Merci de sélectionner une option de paiement
-      payment:
-        purchase: Paiement unique
-        select: Sélectionner une option de paiement
-        interval:
-          Un paiement
-        payment_button:
-          Payer en une fois
-        success: Merci !
-        incomplete: Le paiement n'a pas fonctionné.
-        validate:
-          payment_options:
-            required: Merci de sélectionner une option de paiement.
       user:
         payments:
           id: Code du paiement
@@ -67,6 +59,7 @@ fr:
               confirm: Êtes-vous sûrs de vouloir annuler cette souscription ?
       subscribe:
         title: Souscrire
+        no_products: Aucun produit disponible pour le moment.
         unauthenticated: Vous devez créer un compte utilisateur pour pouvoir soucrire.
         card:
           title: Paiement
@@ -101,7 +94,7 @@ fr:
             update: Modifier produit
             new: Nouveau produit
             destroy:
-                confirm: Êtes-vous sûrs de vouloir supprimer ce produit ?
+              confirm: Êtes-vous sûrs de vouloir supprimer ce produit ?
           product:
             product_id: Code produit
             name: Product Nom

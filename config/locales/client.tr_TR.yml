@@ -1,0 +1,47 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+tr_TR:
+  js:
+    discourse_subscriptions:
+      optional: İsteğe Bağlı
+      plans:
+        interval:
+          adverb:
+            week: Haftalık
+            month: Aylık
+            year: Yıllık
+      user:
+        payments:
+          created_at: Oluşturuldu
+        plans:
+          product: İsim
+        subscriptions:
+          status: Durum
+          created_at: Oluşturuldu
+      billing:
+        email: Eposta
+      admin:
+        dashboard:
+          title: Gösterge Paneli
+          table:
+            head:
+              user: Kullanıcı
+        products:
+          product:
+            description: Açıklama
+            active: Aktif
+            created_at: Oluşturuldu
+            updated_at: Güncellenmiş
+        plans:
+          plan:
+            active: Aktif
+            created_at: Oluşturuldu
+        subscriptions:
+          subscription:
+            user: Kullanıcı
+            status: Durum
+            created_at: Oluşturuldu

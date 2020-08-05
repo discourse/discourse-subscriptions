@@ -1,0 +1,47 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+gl:
+  js:
+    discourse_subscriptions:
+      optional: Opcional
+      plans:
+        interval:
+          adverb:
+            week: Semanal
+            month: Mensual
+            year: Anual
+      user:
+        payments:
+          created_at: Creado
+        plans:
+          product: Nome
+        subscriptions:
+          status: Estado
+          created_at: Creado
+      billing:
+        email: Correo electrónico
+      admin:
+        dashboard:
+          title: Panel
+          table:
+            head:
+              user: Usuario
+        products:
+          product:
+            description: Descrición
+            active: Activo
+            created_at: Creado
+            updated_at: Actualizado
+        plans:
+          plan:
+            active: Activo
+            created_at: Creado
+        subscriptions:
+          subscription:
+            user: Usuario
+            status: Estado
+            created_at: Creado
