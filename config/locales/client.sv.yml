@@ -26,11 +26,13 @@ sv:
         subscribe: Prenumerera
         user_activity:
           payments: Betalningar
+      one_time_payment: Engångsbetalning
       plans:
         purchase: Köp en prenumeration
         select: Välj en prenumerationsplan
         interval:
           adverb:
+            day: Dagligen
             week: Veckovis
             month: Månadsvis
             year: Årsvis
@@ -67,6 +69,8 @@ sv:
           title: Kunddetaljer
         buttons:
           subscribe: Prenumerera
+        purchased: Köpt
+        go_to_billing: Gå till fakturering
       billing:
         name: Fullständigt namn
         email: E-post
@@ -132,6 +136,7 @@ sv:
             group_help: Detta är den användargrupp som kunden läggs till i när deras prenumeration skapas.
             active: Aktiv
             created_at: Skapad
+            recurring: Återkommande plan?
         subscriptions:
           title: Prenumerationer
           subscription:
