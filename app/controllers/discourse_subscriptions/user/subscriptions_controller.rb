@@ -51,7 +51,7 @@ module DiscourseSubscriptions
         # we cancel but don't remove until the end of the period
         # full removal is done via webhooks
         begin
-          subscription = ::Stripe::Subscription.update(params[:id], { cancel_at_period_end: true, } )
+          subscription = ::Stripe::Subscription.update(params[:id], { cancel_at_period_end: true, })
 
           if subscription
             render_json_dump subscription
