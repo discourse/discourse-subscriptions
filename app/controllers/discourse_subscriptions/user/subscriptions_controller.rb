@@ -48,30 +48,13 @@ module DiscourseSubscriptions
       end
 
       def destroy
+        # we cancel but don't remove until the end of the period
+        # full removal is done via webhooks
         begin
-          subscription = ::Stripe::Subscription.retrieve(params[:id])
+          subscription = ::Stripe::Subscription.update(params[:id], { cancel_at_period_end: true, } )
 
-          customer = Customer.find_by(
-            user_id: current_user.id,
-            customer_id: subscription[:customer],
-            product_id: subscription[:plan][:product]
-          )
-
-          if customer.present?
-            sub_model = Subscription.find_by(
-              customer_id: customer.id,
-              external_id: params[:id]
-            )
-
-            deleted = ::Stripe::Subscription.delete(params[:id])
-            customer.delete
-
-            sub_model.delete if sub_model
-
-            group = plan_group(subscription[:plan])
-            group.remove(current_user) if group
-
-            render_json_dump deleted
+          if subscription
+            render_json_dump subscription
           else
             render_json_error I18n.t('discourse_subscriptions.customer_not_found')
           end

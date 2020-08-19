@@ -29,6 +29,7 @@ export default Route.extend({
               )
               .finally(() => {
                 subscription.set("loading", false);
+                this.refresh();
               });
           }
         }
