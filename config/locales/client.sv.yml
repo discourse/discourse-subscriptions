@@ -56,6 +56,7 @@ sv:
           id: Prenumerations-ID
           status: Status
           created_at: Skapad
+          cancelled: avbruten
           operations:
             destroy:
               confirm: Är du säker på att du vill avbryta denna prenumeration?

@@ -67,6 +67,8 @@ fr:
           title: Informations client
         buttons:
           subscribe: Souscrire
+        purchased: Acheté
+        go_to_billing: Procéder au paiement
       billing:
         name: Nom
         email: Courriel
@@ -79,6 +81,7 @@ fr:
         confirm_payment: Confirmer le paiement
         success: Retour
       admin:
+        unconfigured: 'Stripe n''est pas configuré correctement. Veuillez consulter Discourse Meta pour plus d''informations.'
         dashboard:
           title: Tableau de bord
           table:
