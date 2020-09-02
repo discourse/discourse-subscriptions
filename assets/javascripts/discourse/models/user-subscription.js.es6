@@ -21,20 +21,20 @@ const UserSubscription = EmberObject.extend({
 
   destroy() {
     return ajax(`/s/user/subscriptions/${this.id}`, {
-      method: "delete",
-    }).then((result) => UserSubscription.create(result));
-  },
+      method: "delete"
+    }).then(result => UserSubscription.create(result));
+  }
 });
 
 UserSubscription.reopenClass({
   findAll() {
-    return ajax("/s/user/subscriptions", { method: "get" }).then((result) =>
-      result.map((subscription) => {
+    return ajax("/s/user/subscriptions", { method: "get" }).then(result =>
+      result.map(subscription => {
         subscription.plan = Plan.create(subscription.plan);
         return UserSubscription.create(subscription);
       })
     );
-  },
+  }
 });
 
 export default UserSubscription;
