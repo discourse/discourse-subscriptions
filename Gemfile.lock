@@ -1,0 +1,43 @@
+GIT
+  remote: https://github.com/discourse/translations-manager.git
+  revision: a8b225f7fabd3250ba88a4a2eff797693df51192
+  specs:
+    translations-manager (0.6)
+
+GEM
+  specs:
+    ast (2.4.1)
+    parallel (1.19.2)
+    parser (2.7.1.4)
+      ast (~> 2.4.1)
+    rainbow (3.0.0)
+    regexp_parser (1.7.1)
+    rexml (3.2.4)
+    rubocop (0.88.0)
+      parallel (~> 1.10)
+      parser (>= 2.7.1.1)
+      rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 1.7)
+      rexml
+      rubocop-ast (>= 0.1.0, < 1.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 1.4.0, < 2.0)
+    rubocop-ast (0.3.0)
+      parser (>= 2.7.1.4)
+    rubocop-discourse (2.3.1)
+      rubocop (>= 0.69.0)
+      rubocop-rspec (>= 1.39.0)
+    rubocop-rspec (1.42.0)
+      rubocop (>= 0.87.0)
+    ruby-progressbar (1.10.1)
+    unicode-display_width (1.7.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rubocop-discourse
+  translations-manager!
+
+BUNDLED WITH
+   2.1.4
