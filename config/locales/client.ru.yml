@@ -26,11 +26,13 @@ ru:
         subscribe: Подписаться
         user_activity:
           payments: Платежи
+      one_time_payment: Одноразовый платеж
       plans:
         purchase: Купить подписку
         select: Выберите тарифный план
         interval:
           adverb:
+            day: Ежедневно
             week: За неделю
             month: За месяц
             year: За год
@@ -54,6 +56,7 @@ ru:
           id: ID подписки
           status: Статус
           created_at: Создано
+          cancelled: отменён
           operations:
             destroy:
               confirm: Вы действительно хотите отменить эту подписку?
@@ -67,6 +70,8 @@ ru:
           title: Данные клиента
         buttons:
           subscribe: Подписаться
+        purchased: Оплачено
+        go_to_billing: Перейти к оплате
       billing:
         name: ФИО
         email: Email
