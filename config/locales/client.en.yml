@@ -52,6 +52,7 @@ en:
           status: Status
           renews: Renews
           created_at: Created
+          cancel: cancel
           cancelled: cancelled
           operations:
             destroy:

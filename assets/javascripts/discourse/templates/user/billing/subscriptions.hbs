@@ -21,7 +21,11 @@
           {{#if subscription.loading}}
             {{loading-spinner size="small"}}
           {{else}}
-            {{d-button disabled=subscription.canceled_at label="discourse_subscriptions.user.subscriptions.cancelled" action=(route-action "cancelSubscription" subscription) icon="times"}}
+            {{#if subscription.canceled_at}}
+              {{d-button disabled=subscription.canceled_at label="discourse_subscriptions.user.subscriptions.cancelled"}}
+            {{else}}
+              {{d-button disabled=subscription.canceled_at label="discourse_subscriptions.user.subscriptions.cancel" action=(route-action "cancelSubscription" subscription) icon="times"}}
+            {{/if}}
           {{/if}}
         </td>
       </tr>
