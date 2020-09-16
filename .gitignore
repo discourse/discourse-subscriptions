@@ -3,3 +3,6 @@ gems
 log
 .byebug_history
 /.idea
+node_modules/
+.bundle/
+auto_generated

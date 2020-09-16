@@ -21,22 +21,24 @@ const AdminSubscription = EmberObject.extend({
 
   destroy() {
     return ajax(`/s/admin/subscriptions/${this.id}`, {
-      method: "delete"
-    }).then(result => AdminSubscription.create(result));
-  }
+      method: "delete",
+    }).then((result) => AdminSubscription.create(result));
+  },
 });
 
 AdminSubscription.reopenClass({
   find() {
     return ajax("/s/admin/subscriptions", {
-      method: "get"
-    }).then(result => {
+      method: "get",
+    }).then((result) => {
       if (result === null) {
         return { unconfigured: true };
       }
-      return result.map(subscription => AdminSubscription.create(subscription));
+      return result.map((subscription) =>
+        AdminSubscription.create(subscription)
+      );
     });
-  }
+  },
 });
 
 export default AdminSubscription;

@@ -18,6 +18,6 @@ export default Component.extend({
     planClick() {
       this.clickPlan(this.plan);
       return false;
-    }
-  }
+    },
+  },
 });

@@ -15,6 +15,6 @@ export default Controller.extend({
           this.transitionToRoute("adminPlugins.discourse-subscriptions.plans");
         })
         .catch(popupAjaxError);
-    }
-  }
+    },
+  },
 });

@@ -11,5 +11,5 @@ export default Route.extend({
     const plans = Plan.findAll({ product_id });
 
     return hash({ plans, product });
-  }
+  },
 });

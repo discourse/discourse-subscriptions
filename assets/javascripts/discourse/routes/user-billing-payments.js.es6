@@ -6,5 +6,5 @@ export default Route.extend({
 
   model() {
     return UserPayment.findAll();
-  }
+  },
 });

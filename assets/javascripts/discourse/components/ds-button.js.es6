@@ -8,5 +8,5 @@ export default Button.extend({
     this.classNameBindings = this.classNameBindings.concat(
       "selected:btn-primary"
     );
-  }
+  },
 });

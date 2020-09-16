@@ -9,11 +9,11 @@ Group.reopenClass({
 
   find() {
     return ajax(`/groups/${this.subscriptionGroup}`, { method: "get" }).then(
-      result => {
+      (result) => {
         return Group.create(result.group);
       }
     );
-  }
+  },
 });
 
 export default Group;

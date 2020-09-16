@@ -5,5 +5,5 @@ export default Component.extend({
     this._super(...arguments);
     this.cardElement.mount("#card-element");
   },
-  didDestroyElement() {}
+  didDestroyElement() {},
 });

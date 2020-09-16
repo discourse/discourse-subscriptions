@@ -23,16 +23,16 @@ export default Controller.extend({
   },
 
   createSubscription(plan) {
-    return this.stripe.createToken(this.get("cardElement")).then(result => {
+    return this.stripe.createToken(this.get("cardElement")).then((result) => {
       if (result.error) {
         return result;
       } else {
         const customer = Customer.create({ source: result.token.id });
 
-        return customer.save().then(c => {
+        return customer.save().then((c) => {
           const subscription = Subscription.create({
             customer: c.id,
-            plan: plan.get("id")
+            plan: plan.get("id"),
           });
 
           return subscription.save();
@@ -44,7 +44,7 @@ export default Controller.extend({
   handleAuthentication(plan, transaction) {
     return this.stripe
       .confirmCardPayment(transaction.payment_intent.client_secret)
-      .then(result => {
+      .then((result) => {
         if (
           result.paymentIntent &&
           result.paymentIntent.status === "succeeded"
@@ -86,7 +86,7 @@ export default Controller.extend({
       let transaction = this.createSubscription(plan);
 
       transaction
-        .then(result => {
+        .then((result) => {
           if (result.error) {
             bootbox.alert(result.error.message || result.error);
           } else if (
@@ -96,7 +96,7 @@ export default Controller.extend({
             const transactionId = result.id;
             const planId = this.selectedPlan;
             this.handleAuthentication(plan, result).then(
-              authenticationResult => {
+              (authenticationResult) => {
                 if (authenticationResult && !authenticationResult.error) {
                   return Transaction.finalize(transactionId, planId).then(
                     () => {
@@ -110,10 +110,10 @@ export default Controller.extend({
             this._advanceSuccessfulTransaction(plan);
           }
         })
-        .catch(result => {
+        .catch((result) => {
           bootbox.alert(result.errorThrown);
           this.set("loading", false);
         });
-    }
-  }
+    },
+  },
 });

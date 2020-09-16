@@ -28,7 +28,7 @@ export default Route.extend({
         ),
         I18n.t("no_value"),
         I18n.t("yes_value"),
-        confirmed => {
+        (confirmed) => {
           if (confirmed) {
             plan
               .destroy()
@@ -39,12 +39,12 @@ export default Route.extend({
                   .get("model.plans")
                   .removeObject(plan);
               })
-              .catch(data =>
+              .catch((data) =>
                 bootbox.alert(data.jqXHR.responseJSON.errors.join("\n"))
               );
           }
         }
       );
-    }
-  }
+    },
+  },
 });

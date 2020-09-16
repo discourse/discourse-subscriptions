@@ -14,6 +14,6 @@ export default Controller.extend({
       }
 
       this.set("order", order);
-    }
-  }
+    },
+  },
 });

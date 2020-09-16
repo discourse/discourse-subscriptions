@@ -4,5 +4,5 @@ import Product from "discourse/plugins/discourse-subscriptions/discourse/models/
 export default Route.extend({
   model() {
     return Product.findAll();
-  }
+  },
 });

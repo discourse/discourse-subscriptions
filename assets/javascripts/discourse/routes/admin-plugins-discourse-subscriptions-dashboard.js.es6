@@ -4,11 +4,11 @@ import { ajax } from "discourse/lib/ajax";
 export default Route.extend({
   queryParams: {
     order: {
-      refreshModel: true
+      refreshModel: true,
     },
     descending: {
-      refreshModel: true
-    }
+      refreshModel: true,
+    },
   },
 
   model(params) {
@@ -16,8 +16,8 @@ export default Route.extend({
       method: "get",
       data: {
         order: params.order,
-        descending: params.descending
-      }
-    }).then(results => results);
-  }
+        descending: params.descending,
+      },
+    }).then((results) => results);
+  },
 });

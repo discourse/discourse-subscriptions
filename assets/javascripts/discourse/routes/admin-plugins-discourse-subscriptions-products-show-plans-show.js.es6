@@ -19,10 +19,10 @@ export default Route.extend({
         type: "recurring",
         isRecurring: true,
         currency: Discourse.SiteSettings.discourse_subscriptions_currency,
-        product: product.get("id")
+        product: product.get("id"),
       });
     } else {
-      plan = AdminPlan.find(id).then(result => {
+      plan = AdminPlan.find(id).then((result) => {
         result.isRecurring = result.type === "recurring";
 
         return result;
@@ -41,8 +41,8 @@ export default Route.extend({
         into: "adminPlugins.discourse-subscriptions.products",
         outlet: "main",
         controller:
-          "adminPlugins.discourse-subscriptions.products.show.plans.show"
+          "adminPlugins.discourse-subscriptions.products.show.plans.show",
       }
     );
-  }
+  },
 });

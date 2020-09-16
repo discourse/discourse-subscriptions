@@ -29,7 +29,7 @@ const AdminPlan = Plan.extend({
       type: this.type,
       product: this.product,
       metadata: this.metadata,
-      active: this.active
+      active: this.active,
     };
 
     return ajax("/s/admin/plans", { method: "post", data });
@@ -40,25 +40,25 @@ const AdminPlan = Plan.extend({
       nickname: this.nickname,
       trial_period_days: this.parseTrialPeriodDays,
       metadata: this.metadata,
-      active: this.active
+      active: this.active,
     };
 
     return ajax(`/s/admin/plans/${this.id}`, { method: "patch", data });
-  }
+  },
 });
 
 AdminPlan.reopenClass({
   findAll(data) {
-    return ajax("/s/admin/plans", { method: "get", data }).then(result =>
-      result.map(plan => AdminPlan.create(plan))
+    return ajax("/s/admin/plans", { method: "get", data }).then((result) =>
+      result.map((plan) => AdminPlan.create(plan))
     );
   },
 
   find(id) {
-    return ajax(`/s/admin/plans/${id}`, { method: "get" }).then(plan =>
+    return ajax(`/s/admin/plans/${id}`, { method: "get" }).then((plan) =>
       AdminPlan.create(plan)
     );
-  }
+  },
 });
 
 export default AdminPlan;

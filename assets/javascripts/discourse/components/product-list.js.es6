@@ -13,5 +13,5 @@ export default Component.extend({
   @discourseComputed()
   isLoggedIn() {
     return User.current();
-  }
+  },
 });

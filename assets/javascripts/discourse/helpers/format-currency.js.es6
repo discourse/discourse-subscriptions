@@ -1,6 +1,6 @@
 import Helper from "@ember/component/helper";
 
-export default Helper.helper(function(params) {
+export default Helper.helper(function (params) {
   let currencySign;
 
   switch (params[0]) {
@@ -24,5 +24,5 @@ export default Helper.helper(function(params) {
       currencySign = "$";
   }
 
-  return currencySign + params.map(p => p.toUpperCase()).join(" ");
+  return currencySign + params.map((p) => p.toUpperCase()).join(" ");
 });

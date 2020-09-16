@@ -19,7 +19,7 @@ export default Controller.extend({
       { id: "GBP", name: "GBP" },
       { id: "USD", name: "USD" },
       { id: "INR", name: "INR" },
-      { id: "BRL", name: "BRL" }
+      { id: "BRL", name: "BRL" },
     ];
   },
 
@@ -29,7 +29,7 @@ export default Controller.extend({
       { id: "day", name: "day" },
       { id: "week", name: "week" },
       { id: "month", name: "month" },
-      { id: "year", name: "year" }
+      { id: "year", name: "year" },
     ];
   },
 
@@ -60,14 +60,14 @@ export default Controller.extend({
       // TODO: set default group name beforehand
       if (this.get("model.plan.metadata.group_name") === undefined) {
         this.set("model.plan.metadata", {
-          group_name: this.get("model.groups.firstObject.name")
+          group_name: this.get("model.groups.firstObject.name"),
         });
       }
 
       this.get("model.plan")
         .save()
         .then(() => this.redirect(this.productId))
-        .catch(data =>
+        .catch((data) =>
           bootbox.alert(data.jqXHR.responseJSON.errors.join("\n"))
         );
     },
@@ -76,9 +76,9 @@ export default Controller.extend({
       this.get("model.plan")
         .update()
         .then(() => this.redirect(this.productId))
-        .catch(data =>
+        .catch((data) =>
           bootbox.alert(data.jqXHR.responseJSON.errors.join("\n"))
         );
-    }
-  }
+    },
+  },
 });

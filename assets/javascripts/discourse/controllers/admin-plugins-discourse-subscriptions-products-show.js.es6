@@ -10,7 +10,7 @@ export default Controller.extend({
     createProduct() {
       this.get("model.product")
         .save()
-        .then(product => {
+        .then((product) => {
           this.transitionToRoute(
             "adminPlugins.discourse-subscriptions.products.show",
             product.id
@@ -28,6 +28,6 @@ export default Controller.extend({
           );
         })
         .catch(popupAjaxError);
-    }
-  }
+    },
+  },
 });

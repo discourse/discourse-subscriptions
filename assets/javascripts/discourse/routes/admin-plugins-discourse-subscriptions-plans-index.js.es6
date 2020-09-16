@@ -4,5 +4,5 @@ import AdminPlan from "discourse/plugins/discourse-subscriptions/discourse/model
 export default Route.extend({
   model() {
     return AdminPlan.findAll();
-  }
+  },
 });

@@ -11,7 +11,7 @@ const Plan = EmberObject.extend({
       const decimal = parseFloat(value) * 100;
       this.set("unit_amount", decimal);
       return value;
-    }
+    },
   }),
   @discourseComputed("recurring.interval")
   billingInterval(interval) {
@@ -21,15 +21,15 @@ const Plan = EmberObject.extend({
   @discourseComputed("amountDollars", "currency", "billingInterval")
   subscriptionRate(amountDollars, currency, interval) {
     return `${amountDollars} ${currency.toUpperCase()} / ${interval}`;
-  }
+  },
 });
 
 Plan.reopenClass({
   findAll(data) {
-    return ajax("/s/plans", { method: "get", data }).then(result =>
-      result.map(plan => Plan.create(plan))
+    return ajax("/s/plans", { method: "get", data }).then((result) =>
+      result.map((plan) => Plan.create(plan))
     );
-  }
+  },
 });
 
 export default Plan;

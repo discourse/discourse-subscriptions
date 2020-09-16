@@ -7,6 +7,6 @@ export default Controller.extend({
       return DiscourseURL.redirectTo(
         `/admin/plugins/discourse-subscriptions/plans/${id}`
       );
-    }
-  }
+    },
+  },
 });

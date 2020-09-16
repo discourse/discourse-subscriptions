@@ -9,5 +9,5 @@ export default Route.extend({
     } else {
       controller.setProperties({ model });
     }
-  }
+  },
 });

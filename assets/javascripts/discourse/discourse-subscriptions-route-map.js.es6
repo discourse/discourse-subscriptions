@@ -3,12 +3,12 @@ export default {
   path: "/plugins",
 
   map() {
-    this.route("discourse-subscriptions", function() {
+    this.route("discourse-subscriptions", function () {
       this.route("dashboard");
 
-      this.route("products", function() {
-        this.route("show", { path: "/:product-id" }, function() {
-          this.route("plans", function() {
+      this.route("products", function () {
+        this.route("show", { path: "/:product-id" }, function () {
+          this.route("plans", function () {
             this.route("show", { path: "/:plan-id" });
           });
         });
@@ -16,5 +16,5 @@ export default {
 
       this.route("subscriptions");
     });
-  }
+  },
 };

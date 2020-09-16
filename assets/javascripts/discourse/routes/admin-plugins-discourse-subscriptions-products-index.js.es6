@@ -15,7 +15,7 @@ export default Route.extend({
         ),
         I18n.t("no_value"),
         I18n.t("yes_value"),
-        confirmed => {
+        (confirmed) => {
           if (confirmed) {
             product
               .destroy()
@@ -26,12 +26,12 @@ export default Route.extend({
                   .get("model")
                   .removeObject(product);
               })
-              .catch(data =>
+              .catch((data) =>
                 bootbox.alert(data.jqXHR.responseJSON.errors.join("\n"))
               );
           }
         }
       );
-    }
-  }
+    },
+  },
 });

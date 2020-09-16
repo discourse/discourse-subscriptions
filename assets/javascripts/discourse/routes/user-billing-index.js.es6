@@ -5,5 +5,5 @@ export default Route.extend({
 
   redirect() {
     this.transitionTo("user.billing.subscriptions");
-  }
+  },
 });

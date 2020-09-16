@@ -14,13 +14,13 @@ const AdminProduct = EmberObject.extend({
       name: this.name,
       statement_descriptor: this.statement_descriptor,
       metadata: this.metadata,
-      active: this.active
+      active: this.active,
     };
 
     return ajax("/s/admin/products", {
       method: "post",
-      data
-    }).then(product => AdminProduct.create(product));
+      data,
+    }).then((product) => AdminProduct.create(product));
   },
 
   update() {
@@ -28,31 +28,31 @@ const AdminProduct = EmberObject.extend({
       name: this.name,
       statement_descriptor: this.statement_descriptor,
       metadata: this.metadata,
-      active: this.active
+      active: this.active,
     };
 
     return ajax(`/s/admin/products/${this.id}`, {
       method: "patch",
-      data
+      data,
     });
-  }
+  },
 });
 
 AdminProduct.reopenClass({
   findAll() {
-    return ajax("/s/admin/products", { method: "get" }).then(result => {
+    return ajax("/s/admin/products", { method: "get" }).then((result) => {
       if (result === null) {
         return { unconfigured: true };
       }
-      return result.map(product => AdminProduct.create(product));
+      return result.map((product) => AdminProduct.create(product));
     });
   },
 
   find(id) {
     return ajax(`/s/admin/products/${id}`, {
-      method: "get"
-    }).then(product => AdminProduct.create(product));
-  }
+      method: "get",
+    }).then((product) => AdminProduct.create(product));
+  },
 });
 
 export default AdminProduct;
