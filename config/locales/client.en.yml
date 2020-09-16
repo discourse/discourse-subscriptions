@@ -50,6 +50,7 @@ en:
         subscriptions:
           id: Subscription ID
           status: Status
+          renews: Renews
           created_at: Created
           cancelled: cancelled
           operations:
