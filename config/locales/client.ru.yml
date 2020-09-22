@@ -55,7 +55,9 @@ ru:
         subscriptions:
           id: ID подписки
           status: Статус
+          renews: Продлить
           created_at: Создано
+          cancel: Отменить
           cancelled: отменён
           operations:
             destroy:
@@ -137,6 +139,7 @@ ru:
             group_help: Это группа пользователей, к которой добавляется клиент при создании подписки.
             active: Активный
             created_at: Создано
+            recurring: Повторяющийся план?
         subscriptions:
           title: Подписки
           subscription:

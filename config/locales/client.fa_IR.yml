@@ -9,12 +9,14 @@ fa_IR:
     discourse_subscriptions:
       optional: اختیاری
       navigation:
+        billing: صورت‌حساب
         payments: پرداخت‌ها
         user_activity:
           payments: پرداخت‌ها
       plans:
         interval:
           adverb:
+            day: روزانه
             week: هفتگی
             month: ماهانه
             year: سالیانه
@@ -22,7 +24,9 @@ fa_IR:
         payments:
           id: شناسه پرداخت‌
           created_at: ساخته شده
+        payments_help: هنوز هیچ پرداختی وجود ندارد
         plans:
+          rate: نرخ
           product: نام
         subscriptions:
           status: وضعیت
@@ -46,17 +50,29 @@ fa_IR:
               user: کاربر
               payment_intent: شناسه پرداخت‌
         products:
+          title: محصولات
+          operations:
+            create: ایجاد محصول جدید
+            update: به‌روزرسانی محصول
+            new: محصول جدید
+            destroy:
+              confirm: آیا مطمئن هستید که می‌خواهید این محصول را پاک کنید؟
           product:
+            product_id: شناسه محصول
+            name: نام محصول
             description: توضیح
             active: فعال
             created_at: ساخته شده
             updated_at: به روز شده
         plans:
           plan:
+            product: محصول
             active: فعال
             created_at: ساخته شده
         subscriptions:
           subscription:
             user: کاربر
+            customer: مشتری
+            product: محصول
             status: وضعیت
             created_at: ساخته شده

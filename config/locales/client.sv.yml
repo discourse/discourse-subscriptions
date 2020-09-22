@@ -6,17 +6,17 @@
 
 sv:
   site_settings:
-    discourse_subscriptions_enabled: Aktivera tillägget för Discourse prenumerationer.
+    discourse_subscriptions_enabled: Aktivera tillägget för Discourse-prenumerationer.
     discourse_subscriptions_extra_nav_subscribe: Visa prenumerationsknappen i den primära navigeringen
-    discourse_subscriptions_public_key: Stripe publiceringsnyckel
+    discourse_subscriptions_public_key: Stripe-publiceringsnyckel
     discourse_subscriptions_secret_key: Stripe hemlig nyckel
     discourse_subscriptions_webhook_secret: Stripe Webhook-hemlighet
     discourse_subscriptions_currency: Standardiserad valutakod. Detta kan åsidosättas vid skapandet av en prenumerationsplan.
     errors:
-      discourse_patrons_amount_must_be_currency: "Valutasumman måste vara utan valutasymbol (ex 1.50)"
+      discourse_patrons_amount_must_be_currency: "Valutasumman måste vara utan valutasymbol (ex 1,50)"
   js:
     discourse_subscriptions:
-      title: Discourse prenumerationer
+      title: Discourse-prenumerationer
       admin_navigation: Prenumerationer
       optional: Valfria
       navigation:
@@ -41,7 +41,7 @@ sv:
         incomplete: Din betalning är ofullständig. Din prenumeration kommer att uppdateras när din betalning är fullständig.
         validate:
           payment_options:
-            required: Vänligen välj en prenumerationsplan.
+            required: Välj en prenumerationsplan.
       user:
         payments:
           id: Betalnings-ID
@@ -55,7 +55,9 @@ sv:
         subscriptions:
           id: Prenumerations-ID
           status: Status
+          renews: Förnyar
           created_at: Skapad
+          cancel: avbryt
           cancelled: avbruten
           operations:
             destroy:
@@ -84,14 +86,14 @@ sv:
         confirm_payment: Bekräfta betalning
         success: Gå tillbaka
       admin:
-        unconfigured: 'Stripe är inte korrekt konfigurerat. Vänligen se Discourse Meta för information.'
+        unconfigured: 'Stripe är inte korrekt konfigurerat. Se Discourse Meta för information.'
         dashboard:
           title: Översiktspanel
           table:
             head:
               user: Användare
               payment_intent: Betalnings-ID
-              receipt_email: Kvitto e-post
+              receipt_email: Kvitto per e-post
               amount: Summa
         products:
           title: Produkter
@@ -105,36 +107,36 @@ sv:
             product_id: Produkt-ID
             name: Produktnamn
             statement_descriptor: Transaktionsbeskrivning
-            statement_descriptor_help: Extra information om en produkt vilken kommer att visas på din kunds kreditkortsutdrag.
+            statement_descriptor_help: Extra information om en produkt som visas på din kunds kreditkortsutdrag.
             plan_help: Skapa en prislista för prenumeranter för denna produkt.
             description: Beskrivning
             description_help: Detta beskriver din prenumerationsprodukt.
             active: Aktiv
-            active_help: Avaktivera denna tills dess att din produkt är redo för kunder.
+            active_help: Avaktivera denna tills din produkt är redo för kunder.
             created_at: Skapad
             updated_at: Uppdaterad
-          product_help: Innan kunder kan prenumerera på din webbplats måste du skapa minst en produkt och en associerad plan.
+          product_help: Innan kunder kan prenumerera på din webbplats måste du skapa minst en produkt och en plan som är kopplad till den.
         plans:
-          title: Prisplan
+          title: Prisplaner
           operations:
             add: Lägg till ny plan
             create: Skapa plan
             update: Uppdatera plan
-            create_help: När en prisplan väl är skapad kan enbart smeknamn, testperiod och användargrupp uppdateras.
+            create_help: När en prisplan väl är skapad kan enbart dess smeknamn, testperiod och användargrupp uppdateras.
             new: Ny plan
             destroy:
               confirm: Är du säker på att du vill ta bort denna plan?
           plan:
-            nickname: Smeknamn för plan
-            nickname_help: Detta kommer inte visas för kunder utan kommer enbart hjälpa dig att hitta planen senare
+            nickname: Planens smeknamn
+            nickname_help: Detta kommer inte visas för kunder, utan enbart hjälpa dig att hitta planen senare
             plan_id: Plan-ID
             product: Produkt
             interval: Betalningsintervall
             amount: Summa
             trial: Testperiod i antal dagar
-            trial_help: Prenumerationer för denna plan kommer automatiskt börja med en gratis testperiod med denna längd
+            trial_help: Prenumerationer för denna plan kommer automatiskt att börja med en gratis testperiod av denna längd
             group: Användargrupp
-            group_help: Detta är den användargrupp som kunden läggs till i när deras prenumeration skapas.
+            group_help: Detta är den användargrupp som kunden läggs till i när kundens prenumeration skapas.
             active: Aktiv
             created_at: Skapad
             recurring: Återkommande plan?

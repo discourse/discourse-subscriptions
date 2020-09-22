@@ -55,7 +55,9 @@ he:
         subscriptions:
           id: מזהה מינוי
           status: מצב
+          renews: חידושים
           created_at: נוצר
+          cancel: ביטול
           cancelled: בוטל
           operations:
             destroy:
