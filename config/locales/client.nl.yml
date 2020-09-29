@@ -26,11 +26,13 @@ nl:
         subscribe: Abonneren
         user_activity:
           payments: Betalingen
+      one_time_payment: Eenmalige betaling
       plans:
         purchase: Een abonnement aanschaffen
         select: Abonnementsvorm selecteren
         interval:
           adverb:
+            day: Dagelijks
             week: Wekelijks
             month: Maandelijks
             year: Jaarlijks
@@ -53,7 +55,10 @@ nl:
         subscriptions:
           id: Abonnements-ID
           status: Status
+          renews: Vernieuwt
           created_at: Gemaakt
+          cancel: annuleren
+          cancelled: geannuleerd
           operations:
             destroy:
               confirm: Weet u zeker dat u dit abonnement wilt annuleren?
@@ -67,6 +72,8 @@ nl:
           title: Klantgegevens
         buttons:
           subscribe: Abonneren
+        purchased: Aangeschaft
+        go_to_billing: Naar Facturering
       billing:
         name: Volledige naam
         email: E-mailadres
@@ -132,6 +139,7 @@ nl:
             group_help: Dit is de discourse-gebruikersgroep waaraan de gebruiker wordt toegevoegd wanneer het abonnement wordt aangemaakt.
             active: Actief
             created_at: Gemaakt
+            recurring: Herhalend abonnement?
         subscriptions:
           title: Abonnementen
           subscription:
