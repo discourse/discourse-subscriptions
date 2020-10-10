@@ -32,7 +32,7 @@ module DiscourseSubscriptions
           expect(response.parsed_body).to eq([{
             "id" => "prodct_23456",
             "name" => "Very Special Product",
-            "description" => "Many people listened to my phone call with the Ukrainian President while it was being made",
+            "description" => PrettyText.cook("Many people listened to my phone call with the Ukrainian President while it was being made"),
             "subscribed" => false
           }])
         end
@@ -54,7 +54,7 @@ module DiscourseSubscriptions
             expect(response.parsed_body).to eq([{
               "id" => "prodct_23456",
               "name" => "Very Special Product",
-              "description" => "Many people listened to my phone call with the Ukrainian President while it was being made",
+              "description" => PrettyText.cook("Many people listened to my phone call with the Ukrainian President while it was being made"),
               "subscribed" => false
             }])
           end
@@ -86,7 +86,7 @@ module DiscourseSubscriptions
             expect(response.parsed_body).to eq(
               "id" => "prodct_23456",
               "name" => "Very Special Product",
-              "description" => "Many people listened to my phone call with the Ukrainian President while it was being made",
+              "description" => PrettyText.cook("Many people listened to my phone call with the Ukrainian President while it was being made"),
               "subscribed" => false
             )
           end
