@@ -46,7 +46,7 @@ module DiscourseSubscriptions
       {
         id: product[:id],
         name: product[:name],
-        description: product[:metadata][:description],
+        description: PrettyText.cook(product[:metadata][:description]),
         subscribed: current_user_products.include?(product[:id])
       }
     end
