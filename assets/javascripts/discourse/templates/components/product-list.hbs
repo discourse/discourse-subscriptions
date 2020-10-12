@@ -6,7 +6,7 @@
       <h2>{{product.name}}</h2>
 
       <p class="product-description">
-        {{product.description}}
+        {{html-safe product.description}}
       </p>
 
       {{#if isLoggedIn}}
