@@ -76,24 +76,6 @@ module DiscourseSubscriptions
       end
     end
 
-    def retrieve_transaction(transaction)
-      begin
-        case transaction
-        when /^sub_/
-          ::Stripe::Subscription.retrieve(transaction)
-        when /^in_/
-          ::Stripe::Invoice.retrieve(transaction)
-        end
-      rescue ::Stripe::InvalidRequestError => e
-        e.message
-      end
-    end
-
-    def retrieve_payment_intent(invoice_id)
-      invoice = ::Stripe::Invoice.retrieve(invoice_id)
-      ::Stripe::PaymentIntent.retrieve(invoice[:payment_intent])
-    end
-
     def finalize_transaction(transaction, plan)
       group = plan_group(plan)
 
@@ -114,6 +96,24 @@ module DiscourseSubscriptions
     end
 
     private
+
+    def retrieve_payment_intent(invoice_id)
+      invoice = ::Stripe::Invoice.retrieve(invoice_id)
+      ::Stripe::PaymentIntent.retrieve(invoice[:payment_intent])
+    end
+
+    def retrieve_transaction(transaction)
+      begin
+        case transaction
+        when /^sub_/
+          ::Stripe::Subscription.retrieve(transaction)
+        when /^in_/
+          ::Stripe::Invoice.retrieve(transaction)
+        end
+      rescue ::Stripe::InvalidRequestError => e
+        e.message
+      end
+    end
 
     def metadata_user
       { user_id: current_user.id, username: current_user.username_lower }

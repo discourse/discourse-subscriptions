@@ -19,13 +19,7 @@ module DiscourseSubscriptions
             customer_ids.each do |customer_id|
               # lots of matching because the Stripe API doesn't make it easy to match products => payments except from invoices
               all_invoices = ::Stripe::Invoice.list(customer: customer_id)
-              invoices_with_products = all_invoices[:data].select do |invoice|
-                # i cannot dig it so we must get iffy with it
-                invoice_lines = invoice[:lines][:data][0] if invoice[:lines] && invoice[:lines][:data]
-                invoice_product_id = invoice_lines[:price][:product] if invoice_lines[:price] && invoice_lines[:price][:product]
-                invoice_product_id = invoice_lines[:plan][:product] if invoice_lines[:plan] && invoice_lines[:plan][:product]
-                product_ids.include?(invoice_product_id)
-              end
+              invoices_with_products = parse_invoices(all_invoices, product_ids)
               invoice_ids = invoices_with_products.map { |invoice| invoice[:id] }
               payments = ::Stripe::PaymentIntent.list(customer: customer_id)
               payments_from_invoices = payments[:data].select { |payment| invoice_ids.include?(payment[:invoice]) }
@@ -40,6 +34,21 @@ module DiscourseSubscriptions
         rescue ::Stripe::InvalidRequestError => e
           render_json_error e.message
         end
+      end
+
+      private
+
+      def parse_invoices(all_invoices, product_ids)
+        invoices_with_products = all_invoices[:data].select do |invoice|
+          invoice_lines = invoice[:lines][:data][0] if invoice[:lines] && invoice[:lines][:data]
+          invoice_product_id = parse_invoice_lines(invoice_lines)
+          product_ids.include?(invoice_product_id)
+        end
+      end
+
+      def parse_invoice_lines(invoice_lines)
+        invoice_product_id = invoice_lines[:price][:product] if invoice_lines[:price] && invoice_lines[:price][:product]
+        invoice_product_id = invoice_lines[:plan][:product] if invoice_lines[:plan] && invoice_lines[:plan][:product]
       end
     end
   end
