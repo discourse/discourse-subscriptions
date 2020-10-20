@@ -7,6 +7,7 @@ module DiscourseSubscriptions
     before_action :set_api_key
 
     def create
+      puts '', 'customer#create'
       begin
         customer = ::Stripe::Customer.create(
           email: current_user.email,

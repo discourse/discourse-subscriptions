@@ -26,6 +26,6 @@ DiscourseSubscriptions::Engine.routes.draw do
   post '/subscriptions/finalize' => 'subscriptions#finalize'
 
   post '/hooks' => 'hooks#create'
-  get '/' => 'subscriptions#index', constraints: SubscriptionsUserConstraint.new
-  get '/:id' => 'subscriptions#index', constraints: SubscriptionsUserConstraint.new
+  get '/' => 'subscriptions#index'
+  get '/:id' => 'subscriptions#index'
 end

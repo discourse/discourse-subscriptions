@@ -6,7 +6,11 @@ module DiscourseSubscriptions
 
     before_action :set_api_key
 
+    # migrated to subscribe
+
     def index
+      puts '', 'products#index'
+      return redirect_to_login if !current_user
       begin
         product_ids = Product.all.pluck(:external_id)
         products = []
@@ -30,6 +34,7 @@ module DiscourseSubscriptions
     end
 
     def show
+      puts '', 'products#show'
       begin
         product = ::Stripe::Product.retrieve(params[:id])
 

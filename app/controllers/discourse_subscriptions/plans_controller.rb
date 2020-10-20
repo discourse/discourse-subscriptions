@@ -6,11 +6,15 @@ module DiscourseSubscriptions
 
     before_action :set_api_key
 
+    # migrated all but line 18 to subscribe
+
     def index
+      puts '', 'plans#index'
       begin
         if params[:product_id].present?
           plans = ::Stripe::Price.list(active: true, product: params[:product_id])
         else
+          puts '', 'finding active plans'
           plans = ::Stripe::Price.list(active: true)
         end
 

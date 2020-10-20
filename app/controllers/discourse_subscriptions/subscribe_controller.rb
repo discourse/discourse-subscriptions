@@ -1,15 +1,49 @@
 # frozen_string_literal: true
 
 module DiscourseSubscriptions
-  class SubscriptionsController < ::ApplicationController
+  class SubscribeController < ::ApplicationController
     include DiscourseSubscriptions::Stripe
     include DiscourseSubscriptions::Group
     before_action :set_api_key
     requires_login
 
-    # migrated to subscribe
-
     def index
+      puts '', 'products#index'
+      begin
+        product_ids = Product.all.pluck(:external_id)
+        products = []
+
+        if product_ids.present? && is_stripe_configured?
+          response = ::Stripe::Product.list({
+            ids: product_ids,
+            active: true
+          })
+
+          products = response[:data].map do |p|
+            serialize_product(p)
+          end
+
+        end
+
+        render_json_dump products
+
+      rescue ::Stripe::InvalidRequestError => e
+        render_json_error e.message
+      end
+    end
+
+    def show
+      puts '', 'products#show'
+      begin
+        product = ::Stripe::Product.retrieve(params[:id])
+        plans = ::Stripe::Price.list(active: true, product: params[:id])
+
+        response = { serialize_product(product), serialize_plans(plans) }
+
+        render_json_dump response
+      rescue ::Stripe::InvalidRequestError => e
+        render_json_error e.message
+      end
     end
 
     def create
@@ -84,6 +118,30 @@ module DiscourseSubscriptions
     end
 
     private
+
+    def serialize_product(product)
+      {
+        id: product[:id],
+        name: product[:name],
+        description: PrettyText.cook(product[:metadata][:description]),
+        subscribed: current_user_products.include?(product[:id])
+      }
+    end
+
+    def current_user_products
+      return [] if current_user.nil?
+
+      Customer
+        .select(:product_id)
+        .where(user_id: current_user.id)
+        .map { |c| c.product_id }.compact
+    end
+
+    def serialize_plans(plans)
+      plans[:data].map do |plan|
+        plan.to_h.slice(:id, :unit_amount, :currency, :type, :recurring)
+      end.sort_by { |plan| plan[:amount] }
+    end
 
     def retrieve_payment_intent(invoice_id)
       invoice = ::Stripe::Invoice.retrieve(invoice_id)
