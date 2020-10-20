@@ -25,6 +25,7 @@ export default Controller.extend({
   createSubscription(plan) {
     return this.stripe.createToken(this.get("cardElement")).then((result) => {
       if (result.error) {
+        this.set("loading", false);
         return result;
       } else {
         const customer = Customer.create({ source: result.token.id });

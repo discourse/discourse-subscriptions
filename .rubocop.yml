@@ -1,2 +1,5 @@
+AllCops:
+  Exclude:
+    - 'gems/**/*'
 inherit_gem:
   rubocop-discourse: default.yml
