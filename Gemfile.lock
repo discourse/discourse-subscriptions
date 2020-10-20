@@ -5,6 +5,7 @@ GIT
     translations-manager (0.6)
 
 GEM
+  remote: https://rubygems.org/
   specs:
     ast (2.4.1)
     parallel (1.19.2)
