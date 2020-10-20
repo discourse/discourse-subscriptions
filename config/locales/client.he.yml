@@ -15,6 +15,9 @@ he:
     errors:
       discourse_patrons_amount_must_be_currency: "סכומי המטבעות אמורים להיות מטבעות בלי סימן דולר (למשל: 1.50)"
   js:
+    filters:
+      subscribe:
+        help: ניתן לתמוך באתר הזה בהרשמה אל
     discourse_subscriptions:
       title: מינויי Discourse
       admin_navigation: מינויים
