@@ -15,6 +15,9 @@ ru:
     errors:
       discourse_patrons_amount_must_be_currency: "Сумма должна быть без символа доллара (например, 1,50)"
   js:
+    filters:
+      subscribe:
+        help: Подпишитесь и поддержите этот сайт
     discourse_subscriptions:
       title: Подписки
       admin_navigation: Подписки

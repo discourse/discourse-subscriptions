@@ -6,6 +6,9 @@
 
 fa_IR:
   js:
+    filters:
+      subscribe:
+        help: با خرید اشتراک از این سایت پشتیبانی کنید
     discourse_subscriptions:
       optional: اختیاری
       navigation:

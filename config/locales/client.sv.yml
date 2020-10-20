@@ -15,6 +15,9 @@ sv:
     errors:
       discourse_patrons_amount_must_be_currency: "Valutasumman måste vara utan valutasymbol (ex 1,50)"
   js:
+    filters:
+      subscribe:
+        help: Stöd denna webbplats genom att prenumerera
     discourse_subscriptions:
       title: Discourse-prenumerationer
       admin_navigation: Prenumerationer
