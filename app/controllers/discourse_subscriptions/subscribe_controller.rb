@@ -5,7 +5,7 @@ module DiscourseSubscriptions
     include DiscourseSubscriptions::Stripe
     include DiscourseSubscriptions::Group
     before_action :set_api_key
-    requires_login
+    requires_login except: [:index, :show]
 
     def index
       begin
