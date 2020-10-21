@@ -8,7 +8,6 @@ module DiscourseSubscriptions
     requires_login
 
     def index
-      puts '', 'products#index'
       begin
         product_ids = Product.all.pluck(:external_id)
         products = []
@@ -33,12 +32,14 @@ module DiscourseSubscriptions
     end
 
     def show
-      puts '', 'products#show'
       begin
         product = ::Stripe::Product.retrieve(params[:id])
         plans = ::Stripe::Price.list(active: true, product: params[:id])
 
-        response = { serialize_product(product), serialize_plans(plans) }
+        response = {
+          product: serialize_product(product),
+          plans: serialize_plans(plans)
+        }
 
         render_json_dump response
       rescue ::Stripe::InvalidRequestError => e
@@ -48,6 +49,7 @@ module DiscourseSubscriptions
 
     def create
       begin
+        customer = create_customer(params[:source])
         plan = ::Stripe::Price.retrieve(params[:plan])
 
         recurring_plan = plan[:type] == 'recurring'
@@ -56,7 +58,7 @@ module DiscourseSubscriptions
           trial_days = plan[:metadata][:trial_period_days] if plan[:metadata] && plan[:metadata][:trial_period_days]
 
           transaction = ::Stripe::Subscription.create(
-            customer: params[:customer],
+            customer: customer[:id],
             items: [{ price: params[:plan] }],
             metadata: metadata_user,
             trial_period_days: trial_days
@@ -65,11 +67,11 @@ module DiscourseSubscriptions
           payment_intent = retrieve_payment_intent(transaction[:latest_invoice]) if transaction[:status] == 'incomplete'
         else
           invoice_item = ::Stripe::InvoiceItem.create(
-            customer: params[:customer],
+            customer: customer[:id],
             price: params[:plan]
           )
           invoice = ::Stripe::Invoice.create(
-            customer: params[:customer]
+            customer: customer[:id]
           )
           transaction = ::Stripe::Invoice.finalize_invoice(invoice[:id])
           payment_intent = retrieve_payment_intent(transaction[:id]) if transaction[:status] == 'open'
@@ -141,6 +143,13 @@ module DiscourseSubscriptions
       plans[:data].map do |plan|
         plan.to_h.slice(:id, :unit_amount, :currency, :type, :recurring)
       end.sort_by { |plan| plan[:amount] }
+    end
+
+    def create_customer(source)
+      ::Stripe::Customer.create(
+        email: current_user.email,
+        source: source
+      )
     end
 
     def retrieve_payment_intent(invoice_id)

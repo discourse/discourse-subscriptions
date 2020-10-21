@@ -7,6 +7,6 @@ export default {
       plan: plan,
     };
 
-    return ajax("/s/subscriptions/finalize", { method: "post", data });
+    return ajax("/s/finalize", { method: "post", data });
   },
 };

@@ -18,14 +18,11 @@ DiscourseSubscriptions::Engine.routes.draw do
     resources :subscriptions, only: [:index, :destroy]
   end
 
-  resources :customers, only: [:create]
-  resources :plans, only: [:index], constraints: SubscriptionsUserConstraint.new
-  resources :products, only: [:index, :show]
-  resources :subscriptions, only: [:create]
-
-  post '/subscriptions/finalize' => 'subscriptions#finalize'
+  get '/' => 'subscribe#index'
+  get '.json' => 'subscribe#index'
+  get '/:id' => 'subscribe#show'
+  post '/create' => 'subscribe#create'
+  post '/finalize' => 'subscribe#finalize'
 
   post '/hooks' => 'hooks#create'
-  get '/' => 'subscriptions#index'
-  get '/:id' => 'subscriptions#index'
 end

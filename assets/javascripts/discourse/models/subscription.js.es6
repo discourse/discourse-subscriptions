@@ -10,19 +10,17 @@ const Subscription = EmberObject.extend({
 
   save() {
     const data = {
-      customer: this.customer,
+      source: this.source,
       plan: this.plan,
     };
 
-    return ajax("/s/subscriptions", { method: "post", data });
+    return ajax("/s/create", { method: "post", data });
   },
 });
 
 Subscription.reopenClass({
-  findAll() {
-    return ajax("/s/subscriptions", { method: "get" }).then((result) =>
-      result.map((subscription) => Subscription.create(subscription))
-    );
+  show(id) {
+    return ajax(`/s/${id}`, { method: "get" });
   },
 });
 
