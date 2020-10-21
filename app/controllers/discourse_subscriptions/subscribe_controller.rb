@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module DiscourseSubscriptions
-  class SubscriptionsController < ::ApplicationController
+  class SubscribeController < ::ApplicationController
     include DiscourseSubscriptions::Stripe
     include DiscourseSubscriptions::Group
     before_action :set_api_key
@@ -9,23 +9,49 @@ module DiscourseSubscriptions
 
     def index
       begin
-        products = ::Stripe::Product.list(active: true)
+        product_ids = Product.all.pluck(:external_id)
+        products = []
 
-        subscriptions = products[:data].map do |p|
-          {
-            id: p[:id],
-            description: p.dig(:metadata, :description)
-          }
+        if product_ids.present? && is_stripe_configured?
+          response = ::Stripe::Product.list({
+            ids: product_ids,
+            active: true
+          })
+
+          products = response[:data].map do |p|
+            serialize_product(p)
+          end
+
         end
 
-        render_json_dump subscriptions
+        render_json_dump products
+
+      rescue ::Stripe::InvalidRequestError => e
+        render_json_error e.message
+      end
+    end
+
+    def show
+      params.require(:id)
+      begin
+        product = ::Stripe::Product.retrieve(params[:id])
+        plans = ::Stripe::Price.list(active: true, product: params[:id])
+
+        response = {
+          product: serialize_product(product),
+          plans: serialize_plans(plans)
+        }
+
+        render_json_dump response
       rescue ::Stripe::InvalidRequestError => e
         render_json_error e.message
       end
     end
 
     def create
+      params.require([:source, :plan])
       begin
+        customer = create_customer(params[:source])
         plan = ::Stripe::Price.retrieve(params[:plan])
 
         recurring_plan = plan[:type] == 'recurring'
@@ -34,7 +60,7 @@ module DiscourseSubscriptions
           trial_days = plan[:metadata][:trial_period_days] if plan[:metadata] && plan[:metadata][:trial_period_days]
 
           transaction = ::Stripe::Subscription.create(
-            customer: params[:customer],
+            customer: customer[:id],
             items: [{ price: params[:plan] }],
             metadata: metadata_user,
             trial_period_days: trial_days
@@ -43,11 +69,11 @@ module DiscourseSubscriptions
           payment_intent = retrieve_payment_intent(transaction[:latest_invoice]) if transaction[:status] == 'incomplete'
         else
           invoice_item = ::Stripe::InvoiceItem.create(
-            customer: params[:customer],
+            customer: customer[:id],
             price: params[:plan]
           )
           invoice = ::Stripe::Invoice.create(
-            customer: params[:customer]
+            customer: customer[:id]
           )
           transaction = ::Stripe::Invoice.finalize_invoice(invoice[:id])
           payment_intent = retrieve_payment_intent(transaction[:id]) if transaction[:status] == 'open'
@@ -65,6 +91,7 @@ module DiscourseSubscriptions
     end
 
     def finalize
+      params.require([:plan, :transaction])
       begin
         price = ::Stripe::Price.retrieve(params[:plan])
         transaction = retrieve_transaction(params[:transaction])
@@ -74,24 +101,6 @@ module DiscourseSubscriptions
       rescue ::Stripe::InvalidRequestError => e
         render_json_error e.message
       end
-    end
-
-    def retrieve_transaction(transaction)
-      begin
-        case transaction
-        when /^sub_/
-          ::Stripe::Subscription.retrieve(transaction)
-        when /^in_/
-          ::Stripe::Invoice.retrieve(transaction)
-        end
-      rescue ::Stripe::InvalidRequestError => e
-        e.message
-      end
-    end
-
-    def retrieve_payment_intent(invoice_id)
-      invoice = ::Stripe::Invoice.retrieve(invoice_id)
-      ::Stripe::PaymentIntent.retrieve(invoice[:payment_intent])
     end
 
     def finalize_transaction(transaction, plan)
@@ -114,6 +123,55 @@ module DiscourseSubscriptions
     end
 
     private
+
+    def serialize_product(product)
+      {
+        id: product[:id],
+        name: product[:name],
+        description: PrettyText.cook(product[:metadata][:description]),
+        subscribed: current_user_products.include?(product[:id])
+      }
+    end
+
+    def current_user_products
+      return [] if current_user.nil?
+
+      Customer
+        .select(:product_id)
+        .where(user_id: current_user.id)
+        .map { |c| c.product_id }.compact
+    end
+
+    def serialize_plans(plans)
+      plans[:data].map do |plan|
+        plan.to_h.slice(:id, :unit_amount, :currency, :type, :recurring)
+      end.sort_by { |plan| plan[:amount] }
+    end
+
+    def create_customer(source)
+      ::Stripe::Customer.create(
+        email: current_user.email,
+        source: source
+      )
+    end
+
+    def retrieve_payment_intent(invoice_id)
+      invoice = ::Stripe::Invoice.retrieve(invoice_id)
+      ::Stripe::PaymentIntent.retrieve(invoice[:payment_intent])
+    end
+
+    def retrieve_transaction(transaction)
+      begin
+        case transaction
+        when /^sub_/
+          ::Stripe::Subscription.retrieve(transaction)
+        when /^in_/
+          ::Stripe::Invoice.retrieve(transaction)
+        end
+      rescue ::Stripe::InvalidRequestError => e
+        e.message
+      end
+    end
 
     def metadata_user
       { user_id: current_user.id, username: current_user.username_lower }

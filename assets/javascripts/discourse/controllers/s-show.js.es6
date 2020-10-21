@@ -1,5 +1,4 @@
 import Controller from "@ember/controller";
-import Customer from "discourse/plugins/discourse-subscriptions/discourse/models/customer";
 import Subscription from "discourse/plugins/discourse-subscriptions/discourse/models/subscription";
 import Transaction from "discourse/plugins/discourse-subscriptions/discourse/models/transaction";
 import I18n from "I18n";
@@ -28,16 +27,12 @@ export default Controller.extend({
         this.set("loading", false);
         return result;
       } else {
-        const customer = Customer.create({ source: result.token.id });
-
-        return customer.save().then((c) => {
-          const subscription = Subscription.create({
-            customer: c.id,
-            plan: plan.get("id"),
-          });
-
-          return subscription.save();
+        const subscription = Subscription.create({
+          source: result.token.id,
+          plan: plan.get("id"),
         });
+
+        return subscription.save();
       }
     });
   },
