@@ -32,6 +32,7 @@ module DiscourseSubscriptions
     end
 
     def show
+      params.require(:id)
       begin
         product = ::Stripe::Product.retrieve(params[:id])
         plans = ::Stripe::Price.list(active: true, product: params[:id])
