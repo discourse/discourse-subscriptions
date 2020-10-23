@@ -1,5 +1,4 @@
 {{#unless isLoggedIn}}
-  <h3>{{i18n 'discourse_subscriptions.subscribe.unauthenticated'}}</h3>
-  {{d-button label="log_in" action="createAccount" icon="user" class="btn btn-primary"}}
+  {{login-required}}
 {{/unless}}
 {{product-list products=model isLoggedIn=isLoggedIn}}

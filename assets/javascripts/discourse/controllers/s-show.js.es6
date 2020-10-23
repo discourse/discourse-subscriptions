@@ -2,6 +2,8 @@ import Controller from "@ember/controller";
 import Subscription from "discourse/plugins/discourse-subscriptions/discourse/models/subscription";
 import Transaction from "discourse/plugins/discourse-subscriptions/discourse/models/transaction";
 import I18n from "I18n";
+import discourseComputed from "discourse-common/utils/decorators";
+import User from "discourse/models/user";
 
 export default Controller.extend({
   selectedPlan: null,
@@ -19,6 +21,11 @@ export default Controller.extend({
 
   alert(path) {
     bootbox.alert(I18n.t(`discourse_subscriptions.${path}`));
+  },
+
+  @discourseComputed()
+  isAnonymous() {
+    return !User.current();
   },
 
   createSubscription(plan) {
