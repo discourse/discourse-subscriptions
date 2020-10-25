@@ -4,6 +4,8 @@ import EmberObject from "@ember/object";
 import getURL from "discourse-common/lib/get-url";
 
 const AdminSubscription = EmberObject.extend({
+  refund: null,
+
   @discourseComputed("status")
   canceled(status) {
     return status === "canceled";
@@ -20,8 +22,13 @@ const AdminSubscription = EmberObject.extend({
   },
 
   destroy() {
+    debugger;
+    const data = {
+      refund: this.refund,
+    };
     return ajax(`/s/admin/subscriptions/${this.id}`, {
       method: "delete",
+      data,
     }).then((result) => AdminSubscription.create(result));
   },
 });
