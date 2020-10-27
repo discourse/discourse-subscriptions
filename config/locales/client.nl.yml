@@ -15,6 +15,9 @@ nl:
     errors:
       discourse_patrons_amount_must_be_currency: "Valutabedragen moeten valuta zonder dollarsymbool zijn (bv. 1.50)"
   js:
+    filters:
+      subscribe:
+        help: Steun deze website door u te abonneren
     discourse_subscriptions:
       title: Discourse-abonnementen
       admin_navigation: Abonnementen
