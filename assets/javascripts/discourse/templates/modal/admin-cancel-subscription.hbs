@@ -1,16 +1,21 @@
 <div>
   {{#d-modal-body rawTitle=(i18n "discourse_subscriptions.user.subscriptions.operations.destroy.confirm")}}
-    {{input type="checkbox" checked="refund"}}
-    Refund the last payment made by the user?
+    {{input type="checkbox" checked=refund}}
+    {{i18n "discourse_subscriptions.admin.ask_refund"}}
   {{/d-modal-body}}
 
 
   <div class="modal-footer">
-    {{d-button
-      label="yes_value"
-      action=(route-action "cancelSubscription" (hash subscription=model refund=refund))
-      icon="times"
-      class="btn-danger"
-    }}
+    {{#if model.loading}}
+      {{loading-spinner}}
+    {{else}}
+      {{d-button
+        label="yes_value"
+        action=(route-action "cancelSubscription" (hash subscription=model refund=refund))
+        icon="times"
+        class="btn-danger"
+      }}
+      {{d-button label="no_value" action=(route-action "closeModal")}}
+    {{/if}}
   </div>
 </div>
