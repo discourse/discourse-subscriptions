@@ -100,6 +100,21 @@ module DiscourseSubscriptions
           }.not_to change { user.groups.count }
         end
       end
+
+      it "refunds if params[:refund] present" do
+          ::Stripe::Subscription
+            .expects(:delete)
+            .with('sub_12345')
+            .returns(
+              plan: { product: 'pr_34578' },
+              customer: 'c_123'
+            )
+        ::Stripe::Subscription.expects(:retrieve).with('sub_12345').returns(latest_invoice: 'in_123')
+        ::Stripe::Invoice.expects(:retrieve).with('in_123').returns(payment_intent: 'pi_123')
+        ::Stripe::Refund.expects(:create).with(payment_intent: 'pi_123')
+
+        delete "/s/admin/subscriptions/sub_12345.json", params: { refund: true }
+      end
     end
   end
 end
