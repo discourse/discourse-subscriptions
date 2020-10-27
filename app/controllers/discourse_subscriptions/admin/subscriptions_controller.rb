@@ -56,12 +56,12 @@ module DiscourseSubscriptions
 
       # this will only refund the most recent subscription payment
       def refund_subscription(subscription_id)
-          subscription = ::Stripe::Subscription.retrieve(subscription_id)
-          invoice = ::Stripe::Invoice.retrieve(subscription[:latest_invoice]) if subscription[:latest_invoice]
-          payment_intent = invoice[:payment_intent] if invoice[:payment_intent]
-          refund = ::Stripe::Refund.create({
-            payment_intent: payment_intent,
-          })
+        subscription = ::Stripe::Subscription.retrieve(subscription_id)
+        invoice = ::Stripe::Invoice.retrieve(subscription[:latest_invoice]) if subscription[:latest_invoice]
+        payment_intent = invoice[:payment_intent] if invoice[:payment_intent]
+        refund = ::Stripe::Refund.create({
+          payment_intent: payment_intent,
+        })
       end
     end
   end
