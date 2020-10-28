@@ -1,1 +1,4 @@
-{{product-list products=model}}
+{{#unless isLoggedIn}}
+  {{login-required}}
+{{/unless}}
+{{product-list products=model isLoggedIn=isLoggedIn}}

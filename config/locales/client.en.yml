@@ -63,7 +63,7 @@ en:
       subscribe:
         title: Subscribe
         no_products: There are currently no products available.
-        unauthenticated: You need to create an account to subscribe.
+        unauthenticated: Log in or create an account to subscribe.
         card:
           title: Payment
         customer:

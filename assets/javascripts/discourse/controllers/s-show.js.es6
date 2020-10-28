@@ -5,6 +5,7 @@ import I18n from "I18n";
 
 export default Controller.extend({
   selectedPlan: null,
+  isAnonymous: Ember.computed.not("currentUser"),
 
   init() {
     this._super(...arguments);
