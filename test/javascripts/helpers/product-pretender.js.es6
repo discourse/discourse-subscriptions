@@ -36,11 +36,6 @@ export default function (helpers) {
       },
     ];
 
-    const model = {
-      product: product,
-      plans: plans,
-    };
-
-    return response(model);
+    return response({ product, plans });
   });
 }
