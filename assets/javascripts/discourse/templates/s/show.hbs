@@ -26,12 +26,13 @@
 
       <hr>
 
+      {{subscribe-card cardElement=cardElement}}
+
       {{#if loading}}
         {{loading-spinner}}
       {{else if isAnonymous}}
         {{login-required}}
       {{else}}
-        {{subscribe-card cardElement=cardElement}}
 
         {{d-button
           disabled=loading
