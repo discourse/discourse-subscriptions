@@ -14,13 +14,15 @@ export default Route.extend({
       subscription.set("loading", true);
       subscription
         .destroy(refund)
-        .then((result) => subscription.set("status", result.status))
+        .then((result) => {
+          subscription.set("status", result.status);
+          this.send("closeModal");
+          bootbox.alert(I18n.t("discourse_subscriptions.admin.canceled"));
+        })
         .catch((data) =>
           bootbox.alert(data.jqXHR.responseJSON.errors.join("\n"))
         )
         .finally(() => {
-          this.send("closeModal");
-          bootbox.alert(I18n.t("discourse_subscriptions.admin.canceled"));
           subscription.set("loading", false);
           this.refresh();
         });
