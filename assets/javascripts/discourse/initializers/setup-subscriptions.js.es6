@@ -1,5 +1,6 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
 import I18n from "I18n";
+import { default as getURL } from "discourse-common/lib/get-url";
 
 export default {
   name: "setup-subscriptions",
@@ -12,7 +13,7 @@ export default {
         api.addNavigationBarItem({
           name: "subscribe",
           displayName: I18n.t("discourse_subscriptions.navigation.subscribe"),
-          href: "/s",
+          href: getURL("/s"),
         });
       }
     });

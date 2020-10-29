@@ -23,7 +23,7 @@ const AdminSubscription = EmberObject.extend({
     const data = {
       refund: refund,
     };
-    return ajax(`/s/admin/subscriptions/${this.id}`, {
+    return ajax(getURL(`/s/admin/subscriptions/${this.id}`), {
       method: "delete",
       data,
     }).then((result) => AdminSubscription.create(result));
@@ -32,7 +32,7 @@ const AdminSubscription = EmberObject.extend({
 
 AdminSubscription.reopenClass({
   find() {
-    return ajax("/s/admin/subscriptions", {
+    return ajax(getURL("/s/admin/subscriptions"), {
       method: "get",
     }).then((result) => {
       if (result === null) {

@@ -3,6 +3,7 @@ import discourseComputed from "discourse-common/utils/decorators";
 import { ajax } from "discourse/lib/ajax";
 import Plan from "discourse/plugins/discourse-subscriptions/discourse/models/plan";
 import I18n from "I18n";
+import { default as getURL } from "discourse-common/lib/get-url";
 
 const UserSubscription = EmberObject.extend({
   @discourseComputed("status")
@@ -20,7 +21,7 @@ const UserSubscription = EmberObject.extend({
   },
 
   destroy() {
-    return ajax(`/s/user/subscriptions/${this.id}`, {
+    return ajax(getURL(`/s/user/subscriptions/${this.id}`), {
       method: "delete",
     }).then((result) => UserSubscription.create(result));
   },
@@ -28,11 +29,12 @@ const UserSubscription = EmberObject.extend({
 
 UserSubscription.reopenClass({
   findAll() {
-    return ajax("/s/user/subscriptions", { method: "get" }).then((result) =>
-      result.map((subscription) => {
-        subscription.plan = Plan.create(subscription.plan);
-        return UserSubscription.create(subscription);
-      })
+    return ajax(getURL("/s/user/subscriptions"), { method: "get" }).then(
+      (result) =>
+        result.map((subscription) => {
+          subscription.plan = Plan.create(subscription.plan);
+          return UserSubscription.create(subscription);
+        })
     );
   },
 });

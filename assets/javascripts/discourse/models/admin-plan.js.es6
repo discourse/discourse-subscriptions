@@ -1,6 +1,7 @@
 import Plan from "discourse/plugins/discourse-subscriptions/discourse/models/plan";
 import discourseComputed from "discourse-common/utils/decorators";
 import { ajax } from "discourse/lib/ajax";
+import { default as getURL } from "discourse-common/lib/get-url";
 
 const AdminPlan = Plan.extend({
   isNew: false,
@@ -32,7 +33,7 @@ const AdminPlan = Plan.extend({
       active: this.active,
     };
 
-    return ajax("/s/admin/plans", { method: "post", data });
+    return ajax(getURL("/s/admin/plans"), { method: "post", data });
   },
 
   update() {
@@ -43,21 +44,22 @@ const AdminPlan = Plan.extend({
       active: this.active,
     };
 
-    return ajax(`/s/admin/plans/${this.id}`, { method: "patch", data });
+    return ajax(getURL(`/s/admin/plans/${this.id}`), { method: "patch", data });
   },
 });
 
 AdminPlan.reopenClass({
   findAll(data) {
-    return ajax("/s/admin/plans", { method: "get", data }).then((result) =>
-      result.map((plan) => AdminPlan.create(plan))
-    );
+    return ajax(getURL("/s/admin/plans"), {
+      method: "get",
+      data,
+    }).then((result) => result.map((plan) => AdminPlan.create(plan)));
   },
 
   find(id) {
-    return ajax(`/s/admin/plans/${id}`, { method: "get" }).then((plan) =>
-      AdminPlan.create(plan)
-    );
+    return ajax(getURL(`/s/admin/plans/${id}`), {
+      method: "get",
+    }).then((plan) => AdminPlan.create(plan));
   },
 });
 
