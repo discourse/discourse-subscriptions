@@ -19,9 +19,13 @@ const AdminSubscription = EmberObject.extend({
     return getURL(`/admin/users/${metadata.user_id}/${metadata.username}`);
   },
 
-  destroy() {
+  destroy(refund) {
+    const data = {
+      refund: refund,
+    };
     return ajax(`/s/admin/subscriptions/${this.id}`, {
       method: "delete",
+      data,
     }).then((result) => AdminSubscription.create(result));
   },
 });

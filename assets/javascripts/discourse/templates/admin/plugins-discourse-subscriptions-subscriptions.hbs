@@ -34,7 +34,7 @@
           {{#if subscription.loading}}
             {{loading-spinner size="small"}}
           {{else}}
-            {{d-button disabled=subscription.canceled label="cancel" action=(route-action "cancelSubscription" subscription) icon="times"}}
+            {{d-button disabled=subscription.canceled label="cancel" action=(action "showCancelModal" subscription) icon="times"}}
           {{/if}}
         </td>
       </tr>

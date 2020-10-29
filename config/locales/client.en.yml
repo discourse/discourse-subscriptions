@@ -148,3 +148,5 @@ en:
             plan: Plan
             status: Status
             created_at: Created
+        ask_refund: Refund the last payment made by the customer?
+        canceled: "The subscription is canceled."
