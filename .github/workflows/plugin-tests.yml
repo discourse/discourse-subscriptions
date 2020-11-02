@@ -1,6 +1,11 @@
 name: Plugin Tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
 
 jobs:
   build:
@@ -23,7 +28,7 @@ jobs:
 
       matrix:
         build_types: ["BACKEND", "FRONTEND"]
-        target: ["PLUGINS", "CORE"]
+        target: ["PLUGINS"]
         os: [ubuntu-latest]
         ruby: ["2.6"]
         postgres: ["12"]
@@ -49,18 +54,30 @@ jobs:
         with:
           repository: discourse/discourse
           fetch-depth: 1
-          
+
       - name: Install plugin
         uses: actions/checkout@master
         with:
           path: plugins/${{ github.event.repository.name }}
-          fetch-depth: 1 
+          fetch-depth: 1
+
+      - name: Check spec existence
+        id: check_spec
+        uses: andstor/file-existence-action@v1
+        with:
+          files: "plugins/${{ github.event.repository.name }}/spec"
+
+      - name: Check qunit existence
+        id: check_qunit
+        uses: andstor/file-existence-action@v1
+        with:
+          files: "plugins/${{ github.event.repository.name }}/test/javascripts"
 
       - name: Setup Git
         run: |
           git config --global user.email "ci@ci.invalid"
           git config --global user.name "Discourse CI"
-          
+
       - name: Setup packages
         run: |
           sudo apt-get update
@@ -91,7 +108,7 @@ jobs:
           bundle config without 'development'
 
       - name: Bundler cache
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         id: bundler-cache
         with:
           path: vendor/bundle
@@ -107,7 +124,7 @@ jobs:
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
       - name: Yarn cache
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir.outputs.dir }}
@@ -122,7 +139,7 @@ jobs:
         run: |
           bin/rake db:create
           bin/rake db:migrate
-          
+
       - name: Create parallel databases
         if: env.BUILD_TYPE == 'BACKEND' && env.TARGET == 'CORE'
         run: |
@@ -134,17 +151,17 @@ jobs:
         run: |
           bin/turbo_rspec
           bin/rake plugin:spec
-      
+
       - name: Plugin RSpec
-        if: env.BUILD_TYPE == 'BACKEND' && env.TARGET == 'PLUGINS'
+        if: env.BUILD_TYPE == 'BACKEND' && env.TARGET == 'PLUGINS' && steps.check_spec.outputs.files_exists == 'true'
         run: bin/rake plugin:spec[${{ github.event.repository.name }}]
-        
+
       - name: Core QUnit
         if: env.BUILD_TYPE == 'FRONTEND' && env.TARGET == 'CORE'
         run: bundle exec rake qunit:test['1200000']
         timeout-minutes: 30
-        
-      - name: Plugin QUnit # Tests core plugins in TARGET=CORE, and all plugins in TARGET=PLUGINS
-        if: env.BUILD_TYPE == 'FRONTEND'
+
+      - name: Plugin QUnit
+        if: env.BUILD_TYPE == 'FRONTEND' && env.TARGET == 'PLUGINS' && steps.check_qunit.outputs.files_exists == 'true'
         run: bundle exec rake plugin:qunit['${{ github.event.repository.name }}','1200000']
         timeout-minutes: 30
