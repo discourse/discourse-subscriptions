@@ -1,0 +1,80 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  DisplayCopNames: true
+  TargetRubyVersion: 2.3
+
+  Exclude:
+    # brandur: Exclude ephmeral script-like files that I use to try and
+    # reproduce problems with the library. If you know of a better way of doing
+    # this (e.g. exclude files not tracked by Git), feel free to change it.
+    - "example_*"
+
+Layout/CaseIndentation:
+  EnforcedStyle: end
+
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+# This can be re-enabled once we're 2.3+ only and can use the squiggly heredoc
+# operator. Prior to that, Rubocop recommended bringing in a library like
+# ActiveSupport to get heredoc indentation, which is just terrible.
+Layout/HeredocIndentation:
+  Enabled: false
+
+Layout/LineLength:
+  Exclude:
+    - "lib/stripe/resources/**/*.rb"
+    - "test/**/*.rb"
+
+Metrics/BlockLength:
+  Max: 40
+  Exclude:
+    # `context` in tests are blocks and get quite large, so exclude the test
+    # directory from having to adhere to this rule.
+    - "test/**/*.rb"
+
+Metrics/ClassLength:
+  Exclude:
+    # Test classes get quite large, so exclude the test directory from having
+    # to adhere to this rule.
+    - "test/**/*.rb"
+
+Metrics/MethodLength:
+  # There's ~2 long methods in `StripeClient`. If we want to truncate those a
+  # little, we could move this to be closer to ~30 (but the default of 10 is
+  # probably too short).
+  Max: 50
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Style/AccessModifierDeclarations:
+  EnforcedStyle: inline
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: always
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
+Style/NumericPredicate:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma
