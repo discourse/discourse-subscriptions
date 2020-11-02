@@ -1,7 +1,6 @@
 import discourseComputed from "discourse-common/utils/decorators";
 import { ajax } from "discourse/lib/ajax";
 import EmberObject from "@ember/object";
-import { default as getURL } from "discourse-common/lib/get-url";
 
 const Subscription = EmberObject.extend({
   @discourseComputed("status")
@@ -15,13 +14,13 @@ const Subscription = EmberObject.extend({
       plan: this.plan,
     };
 
-    return ajax(getURL("/s/create"), { method: "post", data });
+    return ajax("/s/create", { method: "post", data });
   },
 });
 
 Subscription.reopenClass({
   show(id) {
-    return ajax(getURL(`/s/${id}`), { method: "get" });
+    return ajax(`/s/${id}`, { method: "get" });
   },
 });
 
