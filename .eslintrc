@@ -1,3 +1,6 @@
 {
+  "globals": {
+    "Stripe": true,
+  },
   "extends": "eslint-config-discourse"
 }
