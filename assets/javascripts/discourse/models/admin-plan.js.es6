@@ -49,16 +49,15 @@ const AdminPlan = Plan.extend({
 
 AdminPlan.reopenClass({
   findAll(data) {
-    return ajax("/s/admin/plans", {
-      method: "get",
-      data,
-    }).then((result) => result.map((plan) => AdminPlan.create(plan)));
+    return ajax("/s/admin/plans", { method: "get", data }).then((result) =>
+      result.map((plan) => AdminPlan.create(plan))
+    );
   },
 
   find(id) {
-    return ajax(`/s/admin/plans/${id}`, {
-      method: "get",
-    }).then((plan) => AdminPlan.create(plan));
+    return ajax(`/s/admin/plans/${id}`, { method: "get" }).then((plan) =>
+      AdminPlan.create(plan)
+    );
   },
 });
 
