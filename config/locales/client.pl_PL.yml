@@ -45,3 +45,5 @@ pl_PL:
             user: Użytkownik
             status: Status
             created_at: Utworzono
+        ask_refund: Zwrócić ostatnią płatność dokonaną przez klienta?
+        canceled: "Subskrypcja została anulowana."

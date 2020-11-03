@@ -60,7 +60,6 @@ fr:
       subscribe:
         title: Souscrire
         no_products: Aucun produit disponible pour le moment.
-        unauthenticated: Vous devez créer un compte utilisateur pour pouvoir soucrire.
         card:
           title: Paiement
         customer:

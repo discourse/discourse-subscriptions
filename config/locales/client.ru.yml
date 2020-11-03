@@ -68,7 +68,6 @@ ru:
       subscribe:
         title: Подписаться
         no_products: В настоящее время нет доступных предложений.
-        unauthenticated: Вы должны создать учетную запись, чтобы подписаться.
         card:
           title: Оплата
         customer:
@@ -153,3 +152,5 @@ ru:
             plan: План
             status: Статус
             created_at: Создано
+        ask_refund: Вернуть последний платеж клиента?
+        canceled: "Подписка отменена."

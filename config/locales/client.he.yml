@@ -68,7 +68,6 @@ he:
       subscribe:
         title: הרשמה
         no_products: אין מוצרים זמינים.
-        unauthenticated: עליך ליצור חשבון כדי להירשם.
         card:
           title: תשלום
         customer:
@@ -153,3 +152,5 @@ he:
             plan: תכנית
             status: מצב
             created_at: נוצר
+        ask_refund: לזכות את התשלום האחרון ששולם על ידי הלקוח?
+        canceled: "המינוי מבוטל."
