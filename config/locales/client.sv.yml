@@ -68,7 +68,7 @@ sv:
       subscribe:
         title: Prenumerera
         no_products: Det finns för tillfället inga produkter tillgängliga.
-        unauthenticated: Du behöver skapa ett konto för att prenumerera.
+        unauthenticated: Logga in eller skapa ett konto för att prenumerera.
         card:
           title: Betalning
         customer:
@@ -153,3 +153,5 @@ sv:
             plan: Plan
             status: Status
             created_at: Skapad
+        ask_refund: Återbetala den senaste betalningen från kunden?
+        canceled: "Prenumerationen har sagts upp."

@@ -60,7 +60,6 @@ pt_BR:
       subscribe:
         title: Assinar
         no_products: No momento não existem produtos disponíveis.
-        unauthenticated: Para assinar um produto é necessário criar uma conta.
         card:
           title: Pagamento
         customer:

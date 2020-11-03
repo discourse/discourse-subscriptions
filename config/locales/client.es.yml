@@ -59,7 +59,6 @@ es:
               confirm: '¿Seguro que quieres cancelar esta suscripción?'
       subscribe:
         title: Suscribir
-        unauthenticated: Necesitas crear una cuenta para suscribirte
         card:
           title: Pagos
         customer:

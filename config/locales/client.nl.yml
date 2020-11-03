@@ -68,7 +68,6 @@ nl:
       subscribe:
         title: Abonneren
         no_products: Er zijn momenteel geen producten beschikbaar.
-        unauthenticated: U dient een account aan te maken om u te abonneren.
         card:
           title: Betaling
         customer:
@@ -153,3 +152,5 @@ nl:
             plan: Vorm
             status: Status
             created_at: Gemaakt
+        ask_refund: De laatste betaling door de klant terugbetalen?
+        canceled: "Het abonnement is geannuleerd."
