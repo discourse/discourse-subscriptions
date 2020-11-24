@@ -1,14 +1,31 @@
 import discourseComputed from "discourse-common/utils/decorators";
 import DiscourseURL from "discourse/lib/url";
 import Controller from "@ember/controller";
+import { alias } from "@ember/object/computed";
 
 const RECURRING = "recurring";
 const ONE_TIME = "one_time";
 
 export default Controller.extend({
   // Also defined in settings.
-  selectedCurrency: Ember.computed.alias("model.plan.currency"),
-  selectedInterval: Ember.computed.alias("model.plan.interval"),
+  selectedCurrency: alias("model.plan.currency"),
+  selectedInterval: alias("model.plan.interval"),
+
+  @discourseComputed("model.plan.metadata.group_name")
+  selectedGroup(groupName) {
+    return groupName || "no-group";
+  },
+
+  @discourseComputed("model.groups")
+  availableGroups(groups) {
+    return [
+      {
+        id: null,
+        name: "no-group",
+      },
+      ...groups,
+    ];
+  },
 
   @discourseComputed
   currencies() {
@@ -57,13 +74,9 @@ export default Controller.extend({
     },
 
     createPlan() {
-      // TODO: set default group name beforehand
-      if (this.get("model.plan.metadata.group_name") === undefined) {
-        this.set("model.plan.metadata", {
-          group_name: this.get("model.groups.firstObject.name"),
-        });
+      if (this.model.plan.metadata.group_name === "no-group") {
+        this.set("model.plan.metadata.group_name", null);
       }
-
       this.get("model.plan")
         .save()
         .then(() => this.redirect(this.productId))
@@ -73,6 +86,9 @@ export default Controller.extend({
     },
 
     updatePlan() {
+      if (this.model.plan.metadata.group_name === "no-group") {
+        this.set("model.plan.metadata.group_name", null);
+      }
       this.get("model.plan")
         .update()
         .then(() => this.redirect(this.productId))

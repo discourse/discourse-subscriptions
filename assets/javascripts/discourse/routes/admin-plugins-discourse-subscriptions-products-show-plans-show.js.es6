@@ -20,6 +20,9 @@ export default Route.extend({
         isRecurring: true,
         currency: Discourse.SiteSettings.discourse_subscriptions_currency,
         product: product.get("id"),
+        metadata: {
+          group_name: null,
+        },
       });
     } else {
       plan = AdminPlan.find(id).then((result) => {

@@ -15,10 +15,10 @@
   </p>
   <p>
     <label for="interval">{{i18n 'discourse_subscriptions.admin.plans.plan.group'}}</label>
-    {{combo-box 
+    {{combo-box
       valueProperty="name"
-      content=model.groups 
-      value=model.plan.metadata.group_name 
+      content=availableGroups
+      value=selectedGroup
       onChange=(action (mut model.plan.metadata.group_name))
     }}
     <div class="control-instructions">
@@ -30,10 +30,10 @@
     {{#if planFieldDisabled}}
       {{input class="plan-amount plan-currency" disabled=true value=model.plan.currency}}
     {{else}}
-      {{combo-box 
-        disabled=planFieldDisabled 
-        content=currencies 
-        value=model.plan.currency 
+      {{combo-box
+        disabled=planFieldDisabled
+        content=currencies
+        value=model.plan.currency
         onChange=(action (mut model.plan.currency))
       }}
     {{/if}}
@@ -44,16 +44,16 @@
       {{i18n 'discourse_subscriptions.admin.plans.plan.recurring'}}
     </label>
     {{#if planFieldDisabled}}
-      {{input 
-        type="checkbox" 
-        name="recurring" 
+      {{input
+        type="checkbox"
+        name="recurring"
         checked=model.plan.isRecurring
         disabled=true
       }}
     {{else}}
-      {{input 
-        type="checkbox" 
-        name="recurring" 
+      {{input
+        type="checkbox"
+        name="recurring"
         checked=model.plan.isRecurring
         change=(action 'changeRecurring')
       }}
@@ -67,10 +67,10 @@
       {{#if planFieldDisabled}}
         {{input disabled=true value=selectedInterval}}
       {{else}}
-        {{combo-box 
+        {{combo-box
           valueProperty="name"
-          content=availableIntervals 
-          value=selectedInterval 
+          content=availableIntervals
+          value=selectedInterval
           onChange=(action (mut selectedInterval))
         }}
       {{/if}}
