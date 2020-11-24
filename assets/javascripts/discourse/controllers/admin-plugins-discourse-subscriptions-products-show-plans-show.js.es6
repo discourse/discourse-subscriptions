@@ -10,6 +10,26 @@ export default Controller.extend({
   selectedCurrency: Ember.computed.alias("model.plan.currency"),
   selectedInterval: Ember.computed.alias("model.plan.interval"),
 
+  @discourseComputed("model.plan.metadata.group_name")
+  selectedGroup(groupName) {
+    if (!groupName) {
+      return "no-group";
+    }
+
+    return groupName;
+  },
+
+  @discourseComputed("model.groups")
+  availableGroups(groups) {
+    return [
+      {
+        id: null,
+        name: "no-group",
+      },
+      ...groups,
+    ];
+  },
+
   @discourseComputed
   currencies() {
     return [
@@ -57,13 +77,9 @@ export default Controller.extend({
     },
 
     createPlan() {
-      // TODO: set default group name beforehand
-      if (this.get("model.plan.metadata.group_name") === undefined) {
-        this.set("model.plan.metadata", {
-          group_name: this.get("model.groups.firstObject.name"),
-        });
+      if (this.model.plan.metadata.group_name === "no-group") {
+        this.set("model.plan.metadata.group_name", null);
       }
-
       this.get("model.plan")
         .save()
         .then(() => this.redirect(this.productId))
@@ -73,6 +89,9 @@ export default Controller.extend({
     },
 
     updatePlan() {
+      if (this.model.plan.metadata.group_name === "no-group") {
+        this.set("model.plan.metadata.group_name", null);
+      }
       this.get("model.plan")
         .update()
         .then(() => this.redirect(this.productId))
