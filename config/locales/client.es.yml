@@ -11,10 +11,13 @@ es:
     discourse_subscriptions_public_key: Stripe Publishable Key
     discourse_subscriptions_secret_key: Stripe Secret Key
     discourse_subscriptions_webhook_secret: Stripe Webhook Secret
-    discourse_subscriptions_currency: Código de Moneda Predeterminado. Esto puede anularse al crear un plan de suscripción.
+    discourse_subscriptions_currency: Código de moneda predeterminado. Esto puede anularse al crear un plan de suscripción.
     errors:
-      discourse_patrons_amount_must_be_currency: "Las cantidades de moneda deben ser monedas sin símbolo de dólar (ej 1.50)"
+      discourse_patrons_amount_must_be_currency: "Las cantidades de moneda deben ser monedas sin símbolo de dólar (ej.: 1.50)"
   js:
+    filters:
+      subscribe:
+        help: Apoya este sitio suscribiéndote
     discourse_subscriptions:
       title: Discourse Suscripciones
       admin_navigation: Suscripciones
@@ -23,27 +26,29 @@ es:
         billing: Facturación
         payments: Pagos
         subscriptions: Suscripciones
-        subscribe: Suscribir
+        subscribe: Suscribirse
         user_activity:
           payments: Pagos
+      one_time_payment: Pago único
       plans:
         purchase: Comprar una suscripción
         select: Seleccionar un plan de suscripción
         interval:
           adverb:
+            day: Diario
             week: Semanal
             month: Mensual
             year: Anual
-        payment_button: Subscribe
-        success: '¡Gracias! Su suscripción ha sido creada.'
-        incomplete: El pago está incompleto. Su suscripción se actualizará cuando se complete el pago.
+        payment_button: Suscribirse
+        success: '¡Gracias! Tu suscripción ha sido creada.'
+        incomplete: El pago está incompleto. Tu suscripción se actualizará cuando se complete el pago.
         validate:
           payment_options:
-            required: Por favor seleccione un plan de suscripción.
+            required: Por favor, selecciona un plan de suscripción.
       user:
         payments:
           id: ID de pago
-          amount: Monto
+          amount: Cantidad
           created_at: Creado
         payments_help: No hay pagos
         plans:
@@ -51,40 +56,48 @@ es:
           product: Nombre
         subscriptions_help: No tienes suscripciones activas.
         subscriptions:
-          id: ID de Suscripción
+          id: ID de suscripción
           status: Estado
+          renews: Se renueva
           created_at: Creado
+          cancel: cancelar
+          cancelled: cancelada
           operations:
             destroy:
               confirm: '¿Seguro que quieres cancelar esta suscripción?'
       subscribe:
-        title: Suscribir
+        title: Suscribirse
+        no_products: No hay productos disponibles en este momento.
+        unauthenticated: Inicia sesión o crea una cuenta para suscribirte.
         card:
           title: Pagos
         customer:
           title: Detalles del cliente
         buttons:
           subscribe: Suscribir
+        purchased: Comprado
+        go_to_billing: Ir a facturación
       billing:
         name: Nombre completo
-        email: Email
-        phone: Número de Móvil
+        email: Correo electrónico
+        phone: Número de teléfono
       confirmation:
-        amount: Monto
+        amount: Cantidad
         last4: Número de tarjeta
       buttons:
-        make_payment: Hacer pago
+        make_payment: Pagar
         confirm_payment: Confirmar pago
         success: Volver
       admin:
+        unconfigured: 'Stripe no está configurado correctamente. Consulta Discourse Meta para obtener más información.'
         dashboard:
           title: Tablero
           table:
             head:
               user: Usuario
               payment_intent: ID de pago
-              receipt_email: Email de Recibo
-              amount: Monto
+              receipt_email: Correo electrónico de recibo
+              amount: Cantidad
         products:
           title: Productos
           operations:
@@ -92,50 +105,53 @@ es:
             update: Actualizar producto
             new: Nuevo producto
             destroy:
-              confirm: '¿Estás seguro que quieres eliminar este producto?'
+              confirm: '¿Seguro que quieres eliminar este producto?'
           product:
-            product_id: ID de Producto
-            name: Nombre del Producto
-            statement_descriptor: Descriptor de declaraciones
-            statement_descriptor_help: Información adicional sobre un producto que aparecerá en el extracto de la tarjeta de crédito de su cliente.
-            plan_help: Cree un plan de precios para suscribir clientes a este producto.
+            product_id: ID de producto
+            name: Nombre del producto
+            statement_descriptor: Concepto del extracto
+            statement_descriptor_help: Información adicional sobre un producto que aparecerá en el extracto de la tarjeta de crédito del cliente.
+            plan_help: Crear un plan de precios para suscribir clientes a este producto.
             description: Descripción
-            description_help: Esto describe su producto de suscripción.
+            description_help: Esto describe el producto de suscripción.
             active: Activo
-            active_help: Desactive esto hasta que su producto esté listo para los consumidores.
+            active_help: Desactiva esto hasta que el producto esté listo para el consumidor final.
             created_at: Creado
             updated_at: Actualizado
-          product_help: Antes de que los clientes puedan suscribirse a su sitio, debe crear al menos un producto y un plan asociado.
+          product_help: Antes de que los clientes puedan suscribirse al sitio, debes crear al menos un producto y un plan asociado.
         plans:
           title: Planes de precios
           operations:
-            add: Agegar nuevo plan
-            create: Crear Plan
-            update: Actualizar Plan
+            add: Añadir nuevo plan
+            create: Crear plan
+            update: Actualizar plan
             create_help: Una vez que se crea un plan de precios, solo se puede actualizar su apodo, período de prueba y grupo de usuarios.
-            new: Nuevo Plan
+            new: Nuevo plan
             destroy:
-              confirm: '¿Estás seguro de que quieres destruir este plan?'
+              confirm: '¿Seguro que quieres destruir este plan?'
           plan:
             nickname: Apodo del plan
-            nickname_help: Esto no será visible para los clientes, pero lo ayudará a encontrar este plan más adelante
+            nickname_help: Esto no será visible para los clientes, pero te ayudará a encontrar este plan más adelante
             plan_id: ID del plan
             product: Producto
-            interval: Intervalo de Facturación
-            amount: Monto
+            interval: Intervalo de facturación
+            amount: Cantidad
             trial: Días del período de prueba
             trial_help: Las suscripciones a este plan comenzarán automáticamente con una prueba gratuita de esta duración
-            group: User Grupo
-            group_help: Este es el grupo de usuarios en Discourse al que se agrega el cliente cuando se crea la suscripción.
+            group: Grupo de usuario
+            group_help: Este es el grupo de usuarios en Discourse al que se añadirá el cliente cuando se cree la suscripción.
             active: Activo
             created_at: Creado
+            recurring: '¿Plan recurrente?'
         subscriptions:
           title: Suscripciones
           subscription:
             user: Usuario
-            subscription_id: ID de Suscripción
+            subscription_id: ID de suscripción
             customer: Cliente
             product: Producto
             plan: Plan
             status: Estado
             created_at: Creado
+        ask_refund: '¿Reembolsar el último pago realizado por el cliente?'
+        canceled: "La suscripción está cancelada."
