@@ -1,22 +1,19 @@
 import discourseComputed from "discourse-common/utils/decorators";
 import DiscourseURL from "discourse/lib/url";
 import Controller from "@ember/controller";
+import { alias } from "@ember/object/computed";
 
 const RECURRING = "recurring";
 const ONE_TIME = "one_time";
 
 export default Controller.extend({
   // Also defined in settings.
-  selectedCurrency: Ember.computed.alias("model.plan.currency"),
-  selectedInterval: Ember.computed.alias("model.plan.interval"),
+  selectedCurrency: alias("model.plan.currency"),
+  selectedInterval: alias("model.plan.interval"),
 
   @discourseComputed("model.plan.metadata.group_name")
   selectedGroup(groupName) {
-    if (!groupName) {
-      return "no-group";
-    }
-
-    return groupName;
+    return groupName || "no-group";
   },
 
   @discourseComputed("model.groups")
