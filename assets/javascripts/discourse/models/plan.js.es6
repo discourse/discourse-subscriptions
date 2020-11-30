@@ -1,8 +1,9 @@
 import EmberObject from "@ember/object";
 import discourseComputed from "discourse-common/utils/decorators";
+import { computed } from "@ember/object";
 
 const Plan = EmberObject.extend({
-  amountDollars: Ember.computed("unit_amount", {
+  amountDollars: computed("unit_amount", {
     get() {
       return parseFloat(this.get("unit_amount") / 100).toFixed(2);
     },
