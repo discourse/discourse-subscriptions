@@ -11,7 +11,7 @@ he:
     discourse_subscriptions_public_key: מפתח מופץ של Stripe
     discourse_subscriptions_secret_key: מפתח סודי של Stripe
     discourse_subscriptions_webhook_secret: סוד התלייה של Stripe
-    discourse_subscriptions_currency: קוד מדינה כבררת מחדל. ניתן לדרוס את זה בעת יצירת תכנית מינוי.
+    discourse_subscriptions_currency: קוד מטבע כבררת מחדל. ניתן לדרוס את זה בעת יצירת תכנית מינוי.
     errors:
       discourse_patrons_amount_must_be_currency: "סכומי המטבעות אמורים להיות מטבעות בלי סימן דולר (למשל: 1.50)"
   js:
@@ -68,6 +68,7 @@ he:
       subscribe:
         title: הרשמה
         no_products: אין מוצרים זמינים.
+        unauthenticated: עליך להיכנס או ליצור חשבון כדי להירשם.
         card:
           title: תשלום
         customer:
