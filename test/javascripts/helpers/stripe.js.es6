@@ -4,7 +4,7 @@ export function stubStripe() {
   window.Stripe = () => {
     return {
       createPaymentMethod() {
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
           resolve({});
         });
       },
@@ -14,11 +14,11 @@ export function stubStripe() {
             return {
               on() {},
               card() {},
-              mount() {}
+              mount() {},
             };
-          }
+          },
         };
-      }
+      },
     };
   };
 }

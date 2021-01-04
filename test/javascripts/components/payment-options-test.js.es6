@@ -1,4 +1,4 @@
-import componentTest from "helpers/component-test";
+import componentTest from "discourse/tests/helpers/component-test";
 
 moduleForComponent("payment-options", { integration: true });
 
@@ -13,7 +13,7 @@ componentTest("Discourse Subscriptions payment options have no plans", {
       0,
       "The plan buttons are not shown"
     );
-  }
+  },
 });
 
 componentTest("Discourse Subscriptions payment options has content", {
@@ -27,17 +27,17 @@ componentTest("Discourse Subscriptions payment options has content", {
       {
         currency: "aud",
         recurring: { interval: "year" },
-        amountDollars: "44.99"
+        amountDollars: "44.99",
       },
       {
         currency: "gdp",
         recurring: { interval: "month" },
-        amountDollars: "9.99"
-      }
+        amountDollars: "9.99",
+      },
     ]);
   },
 
   async test(assert) {
     assert.equal(this.selectedPlan, null, "No plans are selected by default");
-  }
+  },
 });
