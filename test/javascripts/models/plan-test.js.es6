@@ -2,13 +2,13 @@ import Plan from "discourse/plugins/discourse-subscriptions/discourse/models/pla
 
 QUnit.module("discourse-patrons:model:plan");
 
-QUnit.test("subscriptionRate", assert => {
+QUnit.test("subscriptionRate", (assert) => {
   const plan = Plan.create({
     unit_amount: "2399",
     currency: "aud",
     recurring: {
-      interval: "month"
-    }
+      interval: "month",
+    },
   });
 
   assert.equal(
@@ -18,7 +18,7 @@ QUnit.test("subscriptionRate", assert => {
   );
 });
 
-QUnit.test("amountDollars", assert => {
+QUnit.test("amountDollars", (assert) => {
   const plan = Plan.create({ unit_amount: 2399 });
 
   assert.equal(
@@ -28,7 +28,7 @@ QUnit.test("amountDollars", assert => {
   );
 });
 
-QUnit.test("amount", assert => {
+QUnit.test("amount", (assert) => {
   const plan = Plan.create({ amountDollars: "22.12" });
 
   assert.equal(plan.get("unit_amount"), 2212, "it returns the cents amount");

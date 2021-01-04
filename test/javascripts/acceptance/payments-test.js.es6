@@ -6,10 +6,10 @@ acceptance("Discourse Subscriptions", {
     stubStripe();
   },
 
-  loggedIn: true
+  loggedIn: true,
 });
 
-QUnit.test("viewing product page", async assert => {
+QUnit.test("viewing product page", async (assert) => {
   await visit("/s");
 
   assert.ok($(".product-list").length, "has product page");
