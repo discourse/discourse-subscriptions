@@ -1,4 +1,4 @@
-import componentTest from "helpers/component-test";
+import componentTest from "discourse/tests/helpers/component-test";
 
 moduleForComponent("payment-options", { integration: true });
 
