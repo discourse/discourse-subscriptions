@@ -1,4 +1,4 @@
-import componentTest from "helpers/component-test";
+import componentTest from "discourse/tests/helpers/component-test";
 
 moduleForComponent("payment-plan", { integration: true });
 
@@ -13,7 +13,7 @@ componentTest("Payment plan subscription button rendered", {
       type: "recurring",
       currency: "aud",
       recurring: { interval: "year" },
-      amountDollars: "44.99"
+      amountDollars: "44.99",
     });
   },
 
@@ -39,7 +39,7 @@ componentTest("Payment plan subscription button rendered", {
       "$AUD 44.99",
       "The plan amount and currency is shown"
     );
-  }
+  },
 });
 
 componentTest("Payment plan one-time-payment button rendered", {
@@ -52,7 +52,7 @@ componentTest("Payment plan one-time-payment button rendered", {
     this.set("plan", {
       type: "one_time",
       currency: "USD",
-      amountDollars: "3.99"
+      amountDollars: "3.99",
     });
   },
 
@@ -64,5 +64,5 @@ componentTest("Payment plan one-time-payment button rendered", {
       "One-Time Payment",
       "Shown as one time payment"
     );
-  }
+  },
 });
