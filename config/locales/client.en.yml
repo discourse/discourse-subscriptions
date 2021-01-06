@@ -68,6 +68,7 @@ en:
           title: Payment
         customer:
           title: Customer Details
+        promo_code: Coupon
         buttons:
           subscribe: Subscribe
         purchased: Purchased
