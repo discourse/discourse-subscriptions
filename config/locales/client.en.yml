@@ -53,6 +53,7 @@ en:
         subscriptions:
           id: Subscription ID
           status: Status
+          discounted: Discounted
           renews: Renews
           created_at: Created
           cancel: cancel
