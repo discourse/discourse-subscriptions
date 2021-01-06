@@ -19,6 +19,22 @@ const UserSubscription = EmberObject.extend({
     }
   },
 
+  @discourseComputed("discount")
+  discounted(discount) {
+    if (discount) {
+      const amount_off = discount.coupon.amount_off;
+      const percent_off = discount.coupon.percent_off;
+
+      if (amount_off) {
+        return `${parseFloat(amount_off * 0.01).toFixed(2)}`;
+      } else if (percent_off) {
+        return `${percent_off}%`;
+      }
+    } else {
+      return I18n.t("no_value");
+    }
+  },
+
   destroy() {
     return ajax(`/s/user/subscriptions/${this.id}`, {
       method: "delete",
