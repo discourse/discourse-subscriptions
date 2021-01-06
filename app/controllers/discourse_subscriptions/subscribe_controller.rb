@@ -77,7 +77,7 @@ module DiscourseSubscriptions
           invoice_item = ::Stripe::InvoiceItem.create(
             customer: customer[:id],
             price: params[:plan],
-            discounts: { coupon: coupon_id }
+            discounts: [{ coupon: coupon_id }]
           )
           invoice = ::Stripe::Invoice.create(
             customer: customer[:id]
