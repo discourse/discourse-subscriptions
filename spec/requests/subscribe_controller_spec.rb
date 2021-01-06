@@ -213,7 +213,7 @@ module DiscourseSubscriptions
                 }
               )
 
-              ::Stripe::InvoiceItem.expects(:create).with(customer: 'cus_1234', price: 'plan_1234', discounts: [{ coupon: 'c123'}])
+              ::Stripe::InvoiceItem.expects(:create).with(customer: 'cus_1234', price: 'plan_1234', discounts: [{ coupon: 'c123' }])
 
               ::Stripe::Invoice.expects(:create).returns(status: 'open', id: 'in_123')
 
