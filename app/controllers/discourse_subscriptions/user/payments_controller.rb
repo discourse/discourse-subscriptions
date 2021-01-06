@@ -49,6 +49,7 @@ module DiscourseSubscriptions
       def parse_invoice_lines(invoice_lines)
         invoice_product_id = invoice_lines[:price][:product] if invoice_lines[:price] && invoice_lines[:price][:product]
         invoice_product_id = invoice_lines[:plan][:product] if invoice_lines[:plan] && invoice_lines[:plan][:product]
+        invoice_product_id
       end
     end
   end
