@@ -49,7 +49,7 @@ module DiscourseSubscriptions
     end
 
     def create
-      params.require([:source, :plan, :promo])
+      params.require([:source, :plan])
       begin
         customer = create_customer(params[:source])
         plan = ::Stripe::Price.retrieve(params[:plan])
