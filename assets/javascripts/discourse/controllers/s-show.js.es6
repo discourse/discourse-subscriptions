@@ -6,6 +6,7 @@ import { not } from "@ember/object/computed";
 
 export default Controller.extend({
   selectedPlan: null,
+  promoCode: null,
   isAnonymous: not("currentUser"),
 
   init() {
@@ -32,6 +33,7 @@ export default Controller.extend({
         const subscription = Subscription.create({
           source: result.token.id,
           plan: plan.get("id"),
+          promo: this.promoCode,
         });
 
         return subscription.save();

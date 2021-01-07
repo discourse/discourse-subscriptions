@@ -33,6 +33,9 @@
       {{else if isAnonymous}}
         {{login-required}}
       {{else}}
+        <div class='promo-code'>
+          {{input type="text" name="promo_code" placeholderKey="discourse_subscriptions.subscribe.promo_code" value=promoCode}}
+        </div>
 
         {{d-button
           disabled=loading

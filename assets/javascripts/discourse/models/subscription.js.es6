@@ -12,6 +12,7 @@ const Subscription = EmberObject.extend({
     const data = {
       source: this.source,
       plan: this.plan,
+      promo: this.promo,
     };
 
     return ajax("/s/create", { method: "post", data });
