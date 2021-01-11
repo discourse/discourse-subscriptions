@@ -25,4 +25,17 @@
       {{/each}}
     </table>
   {{/if}}
+
+  {{#unless creating}}
+    {{d-button
+      action=(action "openCreateForm")
+      label="discourse_subscriptions.admin.coupons.create"
+      title="discourse_subscriptions.admin.coupons.create"
+      icon="plus"
+      class="btn btn-icon btn-primary create-coupon"}}
+  {{/unless}}
+
+  {{#if creating}}
+    {{create-coupon-form cancel=(action 'closeCreateForm') create=(action 'createNewCoupon')}}
+  {{/if}}
 {{/if}}

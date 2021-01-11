@@ -147,6 +147,8 @@ en:
           times_redeemed: Times Redeemed
           active: Active?
           actions: Actions
+          create: Create Coupon
+          promo_code: Promo Code (case-insensitive)
         subscriptions:
           title: Subscriptions
           subscription:

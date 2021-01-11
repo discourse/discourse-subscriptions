@@ -5,4 +5,10 @@ export default Route.extend({
   model() {
     return AdminCoupon.list();
   },
+
+  actions: {
+    reloadModel() {
+      this.refresh();
+    },
+  },
 });

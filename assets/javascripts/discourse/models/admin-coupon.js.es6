@@ -24,6 +24,19 @@ AdminCoupon.reopenClass({
       return result.map((coupon) => AdminCoupon.create(coupon));
     });
   },
+  save(params) {
+    const data = {
+      promo: params.promo,
+      discount_type: params.discount_type,
+      discount: params.discount,
+      active: params.active,
+    };
+
+    return ajax("/s/admin/coupons", {
+      method: "post",
+      data,
+    }).then((coupon) => AdminCoupon.create(coupon));
+  },
 });
 
 export default AdminCoupon;
