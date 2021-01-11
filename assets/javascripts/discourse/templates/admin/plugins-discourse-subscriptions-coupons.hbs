@@ -1,0 +1,28 @@
+{{#if model.unconfigured}}
+  <p>{{i18n 'discourse_subscriptions.admin.unconfigured'}}</p>
+  <p><a href="https://meta.discourse.org/t/discourse-subscriptions/140818/">Discourse Subscriptions on Meta</a></p>
+{{else}}
+  {{#if model}}
+    <table class="table discourse-patrons-table">
+      <thead>
+        <th>{{i18n 'discourse_subscriptions.admin.coupons.code'}}</th>
+        <th>{{i18n 'discourse_subscriptions.admin.coupons.discount'}}</th>
+        <th>{{i18n 'discourse_subscriptions.admin.coupons.times_redeemed'}}</th>
+        <th>{{i18n 'discourse_subscriptions.admin.coupons.active'}}</th>
+        <th>{{i18n 'discourse_subscriptions.admin.coupons.actions'}}</th>
+      </thead>
+      {{#each model as |coupon|}}
+        <tr>
+          <td>{{coupon.code}}</td>
+          <td>{{coupon.discount}}</td>
+          <td>{{coupon.times_redeemed}}</td>
+          <td>{{coupon.active}}</td>
+          <td class="td-right">
+            <div class="align-buttons">
+            </div>
+          </td>
+        </tr>
+      {{/each}}
+    </table>
+  {{/if}}
+{{/if}}
