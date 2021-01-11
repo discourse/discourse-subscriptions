@@ -43,8 +43,10 @@ module DiscourseSubscriptions
       end
 
       def destroy
-        params.require(:id)
+        params.require(:coupon_id)
         begin
+          coupon = ::Stripe::Coupon.delete(params[:coupon_id])
+          render_json_dump coupon
         rescue ::Stripe::InvalidRequestError => e
           render_json_error e.message
         end

@@ -17,9 +17,12 @@
           <td>{{coupon.discount}}</td>
           <td>{{coupon.times_redeemed}}</td>
           <td>{{coupon.active}}</td>
-          <td class="td-right">
-            <div class="align-buttons">
-            </div>
+          <td>
+            {{d-button
+              action=(action "deleteCoupon")
+              actionParam=coupon
+              icon="trash-alt"
+              class="btn-danger btn btn-icon btn-no-text"}}
           </td>
         </tr>
       {{/each}}

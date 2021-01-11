@@ -20,5 +20,12 @@ export default Controller.extend({
         })
         .catch(popupAjaxError);
     },
+    deleteCoupon(coupon) {
+      AdminCoupon.destroy(coupon)
+        .then(() => {
+          this.send("reloadModel");
+        })
+        .catch(popupAjaxError);
+    },
   },
 });

@@ -37,6 +37,16 @@ AdminCoupon.reopenClass({
       data,
     }).then((coupon) => AdminCoupon.create(coupon));
   },
+
+  destroy(params) {
+    const data = {
+      coupon_id: params.coupon.id,
+    };
+    return ajax("/s/admin/coupons", {
+      method: "delete",
+      data,
+    });
+  },
 });
 
 export default AdminCoupon;
