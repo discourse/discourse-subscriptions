@@ -57,6 +57,7 @@ pl_PL:
         subscriptions:
           id: ID subskrypcji
           status: Status
+          discounted: Zniżka
           renews: Odnawia się
           created_at: Utworzono
           cancel: anuluj
@@ -72,6 +73,7 @@ pl_PL:
           title: Płatność
         customer:
           title: Dane klienta
+        promo_code: Kupon
         buttons:
           subscribe: Subskrybuj
         purchased: Zakupione

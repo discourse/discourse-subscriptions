@@ -58,6 +58,7 @@ he:
         subscriptions:
           id: מזהה מינוי
           status: מצב
+          discounted: בהנחה
           renews: חידושים
           created_at: נוצר
           cancel: ביטול
@@ -73,6 +74,7 @@ he:
           title: תשלום
         customer:
           title: פרטי הלקו
+        promo_code: קופון
         buttons:
           subscribe: הרשמה
         purchased: נרכשה
