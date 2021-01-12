@@ -33,10 +33,12 @@ fa_IR:
           product: نام
         subscriptions:
           status: وضعیت
+          discounted: با تخفیف
           created_at: ساخته شده
       subscribe:
         card:
           title: پرداخت‌
+        promo_code: تخفیف
       billing:
         name: نام کامل
         email: ایمیل

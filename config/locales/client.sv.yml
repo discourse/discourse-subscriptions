@@ -58,6 +58,7 @@ sv:
         subscriptions:
           id: Prenumerations-ID
           status: Status
+          discounted: Rabatterad
           renews: Förnyar
           created_at: Skapad
           cancel: avbryt
@@ -73,6 +74,7 @@ sv:
           title: Betalning
         customer:
           title: Kunddetaljer
+        promo_code: Kupong
         buttons:
           subscribe: Prenumerera
         purchased: Köpt
