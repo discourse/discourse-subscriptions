@@ -42,6 +42,22 @@ module DiscourseSubscriptions
         end
       end
 
+      def update
+        params.require([:id, :active])
+        begin
+          promo_code = ::Stripe::PromotionCode.update(
+            params[:id],
+            {
+              active: params[:active]
+            }
+          )
+
+          render_json_dump promo_code
+        rescue ::Stripe::InvalidRequestError => e
+          render_json_error e.message
+        end
+      end
+
       def destroy
         params.require(:coupon_id)
         begin

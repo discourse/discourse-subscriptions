@@ -16,7 +16,7 @@
           <td>{{coupon.code}}</td>
           <td>{{coupon.discount}}</td>
           <td>{{coupon.times_redeemed}}</td>
-          <td>{{coupon.active}}</td>
+          <td>{{input type="checkbox" checked=coupon.active click=(action "toggleActive" coupon)}}</td>
           <td>
             {{d-button
               action=(action "deleteCoupon")

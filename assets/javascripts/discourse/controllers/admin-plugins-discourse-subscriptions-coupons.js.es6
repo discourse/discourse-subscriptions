@@ -27,5 +27,16 @@ export default Controller.extend({
         })
         .catch(popupAjaxError);
     },
+    toggleActive(coupon) {
+      const couponData = {
+        id: coupon.id,
+        active: !coupon.active,
+      };
+      AdminCoupon.update(couponData)
+        .then(() => {
+          this.send("reloadModel");
+        })
+        .catch(popupAjaxError);
+    },
   },
 });

@@ -38,6 +38,18 @@ AdminCoupon.reopenClass({
     }).then((coupon) => AdminCoupon.create(coupon));
   },
 
+  update(params) {
+    const data = {
+      id: params.id,
+      active: params.active,
+    };
+
+    return ajax("/s/admin/coupons", {
+      method: "put",
+      data,
+    }).then((coupon) => AdminCoupon.create(coupon));
+  },
+
   destroy(params) {
     const data = {
       coupon_id: params.coupon.id,
