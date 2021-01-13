@@ -22,6 +22,21 @@ module DiscourseSubscriptions
       before { sign_in(admin) }
 
       describe "#index" do
+        it "returns a list of promo codes" do
+          ::Stripe::PromotionCode.expects(:list).with(limit: 100).returns({
+          data: [{
+              id: 'promo_123',
+              coupon: {
+                valid: true
+              }
+            }]
+          })
+
+          get "/s/admin/coupons.json"
+          expect(response.status).to eq(200)
+          expect(response.parsed_body[0]['id']).to eq('promo_123')
+        end
+
         it "only returns valid promo codes" do
           ::Stripe::PromotionCode.expects(:list).with(limit: 100).returns({
           data: [{
