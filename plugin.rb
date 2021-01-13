@@ -35,6 +35,7 @@ Discourse::Application.routes.append do
   get '/admin/plugins/discourse-subscriptions/subscriptions' => 'admin/plugins#index', constraints: AdminConstraint.new
   get '/admin/plugins/discourse-subscriptions/plans' => 'admin/plugins#index', constraints: AdminConstraint.new
   get '/admin/plugins/discourse-subscriptions/plans/:plan_id' => 'admin/plugins#index', constraints: AdminConstraint.new
+  get '/admin/plugins/discourse-subscriptions/coupons' => 'admin/plugins#index', constraints: AdminConstraint.new
   get 'u/:username/billing' => 'users#show', constraints: { username: USERNAME_ROUTE_FORMAT }
   get 'u/:username/billing/:id' => 'users#show', constraints: { username: USERNAME_ROUTE_FORMAT }
 end

@@ -11,6 +11,8 @@ DiscourseSubscriptions::Engine.routes.draw do
     resources :plans
     resources :subscriptions, only: [:index, :destroy]
     resources :products
+    resources :coupons, only: [:index, :create]
+    resource :coupons, only: [:destroy, :update]
   end
 
   namespace :user do

@@ -1,0 +1,44 @@
+{{#if model.unconfigured}}
+  <p>{{i18n 'discourse_subscriptions.admin.unconfigured'}}</p>
+  <p><a href="https://meta.discourse.org/t/discourse-subscriptions/140818/">Discourse Subscriptions on Meta</a></p>
+{{else}}
+  {{#if model}}
+    <table class="table discourse-patrons-table">
+      <thead>
+        <th>{{i18n 'discourse_subscriptions.admin.coupons.code'}}</th>
+        <th>{{i18n 'discourse_subscriptions.admin.coupons.discount'}}</th>
+        <th>{{i18n 'discourse_subscriptions.admin.coupons.times_redeemed'}}</th>
+        <th>{{i18n 'discourse_subscriptions.admin.coupons.active'}}</th>
+        <th>{{i18n 'discourse_subscriptions.admin.coupons.actions'}}</th>
+      </thead>
+      {{#each model as |coupon|}}
+        <tr>
+          <td>{{coupon.code}}</td>
+          <td>{{coupon.discount}}</td>
+          <td>{{coupon.times_redeemed}}</td>
+          <td>{{input type="checkbox" checked=coupon.active click=(action "toggleActive" coupon)}}</td>
+          <td>
+            {{d-button
+              action=(action "deleteCoupon")
+              actionParam=coupon
+              icon="trash-alt"
+              class="btn-danger btn btn-icon btn-no-text"}}
+          </td>
+        </tr>
+      {{/each}}
+    </table>
+  {{/if}}
+
+  {{#unless creating}}
+    {{d-button
+      action=(action "openCreateForm")
+      label="discourse_subscriptions.admin.coupons.create"
+      title="discourse_subscriptions.admin.coupons.create"
+      icon="plus"
+      class="btn btn-icon btn-primary create-coupon"}}
+  {{/unless}}
+
+  {{#if creating}}
+    {{create-coupon-form cancel=(action 'closeCreateForm') create=(action 'createNewCoupon')}}
+  {{/if}}
+{{/if}}

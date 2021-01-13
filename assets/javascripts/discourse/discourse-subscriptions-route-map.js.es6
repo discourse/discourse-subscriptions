@@ -14,6 +14,8 @@ export default {
         });
       });
 
+      this.route("coupons");
+
       this.route("subscriptions");
     });
   },
