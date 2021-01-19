@@ -74,6 +74,14 @@ fa_IR:
             product: محصول
             active: فعال
             created_at: ساخته شده
+        coupons:
+          title: تخفیف‌ها
+          code: کد تبلیغاتی
+          discount: با تخفیف
+          active: فعال؟
+          actions: عملیات
+          create: ایجاد تخفیف
+          promo_code: کد تبلیغاتی (حساس به حروف کوچک و بزرگ)
         subscriptions:
           subscription:
             user: کاربر
