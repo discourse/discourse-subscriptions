@@ -145,6 +145,15 @@ sv:
             active: Aktiv
             created_at: Skapad
             recurring: Återkommande plan?
+        coupons:
+          title: Rabattkoder
+          code: Kampanjkod
+          discount: Rabatt
+          times_redeemed: Gånger inlösta
+          active: Aktiv?
+          actions: Åtgärder
+          create: Skapa rabattkod
+          promo_code: Kampanjkod (skiftlägesokänslig)
         subscriptions:
           title: Prenumerationer
           subscription:

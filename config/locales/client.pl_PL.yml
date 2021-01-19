@@ -143,6 +143,15 @@ pl_PL:
             active: Aktywni
             created_at: Utworzono
             recurring: Plan cykliczny?
+        coupons:
+          title: Kupony
+          code: Kod promocyjny
+          discount: Zniżka
+          times_redeemed: Liczba użyć
+          active: Aktywny?
+          actions: Akcje
+          create: Utwórz kupon
+          promo_code: Kod promocyjny (bez rozróżniania wielkości liter)
         subscriptions:
           title: Subskrypcje
           subscription:

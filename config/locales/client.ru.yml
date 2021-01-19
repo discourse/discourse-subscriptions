@@ -145,6 +145,15 @@ ru:
             active: Активный
             created_at: Создано
             recurring: Повторяющийся план?
+        coupons:
+          title: Купоны
+          code: Промокод
+          discount: Скидка
+          times_redeemed: Время погашения
+          active: Активный?
+          actions: Действия
+          create: Создать купон
+          promo_code: Промокод (без учета регистра)
         subscriptions:
           title: Подписки
           subscription:
