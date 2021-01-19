@@ -4,4 +4,8 @@
 # To work with us on translations, join this project:
 # https://translate.discourse.org/
 
-bg: 
+bg:
+  discourse_subscriptions:
+    customer_not_found: Customer not found
+    card:
+      declined: Card Declined

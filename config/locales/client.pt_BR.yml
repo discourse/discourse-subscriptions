@@ -15,6 +15,9 @@ pt_BR:
     errors:
       discourse_patrons_amount_must_be_currency: "As quantias no valor devem ser escritas sem o símbolo de dólar (ex 1.50)"
   js:
+    filters:
+      subscribe:
+        help: Support this site by subscribing
     discourse_subscriptions:
       title: Assinaturas Discourse
       admin_navigation: Assinaturas
@@ -26,11 +29,13 @@ pt_BR:
         subscribe: Assinar
         user_activity:
           payments: Pagamentos
+      one_time_payment: One-Time Payment
       plans:
         purchase: Adquirir uma assinatura
         select: Selecione um plano de assinatura
         interval:
           adverb:
+            day: Daily
             week: Semanalmente
             month: Mensalmente
             year: Anualmente
@@ -53,19 +58,27 @@ pt_BR:
         subscriptions:
           id: ID da Assinatura
           status: Status
+          discounted: Discounted
+          renews: Renews
           created_at: Criado
+          cancel: cancel
+          cancelled: cancelled
           operations:
             destroy:
               confirm: Tem certeza que deseja cancelar essa assinatura?
       subscribe:
         title: Assinar
         no_products: No momento não existem produtos disponíveis.
+        unauthenticated: Log in or create an account to subscribe.
         card:
           title: Pagamento
         customer:
           title: Informações do consumidor
+        promo_code: Coupon
         buttons:
           subscribe: Assinar
+        purchased: Purchased
+        go_to_billing: Go to Billing
       billing:
         name: Nome completo
         email: E-mail
@@ -131,6 +144,16 @@ pt_BR:
             group_help: Esse é o grupo de usuários em que o cliente será adicionado ao realizar a assinatura.
             active: Ativos
             created_at: Criado
+            recurring: Recurring Plan?
+        coupons:
+          title: Coupons
+          code: Promo Code
+          discount: Discount
+          times_redeemed: Times Redeemed
+          active: Active?
+          actions: Actions
+          create: Create Coupon
+          promo_code: Promo Code (case-insensitive)
         subscriptions:
           title: Assinaturas
           subscription:
@@ -141,3 +164,5 @@ pt_BR:
             plan: Plano
             status: Status
             created_at: Criado
+        ask_refund: Refund the last payment made by the customer?
+        canceled: "The subscription is canceled."

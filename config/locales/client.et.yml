@@ -5,40 +5,164 @@
 # https://translate.discourse.org/
 
 et:
+  site_settings:
+    discourse_subscriptions_enabled: Enable the Discourse Subscriptions plugin.
+    discourse_subscriptions_extra_nav_subscribe: Show the subscribe button in the primary navigation
+    discourse_subscriptions_public_key: Stripe Publishable Key
+    discourse_subscriptions_secret_key: Stripe Secret Key
+    discourse_subscriptions_webhook_secret: Stripe Webhook Secret
+    discourse_subscriptions_currency: Default Currency Code. This can be overridden when creating a subscription plan.
+    errors:
+      discourse_patrons_amount_must_be_currency: "Currency amounts must be currencies without dollar symbol (eg 1.50)"
   js:
+    filters:
+      subscribe:
+        help: Support this site by subscribing
     discourse_subscriptions:
+      title: Discourse Subscriptions
+      admin_navigation: Subscriptions
       optional: Valikuline
+      navigation:
+        billing: Billing
+        payments: Payments
+        subscriptions: Subscriptions
+        subscribe: Subscribe
+        user_activity:
+          payments: Payments
+      one_time_payment: One-Time Payment
       plans:
+        purchase: Purchase a subscription
+        select: Select subscription plan
         interval:
           adverb:
+            day: Daily
             week: Iganädalaselt
             month: Igakuiselt
             year: Iga-aastaselt
+        payment_button: Subscribe
+        success: Thank you! Your subscription has been created.
+        incomplete: The payment is incomplete. Your subscription will be updated when payment is complete.
+        validate:
+          payment_options:
+            required: Please select a subscription plan.
       user:
         payments:
+          id: Payment ID
+          amount: Amount
           created_at: Loodud
+        payments_help: There are no payments
         plans:
+          rate: Rate
           product: Nimi
+        subscriptions_help: You have no active subscriptions.
         subscriptions:
+          id: Subscription ID
+          status: Status
+          discounted: Discounted
+          renews: Renews
           created_at: Loodud
+          cancel: cancel
+          cancelled: cancelled
+          operations:
+            destroy:
+              confirm: Are you sure you want to cancel this subscription?
+      subscribe:
+        title: Subscribe
+        no_products: There are currently no products available.
+        unauthenticated: Log in or create an account to subscribe.
+        card:
+          title: Payment
+        customer:
+          title: Customer Details
+        promo_code: Coupon
+        buttons:
+          subscribe: Subscribe
+        purchased: Purchased
+        go_to_billing: Go to Billing
       billing:
+        name: Full name
         email: E-post
+        phone: Phone Number
+      confirmation:
+        amount: Amount
+        last4: Card number
+      buttons:
+        make_payment: Make payment
+        confirm_payment: Confirm payment
+        success: Go back
       admin:
+        unconfigured: 'Stripe is not configured correctly. Please see Discourse Meta for information.'
         dashboard:
           title: Armatuurlaud
           table:
             head:
               user: Kasutaja
+              payment_intent: Payment ID
+              receipt_email: Receipt Email
+              amount: Amount
         products:
+          title: Products
+          operations:
+            create: Create New Product
+            update: Update Product
+            new: New Product
+            destroy:
+              confirm: Are you sure you want to destroy this product?
           product:
+            product_id: Product ID
+            name: Product Name
+            statement_descriptor: Statement Descriptor
+            statement_descriptor_help: Extra information about a product which will appear on your customer’s credit card statement.
+            plan_help: Create a pricing plan to subscribe customers to this product.
             description: Kirjeldus
+            description_help: This describes your subscription product.
             active: Aktiivne
+            active_help: Toggle this off until your product is ready for consumers.
             created_at: Loodud
+            updated_at: Updated
+          product_help: Before cutomers can subscribe to your site, you need to create at least one product and an associated plan.
         plans:
+          title: Pricing Plans
+          operations:
+            add: Add New Plan
+            create: Create Plan
+            update: Update Plan
+            create_help: Once a pricing plan is created, only its nickname, trial period and user group can be updated.
+            new: New Plan
+            destroy:
+              confirm: Are you sure you want to destroy this plan?
           plan:
+            nickname: Plan Nickname
+            nickname_help: This won't be visible to customers, but will help you find this plan later
+            plan_id: Plan ID
+            product: Product
+            interval: Billing Interval
+            amount: Amount
+            trial: Trial Period Days
+            trial_help: Subscriptions to this plan will automatically start with a free trial of this length
+            group: User Group
+            group_help: This is the discourse user group the customer gets added to when the subscription is created.
             active: Aktiivne
             created_at: Loodud
+            recurring: Recurring Plan?
+        coupons:
+          title: Coupons
+          code: Promo Code
+          discount: Discount
+          times_redeemed: Times Redeemed
+          active: Active?
+          actions: Actions
+          create: Create Coupon
+          promo_code: Promo Code (case-insensitive)
         subscriptions:
+          title: Subscriptions
           subscription:
             user: Kasutaja
+            subscription_id: Subscription ID
+            customer: Customer
+            product: Product
+            plan: Plan
+            status: Status
             created_at: Loodud
+        ask_refund: Refund the last payment made by the customer?
+        canceled: "The subscription is canceled."

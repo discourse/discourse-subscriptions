@@ -8,6 +8,7 @@ pl_PL:
   site_settings:
     discourse_subscriptions_enabled: Włącz wtyczkę Discourse Subscriptions.
     discourse_subscriptions_extra_nav_subscribe: Pokaż przycisk subskrypcji w podstawowej nawigacji
+    discourse_subscriptions_public_key: Stripe Publishable Key
     discourse_subscriptions_secret_key: Sekretny klucz Stripe
     discourse_subscriptions_webhook_secret: Webhook sekretnego klucza Stripe
     discourse_subscriptions_currency: Domyślny kod waluty. Można to zmienić podczas tworzenia planu subskrypcji.
@@ -110,6 +111,7 @@ pl_PL:
           product:
             product_id: ID produktu
             name: Nazwa produktu
+            statement_descriptor: Statement Descriptor
             statement_descriptor_help: Dodatkowe informacje o produkcie, które pojawią się na wyciągu z karty kredytowej Twojego klienta.
             plan_help: Utwórz plan cenowy, aby subskrybować klientów tego produktu.
             description: Opis
@@ -143,6 +145,15 @@ pl_PL:
             active: Aktywni
             created_at: Utworzono
             recurring: Plan cykliczny?
+        coupons:
+          title: Kupony
+          code: Kod promocyjny
+          discount: Zniżka
+          times_redeemed: Liczba użyć
+          active: Aktywny?
+          actions: Akcje
+          create: Utwórz kupon
+          promo_code: Kod promocyjny (bez rozróżniania wielkości liter)
         subscriptions:
           title: Subskrypcje
           subscription:

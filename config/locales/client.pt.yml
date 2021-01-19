@@ -6,9 +6,18 @@
 
 pt:
   site_settings:
+    discourse_subscriptions_enabled: Enable the Discourse Subscriptions plugin.
+    discourse_subscriptions_extra_nav_subscribe: Show the subscribe button in the primary navigation
+    discourse_subscriptions_public_key: Stripe Publishable Key
+    discourse_subscriptions_secret_key: Stripe Secret Key
+    discourse_subscriptions_webhook_secret: Stripe Webhook Secret
+    discourse_subscriptions_currency: Default Currency Code. This can be overridden when creating a subscription plan.
     errors:
       discourse_patrons_amount_must_be_currency: "Os valores das moedas devem ser moedas sem o símbolo do dólar (por exemplo, 1.50)"
   js:
+    filters:
+      subscribe:
+        help: Support this site by subscribing
     discourse_subscriptions:
       title: Discourse - Subscrições
       admin_navigation: Subscrições
@@ -20,22 +29,26 @@ pt:
         subscribe: Subscrever
         user_activity:
           payments: Pagamentos
+      one_time_payment: One-Time Payment
       plans:
         purchase: Comprar uma subscrição
         select: Selecionar plano de subscrição
         interval:
           adverb:
+            day: Daily
             week: Semanalmente
             month: Mensalmente
             year: Anualmente
         payment_button: Subscrever
         success: Obrigado! A sua subscrição foi criada.
+        incomplete: The payment is incomplete. Your subscription will be updated when payment is complete.
         validate:
           payment_options:
             required: Por favor, selecione um plano de subscrição.
       user:
         payments:
           id: Id. de Pagamento
+          amount: Amount
           created_at: Criado
         payments_help: Não existem pagamentos
         plans:
@@ -45,58 +58,102 @@ pt:
         subscriptions:
           id: Id. da Subscrição
           status: Estado
+          discounted: Discounted
+          renews: Renews
           created_at: Criado
+          cancel: cancel
+          cancelled: cancelled
+          operations:
+            destroy:
+              confirm: Are you sure you want to cancel this subscription?
       subscribe:
         title: Subscrever
+        no_products: There are currently no products available.
+        unauthenticated: Log in or create an account to subscribe.
         card:
           title: Pagamento
         customer:
           title: Detalhes do Cliente
+        promo_code: Coupon
         buttons:
           subscribe: Subscrever
+        purchased: Purchased
+        go_to_billing: Go to Billing
       billing:
         name: Nome completo
         email: E-mail
         phone: Número de Telefone
       confirmation:
+        amount: Amount
         last4: Número do cartão
       buttons:
         make_payment: Efetuar pagamento
         confirm_payment: Confirmar pagamento
         success: Anterior
       admin:
+        unconfigured: 'Stripe is not configured correctly. Please see Discourse Meta for information.'
         dashboard:
           title: Painel
           table:
             head:
               user: Utilizador
               payment_intent: Id. de Pagamento
+              receipt_email: Receipt Email
+              amount: Amount
         products:
           title: Produtos
           operations:
             create: Criar Novo Produto
             update: Atualizar Produto
             new: Novo Produto
+            destroy:
+              confirm: Are you sure you want to destroy this product?
           product:
             product_id: Id. do Produto
             name: Nome do Produto
             statement_descriptor: Descritor do Extrato
             statement_descriptor_help: Informação extra cerca do produto que irá aparecer no extrato do cartão de crédito do seu cliente.
+            plan_help: Create a pricing plan to subscribe customers to this product.
             description: Descrição
+            description_help: This describes your subscription product.
             active: Ativo
+            active_help: Toggle this off until your product is ready for consumers.
             created_at: Criado
+            updated_at: Updated
+          product_help: Before cutomers can subscribe to your site, you need to create at least one product and an associated plan.
         plans:
           title: Planos de Preço
           operations:
             add: Adicionar Novo Plano
             create: Criar Plano
             update: Atualizar Plano
+            create_help: Once a pricing plan is created, only its nickname, trial period and user group can be updated.
             new: Novo Plano
+            destroy:
+              confirm: Are you sure you want to destroy this plan?
           plan:
+            nickname: Plan Nickname
+            nickname_help: This won't be visible to customers, but will help you find this plan later
             plan_id: Id. do Plano
             product: Produto
+            interval: Billing Interval
+            amount: Amount
+            trial: Trial Period Days
+            trial_help: Subscriptions to this plan will automatically start with a free trial of this length
+            group: User Group
+            group_help: This is the discourse user group the customer gets added to when the subscription is created.
             active: Ativo
             created_at: Criado
+            recurring: Recurring Plan?
+        coupons:
+          title: Coupons
+          code: Promo Code
+          discount: Discount
+          times_redeemed: Times Redeemed
+          active: Active?
+          actions: Actions
+          create: Create Coupon
+          promo_code: Promo Code (case-insensitive)
         subscriptions:
           title: Subscrições
           subscription:
@@ -107,3 +164,5 @@ pt:
             plan: Plano
             status: Estado
             created_at: Criado
+        ask_refund: Refund the last payment made by the customer?
+        canceled: "The subscription is canceled."

@@ -15,6 +15,9 @@ fr:
     errors:
       discourse_patrons_amount_must_be_currency: "Le montant doit être indiqué sans le symbole de la monnaie (ex. 1.50)"
   js:
+    filters:
+      subscribe:
+        help: Support this site by subscribing
     discourse_subscriptions:
       title: Discourse Subscriptions
       admin_navigation: Souscriptions
@@ -26,11 +29,13 @@ fr:
         subscribe: Souscrire
         user_activity:
           payments: Paiements
+      one_time_payment: One-Time Payment
       plans:
         purchase: Abonnement
         select: Choisir une formule
         interval:
           adverb:
+            day: Daily
             week: Hebdomadaire
             month: Mensuel
             year: Annuel
@@ -53,17 +58,23 @@ fr:
         subscriptions:
           id: Code de la souscription
           status: Statut
+          discounted: Discounted
+          renews: Renews
           created_at: Création
+          cancel: cancel
+          cancelled: cancelled
           operations:
             destroy:
               confirm: Êtes-vous sûrs de vouloir annuler cette souscription ?
       subscribe:
         title: Souscrire
         no_products: Aucun produit disponible pour le moment.
+        unauthenticated: Log in or create an account to subscribe.
         card:
           title: Paiement
         customer:
           title: Informations client
+        promo_code: Coupon
         buttons:
           subscribe: Souscrire
         purchased: Acheté
@@ -133,6 +144,16 @@ fr:
             group_help: L'utilisateur aura accès à ce groupe quand il aura souscrit à ce produit.
             active: Actif
             created_at: Création
+            recurring: Recurring Plan?
+        coupons:
+          title: Coupons
+          code: Promo Code
+          discount: Discount
+          times_redeemed: Times Redeemed
+          active: Active?
+          actions: Actions
+          create: Create Coupon
+          promo_code: Promo Code (case-insensitive)
         subscriptions:
           title: Souscriptions
           subscription:
@@ -143,3 +164,5 @@ fr:
             plan: Plan
             status: Statut
             created_at: Création
+        ask_refund: Refund the last payment made by the customer?
+        canceled: "The subscription is canceled."

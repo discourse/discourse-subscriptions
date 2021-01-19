@@ -58,6 +58,7 @@ es:
         subscriptions:
           id: ID de suscripción
           status: Estado
+          discounted: Discounted
           renews: Se renueva
           created_at: Creado
           cancel: cancelar
@@ -73,6 +74,7 @@ es:
           title: Pagos
         customer:
           title: Detalles del cliente
+        promo_code: Coupon
         buttons:
           subscribe: Suscribir
         purchased: Comprado
@@ -143,6 +145,15 @@ es:
             active: Activo
             created_at: Creado
             recurring: '¿Plan recurrente?'
+        coupons:
+          title: Coupons
+          code: Promo Code
+          discount: Discount
+          times_redeemed: Times Redeemed
+          active: Active?
+          actions: Actions
+          create: Create Coupon
+          promo_code: Promo Code (case-insensitive)
         subscriptions:
           title: Suscripciones
           subscription:

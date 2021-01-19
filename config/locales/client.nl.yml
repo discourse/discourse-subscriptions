@@ -58,6 +58,7 @@ nl:
         subscriptions:
           id: Abonnements-ID
           status: Status
+          discounted: Discounted
           renews: Vernieuwt
           created_at: Gemaakt
           cancel: annuleren
@@ -68,10 +69,12 @@ nl:
       subscribe:
         title: Abonneren
         no_products: Er zijn momenteel geen producten beschikbaar.
+        unauthenticated: Log in or create an account to subscribe.
         card:
           title: Betaling
         customer:
           title: Klantgegevens
+        promo_code: Coupon
         buttons:
           subscribe: Abonneren
         purchased: Aangeschaft
@@ -142,6 +145,15 @@ nl:
             active: Actief
             created_at: Gemaakt
             recurring: Herhalend abonnement?
+        coupons:
+          title: Coupons
+          code: Promo Code
+          discount: Discount
+          times_redeemed: Times Redeemed
+          active: Active?
+          actions: Actions
+          create: Create Coupon
+          promo_code: Promo Code (case-insensitive)
         subscriptions:
           title: Abonnementen
           subscription:
