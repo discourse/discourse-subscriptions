@@ -93,7 +93,10 @@ module DiscourseSubscriptions
           name: params[:name],
           active: params[:active],
           statement_descriptor: params[:statement_descriptor],
-          metadata: { description: params.dig(:metadata, :description) }
+          metadata: {
+            description: params.dig(:metadata, :description),
+            repurchaseable: params.dig(:metadata, :repurchaseable)
+          }
         }
       end
     end

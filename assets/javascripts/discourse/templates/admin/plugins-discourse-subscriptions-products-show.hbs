@@ -24,6 +24,13 @@
     </div>
   </p>
   <p>
+    <label for="repurchaseable">{{i18n 'discourse_subscriptions.admin.products.product.repurchaseable'}}</label>
+    {{input type="checkbox" name="repurchaseable" checked=model.product.metadata.repurchaseable}}
+    <div class="control-instructions">
+      {{i18n 'discourse_subscriptions.admin.products.product.repurchase_help'}}
+    </div>
+  </p>
+  <p>
     <label for="active">{{i18n 'discourse_subscriptions.admin.products.product.active'}}</label>
     {{input type="checkbox" name="active" checked=model.product.active}}
     <div class="control-instructions">

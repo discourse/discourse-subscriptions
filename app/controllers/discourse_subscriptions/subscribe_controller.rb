@@ -136,7 +136,8 @@ module DiscourseSubscriptions
         id: product[:id],
         name: product[:name],
         description: PrettyText.cook(product[:metadata][:description]),
-        subscribed: current_user_products.include?(product[:id])
+        subscribed: current_user_products.include?(product[:id]),
+        repurchaseable: product[:metadata][:repurchaseable]
       }
     end
 

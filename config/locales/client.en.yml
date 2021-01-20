@@ -111,6 +111,8 @@ en:
             plan_help: Create a pricing plan to subscribe customers to this product.
             description: Description
             description_help: This describes your subscription product.
+            repurchaseable: Repurchaseable?
+            repurchase_help: Allow product and associated plans to be purchased multiple times
             active: Active
             active_help: Toggle this off until your product is ready for consumers.
             created_at: Created
