@@ -1,6 +1,5 @@
-import EmberObject from "@ember/object";
+import EmberObject, { computed } from "@ember/object";
 import discourseComputed from "discourse-common/utils/decorators";
-import { computed } from "@ember/object";
 
 const Plan = EmberObject.extend({
   amountDollars: computed("unit_amount", {
