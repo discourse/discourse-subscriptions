@@ -81,9 +81,15 @@ module DiscourseSubscriptions
             post "/s/admin/products.json", params: { statement_descriptor: '' }
           end
 
-          it 'has a description' do
-            ::Stripe::Product.expects(:create).with(has_entry(metadata: { description: 'Oi, I think he just said bless be all the bignoses!' }))
-            post "/s/admin/products.json", params: { metadata: { description: 'Oi, I think he just said bless be all the bignoses!' } }
+          it 'has metadata' do
+            ::Stripe::Product.expects(:create).with(has_entry(metadata: { description: 'Oi, I think he just said bless be all the bignoses!', repurchaseable: 'false' }))
+
+            post "/s/admin/products.json", params: {
+              metadata: {
+                description: 'Oi, I think he just said bless be all the bignoses!',
+                repurchaseable: 'false'
+              }
+            }
           end
         end
 

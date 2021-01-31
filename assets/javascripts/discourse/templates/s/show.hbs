@@ -12,7 +12,7 @@
     </p>
   </div>
   <div class="section-column">
-    {{#unless model.product.subscribed}}
+    {{#if canPurchase}}
       <h2>
         {{i18n 'discourse_subscriptions.subscribe.card.title'}}
       </h2>
@@ -45,6 +45,6 @@
         }}
       {{/if}}
 
-    {{/unless}}
+    {{/if}}
   </div>
 </div>

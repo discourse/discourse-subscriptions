@@ -12,7 +12,8 @@ module DiscourseSubscriptions
           id: "prodct_23456",
           name: "Very Special Product",
           metadata: {
-            description: "Many people listened to my phone call with the Ukrainian President while it was being made"
+            description: "Many people listened to my phone call with the Ukrainian President while it was being made",
+            repurchaseable: false
           },
           otherstuff: true,
         }
@@ -48,7 +49,8 @@ module DiscourseSubscriptions
             "id" => "prodct_23456",
             "name" => "Very Special Product",
             "description" => PrettyText.cook("Many people listened to my phone call with the Ukrainian President while it was being made"),
-            "subscribed" => false
+            "subscribed" => false,
+            "repurchaseable" => false,
           }])
         end
 
@@ -82,7 +84,8 @@ module DiscourseSubscriptions
              "id" => "prodct_23456",
              "name" => "Very Special Product",
              "description" => PrettyText.cook("Many people listened to my phone call with the Ukrainian President while it was being made"),
-             "subscribed" => false
+             "subscribed" => false,
+             "repurchaseable" => false
            },
            "plans" => [
              { "currency" => "aud", "id" => "plan_id123", "recurring" => { "interval" => "year" }, "unit_amount" => 1220 },

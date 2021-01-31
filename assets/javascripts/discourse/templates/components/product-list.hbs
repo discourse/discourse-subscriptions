@@ -2,28 +2,6 @@
   <p>{{i18n 'discourse_subscriptions.subscribe.no_products'}}</p>
 {{else}}
   {{#each products as |product|}}
-    <div class="product">
-      <h2>{{product.name}}</h2>
-
-      <p class="product-description">
-        {{html-safe product.description}}
-      </p>
-
-      {{#if isLoggedIn}}
-        <div class="product-purchase">
-          {{#if product.subscribed}}
-            <span class="purchased">&#x2713; {{i18n 'discourse_subscriptions.subscribe.purchased'}}</span>
-            {{#link-to "user.billing.subscriptions" currentUser.username class="billing-link"}}
-              {{i18n 'discourse_subscriptions.subscribe.go_to_billing'}}
-            {{/link-to}}
-          {{else}}
-            {{#link-to "s.show" product.id disabled=product.subscribed class="btn btn-primary"}}
-              {{i18n 'discourse_subscriptions.subscribe.title'}}
-            {{/link-to}}
-          {{/if}}
-        </div>
-      {{/if}}
-    </div>
+    {{product-item product=product isLoggedIn=isLoggedIn}}
   {{/each}}
-
 {{/if}}
