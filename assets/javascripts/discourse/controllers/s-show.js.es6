@@ -27,9 +27,7 @@ export default Controller.extend({
 
   @discourseComputed("model.product.repurchaseable", "model.product.subscribed")
   canPurchase(repurchaseable, subscribed) {
-    if (repurchaseable && subscribed) {
-      return true;
-    } else if (!repurchaseable && subscribed) {
+    if (!repurchaseable && subscribed) {
       return false;
     }
 
