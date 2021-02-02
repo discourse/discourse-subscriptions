@@ -38,9 +38,20 @@ AdminSubscription.reopenClass({
       if (result === null) {
         return { unconfigured: true };
       }
-      return result.map((subscription) =>
+      result.data = result.data.map((subscription) =>
         AdminSubscription.create(subscription)
       );
+      return result;
+    });
+  },
+  loadMore(page) {
+    return ajax(`/s/admin/subscriptions?page=${page}`, {
+      method: "get",
+    }).then((result) => {
+      result.data = result.data.map((subscription) =>
+        AdminSubscription.create(subscription)
+      );
+      return result;
     });
   },
 });

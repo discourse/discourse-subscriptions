@@ -9,12 +9,38 @@ module DiscourseSubscriptions
 
       def index
         begin
+          page = params[:page]
           subscription_ids = Subscription.all.pluck(:external_id)
-          subscriptions = []
+          subscriptions = {
+            has_more: false,
+            data: [],
+            length: 0
+          }
 
           if subscription_ids.present? && is_stripe_configured?
-            subscriptions = ::Stripe::Subscription.list(expand: ['data.plan.product'])
-            subscriptions = subscriptions.select { |sub| subscription_ids.include?(sub[:id]) }
+            current_page = page.to_i || 0
+            while subscriptions[:length] < 10
+              current_set = []
+
+              current_set = ::Stripe::Subscription.list(expand: ['data.plan.product'], limit: 10, starting_after: subscriptions[:data].last)
+
+              if page && subscriptions[:data].empty?
+                while page.to_i > current_page && current_set[:has_more] == true do
+                  current_set = ::Stripe::Subscription.list(expand: ['data.plan.product'], limit: 10, starting_after: current_set[:data].last)
+                  current_page += 1
+                end
+              end
+
+              current_set['data'] = current_set['data'].select { |sub| subscription_ids.include?(sub[:id]) }
+              # logic currently loops if current set data is empty
+              unless current_set['data'] == subscriptions[:data] && current_set['data'].empty?
+                subscriptions[:data] = subscriptions[:data].concat(current_set['data'])
+              end
+              subscriptions[:length] = subscriptions[:data].length
+              subscriptions[:has_more] = current_set[:has_more]
+              subscriptions[:next_page] = current_page += 1 unless current_set[:has_more] == false
+              break if subscriptions[:has_more] == false
+            end
           elsif !is_stripe_configured?
             subscriptions = nil
           end
