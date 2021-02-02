@@ -116,6 +116,8 @@ he:
             plan_help: יצירת תכנית תשלום לרישום לקוחות למוצר הזה.
             description: תיאור
             description_help: מתאר את מוצר המינוי שלך.
+            repurchaseable: ניתן לרכישה חוזרת?
+            repurchase_help: לאפשר לרכוש מוצר ותכניות נלוות מספר פעמים
             active: פעיל
             active_help: יש לכבות את זה עד שהמוצר שלך מוכן לקבל לקוחות.
             created_at: נוצר

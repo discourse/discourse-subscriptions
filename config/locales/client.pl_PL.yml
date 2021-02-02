@@ -114,6 +114,8 @@ pl_PL:
             plan_help: Utwórz plan cenowy, aby subskrybować klientów tego produktu.
             description: Opis
             description_help: To opisuje produkt objęty subskrypcją.
+            repurchaseable: Możliwość ponownego zakupu?
+            repurchase_help: Zezwalaj na wielokrotne kupowanie produktów i powiązanych planów
             active: Aktywni
             active_help: Wyłącz tę opcję, aż produkt będzie gotowy dla konsumentów.
             created_at: Utworzono
