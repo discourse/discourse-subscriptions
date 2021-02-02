@@ -116,6 +116,8 @@ sv:
             plan_help: Skapa en prislista för prenumeranter för denna produkt.
             description: Beskrivning
             description_help: Detta beskriver din prenumerationsprodukt.
+            repurchaseable: Återköpbar?
+            repurchase_help: Tillåt flera köp av produkten och tillhörande planer
             active: Aktiv
             active_help: Avaktivera denna tills din produkt är redo för kunder.
             created_at: Skapad
