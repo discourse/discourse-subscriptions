@@ -25,20 +25,24 @@ module DiscourseSubscriptions
               current_set = ::Stripe::Subscription.list(expand: ['data.plan.product'], limit: 10, starting_after: subscriptions[:data].last)
 
               if page && subscriptions[:data].empty?
-                while page.to_i > current_page && current_set[:has_more] == true do
+                while page.to_i > current_page && current_set[:has_more] do
                   current_set = ::Stripe::Subscription.list(expand: ['data.plan.product'], limit: 10, starting_after: current_set[:data].last)
                   current_page += 1
                 end
               end
 
-              current_set['data'] = current_set['data'].select { |sub| subscription_ids.include?(sub[:id]) }
-              # logic currently loops if current set data is empty
-              unless current_set['data'] == subscriptions[:data] && current_set['data'].empty?
-                subscriptions[:data] = subscriptions[:data].concat(current_set['data'])
+              squeezed_set = []
+
+              while squeezed_set.empty? && current_set[:has_more] do
+                squeezed_set = current_set['data'].select { |sub| subscription_ids.include?(sub[:id]) }
+                current_set = ::Stripe::Subscription.list(expand: ['data.plan.product'], limit: 10, starting_after: current_set[:data].last)
+                current_page += 1
               end
+
+              subscriptions[:data] = subscriptions[:data].concat(squeezed_set)
               subscriptions[:length] = subscriptions[:data].length
               subscriptions[:has_more] = current_set[:has_more]
-              subscriptions[:next_page] = current_page += 1 unless current_set[:has_more] == false
+              subscriptions[:next_page] = current_set[:has_more] ? current_page += 1 : nil
               break if subscriptions[:has_more] == false
             end
           elsif !is_stripe_configured?
