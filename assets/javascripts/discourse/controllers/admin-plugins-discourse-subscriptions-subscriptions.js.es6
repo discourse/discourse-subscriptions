@@ -18,7 +18,7 @@ export default Controller.extend({
       if (!this.loading && this.canLoadMore) {
         this.set("loading", true);
 
-        AdminSubscription.loadMore(this.model.next_page).then((result) => {
+        AdminSubscription.loadMore(this.model.last_record).then((result) => {
           const updated = this.model.data.concat(result.data);
           this.set("model", result);
           this.set("model.data", updated);

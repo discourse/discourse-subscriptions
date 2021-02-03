@@ -44,8 +44,8 @@ AdminSubscription.reopenClass({
       return result;
     });
   },
-  loadMore(page) {
-    return ajax(`/s/admin/subscriptions?page=${page}`, {
+  loadMore(lastRecord) {
+    return ajax(`/s/admin/subscriptions?last_record=${lastRecord}`, {
       method: "get",
     }).then((result) => {
       result.data = result.data.map((subscription) =>

@@ -7,42 +7,31 @@ module DiscourseSubscriptions
       include DiscourseSubscriptions::Group
       before_action :set_api_key
 
+      PAGE_LIMIT = 10
+
       def index
         begin
-          page = params[:page]
           subscription_ids = Subscription.all.pluck(:external_id)
           subscriptions = {
             has_more: false,
             data: [],
-            length: 0
+            length: 0,
+            last_record: params[:last_record]
           }
 
           if subscription_ids.present? && is_stripe_configured?
-            current_page = page.to_i || 0
-            while subscriptions[:length] < 10
-              current_set = []
+            while subscriptions[:length] < PAGE_LIMIT
+              current_set = get_subscriptions(subscriptions[:last_record])
 
-              current_set = ::Stripe::Subscription.list(expand: ['data.plan.product'], limit: 10, starting_after: subscriptions[:data].last)
-
-              if page && subscriptions[:data].empty?
-                while page.to_i > current_page && current_set[:has_more] do
-                  current_set = ::Stripe::Subscription.list(expand: ['data.plan.product'], limit: 10, starting_after: current_set[:data].last)
-                  current_page += 1
-                end
+              until valid_subscriptions = find_valid_subscriptions(current_set['data'], subscription_ids) do
+                current_set = get_subscriptions(current_set[:data].last)
+                break if current_set[:has_more] == false
               end
 
-              squeezed_set = []
-
-              while squeezed_set.empty? && current_set[:has_more] do
-                squeezed_set = current_set['data'].select { |sub| subscription_ids.include?(sub[:id]) }
-                current_set = ::Stripe::Subscription.list(expand: ['data.plan.product'], limit: 10, starting_after: current_set[:data].last)
-                current_page += 1
-              end
-
-              subscriptions[:data] = subscriptions[:data].concat(squeezed_set)
+              subscriptions[:data] = subscriptions[:data].concat(valid_subscriptions.to_a)
+              subscriptions[:last_record] = current_set['data'].last[:id]
               subscriptions[:length] = subscriptions[:data].length
               subscriptions[:has_more] = current_set[:has_more]
-              subscriptions[:next_page] = current_set[:has_more] ? current_page += 1 : nil
               break if subscriptions[:has_more] == false
             end
           elsif !is_stripe_configured?
@@ -83,6 +72,15 @@ module DiscourseSubscriptions
       end
 
       private
+
+      def get_subscriptions(start)
+        ::Stripe::Subscription.list(expand: ['data.plan.product'], limit: PAGE_LIMIT, starting_after: start)
+      end
+
+      def find_valid_subscriptions(data, ids)
+        valid = data.select { |sub| ids.include?(sub[:id]) }
+        valid.empty? ? nil : valid
+      end
 
       # this will only refund the most recent subscription payment
       def refund_subscription(subscription_id)
