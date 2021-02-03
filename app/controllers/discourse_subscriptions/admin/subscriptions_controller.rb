@@ -23,13 +23,13 @@ module DiscourseSubscriptions
             while subscriptions[:length] < PAGE_LIMIT
               current_set = get_subscriptions(subscriptions[:last_record])
 
-              until valid_subscriptions = find_valid_subscriptions(current_set['data'], subscription_ids) do
+              until valid_subscriptions = find_valid_subscriptions(current_set[:data], subscription_ids) do
                 current_set = get_subscriptions(current_set[:data].last)
                 break if current_set[:has_more] == false
               end
 
               subscriptions[:data] = subscriptions[:data].concat(valid_subscriptions.to_a)
-              subscriptions[:last_record] = current_set['data'].last[:id]
+              subscriptions[:last_record] = current_set[:data].last[:id] if current_set[:data].present?
               subscriptions[:length] = subscriptions[:data].length
               subscriptions[:has_more] = current_set[:has_more]
               break if subscriptions[:has_more] == false
