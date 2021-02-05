@@ -16,12 +16,14 @@ export default Controller.extend({
       if (!this.loading && this.model.has_more) {
         this.set("loading", true);
 
-        return AdminSubscription.loadMore(this.model.last_record).then((result) => {
-          const updated = this.model.data.concat(result.data);
-          this.set("model", result);
-          this.set("model.data", updated);
-          this.set("loading", false);
-        });
+        return AdminSubscription.loadMore(this.model.last_record).then(
+          (result) => {
+            const updated = this.model.data.concat(result.data);
+            this.set("model", result);
+            this.set("model.data", updated);
+            this.set("loading", false);
+          }
+        );
       }
     },
   },
