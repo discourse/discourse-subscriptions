@@ -2,42 +2,45 @@
   <p>{{i18n 'discourse_subscriptions.admin.unconfigured'}}</p>
   <p><a href="https://meta.discourse.org/t/discourse-subscriptions/140818/">Discourse Subscriptions on Meta</a></p>
 {{else}}
-  <table class="table discourse-patrons-table">
-    <thead>
-      <tr>
-        <th>{{i18n 'discourse_subscriptions.admin.subscriptions.subscription.user'}}</th>
-        <th>{{i18n 'discourse_subscriptions.admin.subscriptions.subscription.subscription_id'}}</th>
-        <th>{{i18n 'discourse_subscriptions.admin.subscriptions.subscription.customer'}}</th>
-        <th>{{i18n 'discourse_subscriptions.admin.subscriptions.subscription.product'}}</th>
-        <th>{{i18n 'discourse_subscriptions.admin.subscriptions.subscription.plan'}}</th>
-        <th>{{i18n 'discourse_subscriptions.admin.subscriptions.subscription.status'}}</th>
-        <th class="td-right">{{i18n 'discourse_subscriptions.admin.subscriptions.subscription.created_at'}}</th>
-        <th></th>
-      </tr>
-    </thead>
-    {{#each model as |subscription|}}
-      <tr>
-        <td>
-          {{#if subscription.metadataUserExists}}
-            <a href="{{unbound subscription.subscriptionUserPath}}">
-              {{subscription.metadata.username}}
-            </a>
-          {{/if}}
-        </td>
-        <td>{{subscription.id}}</td>
-        <td>{{subscription.customer}}</td>
-        <td>{{subscription.plan.product.name}}</td>
-        <td>{{subscription.plan.nickname}}</td>
-        <td>{{subscription.status}}</td>
-        <td class="td-right">{{format-unix-date subscription.created}}</td>
-        <td class="td-right">
-          {{#if subscription.loading}}
-            {{loading-spinner size="small"}}
-          {{else}}
-            {{d-button disabled=subscription.canceled label="cancel" action=(action "showCancelModal" subscription) icon="times"}}
-          {{/if}}
-        </td>
-      </tr>
-    {{/each}}
-  </table>
+  {{#load-more selector=".discourse-patrons-table tr" action=(action "loadMore")}}
+    <table class="table discourse-patrons-table">
+      <thead>
+        <tr>
+          <th>{{i18n 'discourse_subscriptions.admin.subscriptions.subscription.user'}}</th>
+          <th>{{i18n 'discourse_subscriptions.admin.subscriptions.subscription.subscription_id'}}</th>
+          <th>{{i18n 'discourse_subscriptions.admin.subscriptions.subscription.customer'}}</th>
+          <th>{{i18n 'discourse_subscriptions.admin.subscriptions.subscription.product'}}</th>
+          <th>{{i18n 'discourse_subscriptions.admin.subscriptions.subscription.plan'}}</th>
+          <th>{{i18n 'discourse_subscriptions.admin.subscriptions.subscription.status'}}</th>
+          <th class="td-right">{{i18n 'discourse_subscriptions.admin.subscriptions.subscription.created_at'}}</th>
+          <th></th>
+        </tr>
+      </thead>
+      {{#each model.data as |subscription|}}
+        <tr>
+          <td>
+            {{#if subscription.metadataUserExists}}
+              <a href="{{unbound subscription.subscriptionUserPath}}">
+                {{subscription.metadata.username}}
+              </a>
+            {{/if}}
+          </td>
+          <td>{{subscription.id}}</td>
+          <td>{{subscription.customer}}</td>
+          <td>{{subscription.plan.product.name}}</td>
+          <td>{{subscription.plan.nickname}}</td>
+          <td>{{subscription.status}}</td>
+          <td class="td-right">{{format-unix-date subscription.created}}</td>
+          <td class="td-right">
+            {{#if subscription.loading}}
+              {{loading-spinner size="small"}}
+            {{else}}
+              {{d-button disabled=subscription.canceled label="cancel" action=(action "showCancelModal" subscription) icon="times"}}
+            {{/if}}
+          </td>
+        </tr>
+      {{/each}}
+    </table>
+  {{/load-more}}
+  {{conditional-loading-spinner condition=loading}}
 {{/if}}

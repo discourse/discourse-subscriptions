@@ -13,6 +13,7 @@ module DiscourseSubscriptions
 
     before do
       Fabricate(:subscription, external_id: "sub_12345", customer_id: customer.id)
+      Fabricate(:subscription, external_id: "sub_77777", customer_id: customer.id)
     end
 
     context 'unauthenticated' do
@@ -34,20 +35,43 @@ module DiscourseSubscriptions
       before { sign_in(admin) }
 
       describe "index" do
-        it "gets the subscriptions and products" do
+        before do
           SiteSetting.discourse_subscriptions_public_key = "public-key"
           SiteSetting.discourse_subscriptions_secret_key = "secret-key"
-          ::Stripe::Subscription.expects(:list).with(expand: ['data.plan.product']).returns(
-            [
-              { id: "sub_12345" },
-              { id: "sub_nope" }
-            ]
-          )
+        end
+
+        it "gets the subscriptions and products" do
+          ::Stripe::Subscription.expects(:list)
+            .with(expand: ['data.plan.product'], limit: 10, starting_after: nil)
+            .returns(
+              has_more: false,
+              data: [
+                { id: "sub_12345" },
+                { id: "sub_nope" }
+              ]
+            )
           get "/s/admin/subscriptions.json"
-          subscriptions = response.parsed_body[0]["id"]
+          subscriptions = response.parsed_body["data"][0]["id"]
 
           expect(response.status).to eq(200)
           expect(subscriptions).to eq("sub_12345")
+        end
+
+        it "handles starting at a different point in the set" do
+          ::Stripe::Subscription.expects(:list)
+            .with(expand: ['data.plan.product'], limit: 10, starting_after: 'sub_nope')
+            .returns(
+              has_more: false,
+              data: [
+                { id: "sub_77777" },
+                { id: "sub_yepnoep" }
+              ]
+            )
+          get "/s/admin/subscriptions.json", params: { last_record: 'sub_nope' }
+          subscriptions = response.parsed_body["data"][0]["id"]
+
+          expect(response.status).to eq(200)
+          expect(subscriptions).to eq("sub_77777")
         end
       end
 

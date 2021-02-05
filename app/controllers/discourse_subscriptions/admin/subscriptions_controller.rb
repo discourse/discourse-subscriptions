@@ -7,14 +7,33 @@ module DiscourseSubscriptions
       include DiscourseSubscriptions::Group
       before_action :set_api_key
 
+      PAGE_LIMIT = 10
+
       def index
         begin
           subscription_ids = Subscription.all.pluck(:external_id)
-          subscriptions = []
+          subscriptions = {
+            has_more: false,
+            data: [],
+            length: 0,
+            last_record: params[:last_record]
+          }
 
           if subscription_ids.present? && is_stripe_configured?
-            subscriptions = ::Stripe::Subscription.list(expand: ['data.plan.product'])
-            subscriptions = subscriptions.select { |sub| subscription_ids.include?(sub[:id]) }
+            while subscriptions[:length] < PAGE_LIMIT
+              current_set = get_subscriptions(subscriptions[:last_record])
+
+              until valid_subscriptions = find_valid_subscriptions(current_set[:data], subscription_ids) do
+                current_set = get_subscriptions(current_set[:data].last)
+                break if current_set[:has_more] == false
+              end
+
+              subscriptions[:data] = subscriptions[:data].concat(valid_subscriptions.to_a)
+              subscriptions[:last_record] = current_set[:data].last[:id] if current_set[:data].present?
+              subscriptions[:length] = subscriptions[:data].length
+              subscriptions[:has_more] = current_set[:has_more]
+              break if subscriptions[:has_more] == false
+            end
           elsif !is_stripe_configured?
             subscriptions = nil
           end
@@ -53,6 +72,15 @@ module DiscourseSubscriptions
       end
 
       private
+
+      def get_subscriptions(start)
+        ::Stripe::Subscription.list(expand: ['data.plan.product'], limit: PAGE_LIMIT, starting_after: start)
+      end
+
+      def find_valid_subscriptions(data, ids)
+        valid = data.select { |sub| ids.include?(sub[:id]) }
+        valid.empty? ? nil : valid
+      end
 
       # this will only refund the most recent subscription payment
       def refund_subscription(subscription_id)
