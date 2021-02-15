@@ -36,7 +36,7 @@ componentTest("Payment plan subscription button rendered", {
       find(".btn-discourse-subscriptions-subscribe:first-child .amount")
         .text()
         .trim(),
-      "$AUD 44.99",
+      "$44.99",
       "The plan amount and currency is shown"
     );
   },
