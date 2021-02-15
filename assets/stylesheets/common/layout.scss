@@ -52,13 +52,17 @@
       flex-grow: 1;
     }
     .product-purchase {
-      align-self: baseline;
       display: flex;
-      flex-flow: column nowrap;
+      flex-flow: row wrap;
+      justify-content: space-between;
       .purchased {
         color: $success;
       }
       .billing-link {
+        align-self: flex-end;
+        @include breakpoint(large) {
+          margin-top: 1em;
+        }
         font-size: $font-down-1;
       }
     }
