@@ -1,6 +1,12 @@
 import Component from "@ember/component";
+import discourseComputed from "discourse-common/utils/decorators";
 
 export default Component.extend({
+  @discourseComputed("plans")
+  orderedPlans(plans) {
+    return plans.sort((a, b) => (a.unit_amount > b.unit_amount ? 1 : -1));
+  },
+
   didInsertElement() {
     this._super(...arguments);
     if (this.plans && this.plans.length === 1) {

@@ -24,5 +24,5 @@ export default Helper.helper(function (params) {
       currencySign = "$";
   }
 
-  return currencySign + params.map((p) => p.toUpperCase()).join(" ");
+  return currencySign + params[1];
 });
