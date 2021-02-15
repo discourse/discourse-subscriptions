@@ -7,15 +7,14 @@
 {{#if isLoggedIn}}
   <div class="product-purchase">
     {{#if product.repurchaseable}}
-      {{#if product.subscribed}}
-        <span class="purchased">&#x2713; {{i18n 'discourse_subscriptions.subscribe.purchased'}}</span>
-        {{#link-to "user.billing.subscriptions" currentUser.username class="billing-link"}}
-          {{i18n 'discourse_subscriptions.subscribe.go_to_billing'}}
-        {{/link-to}}
-      {{/if}}
       {{#link-to "s.show" product.id class="btn btn-primary"}}
         {{i18n 'discourse_subscriptions.subscribe.title'}}
       {{/link-to}}
+      {{#if product.subscribed}}
+        {{#link-to "user.billing.subscriptions" currentUser.username class="billing-link"}}
+          {{i18n 'discourse_subscriptions.subscribe.view_past'}}
+        {{/link-to}}
+      {{/if}}
     {{else}}
       {{#if product.subscribed}}
         <span class="purchased">&#x2713; {{i18n 'discourse_subscriptions.subscribe.purchased'}}</span>
