@@ -68,6 +68,7 @@ sv:
               confirm: Är du säker på att du vill avbryta denna prenumeration?
       subscribe:
         title: Prenumerera
+        view_past: Visa tidigare köp
         no_products: Det finns för tillfället inga produkter tillgängliga.
         unauthenticated: Logga in eller skapa ett konto för att prenumerera.
         card:
