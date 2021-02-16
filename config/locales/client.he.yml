@@ -68,6 +68,7 @@ he:
               confirm: לבטל את המינוי הזה?
       subscribe:
         title: הרשמה
+        view_past: הצגת רכישות עבר
         no_products: אין מוצרים זמינים.
         unauthenticated: עליך להיכנס או ליצור חשבון כדי להירשם.
         card:

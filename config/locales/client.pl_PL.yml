@@ -67,6 +67,7 @@ pl_PL:
               confirm: Czy na pewno chcesz anulować tę subskrypcję?
       subscribe:
         title: Subskrybuj
+        view_past: Zobacz poprzednie zakupy
         no_products: Obecnie nie ma dostępnych produktów.
         unauthenticated: Zaloguj się lub utwórz konto, aby subskrybować.
         card:
