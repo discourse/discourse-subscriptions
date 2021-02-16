@@ -3,6 +3,7 @@
   justify-content: space-around;
 
   .btn-discourse-subscriptions-subscribe {
+    flex-direction: column;
     padding: 10px 20px;
     div {
       margin-bottom: 5px;
