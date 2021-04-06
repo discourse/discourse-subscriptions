@@ -47,6 +47,8 @@ module DiscourseSubscriptions
         "₹"
       when "brl"
         "R$"
+      when "dkk"
+        "KR"
       else
         "$"
       end

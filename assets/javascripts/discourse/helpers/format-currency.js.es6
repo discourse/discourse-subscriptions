@@ -20,6 +20,10 @@ export default Helper.helper(function (params) {
     case "brl":
       currencySign = "R$";
       break;
+    case "DKK":
+    case "dkk":
+      currencySign = "DKK";
+      break;
     default:
       currencySign = "$";
   }
