@@ -49,6 +49,8 @@ module DiscourseSubscriptions
         "R$"
       when "dkk"
         "KR"
+      when "sgd"
+        "S$"
       else
         "$"
       end

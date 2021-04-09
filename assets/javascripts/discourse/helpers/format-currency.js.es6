@@ -24,6 +24,10 @@ export default Helper.helper(function (params) {
     case "dkk":
       currencySign = "DKK";
       break;
+    case "SGD":
+    case "sgd":
+      currencySign = "S$";
+      break;  
     default:
       currencySign = "$";
   }
