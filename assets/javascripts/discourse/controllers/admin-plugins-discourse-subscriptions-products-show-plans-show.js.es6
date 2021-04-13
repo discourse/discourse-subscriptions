@@ -38,6 +38,7 @@ export default Controller.extend({
       { id: "INR", name: "INR" },
       { id: "BRL", name: "BRL" },
       { id: "DKK", name: "DKK" },
+      { id: "SGD", name: "SGD" },
     ];
   },
 
