@@ -26,3 +26,5 @@ plugins:
       - INR
       - NZD
       - USD
+      - DKK
+      - SGD
