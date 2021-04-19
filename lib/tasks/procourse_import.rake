@@ -19,13 +19,13 @@ task 'subscriptions:procourse_import' => :environment do
   run_import
 end
 
-def get_procourse_stripe_products(starting_after:nil )
+def get_procourse_stripe_products(starting_after: nil)
   puts 'Getting products from Stripe API'
 
   all_products = []
 
   loop do
-    products = Stripe::Product.list({type: 'service', starting_after: starting_after, active: true })
+    products = Stripe::Product.list({ type: 'service', starting_after: starting_after, active: true })
     all_products += products[:data]
     break if products[:has_more] == false
     starting_after = products[:data].last["id"]
@@ -35,13 +35,13 @@ def get_procourse_stripe_products(starting_after:nil )
 
 end
 
-def get_procourse_stripe_subs(starting_after:nil )
+def get_procourse_stripe_subs(starting_after: nil)
   puts 'Getting Procourse Subscriptions from Stripe API'
 
   all_subscriptions = []
 
   loop do
-    subscriptions = Stripe::Subscription.list({starting_after: starting_after, status: 'active'})
+    subscriptions = Stripe::Subscription.list({ starting_after: starting_after, status: 'active' })
     all_subscriptions += subscriptions[:data]
     break if subscriptions[:has_more] == false
     starting_after = subscriptions[:data].last["id"]
@@ -50,13 +50,13 @@ def get_procourse_stripe_subs(starting_after:nil )
   all_subscriptions
 end
 
-def get_procourse_stripe_customers(starting_after:nil )
+def get_procourse_stripe_customers(starting_after: nil)
   puts 'Getting Procourse Customers from Stripe API'
 
   all_customers = []
 
   loop do
-    customers = Stripe::Customer.list({starting_after: starting_after})
+    customers = Stripe::Customer.list({ starting_after: starting_after })
     all_customers += customers[:data]
     break if customers[:has_more] == false
     starting_after = customers[:data].last["id"]
@@ -65,7 +65,6 @@ def get_procourse_stripe_customers(starting_after:nil )
   all_customers
 end
 
-
 def import_procourse_products(products)
   puts 'Importing products:'
 
@@ -73,9 +72,9 @@ def import_procourse_products(products)
     puts "Looking for external_id #{product[:id]} ..."
     if DiscourseSubscriptions::Product.find_by(external_id: product[:id]).blank?
       DiscourseSubscriptions::Product.create(external_id: product[:id])
-      puts "Subscriptons Product external_id: #{product[:id]} CREATED"
+      puts "Subscriptions Product external_id: #{product[:id]} CREATED"
     else
-      puts "Subscriptons Product external_id: #{product[:id]} already exists"
+      puts "Subscriptions Product external_id: #{product[:id]} already exists"
     end
   end
 end
@@ -109,9 +108,9 @@ def run_import
           customer_id: customer_id,
           product_id: product_id
         )
-        puts "Subscriptons Customer user_id: #{user_id}, customer_id: #{customer_id}, product_id: #{product_id}) CREATED"
+        puts "Subscriptions Customer user_id: #{user_id}, customer_id: #{customer_id}, product_id: #{product_id}) CREATED"
       else
-        puts "Subscriptons Customer user_id: #{user_id}, customer_id: #{customer_id}, product_id: #{product_id}) already exists"
+        puts "Subscriptions Customer user_id: #{user_id}, customer_id: #{customer_id}, product_id: #{product_id}) already exists"
       end
 
       if subscriptions_customer
@@ -130,11 +129,11 @@ def run_import
         puts "Discourse User: #{discourse_user.username_lower} found for Strip metadata update ..."
 
         updated_subsciption = Stripe::Subscription.update(subscription_id,
-                                                          {metadata: { user_id: user_id,
-                                                                       username: discourse_user.username_lower }})
+                                                          { metadata: { user_id: user_id,
+                                                                        username: discourse_user.username_lower } })
         puts "Stripe Subscription: #{updated_subsciption[:id]}, metadata: #{updated_subsciption[:metadata]} UPDATED"
 
-        updated_customer = Stripe::Customer.update(customer_id, {email: discourse_user.email})
+        updated_customer = Stripe::Customer.update(customer_id, { email: discourse_user.email })
         puts "Stripe Customer: #{updated_customer[:id]}, email: #{updated_customer[:email]} UPDATED"
 
       end
