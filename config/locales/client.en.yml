@@ -23,6 +23,12 @@ en:
         subscribe: Subscribe
         user_activity:
           payments: Payments
+      campaign:
+        title: Support Our Community
+        body: We need your help to keep this community up and running!
+        goal: Goal
+        subscribers: Subscribers
+        button: Support
       one_time_payment: One-Time Payment
       plans:
         purchase: Purchase a subscription
