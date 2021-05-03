@@ -28,3 +28,9 @@ plugins:
       - USD
       - DKK
       - SGD
+  discourse_subscriptions_campaign_enabled:
+    client: true
+    default: false
+  discourse_subscriptions_campaign_goal:
+    client: true
+    default: 10
