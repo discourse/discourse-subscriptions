@@ -17,4 +17,11 @@ export default Component.extend({
   goalTarget() {
     return this.siteSettings.discourse_subscriptions_campaign_goal;
   },
+
+  @discourseComputed("campaign")
+  isGoalMet(campaign) {
+    const currentVolume = campaign.subscribers;
+
+    return currentVolume >= this.goalTarget;
+  },
 });

@@ -33,7 +33,7 @@ module DiscourseSubscriptions
 
     def get_campaign_info
       json = {
-        subscribers: 4
+        subscribers: 11
       }
 
       render_json_dump json

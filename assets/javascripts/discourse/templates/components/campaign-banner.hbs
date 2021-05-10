@@ -5,5 +5,8 @@
     {{i18n 'discourse_subscriptions.campaign.button'}}
   {{/link-to}}
   <progress value="{{campaign.subscribers}}" max="{{siteSettings.discourse_subscriptions_campaign_goal}}"/>
+  {{#if isGoalMet}}
+    <p>🎉 We've met our goal! 🎉</p>
+  {{/if}}
   <p><strong>{{campaign.subscribers}}</strong> out of <strong>{{goalTarget}}</strong> {{i18n 'discourse_subscriptions.campaign.subscribers'}}</p>
 {{/conditional-loading-spinner}}
