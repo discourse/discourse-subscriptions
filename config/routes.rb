@@ -22,7 +22,6 @@ DiscourseSubscriptions::Engine.routes.draw do
 
   get '/' => 'subscribe#index'
   get '.json' => 'subscribe#index'
-  get '/campaign' => 'subscribe#get_campaign_info'
   get '/:id' => 'subscribe#show'
   post '/create' => 'subscribe#create'
   post '/finalize' => 'subscribe#finalize'

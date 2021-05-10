@@ -5,42 +5,41 @@ module DiscourseSubscriptions
     include DiscourseSubscriptions::Stripe
 
     def initialize
-      @subscribers = 0
-      @amount = 0
       set_api_key # instantiates Stripe API
     end
 
-    def self.subscribers
-      @subscribers
+    def subscribers
+      SiteSetting.discourse_subscriptions_campaign_subscribers
     end
 
-    def self.amount_raised
-      @amount
+    def amount_raised
+      SiteSetting.discourse_subscriptions_campaign_amount_raised
     end
 
     def refresh_data
       product_ids = Product.all.pluck(:external_id)
+      amount = 0
       subscriptions = get_subscription_data
-      subscriptions = filter_to_subscription_products(subscriptions, product_ids)
+      subscriptions = filter_to_subscriptions_products(subscriptions, product_ids)
 
       # get number of subscribers
-      @subscribers = subscriptions.length
+      SiteSetting.discourse_subscriptions_campaign_subscribers = subscriptions.length
 
       # calculate amount raised
       subscriptions.map do |sub|
         items = sub[:items][:data][0] if sub[:items] && sub[:items][:data]
         unit_amount = items[:price][:unit_amount] if items[:price] && items[:price][:unit_amount]
-        @amount += unit_amount
+        amount += unit_amount
       end
-      @amount = @amount / 100
+      SiteSetting.discourse_subscriptions_campaign_amount_raised = amount
     end
 
-    private
+    protected
 
     def get_subscription_data
       subscriptions = []
       current_set = {
-        has_more: true
+        has_more: true,
         last_record: nil
       }
 

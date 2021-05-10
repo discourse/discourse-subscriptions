@@ -1,14 +1,12 @@
 {{#if siteSettings.discourse_subscriptions_campaign_enabled}}
-  {{#conditional-loading-spinner size="small" condition=loading}}
-    <h2>{{i18n 'discourse_subscriptions.campaign.title'}}</h2>
-    <p>{{i18n 'discourse_subscriptions.campaign.body'}}</p>
-    {{#link-to "s" class="btn btn-primary"}}
-      {{i18n 'discourse_subscriptions.campaign.button'}}
-    {{/link-to}}
-    <progress value="{{campaign.subscribers}}" max="{{siteSettings.discourse_subscriptions_campaign_goal}}"/>
-    {{#if isGoalMet}}
-      <p>🎉 We've met our goal! 🎉</p>
-    {{/if}}
-    <p><strong>{{campaign.subscribers}}</strong> out of <strong>{{goalTarget}}</strong> {{i18n 'discourse_subscriptions.campaign.subscribers'}}</p>
-  {{/conditional-loading-spinner}}
+  <h2>{{i18n 'discourse_subscriptions.campaign.title'}}</h2>
+  <p>{{i18n 'discourse_subscriptions.campaign.body'}}</p>
+  {{#link-to "s" class="btn btn-primary"}}
+    {{i18n 'discourse_subscriptions.campaign.button'}}
+  {{/link-to}}
+  <progress value="{{siteSettings.discourse_subscriptions_campaign_subscribers}}" max="{{siteSettings.discourse_subscriptions_campaign_goal}}"/>
+  {{#if isGoalMet}}
+    <p>🎉 We've met our goal! 🎉</p>
+  {{/if}}
+  <p><strong>{{siteSettings.discourse_subscriptions_campaign_subscribers}}</strong> out of <strong>{{goalTarget}}</strong> {{i18n 'discourse_subscriptions.campaign.subscribers'}}</p>
 {{/if}}

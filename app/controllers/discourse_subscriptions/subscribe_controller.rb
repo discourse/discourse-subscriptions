@@ -31,15 +31,6 @@ module DiscourseSubscriptions
       end
     end
 
-    def get_campaign_info
-      json = {
-        amount_raised: Campaign.amount_raised
-        subscribers: Campaign.subscribers
-      }
-
-      render_json_dump json
-    end
-
     def show
       params.require(:id)
       begin
