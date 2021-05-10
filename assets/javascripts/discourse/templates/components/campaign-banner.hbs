@@ -1,12 +1,9 @@
-<h2>{{i18n 'discourse_subscriptions.campaign.title'}}</h2>
-<p>{{i18n 'discourse_subscriptions.campaign.body'}}</p>
-<h3>{{i18n 'discourse_subscriptions.campaign.goal'}}</h3>
 {{#conditional-loading-spinner size="small" condition=loading}}
-  <p><strong>{{campaign.subscribers}}/{{goalTarget}}</strong> {{i18n 'discourse_subscriptions.campaign.subscribers'}}</p>
+  <h2>{{i18n 'discourse_subscriptions.campaign.title'}}</h2>
+  <p>{{i18n 'discourse_subscriptions.campaign.body'}}</p>
+  {{#link-to "s" class="btn btn-primary"}}
+    {{i18n 'discourse_subscriptions.campaign.button'}}
+  {{/link-to}}
   <progress value="{{campaign.subscribers}}" max="{{siteSettings.discourse_subscriptions_campaign_goal}}"/>
+  <p><strong>{{campaign.subscribers}}</strong> out of <strong>{{goalTarget}}</strong> {{i18n 'discourse_subscriptions.campaign.subscribers'}}</p>
 {{/conditional-loading-spinner}}
-<br />
-{{#link-to "s" class="btn btn-primary"}}
-  {{i18n 'discourse_subscriptions.campaign.button'}}
-{{/link-to}}
-<p></p>
