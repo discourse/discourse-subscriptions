@@ -33,7 +33,8 @@ module DiscourseSubscriptions
 
     def get_campaign_info
       json = {
-        subscribers: 4
+        amount_raised: Campaign.amount_raised
+        subscribers: Campaign.subscribers
       }
 
       render_json_dump json
