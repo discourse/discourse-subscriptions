@@ -9,6 +9,7 @@ en:
     discourse_subscriptions_campaign_enabled: Enables a campaign banner to promote supporting this community financially.
     discourse_subscriptions_campaign_goal: The numerical goal for your support campaign (subscribers or amount raised).
     discourse_subscriptions_campaign_type: Selects the type of campaign to run (subscribers or monthly amount raised).
+    discourse_subscriptions_campaign_banner_location: Selects the location of the campaign banner (top or sidebar).
     errors:
       discourse_patrons_amount_must_be_currency: "Currency amounts must be currencies without dollar symbol (eg 1.50)"
   js:
