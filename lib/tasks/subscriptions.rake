@@ -27,9 +27,9 @@ def get_stripe_products
     results = Stripe::Product.list(limit: 100, starting_after: starting_after)
     break if results.data.length == 0
     products = products + results.data
-    starting_after = results.data.last.id  
+    starting_after = results.data.last.id
   end
-  return products
+  products
 end
 
 def get_stripe_subscriptions
@@ -40,9 +40,9 @@ def get_stripe_subscriptions
     results = Stripe::Subscription.list(limit: 100, starting_after: starting_after)
     break if results.data.length == 0
     subscriptions = subscriptions + results.data
-    starting_after = results.data.last.id  
+    starting_after = results.data.last.id
   end
-  return subscriptions
+  subscriptions
 end
 
 def import_products(products)
