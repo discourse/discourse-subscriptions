@@ -27,10 +27,10 @@ module DiscourseSubscriptions
 
       # calculate amount raised
       subscriptions.map do |sub|
-        items = sub[:items][:data][0] if sub[:items] && sub[:items][:data]
-        unit_amount = items[:price][:unit_amount] if items[:price] && items[:price][:unit_amount]
-        amount += unit_amount
+        sub_amount = calculate_monthly_amount(sub)
+        amount += sub_amount
       end
+
       SiteSetting.discourse_subscriptions_campaign_amount_raised = amount
     end
 
@@ -66,6 +66,24 @@ module DiscourseSubscriptions
         ids.include?(product)
       end
       valid.empty? ? nil : valid
+    end
+
+    def calculate_monthly_amount(sub)
+      items = sub[:items][:data][0] if sub[:items] && sub[:items][:data]
+      price = items[:price] if items[:price]
+      unit_amount = price[:unit_amount] if price[:unit_amount]
+      recurrence = price[:recurring][:interval] if price[:recurring] && price[:recurring][:interval]
+
+      case recurrence
+      when "day"
+        unit_amount = unit_amount * 30
+      when "week"
+        unit_amount = unit_amount * 4
+      when "year"
+        unit_amount = unit_amount / 12
+      end
+
+      unit_amount
     end
   end
 end
