@@ -3,13 +3,33 @@ import discourseComputed from "discourse-common/utils/decorators";
 
 export default Component.extend({
   @discourseComputed
+  subscriberGoal() {
+    return this.siteSettings.discourse_subscriptions_campaign_type === "Subscribers";
+  },
+
+  @discourseComputed
+  subscribers(){
+    return this.siteSettings.discourse_subscriptions_campaign_subscribers;
+  },
+
+  @discourseComputed
+  amountRaised(){
+    return this.siteSettings.discourse_subscriptions_campaign_amount_raised / 100;
+  },
+
+  @discourseComputed
+  currency() {
+    return this.siteSettings.discourse_subscriptions_currency;
+  },
+    
+  @discourseComputed
   goalTarget() {
     return this.siteSettings.discourse_subscriptions_campaign_goal;
   },
 
-  @discourseComputed()
+  @discourseComputed
   isGoalMet() {
-    const currentVolume = this.siteSettings.discourse_subscriptions_campaign_subscribers;
+    const currentVolume = this.subscriberGoal ? this.subscribers : this.amountRaised;
 
     return currentVolume >= this.goalTarget;
   },

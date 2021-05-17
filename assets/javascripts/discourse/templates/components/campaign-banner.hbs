@@ -4,9 +4,14 @@
   {{#link-to "s" class="btn btn-primary"}}
     {{i18n 'discourse_subscriptions.campaign.button'}}
   {{/link-to}}
-  <progress value="{{siteSettings.discourse_subscriptions_campaign_subscribers}}" max="{{siteSettings.discourse_subscriptions_campaign_goal}}"/>
   {{#if isGoalMet}}
     <p>🎉 We've met our goal! 🎉</p>
   {{/if}}
-  <p><strong>{{siteSettings.discourse_subscriptions_campaign_subscribers}}</strong> out of <strong>{{goalTarget}}</strong> {{i18n 'discourse_subscriptions.campaign.subscribers'}}</p>
+  {{#if subscriberGoal}}
+    <progress value="{{subscribers}}" max="{{siteSettings.discourse_subscriptions_campaign_goal}}"/>
+    <p><strong>{{subscribers}}</strong>/<strong>{{goalTarget}}</strong> {{i18n 'discourse_subscriptions.campaign.subscribers'}}</p>
+  {{else}}
+    <progress value="{{amountRaised}}" max="{{siteSettings.discourse_subscriptions_campaign_goal}}"/>
+    <p><strong>{{format-currency currency amountRaised}}</strong>/<strong>{{format-currency currency goalTarget}}</strong> {{i18n 'discourse_subscriptions.campaign.raised'}}</p>
+  {{/if}}
 {{/if}}
