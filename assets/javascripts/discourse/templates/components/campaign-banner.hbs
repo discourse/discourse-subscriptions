@@ -1,4 +1,8 @@
-{{#if siteSettings.discourse_subscriptions_campaign_enabled}}
+{{#unless dismissed}}
+  {{d-button
+    icon="times"
+    action="dismissBanner"
+  }}
   <h2>{{i18n 'discourse_subscriptions.campaign.title'}}</h2>
   <p>{{i18n 'discourse_subscriptions.campaign.body'}}</p>
   {{#link-to "s" class="btn btn-primary"}}
@@ -14,4 +18,4 @@
     <progress value="{{amountRaised}}" max="{{siteSettings.discourse_subscriptions_campaign_goal}}"/>
     <p><strong>{{format-currency currency amountRaised}}</strong>/<strong>{{format-currency currency goalTarget}}</strong> {{i18n 'discourse_subscriptions.campaign.raised'}}</p>
   {{/if}}
-{{/if}}
+{{/unless}}
