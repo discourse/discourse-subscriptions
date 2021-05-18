@@ -3,15 +3,22 @@ import Component from "@ember/component";
 import discourseComputed from "discourse-common/utils/decorators";
 
 export default Component.extend({
-  classNameBindings: ["isSidebar:sidebar"],
   dismissed: false,
 
-  @discourseComputed
-  isSidebar() {
-    return (
+  didDestroyElement() {
+    this._super(...arguments);
+    document.body.classList.remove("subscription-campaign-sidebar");
+  },
+
+  didInsertElement() {
+    this._super(...arguments);
+    const sidebar =
       this.siteSettings.discourse_subscriptions_campaign_banner_location ===
-      "Sidebar"
-    );
+      "Sidebar";
+
+    if (sidebar) {
+      document.body.classList.add("subscription-campaign-sidebar");
+    }
   },
 
   @discourseComputed
@@ -57,6 +64,7 @@ export default Component.extend({
     let now = new Date();
     now.setMonth(now.getMonth() + 3);
     document.cookie = `name=discourse-subscriptions-campaign-banner-dismissed; expires=${now.toUTCString()};`;
+    document.body.classList.remove("subscription-campaign-sidebar");
     this.set("dismissed", true);
   },
 });
