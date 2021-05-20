@@ -31,6 +31,7 @@ en:
         title: Support Our Community
         body: We need your help to keep this community up and running!
         subscribers: Subscribers
+        of: of
         raised: Raised
         button: Support
       one_time_payment: One-Time Payment

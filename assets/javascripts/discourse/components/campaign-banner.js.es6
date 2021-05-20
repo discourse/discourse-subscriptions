@@ -1,24 +1,52 @@
 import { action } from "@ember/object";
 import Component from "@ember/component";
-import discourseComputed from "discourse-common/utils/decorators";
+import discourseComputed, { observes } from "discourse-common/utils/decorators";
+import { inject as service } from "@ember/service";
 
 export default Component.extend({
+  router: service(),
   dismissed: false,
+  classNameBindings: ["isSidebar:campaign-banner-sidebar", "shouldShow:campaign-banner"],
 
-  didDestroyElement() {
-    this._super(...arguments);
-    document.body.classList.remove("subscription-campaign-sidebar");
+  init() {
+    this._super(...arguments)
+    const dismissed = document.cookie.includes(
+      "discourse-subscriptions-campaign-banner-dismissed");
+    this.set("dismissed", dismissed);
   },
 
   didInsertElement() {
     this._super(...arguments);
-    const sidebar =
-      this.siteSettings.discourse_subscriptions_campaign_banner_location ===
-      "Sidebar";
-
-    if (sidebar) {
+    if (this.isSidebar && this.shouldShow) {
       document.body.classList.add("subscription-campaign-sidebar");
     }
+  },
+
+  @discourseComputed(
+    "router.currentRouteName",
+    "currentUser",
+    "siteSettings.discourse_subscriptions_campaign_enabled",
+    "dismissed")
+  shouldShow(currentRoute, currentUser, enabled, dismissed) {
+    // do not show on admin or subscriptions pages
+    const showOnRoute = 
+      currentRoute !== "discovery.s" && 
+      !currentRoute.split(".")[0].includes("admin") &&
+      currentRoute.split(".")[0] !== "s";
+
+    return showOnRoute && currentUser && enabled && !dismissed;
+  },
+
+  @observes("dismissed")
+  _updateBodyClasses() {
+    if (this.dismissed) {
+      document.body.classList.remove("subscription-campaign-sidebar");
+    }
+  },
+
+  @discourseComputed("siteSettings.discourse_subscriptions_campaign_banner_location")
+  isSidebar(sidebarSetting) {
+    return sidebarSetting === "Sidebar";
   },
 
   @discourseComputed
@@ -64,7 +92,6 @@ export default Component.extend({
     let now = new Date();
     now.setMonth(now.getMonth() + 3);
     document.cookie = `name=discourse-subscriptions-campaign-banner-dismissed; expires=${now.toUTCString()};`;
-    document.body.classList.remove("subscription-campaign-sidebar");
-    this.set("dismissed", true);
+    this.set("dismissed", true)
   },
 });

@@ -1,21 +1,34 @@
-{{#unless dismissed}}
+{{#if shouldShow}}
   {{d-button
     icon="times"
     action="dismissBanner"
+    class="close"
   }}
-  <h2>{{i18n 'discourse_subscriptions.campaign.title'}}</h2>
-  <p>{{i18n 'discourse_subscriptions.campaign.body'}}</p>
-  {{#link-to "s" class="btn btn-primary"}}
-    {{i18n 'discourse_subscriptions.campaign.button'}}
-  {{/link-to}}
-  {{#if isGoalMet}}
-    <p>🎉 We've met our goal! 🎉</p>
-  {{/if}}
+  <h2 class="campaign-banner-header">{{i18n 'discourse_subscriptions.campaign.title'}}</h2>
+  <div class="campaign-banner-info">
+    {{#if isGoalMet}}
+      <p class="campaign-banner-info-success">🎉 We've met our goal! 🎉</p>
+    {{else}}
+      <p class="campaign-banner-info-description">{{i18n 'discourse_subscriptions.campaign.body'}}</p>
+      {{#link-to "s" class="btn btn-primary campaign-banner-info-button"}}
+        {{i18n 'discourse_subscriptions.campaign.button'}}
+      {{/link-to}}
+    {{/if}}
+  </div>
   {{#if subscriberGoal}}
-    <progress value="{{subscribers}}" max="{{siteSettings.discourse_subscriptions_campaign_goal}}"/>
-    <p><strong>{{subscribers}}</strong>/<strong>{{goalTarget}}</strong> {{i18n 'discourse_subscriptions.campaign.subscribers'}}</p>
+    <progress class="campaign-banner-progress" value="{{subscribers}}" max="{{siteSettings.discourse_subscriptions_campaign_goal}}"/>
+    <p class="campaign-banner-progress-description">
+      <strong>{{subscribers}}</strong> {{i18n 'discourse_subscriptions.campaign.of'}} 
+      <strong>{{goalTarget}}</strong> 
+      {{i18n 'discourse_subscriptions.campaign.subscribers'}}
+    </p>
   {{else}}
-    <progress value="{{amountRaised}}" max="{{siteSettings.discourse_subscriptions_campaign_goal}}"/>
-    <p><strong>{{format-currency currency amountRaised}}</strong>/<strong>{{format-currency currency goalTarget}}</strong> {{i18n 'discourse_subscriptions.campaign.raised'}}</p>
+    <progress class="campaign-banner-progress" value="{{amountRaised}}" max="{{siteSettings.discourse_subscriptions_campaign_goal}}"/>
+    <p class="campaign-banner-progress-description">
+      <strong>{{format-currency currency amountRaised}}</strong> of 
+      <strong>{{format-currency currency goalTarget}}</strong> 
+      {{i18n 'discourse_subscriptions.campaign.raised'}}
+    </p>
   {{/if}}
-{{/unless}}
+{{/if}}
+
