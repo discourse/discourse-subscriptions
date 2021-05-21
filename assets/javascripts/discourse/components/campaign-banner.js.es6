@@ -19,6 +19,8 @@ export default Component.extend({
     this._super(...arguments);
     if (this.isSidebar && this.shouldShow) {
       document.body.classList.add("subscription-campaign-sidebar");
+    } else {
+      document.body.classList.remove("subscription-campaign-sidebar");
     }
   },
 

@@ -12,24 +12,28 @@
 
 // Sidebar Version
 .campaign-banner.campaign-banner-sidebar {
-  width: calc(100% - 2em);
-  padding: 1em;
+  width: 100%;
+  flex-direction: column;
   position: relative;
   .btn.close {
     position: absolute;
     top: 0.5em;
     right: 0.5em;
     font-size: 10px;
-  }
-  .campaign-banner-header {
-    font-size: 16px;
-    margin: 0.5em 0 !important;
-    text-align: center;
+    z-index: 1;
   }
   .campaign-banner-info {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
+    width: calc(100% - 2em);
+    padding: 1em 1em 2em 1em;
+    position: relative;
+    &-header {
+      font-size: 16px;
+      margin: 0.5em 0 !important;
+      text-align: center;
+    }
     &-description {
       width: 100%;
       font-size: $font-down-1;
@@ -37,7 +41,12 @@
       margin-bottom: 1em;
     }
   }
-  .btn {
+  .campaign-banner-progress {
+    width: calc(100% - 2em);
+    margin: 1em 0;
+    padding: 1em;
+  }
+  .campaign-banner-info-button {
     height: 2em;
   }
   progress[value] {
@@ -50,12 +59,13 @@
 
 // Non Sidebar version
 .campaign-banner {
-  width: max-content;
+  display: flex;
+  width: calc(100%);
   height: max-content;
-  padding: 1.5em;
-  margin: 1em auto 2em;
+  margin: 1em 0 2em 0;
   border: 1px solid var(--primary-low);
   position: relative;
+  align-items: center;
   .btn.close {
     position: absolute;
     top: 1em;
@@ -68,53 +78,81 @@
       }
     }
   }
-  &-header {
-    font-size: $font-up-4;
-  }
   &-info {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
-    margin: 1em 0;
+    align-items: flex-start;
+    width: 40%;
+    padding: 1.5em 2em 1.5em;
+    background-color: var(--primary-very-low);
+    &-header {
+      font-size: $font-up-4;
+      margin: 0;
+    }
     &-success {
       width: 100%;
       margin: 0;
     }
     &-description {
-      width: 65%;
-      margin: 0;
+      width: 100%;
+      margin: 1em 0;
     }
     &-button {
       height: 2.5em;
-      padding: 0.75em 1.5em;
+      padding: 0.75em 1.5em 0.75em 2.75em;
+      position: relative;
+      .d-icon {
+        position: absolute;
+        left: 1em;
+        &.hover-heart {
+          opacity: 0;
+          transition: opacity 0.2s ease-in-out;
+        }
+      }
+      &:hover {
+        .d-icon.hover-heart {
+          opacity: 1;
+        }
+      }
     }
   }
-  &-progress-description {
-    margin: 0;
-    font-weight: 300;
-    strong {
-      font-weight: bold;
+  &-progress {
+    width: 60%;
+    padding: 1.5em;
+
+    &-description {
+      margin: 0.5em 0 0;
+      font-weight: 300;
+      strong {
+        font-weight: bold;
+      }
     }
-  }
-  progress[value] {
-    -webkit-appearance: none;
-    appearance: none;
-    height: 2.5em;
-    width: 100%;
-    border: 1px solid #e5e5e5;
-    background-color: var(--primary-very-low);
-    overflow: hidden;
-  }
-  
-  progress[value]::-webkit-progress-bar {
-    background-color: var(--primary-very-low);
-  }
-  
-  progress[value]::-webkit-progress-value {
-    background-color: rgba(var(--tertiary-rgb),0.90);
-  }
-  
-  progress[value]::-moz-progress-bar {
-    background-color: rgba(var(--tertiary-rgb),0.90);
+    progress[value] {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 2.5em;
+      width: 100%;
+      border: 1px solid #e5e5e5;
+      border-radius: 2em;
+      background-color: var(--primary-very-low);
+      overflow: hidden;
+    }
+    
+    progress[value]::-webkit-progress-bar {
+      background-color: var(--primary-very-low);
+    }
+    
+    progress[value]::-webkit-progress-value {
+      background-color: var(--tertiary);
+      border-top-right-radius: 2em;
+      border-bottom-right-radius: 2em;
+    }
+    
+    progress[value]::-moz-progress-bar {
+      background-color: var(--tertiary);
+      border-top-right-radius: 2em;
+      border-bottom-right-radius: 2em;
+    }
   }
 }
