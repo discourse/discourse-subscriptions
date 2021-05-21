@@ -24,9 +24,9 @@
         {{i18n 'discourse_subscriptions.campaign.subscribers'}}
       </p>
     {{else}}
-      <progress class="campaign-banner-progress-bar" value="1500" max="{{siteSettings.discourse_subscriptions_campaign_goal}}"/>
+      <progress class="campaign-banner-progress-bar" value="{{amountRaised}}" max="{{siteSettings.discourse_subscriptions_campaign_goal}}"/>
       <p class="campaign-banner-progress-description">
-        <strong>{{format-currency currency 1500}}</strong> of 
+        <strong>{{format-currency currency amountRaised}}</strong> of 
         <strong>{{format-currency currency goalTarget}}</strong> 
         {{i18n 'discourse_subscriptions.campaign.raised'}}
       </p>
