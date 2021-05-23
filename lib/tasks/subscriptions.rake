@@ -21,7 +21,28 @@ end
 
 def get_stripe_products
   puts 'Getting products from Stripe API'
-  Stripe::Product.list
+  starting_after = nil
+  products = []
+  loop do
+    results = Stripe::Product.list(limit: 100, starting_after: starting_after)
+    break if results.data.length == 0
+    products = products + results.data
+    starting_after = results.data.last.id
+  end
+  products
+end
+
+def get_stripe_subscriptions
+  puts 'Getting subscriptions from Stripe API'
+  starting_after = nil
+  subscriptions = []
+  loop do
+    results = Stripe::Subscription.list(limit: 100, starting_after: starting_after)
+    break if results.data.length == 0
+    subscriptions = subscriptions + results.data
+    starting_after = results.data.last.id
+  end
+  subscriptions
 end
 
 def import_products(products)
@@ -36,8 +57,8 @@ end
 def import_subscriptions
   puts 'Importing subscriptions'
   product_ids = DiscourseSubscriptions::Product.all.pluck(:external_id)
-  subscriptions = Stripe::Subscription.list
-  subscriptions_for_products = subscriptions[:data].select { |sub| product_ids.include?(sub[:items][:data][0][:plan][:product]) }
+  subscriptions = get_stripe_subscriptions
+  subscriptions_for_products = subscriptions.select { |sub| product_ids.include?(sub[:items][:data][0][:plan][:product]) }
 
   subscriptions_for_products.each do |subscription|
     product_id = subscription[:items][:data][0][:plan][:product]
