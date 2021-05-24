@@ -33,14 +33,14 @@ plugins:
     default: false
   discourse_subscriptions_campaign_goal:
     client: true
-    default: 10
+    default: 100
   discourse_subscriptions_campaign_type:
     client: true
     type: enum
-    default: "Subscribers"
+    default: "Amount"
     choices:
-      - Subscribers
       - Amount
+      - Subscribers
   discourse_subscriptions_campaign_banner_location:
     client: true
     type: enum
