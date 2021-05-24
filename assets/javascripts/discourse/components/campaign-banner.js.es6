@@ -2,17 +2,37 @@ import { action } from "@ember/object";
 import Component from "@ember/component";
 import discourseComputed, { observes } from "discourse-common/utils/decorators";
 import { inject as service } from "@ember/service";
+import User from "discourse/models/user";
 
 export default Component.extend({
   router: service(),
   dismissed: false,
-  classNameBindings: ["isSidebar:campaign-banner-sidebar", "shouldShow:campaign-banner"],
+  contributors: [],
+  classNameBindings: [
+    "isSidebar:campaign-banner-sidebar",
+    "shouldShow:campaign-banner",
+  ],
 
   init() {
-    this._super(...arguments)
+    this._super(...arguments);
     const dismissed = document.cookie.includes(
-      "discourse-subscriptions-campaign-banner-dismissed");
+      "discourse-subscriptions-campaign-banner-dismissed"
+    );
     this.set("dismissed", dismissed);
+
+    const contributorNames = [
+      ...new Set(
+        JSON.parse(
+          this.siteSettings.discourse_subscriptions_campaign_contributors
+        )
+      ),
+    ];
+
+    contributorNames.map((username) => {
+      User.findByUsername(username).then((result) => {
+        this.contributors.pushObject(result);
+      });
+    });
   },
 
   didInsertElement() {
@@ -28,11 +48,12 @@ export default Component.extend({
     "router.currentRouteName",
     "currentUser",
     "siteSettings.discourse_subscriptions_campaign_enabled",
-    "dismissed")
+    "dismissed"
+  )
   shouldShow(currentRoute, currentUser, enabled, dismissed) {
     // do not show on admin or subscriptions pages
-    const showOnRoute = 
-      currentRoute !== "discovery.s" && 
+    const showOnRoute =
+      currentRoute !== "discovery.s" &&
       !currentRoute.split(".")[0].includes("admin") &&
       currentRoute.split(".")[0] !== "s";
 
@@ -46,7 +67,9 @@ export default Component.extend({
     }
   },
 
-  @discourseComputed("siteSettings.discourse_subscriptions_campaign_banner_location")
+  @discourseComputed(
+    "siteSettings.discourse_subscriptions_campaign_banner_location"
+  )
   isSidebar(sidebarSetting) {
     return sidebarSetting === "Sidebar";
   },
@@ -81,6 +104,11 @@ export default Component.extend({
   },
 
   @discourseComputed
+  showContributors() {
+    return this.siteSettings.discourse_subscriptions_campaign_show_contributors;
+  },
+
+  @discourseComputed
   isGoalMet() {
     const currentVolume = this.subscriberGoal
       ? this.subscribers
@@ -89,11 +117,16 @@ export default Component.extend({
     return currentVolume >= this.goalTarget;
   },
 
+  @discourseComputed("currentUser")
+  users(user) {
+    return user;
+  },
+
   @action
   dismissBanner() {
     let now = new Date();
     now.setMonth(now.getMonth() + 3);
     document.cookie = `name=discourse-subscriptions-campaign-banner-dismissed; expires=${now.toUTCString()};`;
-    this.set("dismissed", true)
+    this.set("dismissed", true);
   },
 });

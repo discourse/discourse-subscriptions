@@ -10,6 +10,7 @@ en:
     discourse_subscriptions_campaign_goal: The numerical goal for your support campaign (subscribers or amount raised).
     discourse_subscriptions_campaign_type: Selects the type of campaign to run (subscribers or monthly amount raised).
     discourse_subscriptions_campaign_banner_location: Selects the location of the campaign banner (top or sidebar).
+    discourse_subscriptions_campaign_show_contributors: Show avatars of the most recent purchases of subscription products.
     errors:
       discourse_patrons_amount_must_be_currency: "Currency amounts must be currencies without dollar symbol (eg 1.50)"
   js:
@@ -34,6 +35,7 @@ en:
         of: of
         raised: Raised
         button: Support
+        recent_contributors: Recent Contributors
       one_time_payment: One-Time Payment
       plans:
         purchase: Purchase a subscription

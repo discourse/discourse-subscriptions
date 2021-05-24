@@ -45,6 +45,18 @@
     width: calc(100% - 2em);
     margin: 1em 0;
     padding: 1em;
+    &-users {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+
+      &-title {
+        font-size: $font-down-1;
+        strong {
+          font-weight: bold;
+        }
+      }
+    }
   }
   .campaign-banner-info-button {
     height: 2em;
@@ -119,7 +131,7 @@
   }
   &-progress {
     width: 60%;
-    padding: 1.5em;
+    padding: 3em 2em 1.5em;
 
     &-description {
       margin: 0.5em 0 0;
@@ -128,6 +140,22 @@
         font-weight: bold;
       }
     }
+
+    &-users {
+      align-items: center;
+      display: inline-flex;
+      margin: 0 0 -2em 0;
+
+      &-title {
+        strong {
+          font-weight: bold;
+        }
+      }
+      &-avatars {
+        margin: 0 0 0 0.5em;
+      }
+    }
+
     progress[value] {
       -webkit-appearance: none;
       appearance: none;
@@ -138,17 +166,17 @@
       background-color: var(--primary-very-low);
       overflow: hidden;
     }
-    
+
     progress[value]::-webkit-progress-bar {
       background-color: var(--primary-very-low);
     }
-    
+
     progress[value]::-webkit-progress-value {
       background-color: var(--tertiary);
       border-top-right-radius: 2em;
       border-bottom-right-radius: 2em;
     }
-    
+
     progress[value]::-moz-progress-bar {
       background-color: var(--tertiary);
       border-top-right-radius: 2em;

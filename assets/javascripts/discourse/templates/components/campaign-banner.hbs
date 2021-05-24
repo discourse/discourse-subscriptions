@@ -19,18 +19,29 @@
     {{#if subscriberGoal}}
       <progress class="campaign-banner-progress-bar" value="{{subscribers}}" max="{{siteSettings.discourse_subscriptions_campaign_goal}}"/>
       <p class="campaign-banner-progress-description">
-        <strong>{{subscribers}}</strong> {{i18n 'discourse_subscriptions.campaign.of'}} 
-        <strong>{{goalTarget}}</strong> 
+        <strong>{{subscribers}}</strong> {{i18n 'discourse_subscriptions.campaign.of'}}
+        <strong>{{goalTarget}}</strong>
         {{i18n 'discourse_subscriptions.campaign.subscribers'}}
       </p>
     {{else}}
       <progress class="campaign-banner-progress-bar" value="{{amountRaised}}" max="{{siteSettings.discourse_subscriptions_campaign_goal}}"/>
       <p class="campaign-banner-progress-description">
-        <strong>{{format-currency currency amountRaised}}</strong> of 
-        <strong>{{format-currency currency goalTarget}}</strong> 
+        <strong>{{format-currency currency amountRaised}}</strong> of
+        <strong>{{format-currency currency goalTarget}}</strong>
         {{i18n 'discourse_subscriptions.campaign.raised'}}
       </p>
     {{/if}}
+    {{#if showContributors}}
+      <div class="campaign-banner-progress-users">
+        <p class="campaign-banner-progress-users-title">
+          <strong>{{i18n 'discourse_subscriptions.campaign.recent_contributors'}}</strong>
+        </p>
+        <div class="campaign-banner-progress-users-avatars">
+          {{#each contributors as |contributor|}}
+            {{avatar contributor avatarTemplatePath="avatar_template" usernamePath="username" namePath="name" imageSize="small"}}
+          {{/each}}
+        </div>
+      </div>
+    {{/if}}
   </div>
 {{/if}}
-

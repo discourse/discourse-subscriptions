@@ -8,14 +8,6 @@ module DiscourseSubscriptions
       set_api_key # instantiates Stripe API
     end
 
-    def subscribers
-      SiteSetting.discourse_subscriptions_campaign_subscribers
-    end
-
-    def amount_raised
-      SiteSetting.discourse_subscriptions_campaign_amount_raised
-    end
-
     def refresh_data
       product_ids = Product.all.pluck(:external_id)
       amount = 0
@@ -32,6 +24,14 @@ module DiscourseSubscriptions
       end
 
       SiteSetting.discourse_subscriptions_campaign_amount_raised = amount
+
+      if SiteSetting.discourse_subscriptions_campaign_show_contributors == true
+        contributor_ids = Customer.last(5).pluck(:user_id)
+        usernames = contributor_ids.map { |id| ::User.find(id).username }
+        SiteSetting.discourse_subscriptions_campaign_contributors = usernames
+      else
+        SiteSetting.discourse_subscriptions_campaign_contributors = nil
+      end
     end
 
     protected

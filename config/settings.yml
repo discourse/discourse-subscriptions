@@ -48,6 +48,9 @@ plugins:
     choices:
       - Top
       - Sidebar
+  discourse_subscriptions_campaign_show_contributors:
+    client: true
+    default: true
   discourse_subscriptions_campaign_amount_raised:
     client: true
     default: 0
@@ -55,4 +58,8 @@ plugins:
   discourse_subscriptions_campaign_subscribers:
     client: true
     default: 0
+    hidden: true
+  discourse_subscriptions_campaign_contributors:
+    client: true
+    default: ""
     hidden: true
