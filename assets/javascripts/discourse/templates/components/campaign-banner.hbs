@@ -31,17 +31,19 @@
         {{i18n 'discourse_subscriptions.campaign.raised'}}
       </p>
     {{/if}}
-    {{#if showContributors}}
-      <div class="campaign-banner-progress-users">
-        <p class="campaign-banner-progress-users-title">
-          <strong>{{i18n 'discourse_subscriptions.campaign.recent_contributors'}}</strong>
-        </p>
-        <div class="campaign-banner-progress-users-avatars">
-          {{#each contributors as |contributor|}}
-            {{avatar contributor avatarTemplatePath="avatar_template" usernamePath="username" namePath="name" imageSize="small"}}
-          {{/each}}
+    {{#conditional-loading-spinner condition=loading size="small"}}
+      {{#if showContributors}}
+        <div class="campaign-banner-progress-users">
+          <p class="campaign-banner-progress-users-title">
+            <strong>{{i18n 'discourse_subscriptions.campaign.recent_contributors'}}</strong>
+          </p>
+          <div class="campaign-banner-progress-users-avatars">
+            {{#each contributors as |contributor|}}
+              {{avatar contributor avatarTemplatePath="avatar_template" usernamePath="username" namePath="name" imageSize="small"}}
+            {{/each}}
+          </div>
         </div>
-      </div>
-    {{/if}}
+      {{/if}}
+    {{/conditional-loading-spinner}}
   </div>
 {{/if}}

@@ -3,10 +3,13 @@ import Component from "@ember/component";
 import discourseComputed, { observes } from "discourse-common/utils/decorators";
 import { inject as service } from "@ember/service";
 import User from "discourse/models/user";
+import { Promise } from "rsvp";
 
 export default Component.extend({
   router: service(),
   dismissed: false,
+  loading: false,
+  showContributors: false,
   contributors: [],
   classNameBindings: [
     "isSidebar:campaign-banner-sidebar",
@@ -20,19 +23,27 @@ export default Component.extend({
     );
     this.set("dismissed", dismissed);
 
-    const contributorNames = [
-      ...new Set(
-        JSON.parse(
-          this.siteSettings.discourse_subscriptions_campaign_contributors
-        )
-      ),
-    ];
+    const contributorSetting = this.siteSettings
+      .discourse_subscriptions_campaign_contributors;
 
-    contributorNames.map((username) => {
-      User.findByUsername(username).then((result) => {
-        this.contributors.pushObject(result);
+    if (contributorSetting !== "" && contributorSetting !== "[]") {
+      this.set("loading", true);
+      let promises = [];
+      const contributorNames = [...new Set(JSON.parse(contributorSetting))];
+
+      contributorNames.map((username) => {
+        let promise = User.findByUsername(username).then((result) => {
+          this.contributors.pushObject(result);
+        });
+
+        promises.push(promise);
       });
-    });
+
+      Promise.all(promises).then(() => {
+        this.set("showContributors", true);
+        this.set("loading", false);
+      });
+    }
   },
 
   didInsertElement() {
@@ -105,7 +116,7 @@ export default Component.extend({
 
   @discourseComputed
   showContributors() {
-    return this.siteSettings.discourse_subscriptions_campaign_show_contributors;
+    return;
   },
 
   @discourseComputed
