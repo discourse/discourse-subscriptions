@@ -115,11 +115,6 @@ export default Component.extend({
   },
 
   @discourseComputed
-  showContributors() {
-    return;
-  },
-
-  @discourseComputed
   isGoalMet() {
     const currentVolume = this.subscriberGoal
       ? this.subscribers

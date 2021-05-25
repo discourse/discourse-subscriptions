@@ -132,7 +132,15 @@
   &-progress {
     width: 60%;
     padding: 3em 2em 1.5em;
-
+    &-success {
+      font-size: $font-up-1;
+      text-align: center;
+      background-color: var(--tertiary);
+      color: var(--secondary);
+      padding: 0.75em;
+      border-radius: 2em;
+      margin: 0;
+    }
     &-description {
       margin: 0.5em 0 0;
       font-weight: 300;
@@ -140,7 +148,6 @@
         font-weight: bold;
       }
     }
-
     &-users {
       align-items: center;
       display: inline-flex;

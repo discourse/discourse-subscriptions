@@ -6,44 +6,71 @@
   }}
   <div class="campaign-banner-info">
     <h2 class="campaign-banner-info-header">{{i18n 'discourse_subscriptions.campaign.title'}}</h2>
-    {{#if isGoalMet}}
-      <p class="campaign-banner-info-success">🎉 We've met our goal! 🎉</p>
-    {{else}}
       <p class="campaign-banner-info-description">{{i18n 'discourse_subscriptions.campaign.body'}}</p>
       {{#link-to "s" class="btn btn-primary campaign-banner-info-button"}}
         {{d-icon "far-heart"}} {{d-icon "heart" class="hover-heart"}} {{i18n 'discourse_subscriptions.campaign.button'}}
       {{/link-to}}
-    {{/if}}
   </div>
   <div class="campaign-banner-progress">
-    {{#if subscriberGoal}}
-      <progress class="campaign-banner-progress-bar" value="{{subscribers}}" max="{{siteSettings.discourse_subscriptions_campaign_goal}}"/>
-      <p class="campaign-banner-progress-description">
-        <strong>{{subscribers}}</strong> {{i18n 'discourse_subscriptions.campaign.of'}}
-        <strong>{{goalTarget}}</strong>
-        {{i18n 'discourse_subscriptions.campaign.subscribers'}}
-      </p>
-    {{else}}
-      <progress class="campaign-banner-progress-bar" value="{{amountRaised}}" max="{{siteSettings.discourse_subscriptions_campaign_goal}}"/>
-      <p class="campaign-banner-progress-description">
-        <strong>{{format-currency currency amountRaised}}</strong> of
-        <strong>{{format-currency currency goalTarget}}</strong>
-        {{i18n 'discourse_subscriptions.campaign.raised'}}
-      </p>
-    {{/if}}
-    {{#conditional-loading-spinner condition=loading size="small"}}
-      {{#if showContributors}}
-        <div class="campaign-banner-progress-users">
-          <p class="campaign-banner-progress-users-title">
-            <strong>{{i18n 'discourse_subscriptions.campaign.recent_contributors'}}</strong>
-          </p>
-          <div class="campaign-banner-progress-users-avatars">
-            {{#each contributors as |contributor|}}
-              {{avatar contributor avatarTemplatePath="avatar_template" usernamePath="username" namePath="name" imageSize="small"}}
-            {{/each}}
-          </div>
-        </div>
+    {{#if isGoalMet}}
+      <p class="campaign-banner-progress-success">{{i18n 'discourse_subscriptions.campaign.goal'}}!</p>
+      {{#if subscriberGoal}}
+        <p class="campaign-banner-progress-description">
+          <strong>{{subscribers}}</strong> {{i18n 'discourse_subscriptions.campaign.of'}}
+          <strong>{{goalTarget}}</strong>
+          {{i18n 'discourse_subscriptions.campaign.subscribers'}}
+        </p>
+      {{else}}
+        <p class="campaign-banner-progress-description">
+          <strong>{{format-currency currency amountRaised}}</strong> of
+          <strong>{{format-currency currency goalTarget}}</strong>
+          {{i18n 'discourse_subscriptions.campaign.raised'}}
+        </p>
+          {{#if showContributors}}
+            {{#conditional-loading-spinner condition=loading size="small"}}
+              <div class="campaign-banner-progress-users">
+                <p class="campaign-banner-progress-users-title">
+                  <strong>{{i18n 'discourse_subscriptions.campaign.recent_contributors'}}</strong>
+                </p>
+                <div class="campaign-banner-progress-users-avatars">
+                  {{#each contributors as |contributor|}}
+                    {{avatar contributor avatarTemplatePath="avatar_template" usernamePath="username" namePath="name" imageSize="small"}}
+                  {{/each}}
+                </div>
+              </div>
+            {{/conditional-loading-spinner}}
+          {{/if}}
       {{/if}}
-    {{/conditional-loading-spinner}}
+    {{else}}
+      {{#if subscriberGoal}}
+        <progress class="campaign-banner-progress-bar" value="{{subscribers}}" max="{{siteSettings.discourse_subscriptions_campaign_goal}}"/>
+        <p class="campaign-banner-progress-description">
+          <strong>{{subscribers}}</strong> {{i18n 'discourse_subscriptions.campaign.of'}}
+          <strong>{{goalTarget}}</strong>
+          {{i18n 'discourse_subscriptions.campaign.subscribers'}}
+        </p>
+      {{else}}
+        <progress class="campaign-banner-progress-bar" value="{{amountRaised}}" max="{{siteSettings.discourse_subscriptions_campaign_goal}}"/>
+        <p class="campaign-banner-progress-description">
+          <strong>{{format-currency currency amountRaised}}</strong> of
+          <strong>{{format-currency currency goalTarget}}</strong>
+          {{i18n 'discourse_subscriptions.campaign.raised'}}
+        </p>
+      {{/if}}
+      {{#if showContributors}}
+        {{#conditional-loading-spinner condition=loading size="small"}}
+          <div class="campaign-banner-progress-users">
+            <p class="campaign-banner-progress-users-title">
+              <strong>{{i18n 'discourse_subscriptions.campaign.recent_contributors'}}</strong>
+            </p>
+            <div class="campaign-banner-progress-users-avatars">
+              {{#each contributors as |contributor|}}
+                {{avatar contributor avatarTemplatePath="avatar_template" usernamePath="username" namePath="name" imageSize="small"}}
+              {{/each}}
+            </div>
+          </div>
+        {{/conditional-loading-spinner}}
+      {{/if}}
+    {{/if}}
   </div>
 {{/if}}
