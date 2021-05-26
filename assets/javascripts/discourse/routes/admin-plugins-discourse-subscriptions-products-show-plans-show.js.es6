@@ -18,7 +18,7 @@ export default Route.extend({
         interval: "month",
         type: "recurring",
         isRecurring: true,
-        currency: Discourse.SiteSettings.discourse_subscriptions_currency,
+        currency: this.siteSettings.discourse_subscriptions_currency,
         product: product.get("id"),
         metadata: {
           group_name: null,
