@@ -26,10 +26,10 @@ export default Component.extend({
     const contributorSetting = this.siteSettings
       .discourse_subscriptions_campaign_contributors;
 
-    if (contributorSetting !== "" && contributorSetting !== "[]") {
+    if (contributorSetting !== "") {
       this.set("loading", true);
       let promises = [];
-      const contributorNames = [...new Set(JSON.parse(contributorSetting))];
+      const contributorNames = [...new Set(contributorSetting.split(","))];
 
       contributorNames.map((username) => {
         let promise = User.findByUsername(username).then((result) => {

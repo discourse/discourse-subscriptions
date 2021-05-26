@@ -28,9 +28,9 @@ module DiscourseSubscriptions
       if SiteSetting.discourse_subscriptions_campaign_show_contributors == true
         contributor_ids = Customer.last(5).pluck(:user_id)
         usernames = contributor_ids.map { |id| ::User.find(id).username }
-        SiteSetting.discourse_subscriptions_campaign_contributors = usernames.join(",")
+        SiteSetting.discourse_subscriptions_campaign_contributors = usernames.join(",") || ""
       else
-        SiteSetting.discourse_subscriptions_campaign_contributors = nil
+        SiteSetting.discourse_subscriptions_campaign_contributors = ""
       end
     end
 
