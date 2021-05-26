@@ -2,10 +2,10 @@
 require_dependency "subscriptions_user_constraint"
 
 DiscourseSubscriptions::Engine.routes.draw do
-  # TODO: namespace this
   scope 'admin' do
     get '/' => 'admin#index'
     post '/refresh' => 'admin#refresh_campaign'
+    post '/create-campaign' => 'admin#create_campaign'
   end
 
   namespace :admin do

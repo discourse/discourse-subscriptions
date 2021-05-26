@@ -34,7 +34,86 @@ module DiscourseSubscriptions
       end
     end
 
+    def create_campaign
+      begin
+        group = create_campaign_group
+        product = create_campaign_product
+        create_campaign_prices(product, group)
+
+        SiteSetting.discourse_subscriptions_campaign_enabled = true
+        SiteSetting.discourse_subscriptions_campaign_product = product[:id]
+      rescue ::Stripe::InvalidRequestError => e
+        e
+      end
+    end
+
     protected
+
+    def create_campaign_group
+      return if ::Group.find_by(name: I18n.t('js.discourse_subscriptions.campaign.supporters'))
+
+      # since this is public, we want to localize this as much as possible
+      group = ::Group.create(name: I18n.t('js.discourse_subscriptions.campaign.supporters'))
+
+      params = {
+        full_name: I18n.t('js.discourse_subscriptions.campaign.supporters'),
+        title: I18n.t('js.discourse_subscriptions.campaign.supporter'),
+        flair_icon: "donate"
+      }
+
+      group.update(params)
+
+      group[:name]
+    end
+
+    def create_campaign_product
+      # fill out params
+      product_params = {
+        name: I18n.t('js.discourse_subscriptions.campaign.title'),
+        active: true,
+        metadata: {
+          description: I18n.t('js.discourse_subscriptions.campaign.body'),
+        }
+      }
+
+      product = ::Stripe::Product.create(product_params)
+
+      Product.create(external_id: product[:id])
+
+      product
+    end
+
+    def create_campaign_prices(product, group)
+      # hard coded defaults to make setting this up as simple as possible
+      monthly_prices = [3, 5, 10, 25]
+      yearly_prices = [50, 100]
+
+      monthly_prices.each do |price|
+        create_price(product[:id], group, price, "month")
+      end
+
+      yearly_prices.each do |price|
+        create_price(product[:id], group, price, "year")
+      end
+    end
+
+    def create_price(product_id, group_name, amount, recurrence)
+      price_object = {
+        nickname: "#{amount}/#{recurrence}",
+        unit_amount: amount * 100,
+        product: product_id,
+        currency: SiteSetting.discourse_subscriptions_currency,
+        active: true,
+        recurring: {
+          interval: recurrence
+        },
+        metadata: {
+          group_name: group_name
+        }
+      }
+
+      plan = ::Stripe::Price.create(price_object)
+    end
 
     def get_subscription_data
       subscriptions = []

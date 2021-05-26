@@ -26,4 +26,17 @@ export default Controller.extend({
       );
     });
   },
+
+  @action
+  createOneClickCampaign() {
+    ajax(`/s/admin/create-campaign`, {
+      method: "post",
+    }).then(() => {
+      bootbox.alert(I18n.t("discourse_subscriptions.campaign.created"), () => {
+        window.location.pathname = getURL(
+          "/admin/plugins/discourse-subscriptions/products"
+        );
+      });
+    });
+  },
 });

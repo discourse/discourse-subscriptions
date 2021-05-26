@@ -51,6 +51,9 @@ plugins:
   discourse_subscriptions_campaign_show_contributors:
     client: true
     default: true
+  discourse_subscriptions_campaign_product:
+    client: true
+    default: ""
   discourse_subscriptions_campaign_amount_raised:
     client: true
     default: 0
