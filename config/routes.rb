@@ -5,6 +5,7 @@ DiscourseSubscriptions::Engine.routes.draw do
   # TODO: namespace this
   scope 'admin' do
     get '/' => 'admin#index'
+    post '/refresh' => 'admin#refresh_campaign'
   end
 
   namespace :admin do

@@ -5,5 +5,10 @@ module DiscourseSubscriptions
     def index
       head 200
     end
+
+    def refresh_campaign
+      Jobs.enqueue(:manually_update_campaign_data)
+      render json: success_json
+    end
   end
 end
