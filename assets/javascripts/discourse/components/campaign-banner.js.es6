@@ -26,7 +26,7 @@ export default Component.extend({
     const contributorSetting = this.siteSettings
       .discourse_subscriptions_campaign_contributors;
 
-    if (contributorSetting !== "") {
+    if (contributorSetting && contributorSetting !== "") {
       this.set("loading", true);
       let promises = [];
       const contributorNames = [...new Set(contributorSetting.split(","))];
