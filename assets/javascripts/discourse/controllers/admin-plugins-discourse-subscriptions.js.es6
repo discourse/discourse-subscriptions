@@ -14,6 +14,11 @@ export default Controller.extend({
     return this.siteSettings.discourse_subscriptions_campaign_enabled;
   },
 
+  @discourseComputed
+  campaignProductSet() {
+    return !!this.siteSettings.discourse_subscriptions_campaign_product;
+  },
+
   @action
   triggerManualRefresh() {
     ajax(`/s/admin/refresh`, {

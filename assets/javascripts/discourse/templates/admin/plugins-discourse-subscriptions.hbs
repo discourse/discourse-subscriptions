@@ -9,12 +9,14 @@
       action=(action 'triggerManualRefresh')
     }}
   {{else}}
-    {{d-button
-      label="discourse_subscriptions.campaign.one_click_campaign"
-      icon="plus-square"
-      action=(action 'createOneClickCampaign')
-      isLoading=loading
-    }}
+    {{#unless campaignProductSet}}
+      {{d-button
+        label="discourse_subscriptions.campaign.one_click_campaign"
+        icon="plus-square"
+        action=(action 'createOneClickCampaign')
+        isLoading=loading
+      }}
+    {{/unless}}
   {{/if}}
 </div>
 
