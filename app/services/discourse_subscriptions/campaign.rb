@@ -10,6 +10,12 @@ module DiscourseSubscriptions
 
     def refresh_data
       product_ids = Product.all.pluck(:external_id)
+
+      # if a product id is set for the campaign, we only want to return those results.
+      # if it's blank, return them all.
+      campaign_product = SiteSetting.discourse_subscriptions_campaign_product
+      product_ids = product_ids.select { |id| id == campaign_product } if campaign_product.present?
+
       amount = 0
       subscriptions = get_subscription_data
       subscriptions = filter_to_subscriptions_products(subscriptions, product_ids)
@@ -26,7 +32,7 @@ module DiscourseSubscriptions
       SiteSetting.discourse_subscriptions_campaign_amount_raised = amount
 
       if SiteSetting.discourse_subscriptions_campaign_show_contributors == true
-        contributor_ids = Customer.last(5).pluck(:user_id)
+        contributor_ids = campaign_product.present? ? Customer.where(product_id: campaign_product).last(5).pluck(:user_id) : Customer.last(5).pluck(:user_id)
         usernames = contributor_ids.map { |id| ::User.find(id).username }
         SiteSetting.discourse_subscriptions_campaign_contributors = usernames.join(",") || ""
       else
@@ -50,24 +56,25 @@ module DiscourseSubscriptions
     protected
 
     def create_campaign_group
-      return if ::Group.find_by(name: I18n.t('js.discourse_subscriptions.campaign.supporters'))
-
       # since this is public, we want to localize this as much as possible
-      group = ::Group.create(name: I18n.t('js.discourse_subscriptions.campaign.supporters'))
+      group = ::Group.find_by(name: I18n.t('js.discourse_subscriptions.campaign.supporters'))
 
-      params = {
-        full_name: I18n.t('js.discourse_subscriptions.campaign.supporters'),
-        title: I18n.t('js.discourse_subscriptions.campaign.supporter'),
-        flair_icon: "donate"
-      }
+      unless group
+        group = ::Group.create(name: I18n.t('js.discourse_subscriptions.campaign.supporters'))
 
-      group.update(params)
+        params = {
+          full_name: I18n.t('js.discourse_subscriptions.campaign.supporters'),
+          title: I18n.t('js.discourse_subscriptions.campaign.supporter'),
+          flair_icon: "donate"
+        }
+
+        group.update(params)
+      end
 
       group[:name]
     end
 
     def create_campaign_product
-      # fill out params
       product_params = {
         name: I18n.t('js.discourse_subscriptions.campaign.title'),
         active: true,
