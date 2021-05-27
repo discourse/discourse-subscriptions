@@ -1,6 +1,7 @@
 import Controller from "@ember/controller";
 import Subscription from "discourse/plugins/discourse-subscriptions/discourse/models/subscription";
 import Transaction from "discourse/plugins/discourse-subscriptions/discourse/models/transaction";
+import User from "discourse/models/user";
 import I18n from "I18n";
 import { not } from "@ember/object/computed";
 import discourseComputed from "discourse-common/utils/decorators";
@@ -76,7 +77,7 @@ export default Controller.extend({
       plan.type === "recurring"
         ? "user.billing.subscriptions"
         : "user.billing.payments",
-      Discourse.User.current().username.toLowerCase()
+      User.current().username.toLowerCase()
     );
   },
 
