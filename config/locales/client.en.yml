@@ -43,6 +43,18 @@ en:
         refresh_page: Campaign data is now syncing from Stripe in the background. Refresh the page in a few moments to load the updated info.
         supporter: Supporter
         supporters: Supporters
+        confirm_creation: |-
+          <p>Do you want to automatically create a campaign for your community?</p>
+
+          <p>Continuing will create:</p>
+
+          <ul>
+            <li>A group to reward your supporters with a custom title and avatar flair</li>
+            <li>A Stripe product with pre-set prices (monthly and annual) your users can purchase to support your site.</li>
+          </ul>
+
+          <p>Do you wish to continue?</p>
+
         created: Your one-click campaign is created and ready to go! Redirecting to the campaign settings.
       one_time_payment: One-Time Payment
       plans:
