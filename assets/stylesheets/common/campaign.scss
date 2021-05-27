@@ -1,5 +1,10 @@
 .subscription-campaign-sidebar {
-  #main-outlet .container.list-container .row:nth-of-type(2) .full-width #list-area .contents {
+  #main-outlet
+    .container.list-container
+    .row:nth-of-type(2)
+    .full-width
+    #list-area
+    .contents {
     display: grid;
     grid-template-columns: 78% calc(22% - 2em);
     grid-template-areas: "content sidebar";

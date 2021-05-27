@@ -13,7 +13,7 @@ module DiscourseSubscriptions
           products = []
 
           if product_ids.present? && is_stripe_configured?
-            products = ::Stripe::Product.list({ ids: product_ids, limit:100 })
+            products = ::Stripe::Product.list({ ids: product_ids, limit: 100 })
             products = products[:data]
           elsif !is_stripe_configured?
             products = nil
