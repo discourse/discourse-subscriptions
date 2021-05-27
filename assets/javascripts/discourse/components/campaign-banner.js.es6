@@ -128,6 +128,11 @@ export default Component.extend({
     return user;
   },
 
+  @discourseComputed
+  product() {
+    return this.siteSettings.discourse_subscriptions_campaign_product;
+  },
+
   @action
   dismissBanner() {
     let now = new Date();

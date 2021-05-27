@@ -95,6 +95,7 @@ en:
           subscribe: Subscribe
         purchased: Purchased
         go_to_billing: Go to Billing
+        already_purchased: Thanks so much for your prior purchase of this product!
       billing:
         name: Full name
         email: Email

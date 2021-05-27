@@ -44,7 +44,11 @@
           label="discourse_subscriptions.plans.payment_button"
         }}
       {{/if}}
-
+    {{else}}
+      <h2>{{i18n 'discourse_subscriptions.subscribe.already_purchased'}}</h2>
+      {{#link-to "user.billing.subscriptions" currentUser.username class="btn btn-primary"}}
+        {{i18n 'discourse_subscriptions.subscribe.go_to_billing'}}
+      {{/link-to}}
     {{/if}}
   </div>
 </div>
