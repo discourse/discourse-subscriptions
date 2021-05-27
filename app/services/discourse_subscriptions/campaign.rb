@@ -21,7 +21,7 @@ module DiscourseSubscriptions
       subscriptions = filter_to_subscriptions_products(subscriptions, product_ids)
 
       # get number of subscribers
-      SiteSetting.discourse_subscriptions_campaign_subscribers = subscriptions.length
+      SiteSetting.discourse_subscriptions_campaign_subscribers = subscriptions.length || 0
 
       # calculate amount raised
       subscriptions.map do |sub|
