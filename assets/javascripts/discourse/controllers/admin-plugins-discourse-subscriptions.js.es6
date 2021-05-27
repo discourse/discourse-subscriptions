@@ -10,6 +10,11 @@ export default Controller.extend({
   loading: false,
 
   @discourseComputed
+  stripeConfigured() {
+    return !!this.siteSettings.discourse_subscriptions_public_key;
+  },
+
+  @discourseComputed
   campaignEnabled() {
     return this.siteSettings.discourse_subscriptions_campaign_enabled;
   },
