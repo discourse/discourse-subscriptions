@@ -24,8 +24,6 @@ describe DiscourseSubscriptions::Campaign do
       }
     end
 
-    let(:product_ids) { ["prodct_23456"] }
-
     before do
       Fabricate(:product, external_id: "prodct_23456")
       Fabricate(:customer, product_id: "prodct_23456", user_id: user.id, customer_id: 'x')
@@ -34,14 +32,80 @@ describe DiscourseSubscriptions::Campaign do
     end
 
     describe "refresh_data" do
-      it "refreshes the campaign data properly" do
-        ::Stripe::Subscription.expects(:list).returns(data: [subscription], has_more: false)
+      context "for all subscription purchases" do
+        it "refreshes the campaign data properly" do
+          ::Stripe::Subscription.expects(:list).returns(data: [subscription], has_more: false)
 
-        DiscourseSubscriptions::Campaign.new.refresh_data
+          DiscourseSubscriptions::Campaign.new.refresh_data
 
-        expect(SiteSetting.discourse_subscriptions_campaign_subscribers).to eq 1
-        expect(SiteSetting.discourse_subscriptions_campaign_amount_raised).to eq 1000
-        expect(SiteSetting.discourse_subscriptions_campaign_contributors).to eq "#{user.username}"
+          expect(SiteSetting.discourse_subscriptions_campaign_subscribers).to eq 1
+          expect(SiteSetting.discourse_subscriptions_campaign_amount_raised).to eq 1000
+          expect(SiteSetting.discourse_subscriptions_campaign_contributors).to eq "#{user.username}"
+        end
+      end
+
+      context "with a campaign product set" do
+        let(:user2) { Fabricate(:user) }
+        let(:campaign_subscription) do
+          {
+            id: "sub_5678",
+            items: {
+              data: [
+                {
+                  price: {
+                    product: "prod_use",
+                    unit_amount: 10000,
+                    recurring: {
+                      interval: "year"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        end
+
+        before do
+          Fabricate(:product, external_id: "prod_use")
+          Fabricate(:customer, product_id: "prod_use", user_id: user2.id, customer_id: 'y')
+          SiteSetting.discourse_subscriptions_campaign_product = "prod_use"
+        end
+
+        it "refreshes campaign data with only the campaign product/subscriptions" do
+          ::Stripe::Subscription.expects(:list).returns(data: [subscription, campaign_subscription], has_more: false)
+
+          DiscourseSubscriptions::Campaign.new.refresh_data
+
+          expect(SiteSetting.discourse_subscriptions_campaign_subscribers).to eq 1
+          expect(SiteSetting.discourse_subscriptions_campaign_amount_raised).to eq 833
+          expect(SiteSetting.discourse_subscriptions_campaign_contributors).to eq "#{user2.username}"
+
+        end
+      end
+    end
+  end
+
+  describe "campaign is automatically created" do
+    describe "create_campaign" do
+      it "successfully creates the campaign group, product, and prices" do
+        ::Stripe::Product.expects(:create).returns(id: "prod_campaign")
+        ::Stripe::Price.expects(:create)
+        ::Stripe::Price.expects(:create)
+        ::Stripe::Price.expects(:create)
+        ::Stripe::Price.expects(:create)
+        ::Stripe::Price.expects(:create)
+        ::Stripe::Price.expects(:create)
+
+        DiscourseSubscriptions::Campaign.new.create_campaign
+
+        expect(Group.find_by(
+          name: I18n.t('js.discourse_subscriptions.campaign.supporters')
+        ).name).to eq "Supporters"
+
+        expect(DiscourseSubscriptions::Product.where(external_id: "prod_campaign").length).to eq 1
+
+        expect(SiteSetting.discourse_subscriptions_campaign_enabled).to eq true
+        expect(SiteSetting.discourse_subscriptions_campaign_product).to eq "prod_campaign"
       end
     end
   end
