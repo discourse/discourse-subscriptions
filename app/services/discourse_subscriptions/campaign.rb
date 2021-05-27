@@ -21,10 +21,10 @@ module DiscourseSubscriptions
       subscriptions = filter_to_subscriptions_products(subscriptions, product_ids)
 
       # get number of subscribers
-      SiteSetting.discourse_subscriptions_campaign_subscribers = subscriptions.length || 0
+      SiteSetting.discourse_subscriptions_campaign_subscribers = subscriptions&.length || 0
 
       # calculate amount raised
-      subscriptions.map do |sub|
+      subscriptions&.map do |sub|
         sub_amount = calculate_monthly_amount(sub)
         amount += sub_amount
       end
