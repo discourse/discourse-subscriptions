@@ -32,10 +32,6 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-    const dismissed = document.cookie.includes(
-      "discourse-subscriptions-campaign-banner-dismissed"
-    );
-    this.set("dismissed", dismissed);
 
     this.set("contributors", []);
 
@@ -62,16 +58,16 @@ export default Component.extend({
     "router.currentRouteName",
     "currentUser",
     "siteSettings.discourse_subscriptions_campaign_enabled",
-    "dismissed"
+    "visible"
   )
-  shouldShow(currentRoute, currentUser, enabled, dismissed) {
+  shouldShow(currentRoute, currentUser, enabled, visible) {
     // do not show on admin or subscriptions pages
     const showOnRoute =
       currentRoute !== "discovery.s" &&
       !currentRoute.split(".")[0].includes("admin") &&
       currentRoute.split(".")[0] !== "s";
 
-    return showOnRoute && currentUser && enabled && !dismissed;
+    return showOnRoute && currentUser && enabled && visible;
   },
 
   @observes("dismissed")
@@ -79,6 +75,22 @@ export default Component.extend({
     if (this.dismissed) {
       document.body.classList.remove("subscription-campaign-sidebar");
     }
+  },
+
+  @discourseComputed("dismissed")
+  visible(dismissed) {
+    const dismissedBannerKey = this.keyValueStore.get(
+      "dismissed_campaign_banner"
+    );
+    const threeMonths = 2628000000 * 3;
+
+    const bannerDismissedTime = new Date(dismissedBannerKey);
+    const now = Date.now();
+
+    return (
+      (!dismissedBannerKey || now - bannerDismissedTime > threeMonths) &&
+      !dismissed
+    );
   },
 
   @discourseComputed
@@ -99,9 +111,10 @@ export default Component.extend({
 
   @action
   dismissBanner() {
-    let now = new Date();
-    now.setMonth(now.getMonth() + 3);
-    document.cookie = `name=discourse-subscriptions-campaign-banner-dismissed; expires=${now.toUTCString()};`;
     this.set("dismissed", true);
+    this.keyValueStore.set({
+      key: "dismissed_campaign_banner",
+      value: Date.now(),
+    });
   },
 });
