@@ -5,7 +5,7 @@ module DiscourseSubscriptions
     include DiscourseSubscriptions::Stripe
     include DiscourseSubscriptions::Group
     before_action :set_api_key
-    requires_login except: [:index, :show]
+    requires_login except: [:index, :get_contributors, :show]
 
     def index
       begin
@@ -29,6 +29,18 @@ module DiscourseSubscriptions
       rescue ::Stripe::InvalidRequestError => e
         render_json_error e.message
       end
+    end
+
+    def get_contributors
+      return unless SiteSetting.discourse_subscriptions_campaign_show_contributors
+      contributor_ids = Set.new
+
+      campaign_product = SiteSetting.discourse_subscriptions_campaign_product
+      campaign_product.present? ? contributor_ids.merge(Customer.where(product_id: campaign_product).last(5).pluck(:user_id)) : contributor_ids.merge(Customer.last(5).pluck(:user_id))
+
+      contributors = ::User.where(id: contributor_ids)
+
+      render_serialized(contributors, UserSerializer)
     end
 
     def show

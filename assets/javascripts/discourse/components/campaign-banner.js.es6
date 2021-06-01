@@ -1,11 +1,10 @@
 import { action } from "@ember/object";
+import { ajax } from "discourse/lib/ajax";
 import { equal } from "@ember/object/computed";
 import { setting } from "discourse/lib/computed";
 import Component from "@ember/component";
 import discourseComputed, { observes } from "discourse-common/utils/decorators";
 import { inject as service } from "@ember/service";
-import User from "discourse/models/user";
-import { Promise } from "rsvp";
 
 export default Component.extend({
   router: service(),
@@ -23,7 +22,9 @@ export default Component.extend({
   currency: setting("discourse_subscriptions_currency"),
   goalTarget: setting("discourse_subscriptions_campaign_goal"),
   product: setting("discourse_subscriptions_campaign_product"),
-  showContributors: false,
+  showContributors: setting(
+    "discourse_subscriptions_campaign_show_contributors"
+  ),
   classNameBindings: [
     "isSidebar:campaign-banner-sidebar",
     "shouldShow:campaign-banner",
@@ -38,25 +39,10 @@ export default Component.extend({
 
     this.set("contributors", []);
 
-    const contributorSetting = this.siteSettings
-      .discourse_subscriptions_campaign_contributors;
-
-    if (contributorSetting && contributorSetting !== "") {
-      this.set("loading", true);
-      let promises = [];
-      const contributorNames = [...new Set(contributorSetting.split(","))];
-
-      contributorNames.map((username) => {
-        let promise = User.findByUsername(username).then((result) => {
-          this.contributors.pushObject(result);
-        });
-
-        promises.push(promise);
-      });
-
-      Promise.all(promises).then(() => {
+    if (this.showContributors) {
+      return ajax("/s/contributors", { method: "get" }).then((result) => {
         this.setProperties({
-          showContributors: true,
+          contributors: result,
           loading: false,
         });
       });

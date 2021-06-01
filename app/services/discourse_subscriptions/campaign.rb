@@ -32,14 +32,6 @@ module DiscourseSubscriptions
       end
 
       SiteSetting.discourse_subscriptions_campaign_amount_raised = amount
-
-      if SiteSetting.discourse_subscriptions_campaign_show_contributors
-        contributor_ids = campaign_product.present? ? Customer.where(product_id: campaign_product).last(5).pluck(:user_id) : Customer.last(5).pluck(:user_id)
-        usernames = ::User.where(id: contributor_ids).pluck(:username)
-        SiteSetting.discourse_subscriptions_campaign_contributors = usernames.join(",") || ""
-      else
-        SiteSetting.discourse_subscriptions_campaign_contributors = ""
-      end
     end
 
     def create_campaign

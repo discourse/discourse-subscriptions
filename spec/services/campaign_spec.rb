@@ -40,7 +40,6 @@ describe DiscourseSubscriptions::Campaign do
 
           expect(SiteSetting.discourse_subscriptions_campaign_subscribers).to eq 1
           expect(SiteSetting.discourse_subscriptions_campaign_amount_raised).to eq 1000
-          expect(SiteSetting.discourse_subscriptions_campaign_contributors).to eq "#{user.username}"
         end
       end
 
@@ -78,8 +77,6 @@ describe DiscourseSubscriptions::Campaign do
 
           expect(SiteSetting.discourse_subscriptions_campaign_subscribers).to eq 1
           expect(SiteSetting.discourse_subscriptions_campaign_amount_raised).to eq 833
-          expect(SiteSetting.discourse_subscriptions_campaign_contributors).to eq "#{user2.username}"
-
         end
       end
     end

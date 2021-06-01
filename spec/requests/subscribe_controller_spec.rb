@@ -5,6 +5,7 @@ require 'rails_helper'
 module DiscourseSubscriptions
   RSpec.describe SubscribeController do
     let (:user) { Fabricate(:user) }
+    let (:campaign_user) { Fabricate(:user) }
 
     context "showing products" do
       let(:product) do
@@ -70,6 +71,48 @@ module DiscourseSubscriptions
           get "/s.json"
           data = response.parsed_body
           expect(data.first["subscribed"]).to eq false
+        end
+      end
+
+      describe "#get_contributors" do
+        before do
+          Fabricate(:product, external_id: "prod_campaign")
+          Fabricate(:customer, product_id: "prodct_23456", user_id: user.id, customer_id: 'x')
+          Fabricate(:customer, product_id: "prod_campaign", user_id: campaign_user.id, customer_id: 'y')
+        end
+        context 'not showing contributors' do
+          it 'returns nothing if not set to show contributors' do
+            SiteSetting.discourse_subscriptions_campaign_show_contributors = false
+            get "/s/contributors.json"
+
+            data = response.parsed_body
+            expect(data).to be_empty
+          end
+        end
+
+        context 'showing contributors' do
+          before do
+            SiteSetting.discourse_subscriptions_campaign_show_contributors = true
+          end
+
+          it 'filters users by campaign product if set' do
+            SiteSetting.discourse_subscriptions_campaign_product = "prod_campaign"
+
+            get "/s/contributors.json"
+
+            data = response.parsed_body
+            expect(data.first["id"]).to eq campaign_user.id
+            expect(data.length).to eq 1
+          end
+
+          it 'shows all purchases if campaign product not set' do
+            SiteSetting.discourse_subscriptions_campaign_product = nil
+
+            get "/s/contributors.json"
+
+            data = response.parsed_body
+            expect(data.length).to eq 2
+          end
         end
       end
 

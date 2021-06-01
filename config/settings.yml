@@ -62,7 +62,3 @@ plugins:
     client: true
     default: 0
     hidden: true
-  discourse_subscriptions_campaign_contributors:
-    client: true
-    default: ""
-    hidden: true
