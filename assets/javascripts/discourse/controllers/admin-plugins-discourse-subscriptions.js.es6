@@ -3,7 +3,6 @@ import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 import Controller from "@ember/controller";
 import discourseComputed from "discourse-common/utils/decorators";
-import getURL from "discourse-common/lib/get-url";
 import I18n from "I18n";
 
 export default Controller.extend({
@@ -32,8 +31,8 @@ export default Controller.extend({
       bootbox.alert(
         I18n.t("discourse_subscriptions.campaign.refresh_page"),
         () => {
-          window.location.pathname = getURL(
-            "/admin/plugins/discourse-subscriptions/products"
+          this.transitionToRoute(
+            "adminPlugins.discourse-subscriptions.products"
           );
         }
       );
