@@ -33,7 +33,7 @@ en:
         title: Support Our Community
         body: We need your help to keep this community up and running!
         subscribers: Subscribers
-        of: of
+        goal_comparison: "<strong>%{current}</strong> of <strong>%{goal}</strong>"
         raised: Raised
         button: Support
         recent_contributors: Recent Contributors

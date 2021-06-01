@@ -22,14 +22,12 @@
       <p class="campaign-banner-progress-success">{{i18n 'discourse_subscriptions.campaign.goal'}}!</p>
       {{#if subscriberGoal}}
         <p class="campaign-banner-progress-description">
-          <strong>{{subscribers}}</strong> {{i18n 'discourse_subscriptions.campaign.of'}}
-          <strong>{{goalTarget}}</strong>
+          {{i18n 'discourse_subscriptions.campaign.goal_comparison' current=subscribers goal=goalTarget}}
           {{i18n 'discourse_subscriptions.campaign.subscribers'}}
         </p>
       {{else}}
         <p class="campaign-banner-progress-description">
-          <strong>{{format-currency currency amountRaised}}</strong> of
-          <strong>{{format-currency currency goalTarget}}</strong>
+          {{html-safe (i18n 'discourse_subscriptions.campaign.goal_comparison' current=(format-currency currency amountRaised) goal=(format-currency currency goalTarget))}}
           {{i18n 'discourse_subscriptions.campaign.raised'}}
         </p>
           {{#if showContributors}}
@@ -51,15 +49,13 @@
       {{#if subscriberGoal}}
         <progress class="campaign-banner-progress-bar" value="{{subscribers}}" max="{{siteSettings.discourse_subscriptions_campaign_goal}}"/>
         <p class="campaign-banner-progress-description">
-          <strong>{{subscribers}}</strong> {{i18n 'discourse_subscriptions.campaign.of'}}
-          <strong>{{goalTarget}}</strong>
+          {{i18n 'discourse_subscriptions.campaign.goal_comparison' current=subscribers goal=goalTarget}}
           {{i18n 'discourse_subscriptions.campaign.subscribers'}}
         </p>
       {{else}}
         <progress class="campaign-banner-progress-bar" value="{{amountRaised}}" max="{{siteSettings.discourse_subscriptions_campaign_goal}}"/>
         <p class="campaign-banner-progress-description">
-          <strong>{{format-currency currency amountRaised}}</strong> of
-          <strong>{{format-currency currency goalTarget}}</strong>
+          {{html-safe (i18n 'discourse_subscriptions.campaign.goal_comparison' current=(format-currency currency amountRaised) goal=(format-currency currency goalTarget))}}
           {{i18n 'discourse_subscriptions.campaign.raised'}}
         </p>
       {{/if}}
