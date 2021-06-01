@@ -95,9 +95,10 @@ describe DiscourseSubscriptions::Campaign do
 
         DiscourseSubscriptions::Campaign.new.create_campaign
 
-        expect(Group.find_by(
-          name: I18n.t('js.discourse_subscriptions.campaign.supporters')
-        ).name).to eq "Supporters"
+        group = Group.find_by(name: "campaign_supporters")
+
+        expect(group[:full_name]).to eq "Supporters"
+        expect(SiteSetting.discourse_subscriptions_campaign_group.to_i).to eq group.id
 
         expect(DiscourseSubscriptions::Product.where(external_id: "prod_campaign").length).to eq 1
 

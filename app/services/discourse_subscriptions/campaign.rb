@@ -3,7 +3,6 @@
 module DiscourseSubscriptions
   class Campaign
     include DiscourseSubscriptions::Stripe
-
     def initialize
       set_api_key # instantiates Stripe API
     end
@@ -50,11 +49,13 @@ module DiscourseSubscriptions
     protected
 
     def create_campaign_group
-      # since this is public, we want to localize this as much as possible
-      group = ::Group.find_by(name: I18n.t('js.discourse_subscriptions.campaign.supporters'))
+      campaign_group = SiteSetting.discourse_subscriptions_campaign_group
+      group = ::Group.find_by_id(campaign_group) if campaign_group.present?
 
       unless group
-        group = ::Group.create(name: I18n.t('js.discourse_subscriptions.campaign.supporters'))
+        group = ::Group.create(name: "campaign_supporters")
+
+        SiteSetting.discourse_subscriptions_campaign_group = group[:id]
 
         params = {
           full_name: I18n.t('js.discourse_subscriptions.campaign.supporters'),
