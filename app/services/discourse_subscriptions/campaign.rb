@@ -8,7 +8,7 @@ module DiscourseSubscriptions
     end
 
     def refresh_data
-      product_ids = Product.all.pluck(:external_id)
+      product_ids = Set.new(Product.all.pluck(:external_id))
 
       # if a product id is set for the campaign, we only want to return those results.
       # if it's blank, return them all.
