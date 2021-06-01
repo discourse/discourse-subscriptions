@@ -14,26 +14,28 @@ module DiscourseSubscriptions
       # if a product id is set for the campaign, we only want to return those results.
       # if it's blank, return them all.
       campaign_product = SiteSetting.discourse_subscriptions_campaign_product
-      product_ids = product_ids.select { |id| id == campaign_product } if campaign_product.present?
+      if campaign_product.present?
+        product_ids = product_ids.include?(campaign_product) ? [campaign_product] : []
+      end
 
       amount = 0
       subscriptions = get_subscription_data
       subscriptions = filter_to_subscriptions_products(subscriptions, product_ids)
 
       # get number of subscribers
-      SiteSetting.discourse_subscriptions_campaign_subscribers = subscriptions&.length || 0
+      SiteSetting.discourse_subscriptions_campaign_subscribers = subscriptions&.length.to_i
 
       # calculate amount raised
-      subscriptions&.map do |sub|
+      subscriptions&.each do |sub|
         sub_amount = calculate_monthly_amount(sub)
         amount += sub_amount
       end
 
       SiteSetting.discourse_subscriptions_campaign_amount_raised = amount
 
-      if SiteSetting.discourse_subscriptions_campaign_show_contributors == true
+      if SiteSetting.discourse_subscriptions_campaign_show_contributors
         contributor_ids = campaign_product.present? ? Customer.where(product_id: campaign_product).last(5).pluck(:user_id) : Customer.last(5).pluck(:user_id)
-        usernames = contributor_ids.map { |id| ::User.find(id).username }
+        usernames = ::User.where(id: contributor_ids).pluck(:username)
         SiteSetting.discourse_subscriptions_campaign_contributors = usernames.join(",") || ""
       else
         SiteSetting.discourse_subscriptions_campaign_contributors = ""

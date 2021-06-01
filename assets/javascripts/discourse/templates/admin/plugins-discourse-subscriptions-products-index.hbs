@@ -1,6 +1,6 @@
 {{#if model.unconfigured }}
   <p>{{i18n 'discourse_subscriptions.admin.unconfigured'}}</p>
-  <p><a href="https://meta.discourse.org/t/discourse-subscriptions/140818/">Discourse Subscriptions on Meta</a></p>
+  <p><a href="https://meta.discourse.org/t/discourse-subscriptions/140818/">{{i18n 'discourse_subscriptions.admin.on_meta'}}</a></p>
 {{else}}
   <p class="btn-right">
     {{#link-to 'adminPlugins.discourse-subscriptions.products.show' 'new' class="btn btn-primary"}}

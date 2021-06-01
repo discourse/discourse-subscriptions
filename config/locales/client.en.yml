@@ -11,7 +11,7 @@ en:
     discourse_subscriptions_campaign_type: Selects the type of campaign to run (subscribers or monthly amount raised).
     discourse_subscriptions_campaign_banner_location: Selects the location of the campaign banner (top or sidebar).
     discourse_subscriptions_campaign_show_contributors: Show avatars of the most recent purchases of subscription products.
-    discourse_subscriptions_campaign_product: The Stripe product id to send supporters when they click the button on the campaign. If this setting is blank, supporters will be directed to the products page at '/s'.
+    discourse_subscriptions_campaign_product: The Stripe product id to send supporters when they click the button on the campaign. If this setting is blank, supporters will be directed to the main products page.
     errors:
       discourse_patrons_amount_must_be_currency: "Currency amounts must be currencies without dollar symbol (eg 1.50)"
   js:
@@ -122,6 +122,7 @@ en:
         success: Go back
       admin:
         unconfigured: 'Stripe is not configured correctly. Please see Discourse Meta for information.'
+        on_meta: Discourse Subscriptions on Meta
         dashboard:
           title: Dashboard
           table:

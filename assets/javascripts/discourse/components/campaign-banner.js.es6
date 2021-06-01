@@ -1,4 +1,6 @@
 import { action } from "@ember/object";
+import { equal } from "@ember/object/computed";
+import { setting } from "discourse/lib/computed";
 import Component from "@ember/component";
 import discourseComputed, { observes } from "discourse-common/utils/decorators";
 import { inject as service } from "@ember/service";
@@ -9,8 +11,19 @@ export default Component.extend({
   router: service(),
   dismissed: false,
   loading: false,
+  isSidebar: equal(
+    "siteSettings.discourse_subscriptions_campaign_banner_location",
+    "Sidebar"
+  ),
+  subscribers: setting("discourse_subscriptions_campaign_subscribers"),
+  subscriberGoal: equal(
+    "siteSettings.discourse_subscriptions_campaign_type",
+    "Subscribers"
+  ),
+  currency: setting("discourse_subscriptions_currency"),
+  goalTarget: setting("discourse_subscriptions_campaign_goal"),
+  product: setting("discourse_subscriptions_campaign_product"),
   showContributors: false,
-  contributors: [],
   classNameBindings: [
     "isSidebar:campaign-banner-sidebar",
     "shouldShow:campaign-banner",
@@ -22,6 +35,8 @@ export default Component.extend({
       "discourse-subscriptions-campaign-banner-dismissed"
     );
     this.set("dismissed", dismissed);
+
+    this.set("contributors", []);
 
     const contributorSetting = this.siteSettings
       .discourse_subscriptions_campaign_contributors;
@@ -40,8 +55,10 @@ export default Component.extend({
       });
 
       Promise.all(promises).then(() => {
-        this.set("showContributors", true);
-        this.set("loading", false);
+        this.setProperties({
+          showContributors: true,
+          loading: false,
+        });
       });
     }
   },
@@ -78,40 +95,11 @@ export default Component.extend({
     }
   },
 
-  @discourseComputed(
-    "siteSettings.discourse_subscriptions_campaign_banner_location"
-  )
-  isSidebar(sidebarSetting) {
-    return sidebarSetting === "Sidebar";
-  },
-
-  @discourseComputed
-  subscriberGoal() {
-    return (
-      this.siteSettings.discourse_subscriptions_campaign_type === "Subscribers"
-    );
-  },
-
-  @discourseComputed
-  subscribers() {
-    return this.siteSettings.discourse_subscriptions_campaign_subscribers;
-  },
-
   @discourseComputed
   amountRaised() {
     return (
       this.siteSettings.discourse_subscriptions_campaign_amount_raised / 100
     );
-  },
-
-  @discourseComputed
-  currency() {
-    return this.siteSettings.discourse_subscriptions_currency;
-  },
-
-  @discourseComputed
-  goalTarget() {
-    return this.siteSettings.discourse_subscriptions_campaign_goal;
   },
 
   @discourseComputed
@@ -121,16 +109,6 @@ export default Component.extend({
       : this.amountRaised;
 
     return currentVolume >= this.goalTarget;
-  },
-
-  @discourseComputed("currentUser")
-  users(user) {
-    return user;
-  },
-
-  @discourseComputed
-  product() {
-    return this.siteSettings.discourse_subscriptions_campaign_product;
   },
 
   @action
