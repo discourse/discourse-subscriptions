@@ -15,6 +15,9 @@ pt_BR:
     errors:
       discourse_patrons_amount_must_be_currency: "As quantias no valor devem ser escritas sem o símbolo de dólar (ex 1.50)"
   js:
+    filters:
+      subscribe:
+        help: Apoie este site assinando
     discourse_subscriptions:
       title: Assinaturas Discourse
       admin_navigation: Assinaturas
@@ -26,11 +29,13 @@ pt_BR:
         subscribe: Assinar
         user_activity:
           payments: Pagamentos
+      one_time_payment: Pagamento Único
       plans:
         purchase: Adquirir uma assinatura
         select: Selecione um plano de assinatura
         interval:
           adverb:
+            day: Diário
             week: Semanalmente
             month: Mensalmente
             year: Anualmente
@@ -53,19 +58,28 @@ pt_BR:
         subscriptions:
           id: ID da Assinatura
           status: Status
+          discounted: Descontado
+          renews: Renova
           created_at: Criado
+          cancel: cancelar
+          cancelled: cancelado
           operations:
             destroy:
               confirm: Tem certeza que deseja cancelar essa assinatura?
       subscribe:
         title: Assinar
+        view_past: Ver compras anteriores
         no_products: No momento não existem produtos disponíveis.
+        unauthenticated: Faça login ou crie uma conta para se inscrever.
         card:
           title: Pagamento
         customer:
           title: Informações do consumidor
+        promo_code: Cupom
         buttons:
           subscribe: Assinar
+        purchased: Comprado
+        go_to_billing: Vá para o Faturamento
       billing:
         name: Nome completo
         email: E-mail
@@ -103,6 +117,8 @@ pt_BR:
             plan_help: Crie um plano de preços para assinar clientes neste produto.
             description: Descrição
             description_help: Isso descreve o seu produto de assinatura.
+            repurchaseable: Recomprável?
+            repurchase_help: Permitir que produtos e planos associados sejam comprados várias vezes
             active: Ativos
             active_help: Desative isso até que seu produto esteja pronto para os consumidores.
             created_at: Criado
@@ -131,6 +147,16 @@ pt_BR:
             group_help: Esse é o grupo de usuários em que o cliente será adicionado ao realizar a assinatura.
             active: Ativos
             created_at: Criado
+            recurring: Plano recorrente?
+        coupons:
+          title: Cupons
+          code: Código promocional
+          discount: Desconto
+          times_redeemed: Vezes Resgatadas
+          active: Ativo?
+          actions: Ações
+          create: Criar cupom
+          promo_code: Código promocional (não diferencia maiúsculas de minúsculas)
         subscriptions:
           title: Assinaturas
           subscription:
@@ -141,3 +167,5 @@ pt_BR:
             plan: Plano
             status: Status
             created_at: Criado
+        ask_refund: Reembolsar o último pagamento efetuado pelo cliente?
+        canceled: "A assinatura foi cancelada."
