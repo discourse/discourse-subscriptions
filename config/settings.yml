@@ -28,3 +28,40 @@ plugins:
       - USD
       - DKK
       - SGD
+  discourse_subscriptions_campaign_enabled:
+    client: true
+    default: false
+  discourse_subscriptions_campaign_goal:
+    client: true
+    default: 100
+  discourse_subscriptions_campaign_type:
+    client: true
+    type: enum
+    default: "Amount"
+    choices:
+      - Amount
+      - Subscribers
+  discourse_subscriptions_campaign_banner_location:
+    client: true
+    type: enum
+    default: "Top"
+    choices:
+      - Top
+      - Sidebar
+  discourse_subscriptions_campaign_show_contributors:
+    client: true
+    default: true
+  discourse_subscriptions_campaign_product:
+    client: true
+    default: ""
+  discourse_subscriptions_campaign_amount_raised:
+    client: true
+    default: 0
+    hidden: true
+  discourse_subscriptions_campaign_subscribers:
+    client: true
+    default: 0
+    hidden: true
+  discourse_subscriptions_campaign_group:
+    default: ""
+    hidden: true

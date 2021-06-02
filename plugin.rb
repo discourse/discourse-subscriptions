@@ -13,6 +13,7 @@ gem 'stripe', '5.29.0'
 register_asset "stylesheets/common/main.scss"
 register_asset "stylesheets/common/layout.scss"
 register_asset "stylesheets/common/subscribe.scss"
+register_asset "stylesheets/common/campaign.scss"
 register_asset "stylesheets/mobile/main.scss"
 register_svg_icon "far-credit-card" if respond_to?(:register_svg_icon)
 

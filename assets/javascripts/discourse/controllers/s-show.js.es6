@@ -14,7 +14,7 @@ export default Controller.extend({
     this._super(...arguments);
     this.set(
       "stripe",
-      Stripe(Discourse.SiteSettings.discourse_subscriptions_public_key)
+      Stripe(this.siteSettings.discourse_subscriptions_public_key)
     );
     const elements = this.get("stripe").elements();
 
@@ -76,7 +76,7 @@ export default Controller.extend({
       plan.type === "recurring"
         ? "user.billing.subscriptions"
         : "user.billing.payments",
-      Discourse.User.current().username.toLowerCase()
+      this.currentUser.username.toLowerCase()
     );
   },
 
