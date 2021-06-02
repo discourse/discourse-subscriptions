@@ -23,7 +23,7 @@ DiscourseSubscriptions::Engine.routes.draw do
 
   get '/' => 'subscribe#index'
   get '.json' => 'subscribe#index'
-  get '/contributors' => 'subscribe#get_contributors'
+  get '/contributors' => 'subscribe#contributors'
   get '/:id' => 'subscribe#show'
   post '/create' => 'subscribe#create'
   post '/finalize' => 'subscribe#finalize'

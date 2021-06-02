@@ -5,7 +5,7 @@ module DiscourseSubscriptions
     include DiscourseSubscriptions::Stripe
     include DiscourseSubscriptions::Group
     before_action :set_api_key
-    requires_login except: [:index, :get_contributors, :show]
+    requires_login except: [:index, :contributors, :show]
 
     def index
       begin
@@ -31,7 +31,7 @@ module DiscourseSubscriptions
       end
     end
 
-    def get_contributors
+    def contributors
       return unless SiteSetting.discourse_subscriptions_campaign_show_contributors
       contributor_ids = Set.new
 
