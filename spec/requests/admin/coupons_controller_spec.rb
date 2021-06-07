@@ -12,7 +12,7 @@ module DiscourseSubscriptions
       it "does nothing" do
         ::Stripe::PromotionCode.expects(:list).never
         get "/s/admin/coupons.json"
-        expect(response.status).to eq(403)
+        expect(response.status).to eq(404)
       end
     end
 
