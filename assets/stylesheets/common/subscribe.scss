@@ -1,13 +1,13 @@
 .subscribe-buttons {
   display: flex;
-  justify-content: space-around;
+  flex-flow: row wrap;
+  justify-content: left;
 
   .btn-discourse-subscriptions-subscribe {
     flex-direction: column;
-    padding: 10px 20px;
-    div {
-      margin-bottom: 5px;
-    }
+    margin: 0.25em;
+    padding: 1em;
+    width: 6em;
   }
 }
 
