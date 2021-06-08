@@ -12,6 +12,12 @@ sv:
     discourse_subscriptions_secret_key: Stripe hemlig nyckel
     discourse_subscriptions_webhook_secret: Stripe Webhook-hemlighet
     discourse_subscriptions_currency: Standardiserad valutakod. Detta kan åsidosättas vid skapandet av en prenumerationsplan.
+    discourse_subscriptions_campaign_enabled: Aktiverar en kampanjbanderoll för att främja stödet till detta forum ekonomiskt.
+    discourse_subscriptions_campaign_goal: Det numeriska målet för din stödkampanj (prenumeranter eller insamlat belopp).
+    discourse_subscriptions_campaign_type: Väljer vilken typ av kampanj som ska drivas (prenumeranter eller månatligt belopp).
+    discourse_subscriptions_campaign_banner_location: Väljer platsen för kampanjbanderollen (överst eller sidofält).
+    discourse_subscriptions_campaign_show_contributors: Visa avatarer för de senaste inköpen av prenumerationsprodukter.
+    discourse_subscriptions_campaign_product: Stripe-produkt-id för plats dit understödjare skickas när de klickar på knappen i kampanjen. Om den här inställningen är tom skickas understödjarna till produkternas huvudsida.
     errors:
       discourse_patrons_amount_must_be_currency: "Valutasumman måste vara utan valutasymbol (ex 1,50)"
   js:
@@ -29,6 +35,32 @@ sv:
         subscribe: Prenumerera
         user_activity:
           payments: Betalningar
+      campaign:
+        title: Stöd vårt forum
+        body: Vi behöver din hjälp för att hålla igång detta forum!
+        subscribers: Prenumeranter
+        goal_comparison: "<strong>%{current}</strong> av <strong>%{goal}</strong>"
+        raised: Insamlat
+        button: Stöd
+        recent_contributors: Senaste bidragsgivare
+        goal: Vi har uppfyllt vårt mål
+        one_click_campaign: Auto-skapa stödkampanj
+        refresh_campaign: Uppdatera kampanjdata
+        refresh_page: Kampanjdata synkroniseras nu från Stripe i bakgrunden. Uppdatera sidan om en stund för att ladda den uppdaterade informationen.
+        supporter: Understödjare
+        supporters: Understödjare
+        confirm_creation: |-
+          <p>Vill du automatiskt skapa en kampanj för ditt forum?</p>
+
+          <p>Om du fortsätter skapas det:</p>
+
+          <ul>
+          <li>En grupp som belönar dina understödjare med en egen titel och avatarstil</li>
+          <li>En Stripe-produkt med förinställda priser (per månad och år) som dina användare kan köpa för att stödja din webbplats.</li>
+          </ul>
+
+          <p>Vill du fortsätta?</p>
+        created: Din kampanj genom ett klick är skapad och klar att börja! Omdirigerar till kampanjinställningarna.
       one_time_payment: Engångsbetalning
       plans:
         purchase: Köp en prenumeration
@@ -80,6 +112,7 @@ sv:
           subscribe: Prenumerera
         purchased: Köpt
         go_to_billing: Gå till fakturering
+        already_purchased: Tack så mycket för ditt tidigare köp av den här produkten!
       billing:
         name: Fullständigt namn
         email: E-post
@@ -93,6 +126,7 @@ sv:
         success: Gå tillbaka
       admin:
         unconfigured: 'Stripe är inte korrekt konfigurerat. Se Discourse Meta för information.'
+        on_meta: Discourse-prenumerationer i Meta
         dashboard:
           title: Översiktspanel
           table:
