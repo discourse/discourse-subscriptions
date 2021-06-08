@@ -13,31 +13,31 @@ module DiscourseSubscriptions
         it "does not list the products" do
           ::Stripe::Product.expects(:list).never
           get "/s/admin/products.json"
-          expect(response.status).to eq(403)
+          expect(response.status).to eq(404)
         end
 
         it "does not create the product" do
           ::Stripe::Product.expects(:create).never
           post "/s/admin/products.json"
-          expect(response.status).to eq(403)
+          expect(response.status).to eq(404)
         end
 
         it "does not show the product" do
           ::Stripe::Product.expects(:retrieve).never
           get "/s/admin/products/prod_qwerty123.json"
-          expect(response.status).to eq(403)
+          expect(response.status).to eq(404)
         end
 
         it "does not update the product" do
           ::Stripe::Product.expects(:update).never
           put "/s/admin/products/prod_qwerty123.json"
-          expect(response.status).to eq(403)
+          expect(response.status).to eq(404)
         end
 
         it "does not delete the product" do
           ::Stripe::Product.expects(:delete).never
           delete "/s/admin/products/u2.json"
-          expect(response.status).to eq(403)
+          expect(response.status).to eq(404)
         end
       end
 

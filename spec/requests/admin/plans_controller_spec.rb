@@ -18,7 +18,7 @@ module DiscourseSubscriptions
 
           it "not ok" do
             get "/s/admin/plans.json"
-            expect(response.status).to eq 403
+            expect(response.status).to eq 404
           end
         end
 
@@ -30,7 +30,7 @@ module DiscourseSubscriptions
 
           it "is not ok" do
             post "/s/admin/plans.json", params: { name: 'Rick Astley', amount: 1, interval: 'week' }
-            expect(response.status).to eq 403
+            expect(response.status).to eq 404
           end
         end
 
@@ -42,7 +42,7 @@ module DiscourseSubscriptions
 
           it "is not ok" do
             get "/s/admin/plans/plan_12345.json"
-            expect(response.status).to eq 403
+            expect(response.status).to eq 404
           end
         end
 

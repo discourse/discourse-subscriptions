@@ -8,7 +8,7 @@ DiscourseSubscriptions::Engine.routes.draw do
     post '/create-campaign' => 'admin#create_campaign'
   end
 
-  namespace :admin do
+  namespace :admin, constraints: AdminConstraint.new do
     resources :plans
     resources :subscriptions, only: [:index, :destroy]
     resources :products

@@ -20,7 +20,7 @@ module DiscourseSubscriptions
       it "does nothing" do
         ::Stripe::Subscription.expects(:list).never
         get "/s/admin/subscriptions.json"
-        expect(response.status).to eq(403)
+        expect(response.status).to eq(404)
       end
 
       it "does not destroy a subscription" do
