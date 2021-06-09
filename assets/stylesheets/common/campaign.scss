@@ -16,7 +16,8 @@
 }
 
 // Sidebar Version
-.campaign-banner.campaign-banner-sidebar {
+.subscriptions-campaign-sidebar .campaign-banner,
+.mobile-view .subscriptions-campaign-topic-footer .campaign-banner {
   width: 100%;
   flex-direction: column;
   position: relative;
@@ -75,7 +76,15 @@
   }
 }
 
-// Non Sidebar version
+// Hide from showing above main container outlet
+// on topic list
+body.archetype-regular {
+  .above-main-container-outlet.subscriptions-campaign {
+    display: none
+  }
+}
+
+// Above Topic List version
 .campaign-banner {
   display: flex;
   width: calc(100%);
@@ -196,4 +205,37 @@
       border-bottom-right-radius: 2em;
     }
   }
+}
+
+// Topic Footer Version
+html:not(.mobile-view) .subscriptions-campaign-topic-footer .campaign-banner {
+  margin-top: 2em;
+  height: 150px;
+  .btn.close {
+    top: 0.5em;
+    right: 0.25em;
+  }
+  .campaign-banner-info {
+    &-header {
+      font-size: $font-up-1;
+    }
+    &-description {
+      font-size: $font-down-1;
+      margin: 0.25em 0.25em 1em 0 !important;
+    }
+  }
+  .campaign-banner-progress {
+    padding: 1.5em 2.5em 1em;
+    progress[value] {
+      height: 2em;
+    }
+    .campaign-banner-progress-users {
+      margin-top: 1em;
+    }
+    .campaign-banner-progress-users-title {
+      margin: 0;
+    }
+  }
+
+  
 }

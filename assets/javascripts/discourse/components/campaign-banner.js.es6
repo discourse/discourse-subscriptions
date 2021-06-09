@@ -26,7 +26,6 @@ export default Component.extend({
     "discourse_subscriptions_campaign_show_contributors"
   ),
   classNameBindings: [
-    "isSidebar:campaign-banner-sidebar",
     "shouldShow:campaign-banner",
   ],
 
@@ -47,7 +46,7 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    if (this.isSidebar && this.shouldShow) {
+    if (this.isSidebar && this.shouldShow && !this.site.mobileView) {
       document.body.classList.add("subscription-campaign-sidebar");
     } else {
       document.body.classList.remove("subscription-campaign-sidebar");
