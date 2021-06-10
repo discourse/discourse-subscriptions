@@ -5,8 +5,6 @@ export default {
     const bannerLocation =
       siteSettings.discourse_subscriptions_campaign_banner_location;
 
-    return (
-      bannerLocation === "Top" || bannerLocation === "Sidebar";
-    );
+    return bannerLocation === "Top" || bannerLocation === "Sidebar";
   },
 };
