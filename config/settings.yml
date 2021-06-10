@@ -48,6 +48,10 @@ plugins:
     choices:
       - Top
       - Sidebar
+  discourse_subscriptions_campaign_banner_shadow_color:
+    client: true
+    type: color
+    default: "2F70AC"
   discourse_subscriptions_campaign_show_contributors:
     client: true
     default: true

@@ -15,6 +15,11 @@
   }
 }
 
+// All
+.campaign-banner {
+  box-shadow: 5px 5px var(--discourse_subscriptions_campaign_banner_shadow_color);
+}
+
 // Sidebar Version
 .subscriptions-campaign-sidebar .campaign-banner,
 .mobile-view .subscriptions-campaign-topic-footer .campaign-banner {
@@ -23,8 +28,8 @@
   position: relative;
   .btn.close {
     position: absolute;
-    top: 0.5em;
-    right: 0.5em;
+    top: 1em;
+    right: 1em;
     font-size: 10px;
     z-index: 1;
   }
@@ -36,8 +41,8 @@
     padding: 1em 1em 2em 1em;
     position: relative;
     &-header {
-      font-size: 16px;
-      margin: 0.5em 0 !important;
+      font-size: $font-up-5;
+      margin: 0 !important;
       text-align: center;
     }
     &-description {
@@ -87,8 +92,7 @@ body.archetype-regular {
 // Above Topic List version
 .campaign-banner {
   display: flex;
-  width: calc(100%);
-  height: max-content;
+  width: 100%;
   margin: 1em 0 2em 0;
   border: 1px solid var(--primary-low);
   position: relative;
@@ -97,8 +101,9 @@ body.archetype-regular {
     position: absolute;
     top: 1em;
     right: 1em;
-    font-size: 12px;
+    font-size: 10px;
     background-color: transparent;
+    padding: 0;
     &:hover {
       .d-icon {
         color: var(--primary);
@@ -106,16 +111,25 @@ body.archetype-regular {
     }
   }
   &-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 40%;
-    padding: 1.5em 2em 1.5em;
+    width: 30%;
+    padding: 0.5em 2em 0.5em;
     background-color: var(--primary-very-low);
+    @media screen and (min-width: 1000px) {
+      width: 40%;
+      display: grid;
+      grid-template-columns: 65% calc(40% - 2em);
+      grid-template-areas: "left right" "left right";
+      align-items: center;
+    }
     &-header {
-      font-size: $font-up-4;
+      font-size: $font-up-6;
       margin: 0;
+      @media screen and (max-width: 750px) {
+          font-size: $font-up-3;
+      }
+      @media screen and (max-width: 500px) {
+        display: none;
+      }
     }
     &-success {
       width: 100%;
@@ -123,9 +137,13 @@ body.archetype-regular {
     }
     &-description {
       width: 100%;
-      margin: 1em 0;
+      margin: 0.25em 0 1em 0;
+      @media screen and (max-width: 750px) {
+        font-size: $font-down-1;
+      }
     }
     &-button {
+      grid-area: right;
       height: 2.5em;
       padding: 0.75em 1.5em 0.75em 2.75em;
       position: relative;
@@ -146,13 +164,13 @@ body.archetype-regular {
   }
   &-progress {
     width: 60%;
-    padding: 3em 2em 1.5em;
+    padding: 1.5em 2em 1.5em;
     &-success {
       font-size: $font-up-1;
       text-align: center;
       background-color: var(--tertiary);
       color: var(--secondary);
-      padding: 0.75em;
+      padding: 0.25em;
       border-radius: 2em;
       margin: 0;
     }
@@ -210,14 +228,16 @@ body.archetype-regular {
 // Topic Footer Version
 html:not(.mobile-view) .subscriptions-campaign-topic-footer .campaign-banner {
   margin-top: 2em;
-  height: 150px;
+  height: min-content;
+  width: calc(100% + 5em);
   .btn.close {
-    top: 0.5em;
-    right: 0.25em;
+    top: 1em;
+    right: 1em;
   }
   .campaign-banner-info {
+    width: 65%;
     &-header {
-      font-size: $font-up-1;
+      font-size: $font-up-6;
     }
     &-description {
       font-size: $font-down-1;
@@ -236,6 +256,4 @@ html:not(.mobile-view) .subscriptions-campaign-topic-footer .campaign-banner {
       margin: 0;
     }
   }
-
-  
 }
