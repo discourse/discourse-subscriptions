@@ -21,8 +21,7 @@
 }
 
 // Sidebar Version
-.subscriptions-campaign-sidebar .campaign-banner,
-.mobile-view .subscriptions-campaign-topic-footer .campaign-banner {
+.subscriptions-campaign-sidebar .campaign-banner {
   width: 100%;
   flex-direction: column;
   position: relative;
@@ -121,14 +120,18 @@ body.archetype-regular {
       grid-template-areas: "left right" "left right";
       align-items: center;
     }
+    @media screen and (max-width: 400px) {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 60% auto;
+      grid-template-areas: "left right" "left right";
+      align-items: center;
+    }
     &-header {
       font-size: $font-up-6;
       margin: 0;
       @media screen and (max-width: 750px) {
           font-size: $font-up-3;
-      }
-      @media screen and (max-width: 500px) {
-        display: none;
       }
     }
     &-success {
@@ -165,6 +168,9 @@ body.archetype-regular {
   &-progress {
     width: 60%;
     padding: 1.5em 2em 1.5em;
+    @media screen and (max-width: 400px) {
+      display: none;
+    }
     &-success {
       font-size: $font-up-1;
       text-align: center;
