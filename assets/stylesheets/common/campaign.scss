@@ -17,7 +17,8 @@
 
 // All
 .campaign-banner {
-  box-shadow: 5px 5px var(--discourse_subscriptions_campaign_banner_shadow_color);
+  box-shadow: 5px 5px
+    var(--discourse_subscriptions_campaign_banner_shadow_color);
 }
 
 // Sidebar Version
@@ -84,7 +85,7 @@
 // on topic list
 body.archetype-regular {
   .above-main-container-outlet.subscriptions-campaign {
-    display: none
+    display: none;
   }
 }
 
@@ -131,7 +132,7 @@ body.archetype-regular {
       font-size: $font-up-6;
       margin: 0;
       @media screen and (max-width: 750px) {
-          font-size: $font-up-3;
+        font-size: $font-up-3;
       }
     }
     &-success {
