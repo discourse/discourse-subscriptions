@@ -10,7 +10,9 @@ export default Component.extend({
   router: service(),
   dismissed: false,
   loading: false,
-  dropShadowColor: setting("discourse_subscriptions_campaign_banner_shadow_color"),
+  dropShadowColor: setting(
+    "discourse_subscriptions_campaign_banner_shadow_color"
+  ),
   isSidebar: equal(
     "siteSettings.discourse_subscriptions_campaign_banner_location",
     "Sidebar"
@@ -64,9 +66,11 @@ export default Component.extend({
       !currentRoute.split(".")[0].includes("admin") &&
       currentRoute.split(".")[0] !== "s";
 
-    // make sure not to render above main container
-    // when inside a topic
-    if (this.connectorName === "above-main-container" && currentRoute.includes("topic")) {
+    // make sure not to render above main container when inside a topic
+    if (
+      this.connectorName === "above-main-container" &&
+      currentRoute.includes("topic")
+    ) {
       return false;
     }
 
@@ -108,7 +112,7 @@ export default Component.extend({
     const currentVolume = this.subscriberGoal
       ? this.subscribers
       : this.amountRaised;
-    
+
     return currentVolume >= this.goalTarget;
   },
 
