@@ -48,6 +48,10 @@ plugins:
     choices:
       - Top
       - Sidebar
+  discourse_subscriptions_campaign_banner_bg_image:
+    client: true
+    type: upload
+    default: ""
   discourse_subscriptions_campaign_banner_shadow_color:
     client: true
     type: color
