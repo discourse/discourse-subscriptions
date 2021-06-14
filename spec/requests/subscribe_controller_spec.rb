@@ -219,59 +219,88 @@ module DiscourseSubscriptions
           end
 
           context "with promo code" do
-            before do
-              ::Stripe::PromotionCode.expects(:list).with({ code: '123' }).returns(
-                data: [{
-                  id: 'promo123',
-                  coupon: { id: 'c123' }
-                }]
-              )
+            context "invalid code" do
+              it "prevents use of invalid coupon codes" do
+                ::Stripe::Price.expects(:retrieve).returns(
+                  type: 'recurring',
+                  product: 'product_12345',
+                  metadata: {
+                    group_name: 'awesome',
+                    trial_period_days: 0
+                  }
+                )
+
+                ::Stripe::PromotionCode.expects(:list).with({ code: 'invalid' }).returns(
+                  data: []
+                )
+
+                post "/s/create.json", params: { plan: 'plan_1234', source: 'tok_1234', promo: 'invalid' }
+
+                data = response.parsed_body
+                expect(data["errors"]).not_to be_blank
+              end
             end
 
-            it "applies promo code to recurring subscription" do
-              ::Stripe::Price.expects(:retrieve).returns(
-                type: 'recurring',
-                product: 'product_12345',
-                metadata: {
-                  group_name: 'awesome',
-                  trial_period_days: 0
-                }
-              )
+            context "valid code" do
+              before do
+                ::Stripe::PromotionCode.expects(:list).with({ code: '123' }).returns(
+                  data: [{
+                    id: 'promo123',
+                    coupon: { id: 'c123' }
+                  }]
+                )
+              end
 
-              ::Stripe::Subscription.expects(:create).with(
-                customer: 'cus_1234',
-                items: [ price: 'plan_1234' ],
-                metadata: { user_id: user.id, username: user.username_lower },
-                trial_period_days: 0,
-                promotion_code: 'promo123'
-              ).returns(status: 'active', customer: 'cus_1234')
 
-              post "/s/create.json", params: { plan: 'plan_1234', source: 'tok_1234', promo: '123' }
+              it "applies promo code to recurring subscription" do
+                ::Stripe::Price.expects(:retrieve).returns(
+                  type: 'recurring',
+                  product: 'product_12345',
+                  metadata: {
+                    group_name: 'awesome',
+                    trial_period_days: 0
+                  }
+                )
 
-            end
+                ::Stripe::Subscription.expects(:create).with(
+                  customer: 'cus_1234',
+                  items: [ price: 'plan_1234' ],
+                  metadata: { user_id: user.id, username: user.username_lower },
+                  trial_period_days: 0,
+                  promotion_code: 'promo123'
+                ).returns(status: 'active', customer: 'cus_1234')
 
-            it "applies promo code to one time purchase" do
-              ::Stripe::Price.expects(:retrieve).returns(
-                type: 'one_time',
-                product: 'product_12345',
-                metadata: {
-                  group_name: 'awesome'
-                }
-              )
+                expect {
+                  post "/s/create.json", params: { plan: 'plan_1234', source: 'tok_1234', promo: '123' }
+                }.to change { DiscourseSubscriptions::Customer.count }
 
-              ::Stripe::InvoiceItem.expects(:create).with(customer: 'cus_1234', price: 'plan_1234', discounts: [{ coupon: 'c123' }])
+              end
 
-              ::Stripe::Invoice.expects(:create).returns(status: 'open', id: 'in_123')
+              it "applies promo code to one time purchase" do
+                ::Stripe::Price.expects(:retrieve).returns(
+                  type: 'one_time',
+                  product: 'product_12345',
+                  metadata: {
+                    group_name: 'awesome'
+                  }
+                )
 
-              ::Stripe::Invoice.expects(:finalize_invoice).returns(id: 'in_123', status: 'open', payment_intent: 'pi_123')
+                ::Stripe::InvoiceItem.expects(:create).with(customer: 'cus_1234', price: 'plan_1234', discounts: [{ coupon: 'c123' }])
 
-              ::Stripe::Invoice.expects(:retrieve).returns(id: 'in_123', status: 'open', payment_intent: 'pi_123')
+                ::Stripe::Invoice.expects(:create).returns(status: 'open', id: 'in_123')
 
-              ::Stripe::PaymentIntent.expects(:retrieve).returns(status: 'successful')
+                ::Stripe::Invoice.expects(:finalize_invoice).returns(id: 'in_123', status: 'open', payment_intent: 'pi_123')
 
-              ::Stripe::Invoice.expects(:pay).returns(status: 'paid', customer: 'cus_1234')
+                ::Stripe::Invoice.expects(:retrieve).returns(id: 'in_123', status: 'open', payment_intent: 'pi_123')
 
-              post '/s/create.json', params: { plan: 'plan_1234', source: 'tok_1234', promo: '123' }
+                ::Stripe::PaymentIntent.expects(:retrieve).returns(status: 'successful')
+
+                ::Stripe::Invoice.expects(:pay).returns(status: 'paid', customer: 'cus_1234')
+
+                expect {
+                  post '/s/create.json', params: { plan: 'plan_1234', source: 'tok_1234', promo: '123' }
+                }.to change { DiscourseSubscriptions::Customer.count }
+              end
             end
           end
         end

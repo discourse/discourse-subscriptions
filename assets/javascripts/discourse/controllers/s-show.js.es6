@@ -121,7 +121,9 @@ export default Controller.extend({
           }
         })
         .catch((result) => {
-          bootbox.alert(result.errorThrown);
+          bootbox.alert(
+            result.jqXHR.responseJSON.errors[0] || result.errorThrown
+          );
           this.set("loading", false);
         });
     },
