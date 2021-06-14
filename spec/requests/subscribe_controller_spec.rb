@@ -251,7 +251,6 @@ module DiscourseSubscriptions
                 )
               end
 
-
               it "applies promo code to recurring subscription" do
                 ::Stripe::Price.expects(:retrieve).returns(
                   type: 'recurring',
