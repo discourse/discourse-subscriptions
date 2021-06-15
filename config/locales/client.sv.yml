@@ -16,6 +16,7 @@ sv:
     discourse_subscriptions_campaign_goal: Det numeriska målet för din stödkampanj (prenumeranter eller insamlat belopp).
     discourse_subscriptions_campaign_type: Väljer vilken typ av kampanj som ska drivas (prenumeranter eller månatligt belopp).
     discourse_subscriptions_campaign_banner_location: Väljer platsen för kampanjbanderollen (överst eller sidofält).
+    discourse_subscriptions_campaign_banner_shadow_color: Väljer färgen på kampanjbanderollens skugga.
     discourse_subscriptions_campaign_show_contributors: Visa avatarer för de senaste inköpen av prenumerationsprodukter.
     discourse_subscriptions_campaign_product: Stripe-produkt-id för plats dit understödjare skickas när de klickar på knappen i kampanjen. Om den här inställningen är tom skickas understödjarna till produkternas huvudsida.
     errors:
@@ -36,7 +37,7 @@ sv:
         user_activity:
           payments: Betalningar
       campaign:
-        title: Stöd vårt forum
+        title: Stöd oss
         body: Vi behöver din hjälp för att hålla igång detta forum!
         subscribers: Prenumeranter
         goal_comparison: "<strong>%{current}</strong> av <strong>%{goal}</strong>"

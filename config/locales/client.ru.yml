@@ -16,8 +16,9 @@ ru:
     discourse_subscriptions_campaign_goal: Цель вашей кампании поддержки, выраженная числом (количество подписчиков или собранная сумма).
     discourse_subscriptions_campaign_type: Тип кампании (подписчики или ежемесячная сумма сбора).
     discourse_subscriptions_campaign_banner_location: Расположение баннера кампании (верхняя или боковая панель).
+    discourse_subscriptions_campaign_banner_shadow_color: Цвет тени баннера кампании.
     discourse_subscriptions_campaign_show_contributors: Показывать аватары последних купленных товаров по подписке.
-    discourse_subscriptions_campaign_product: Идентификатор продукта Stripe для отправки участникам, когда они нажимают кнопку кампании. Если этот параметр не задан, участники будут перенаправлены на главную страницу продуктов.
+    discourse_subscriptions_campaign_product: Идентификатор продукта Stripe для отправки участникам, когда они нажимают кнопку кампании. Если этот параметр не задан, участники будут перенаправлены на главную страницу товаров.
     errors:
       discourse_patrons_amount_must_be_currency: "Сумма должна быть без символа доллара (например, 1,50)"
   js:
@@ -36,7 +37,6 @@ ru:
         user_activity:
           payments: Платежи
       campaign:
-        title: Поддержите наше сообщество
         body: Нам нужна ваша помощь для поддержки и продуктивной работы этого сообщества!
         subscribers: Подписчики
         goal_comparison: "<strong>%{current}</strong> из <strong>%{goal}</strong>"
