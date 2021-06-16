@@ -100,6 +100,7 @@ en:
         view_past: View past purchases
         no_products: There are currently no products available.
         unauthenticated: Log in or create an account to subscribe.
+        invalid_coupon: You entered an invalid coupon code. Please try again.
         card:
           title: Payment
         customer:

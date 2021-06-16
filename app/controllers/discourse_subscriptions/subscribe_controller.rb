@@ -65,8 +65,13 @@ module DiscourseSubscriptions
       begin
         customer = create_customer(params[:source])
         plan = ::Stripe::Price.retrieve(params[:plan])
-        promo_code = ::Stripe::PromotionCode.list({ code: params[:promo] }) if params[:promo].present?
-        promo_code = promo_code[:data][0] if promo_code && promo_code[:data] # we assume promo codes have a unique name
+
+        if params[:promo].present?
+          promo_code = ::Stripe::PromotionCode.list({ code: params[:promo] })
+          promo_code = promo_code[:data][0] # we assume promo codes have a unique name
+
+          return render_json_error I18n.t("js.discourse_subscriptions.subscribe.invalid_coupon") if promo_code.blank?
+        end
 
         recurring_plan = plan[:type] == 'recurring'
 
