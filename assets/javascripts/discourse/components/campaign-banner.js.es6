@@ -13,6 +13,9 @@ export default Component.extend({
   dropShadowColor: setting(
     "discourse_subscriptions_campaign_banner_shadow_color"
   ),
+  backgroundImageUrl: setting(
+    "discourse_subscriptions_campaign_banner_bg_image"
+  ),
   isSidebar: equal(
     "siteSettings.discourse_subscriptions_campaign_banner_location",
     "Sidebar"
@@ -33,6 +36,21 @@ export default Component.extend({
     this._super(...arguments);
 
     this.set("contributors", []);
+
+    // add background-image url to stylesheet
+    if (this.backgroundImageUrl) {
+      const backgroundUrl = `url(${this.backgroundImageUrl}`.replace(/\\/g, "");
+      if (
+        document.documentElement.style.getPropertyValue(
+          "--campaign-background-image"
+        ) !== backgroundUrl
+      ) {
+        document.documentElement.style.setProperty(
+          "--campaign-background-image",
+          backgroundUrl
+        );
+      }
+    }
 
     if (this.showContributors) {
       return ajax("/s/contributors", { method: "get" }).then((result) => {
