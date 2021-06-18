@@ -40,10 +40,15 @@ export default Component.extend({
     // add background-image url to stylesheet
     if (this.backgroundImageUrl) {
       const backgroundUrl = `url(${this.backgroundImageUrl}`.replace(/\\/g, "");
-      if (document.documentElement.style.getPropertyValue("--campaign-background-image") !==
-        backgroundUrl
+      if (
+        document.documentElement.style.getPropertyValue(
+          "--campaign-background-image"
+        ) !== backgroundUrl
       ) {
-        document.documentElement.style.setProperty("--campaign-background-image", backgroundUrl);
+        document.documentElement.style.setProperty(
+          "--campaign-background-image",
+          backgroundUrl
+        );
       }
     }
 
