@@ -4,6 +4,7 @@ import { equal } from "@ember/object/computed";
 import { setting } from "discourse/lib/computed";
 import Component from "@ember/component";
 import discourseComputed, { observes } from "discourse-common/utils/decorators";
+import { later } from "@ember/runloop";
 import { inject as service } from "@ember/service";
 
 export default Component.extend({
@@ -31,6 +32,7 @@ export default Component.extend({
   showContributors: setting(
     "discourse_subscriptions_campaign_show_contributors"
   ),
+  classNameBindings: ["isGoalMet:goal-met"],
 
   init() {
     this._super(...arguments);
@@ -68,6 +70,25 @@ export default Component.extend({
       document.body.classList.add("subscription-campaign-sidebar");
     } else {
       document.body.classList.remove("subscription-campaign-sidebar");
+    }
+
+    // makes sure to only play animation once, & not repeat on reload
+    if (this.isGoalMet) {
+      const successAnimationKey = this.keyValueStore.get(
+        "campaign_success_animation"
+      );
+
+      if (!successAnimationKey) {
+        later(() => {
+          this.keyValueStore.set({
+            key: "campaign_success_animation",
+            value: Date.now(),
+          });
+          document.body.classList.add("success-animation-off");
+        }, 7000);
+      } else {
+        document.body.classList.add("success-animation-off");
+      }
     }
   },
 
@@ -130,7 +151,6 @@ export default Component.extend({
     const currentVolume = this.subscriberGoal
       ? this.subscribers
       : this.amountRaised;
-
     return currentVolume >= this.goalTarget;
   },
 

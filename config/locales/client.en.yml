@@ -34,6 +34,8 @@ en:
       campaign:
         title: Support Us
         body: We need your help to keep this community up and running!
+        success_title: Success!
+        success_body: Thank you for your help in keeping this community up and running!
         subscribers: Subscribers
         goal_comparison: "<strong>%{current}</strong> of <strong>%{goal}</strong>"
         raised: Raised
