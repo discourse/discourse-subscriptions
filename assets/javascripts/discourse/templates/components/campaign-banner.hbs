@@ -29,7 +29,7 @@
         <p class="campaign-banner-progress-success">{{i18n 'discourse_subscriptions.campaign.goal'}}!</p>
         {{#if subscriberGoal}}
           <p class="campaign-banner-progress-description">
-            {{i18n 'discourse_subscriptions.campaign.goal_comparison' current=subscribers goal=goalTarget}}
+            {{html-safe (i18n 'discourse_subscriptions.campaign.goal_comparison' current=subscribers goal=goalTarget)}}
             {{i18n 'discourse_subscriptions.campaign.subscribers'}}
           </p>
         {{else}}
