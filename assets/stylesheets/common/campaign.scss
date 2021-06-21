@@ -97,6 +97,10 @@ body.archetype-regular {
   border: 1px solid var(--primary-low);
   position: relative;
   align-items: stretch;
+  @media screen and (max-width: 400px) {
+    width: 98%;
+    flex-direction: column;
+  }
   .btn.close {
     position: absolute;
     top: 1em;
@@ -122,11 +126,11 @@ body.archetype-regular {
       align-items: center;
     }
     @media screen and (max-width: 400px) {
-      width: 100%;
-      display: grid;
-      grid-template-columns: 60% auto;
-      grid-template-areas: "left right" "left right";
+      width: calc(100% - 4em);
+      display: flex;
+      flex-direction: column;
       align-items: center;
+      padding-bottom: 1em;
     }
     &-header {
       font-size: $font-up-6;
@@ -144,6 +148,9 @@ body.archetype-regular {
       margin: 0.25em 0 1em 0;
       @media screen and (max-width: 750px) {
         font-size: $font-down-1;
+      }
+      @media screen and (max-width: 400px) {
+        text-align: center;
       }
     }
     &-button {
@@ -170,16 +177,21 @@ body.archetype-regular {
     width: 60%;
     padding: 1.5em 2em 1.5em;
     @media screen and (max-width: 400px) {
-      display: none;
+      width: calc(100% - 4em);
     }
     &-success {
-      font-size: $font-up-1;
-      text-align: center;
-      background-color: var(--tertiary);
-      color: var(--secondary);
-      padding: 0.25em;
+      height: 32px;
+      background: linear-gradient(
+        -45deg,
+        var(--tertiary-hover),
+        var(--tertiary-medium),
+        var(--tertiary-hover),
+        var(--tertiary-medium)
+      );
       border-radius: 2em;
       margin: 0;
+      background-size: 400% 100%;
+      animation: gradient 15s ease infinite;
     }
     &-description {
       margin: 0.5em 0 0;
@@ -236,7 +248,7 @@ body.archetype-regular {
 html:not(.mobile-view) .subscriptions-campaign-topic-footer .campaign-banner {
   margin-top: 2em;
   height: min-content;
-  width: calc(100% + 5em);
+  width: calc(100% + 14em);
   .btn.close {
     top: 1em;
     right: 1em;
@@ -262,5 +274,236 @@ html:not(.mobile-view) .subscriptions-campaign-topic-footer .campaign-banner {
     .campaign-banner-progress-users-title {
       margin: 0;
     }
+  }
+}
+
+// CSS Animations for campaign Success
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Fireworks
+  Copyright (c) 2020 by Eddie Lin (https://codepen.io/yshlin/pen/ylDEk)
+  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+$particles: 50;
+$width: 500;
+$height: 250;
+
+$sidebar-particles: 25;
+$sidebar-width: 300;
+$sidebar-height: 100;
+
+// Create the explosion...
+$box-shadow: ();
+$box-shadow2: ();
+
+$sidebar-box-shadow: ();
+$sidebar-box-shadow2: ();
+
+@for $i from 0 through $particles {
+  $box-shadow: $box-shadow,
+    random($width)-$width /
+      2 +
+      px
+      random($height)-$height /
+      1.2 +
+      px
+      hsl(random(360), 100, 50);
+  $box-shadow2: $box-shadow2, 0 0 #fff;
+}
+
+@for $i from 0 through $sidebar-particles {
+  $sidebar-box-shadow: $sidebar-box-shadow,
+    random($sidebar-width)-$sidebar-width /
+      2 +
+      px
+      random($sidebar-height)-$sidebar-height /
+      1.2 +
+      px
+      hsl(random(360), 100, 50);
+  $sidebar-box-shadow2: $sidebar-box-shadow2, 0 0 #fff;
+}
+
+@mixin keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+
+  @-ms-keyframes #{$animationName} {
+    @content;
+  }
+
+  @keyframes #{$animationName} {
+    @content;
+  }
+}
+
+@mixin animation-delay($settings) {
+  -moz-animation-delay: $settings;
+  -webkit-animation-delay: $settings;
+  -o-animation-delay: $settings;
+  -ms-animation-delay: $settings;
+  animation-delay: $settings;
+}
+
+@mixin animation-duration($settings) {
+  -moz-animation-duration: $settings;
+  -webkit-animation-duration: $settings;
+  -o-animation-duration: $settings;
+  -ms-animation-duration: $settings;
+  animation-duration: $settings;
+}
+
+@mixin animation($settings) {
+  -moz-animation: $settings;
+  -webkit-animation: $settings;
+  -o-animation: $settings;
+  -ms-animation: $settings;
+  animation: $settings;
+}
+
+@mixin transform($settings) {
+  transform: $settings;
+  -moz-transform: $settings;
+  -webkit-transform: $settings;
+  -o-transform: $settings;
+  -ms-transform: $settings;
+}
+
+body:not(.archetype-regular):not(.success-animation-off) {
+  .fireworks > .before,
+  .fireworks > .after {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    box-shadow: $box-shadow2;
+    @include animation(
+      (
+        1s bang ease-out 1s 5 backwards,
+        1s gravity ease-in 1s 5 backwards,
+        5s position ease-in-out 1s 1 backwards
+      )
+    );
+  }
+}
+
+body.subscription-campaign-sidebar:not(.archetype-regular):not(.success-animation-off) {
+  .fireworks > .before,
+  .fireworks > .after {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    box-shadow: $sidebar-box-shadow2;
+    animation: name duration timing-function delay iteration-count direction
+      fill-mode;
+    @include animation(
+      (
+        1s sidebarbang ease-out 1s 5 backwards,
+        1s gravity ease-in 1s 5 backwards,
+        5s sidebarposition ease-in-out 1s 1 backwards
+      )
+    );
+  }
+}
+
+.fireworks > .after {
+  @include animation-delay((1.25s, 1.25s, 1.25s));
+  @include animation-duration((1.25s, 1.25s, 1.25s));
+}
+
+@include keyframes(bang) {
+  to {
+    box-shadow: $box-shadow;
+  }
+}
+
+@include keyframes(sidebarbang) {
+  to {
+    box-shadow: $sidebar-box-shadow;
+  }
+}
+
+@include keyframes(gravity) {
+  to {
+    @include transform(translateY(200px));
+    opacity: 0;
+  }
+}
+
+@include keyframes(position) {
+  0%,
+  19.9% {
+    margin-top: -2%;
+    margin-left: -43%;
+  }
+  20%,
+  39.9% {
+    margin-top: 2%;
+    margin-left: -18%;
+  }
+  40%,
+  59.9% {
+    margin-top: 0%;
+    margin-left: 0%;
+  }
+  60%,
+  79.9% {
+    margin-top: 4%;
+    margin-left: 18%;
+  }
+  80%,
+  99.9% {
+    margin-top: 6%;
+    margin-left: 56%;
+  }
+}
+
+@include keyframes(sidebarposition) {
+  0%,
+  19.9% {
+    margin-top: -25%;
+    margin-left: 0%;
+  }
+  20%,
+  39.9% {
+    margin-top: -25%;
+    margin-left: 25%;
+  }
+  40%,
+  59.9% {
+    margin-top: -25%;
+    margin-left: 50%;
+  }
+  60%,
+  79.9% {
+    margin-top: -25%;
+    margin-left: 75%;
+  }
+  80%,
+  99.9% {
+    margin-top: -25%;
+    margin-left: 100%;
   }
 }
