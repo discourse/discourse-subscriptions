@@ -245,10 +245,16 @@ body.archetype-regular {
   }
 }
 
-.goal-met .campaign-banner {
-  &-info {
-    &-description {
-      margin: 1em auto;
+html:not(.mobile-view) {
+  .subscriptions-campaign,
+  .subscriptions-campaign-sidebar,
+  .subscriptions-campaign-topic-footer {
+    .goal-met .campaign-banner {
+      .campaign-banner-info {
+        &-description {
+          margin: 1em auto !important;
+        }
+      }
     }
   }
 }
