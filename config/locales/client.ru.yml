@@ -17,6 +17,7 @@ ru:
     discourse_subscriptions_campaign_type: Тип кампании (подписчики или ежемесячная сумма сбора).
     discourse_subscriptions_campaign_banner_location: Расположение баннера кампании (верхняя или боковая панель).
     discourse_subscriptions_campaign_banner_shadow_color: Цвет тени баннера кампании.
+    discourse_subscriptions_campaign_banner_bg_image: Загрузить изображение для использования его в качестве фона на баннере кампании.
     discourse_subscriptions_campaign_show_contributors: Показывать аватары последних купленных товаров по подписке.
     discourse_subscriptions_campaign_product: Идентификатор продукта Stripe для отправки участникам, когда они нажимают кнопку кампании. Если этот параметр не задан, участники будут перенаправлены на главную страницу товаров.
     errors:
@@ -37,7 +38,9 @@ ru:
         user_activity:
           payments: Платежи
       campaign:
+        title: Поддержите нас
         body: Нам нужна ваша помощь для поддержки и продуктивной работы этого сообщества!
+        success_body: Спасибо за вашу помощь в поддержании работы сообщества!
         subscribers: Подписчики
         goal_comparison: "<strong>%{current}</strong> из <strong>%{goal}</strong>"
         raised: Собрано
@@ -103,6 +106,7 @@ ru:
         view_past: Посмотреть прошлые покупки
         no_products: В настоящее время нет доступных предложений.
         unauthenticated: Войдите в систему или создайте учетную запись, чтобы подписаться.
+        invalid_coupon: Вы ввели неверный код купона. Пожалуйста, попробуйте еще раз.
         card:
           title: Оплата
         customer:
