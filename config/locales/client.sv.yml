@@ -17,6 +17,7 @@ sv:
     discourse_subscriptions_campaign_type: Väljer vilken typ av kampanj som ska drivas (prenumeranter eller månatligt belopp).
     discourse_subscriptions_campaign_banner_location: Väljer platsen för kampanjbanderollen (överst eller sidofält).
     discourse_subscriptions_campaign_banner_shadow_color: Väljer färgen på kampanjbanderollens skugga.
+    discourse_subscriptions_campaign_banner_bg_image: Ladda upp en anpassad bild som ska användas som bakgrund på kampanjbanderollen.
     discourse_subscriptions_campaign_show_contributors: Visa avatarer för de senaste inköpen av prenumerationsprodukter.
     discourse_subscriptions_campaign_product: Stripe-produkt-id för plats dit understödjare skickas när de klickar på knappen i kampanjen. Om den här inställningen är tom skickas understödjarna till produkternas huvudsida.
     errors:
@@ -39,6 +40,8 @@ sv:
       campaign:
         title: Stöd oss
         body: Vi behöver din hjälp för att hålla igång detta forum!
+        success_title: Klart!
+        success_body: Tack för att du hjälper oss hålla igång detta forum!
         subscribers: Prenumeranter
         goal_comparison: "<strong>%{current}</strong> av <strong>%{goal}</strong>"
         raised: Insamlat
@@ -104,6 +107,7 @@ sv:
         view_past: Visa tidigare köp
         no_products: Det finns för tillfället inga produkter tillgängliga.
         unauthenticated: Logga in eller skapa ett konto för att prenumerera.
+        invalid_coupon: Du angav en ogiltig kupongkod. Försök igen.
         card:
           title: Betalning
         customer:

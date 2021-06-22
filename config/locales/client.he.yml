@@ -17,6 +17,7 @@ he:
     discourse_subscriptions_campaign_type: בוחר את סוג מסע הפרסום להרצה (מנויים או סכום חודשי שגויס).
     discourse_subscriptions_campaign_banner_location: בוחר את מיקום כרזת מסע הפרסום (למעלה או בסרגל הצד).
     discourse_subscriptions_campaign_banner_shadow_color: בוחר את צבע הצללת כרזת מסע הפרסום.
+    discourse_subscriptions_campaign_banner_bg_image: ניתן להעלות תמונה משלך כרקע לכרזת מסע הפרסום.
     discourse_subscriptions_campaign_show_contributors: מציג תמונות ייצוגיות של הרכישות האחרונות של מוצרים שדורשים מינוי.
     discourse_subscriptions_campaign_product: מזהה המוצר ב־Stripe לשליחה לתומכים כשהם לוחצים על הכפתור במסע הפרסום. אם ההגדרה הזאת ריקה, התומכים יופנו לעמוד המוצרים הראשי.
     errors:
@@ -37,7 +38,10 @@ he:
         user_activity:
           payments: תשלומים
       campaign:
+        title: לתמוך בנו
         body: אנו זקוקים לעזרה שלך כדי שהקהילה הזאת תמשיך להתקיים!
+        success_title: הצלחה!
+        success_body: אנו מודים ךף על עזרתך להמשך ביסוס הקהילה הזאת!
         subscribers: מנויים
         goal_comparison: "<strong>%{current}</strong> מתוך <strong>%{goal}</strong>"
         raised: גויסו
@@ -103,6 +107,7 @@ he:
         view_past: הצגת רכישות עבר
         no_products: אין מוצרים זמינים.
         unauthenticated: עליך להיכנס או ליצור חשבון כדי להירשם.
+        invalid_coupon: קוד הקופון שהזנת שגוי. נא לנסות שוב.
         card:
           title: תשלום
         customer:
