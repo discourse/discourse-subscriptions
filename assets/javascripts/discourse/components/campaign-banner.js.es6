@@ -54,7 +54,7 @@ export default Component.extend({
       }
     }
 
-    if (this.showContributors) {
+    if (this.currentUser && this.showContributors) {
       return ajax("/s/contributors", { method: "get" }).then((result) => {
         this.setProperties({
           contributors: result,
