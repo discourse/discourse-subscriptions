@@ -13,22 +13,21 @@
       background-size: cover;
       background-repeat: no-repeat;' ''}}">
       {{#if isGoalMet}}
-         <h2 class="campaign-banner-info-header">{{i18n 'discourse_subscriptions.campaign.success_title'}}</h2>
+        <h2 class="campaign-banner-info-header">{{i18n 'discourse_subscriptions.campaign.success_title'}}</h2>
         <p class="campaign-banner-info-description">{{i18n 'discourse_subscriptions.campaign.success_body'}}</p>
       {{else}}
         <h2 class="campaign-banner-info-header">{{i18n 'discourse_subscriptions.campaign.title'}}</h2>
         <p class="campaign-banner-info-description">{{i18n 'discourse_subscriptions.campaign.body'}}</p>
+        {{#if product}}
+          {{#link-to "s.show" product disabled=product.subscribed class="btn btn-primary campaign-banner-info-button"}}
+            {{d-icon "far-heart"}} {{d-icon "heart" class="hover-heart"}} {{i18n 'discourse_subscriptions.campaign.button'}}
+          {{/link-to}}
+        {{else}}
+          {{#link-to "s" class="btn btn-primary campaign-banner-info-button"}}
+            {{d-icon "far-heart"}} {{d-icon "heart" class="hover-heart"}} {{i18n 'discourse_subscriptions.campaign.button'}}
+          {{/link-to}}
+        {{/if}}
       {{/if}}
-      {{#if product}}
-        {{#link-to "s.show" product disabled=product.subscribed class="btn btn-primary campaign-banner-info-button"}}
-          {{d-icon "far-heart"}} {{d-icon "heart" class="hover-heart"}} {{i18n 'discourse_subscriptions.campaign.button'}}
-        {{/link-to}}
-      {{else}}
-        {{#link-to "s" class="btn btn-primary campaign-banner-info-button"}}
-          {{d-icon "far-heart"}} {{d-icon "heart" class="hover-heart"}} {{i18n 'discourse_subscriptions.campaign.button'}}
-        {{/link-to}}
-      {{/if}}
-      
     </div>
     <div class="campaign-banner-progress">
       {{#if isGoalMet}}

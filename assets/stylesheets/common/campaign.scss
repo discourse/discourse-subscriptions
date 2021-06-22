@@ -153,6 +153,7 @@ body.archetype-regular {
         text-align: center;
       }
     }
+
     &-button {
       grid-area: right;
       height: 2.5em;
@@ -240,6 +241,14 @@ body.archetype-regular {
       background-color: var(--tertiary);
       border-top-right-radius: 2em;
       border-bottom-right-radius: 2em;
+    }
+  }
+}
+
+.goal-met .campaign-banner {
+  &-info {
+    &-description {
+      margin: 1em auto;
     }
   }
 }
