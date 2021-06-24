@@ -63,9 +63,9 @@ table.discourse-subscriptions-user-table {
 }
 
 #stripe-elements {
-  border: 1px $primary-low-mid solid;
+  border: 1px solid var(--primary-low-mid);
   padding: 10px;
-  background-color: $primary-very-low;
+  background-color: var(--primary-very-low);
 }
 
 #card-action {
