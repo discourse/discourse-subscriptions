@@ -47,7 +47,7 @@
   .product {
     display: flex;
     flex-flow: column nowrap;
-    border: 1px solid $primary-low;
+    border: 1px solid var(--primary-low);
     padding: 1.5rem;
     margin: 1rem;
     width: calc(50% - 240px);
@@ -60,7 +60,7 @@
       flex-flow: row wrap;
       justify-content: space-between;
       .purchased {
-        color: $success;
+        color: var(--success);
       }
       .billing-link {
         align-self: flex-end;
