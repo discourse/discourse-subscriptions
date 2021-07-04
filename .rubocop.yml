@@ -1,5 +1,8 @@
 inherit_gem:
   rubocop-discourse: default.yml
-
+AllCops:
+  Exclude:
+    - "gems/**/*"
+    - "vendor/bundle/**/*"
 Discourse/NoAddReferenceOrAliasesActiveRecordMigration:
   Enabled: false
