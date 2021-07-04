@@ -1,47 +1,50 @@
 {{#if model.unconfigured }}
-  <p>{{i18n 'discourse_subscriptions.admin.unconfigured'}}</p>
-  <p><a href="https://meta.discourse.org/t/discourse-subscriptions/140818/">{{i18n 'discourse_subscriptions.admin.on_meta'}}</a></p>
+  <p>{{i18n "discourse_subscriptions.admin.unconfigured"}}</p>
+  <p><a href="https://meta.discourse.org/t/discourse-subscriptions/140818/">{{i18n "discourse_subscriptions.admin.on_meta"}}</a></p>
 {{else}}
   <p class="btn-right">
-    {{#link-to 'adminPlugins.discourse-subscriptions.products.show' 'new' class="btn btn-primary"}}
+    {{#link-to "adminPlugins.discourse-subscriptions.products.show" "new" class="btn btn-primary"}}
       {{d-icon "plus"}}
-      <span>{{i18n 'discourse_subscriptions.admin.products.operations.new'}}</span>
+      <span>{{i18n "discourse_subscriptions.admin.products.operations.new"}}</span>
     {{/link-to}}
   </p>
 
   {{#if model}}
     <table class="table discourse-patrons-table">
       <thead>
-        <th>{{i18n 'discourse_subscriptions.admin.products.product.name'}}</th>
-        <th>{{i18n 'discourse_subscriptions.admin.products.product.created_at'}}</th>
-        <th>{{i18n 'discourse_subscriptions.admin.products.product.updated_at'}}</th>
-        <th class="td-right">{{i18n 'discourse_subscriptions.admin.products.product.active'}}</th>
+        <th>{{i18n "discourse_subscriptions.admin.products.product.name"}}</th>
+        <th>{{i18n "discourse_subscriptions.admin.products.product.created_at"}}</th>
+        <th>{{i18n "discourse_subscriptions.admin.products.product.updated_at"}}</th>
+        <th class="td-right">{{i18n "discourse_subscriptions.admin.products.product.active"}}</th>
         <th></th>
       </thead>
-      {{#each model as |product|}}
-        <tr>
-          <td>{{product.name}}</td>
-          <td>{{format-unix-date product.created}}</td>
-          <td>{{format-unix-date product.updated}}</td>
-          <td class="td-right">{{product.active}}</td>
-          <td class="td-right">
-            <div class="align-buttons">
-            {{#link-to "adminPlugins.discourse-subscriptions.products.show" product.id class="btn no-text btn-icon"}}
-              {{d-icon "far-edit"}}
-            {{/link-to}}
-            {{d-button
-              action=(route-action "destroyProduct")
-              actionParam=product
-              icon="trash-alt"
-              class="btn-danger btn no-text btn-icon"}}
-            </div>
-          </td>
-        </tr>
-      {{/each}}
+      <tbody>
+        {{#each model as |product|}}
+          <tr>
+            <td>{{product.name}}</td>
+            <td>{{format-unix-date product.created}}</td>
+            <td>{{format-unix-date product.updated}}</td>
+            <td class="td-right">{{product.active}}</td>
+            <td class="td-right">
+              <div class="align-buttons">
+                {{#link-to "adminPlugins.discourse-subscriptions.products.show" product.id class="btn no-text btn-icon"}}
+                  {{d-icon "far-edit"}}
+                {{/link-to}}
+                {{d-button
+                  action=(route-action "destroyProduct")
+                  actionParam=product
+                  icon="trash-alt"
+                  class="btn-danger btn no-text btn-icon"
+                }}
+              </div>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
     </table>
   {{else}}
     <p>
-      {{i18n 'discourse_subscriptions.admin.products.product_help'}}
+      {{i18n "discourse_subscriptions.admin.products.product_help"}}
     </p>
   {{/if}}
 {{/if}}

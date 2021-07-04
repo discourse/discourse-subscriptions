@@ -1,11 +1,11 @@
-<div class='create-coupon-form'>
+<div class="create-coupon-form">
   <form class="form-horizontal">
     <p>
-      <label for="promo_code">{{i18n 'discourse_subscriptions.admin.coupons.promo_code'}}</label>
+      <label for="promo_code">{{i18n "discourse_subscriptions.admin.coupons.promo_code"}}</label>
       {{input type="text" name="promo_code" value=promoCode}}
     </p>
     <p>
-      <label for="amount">{{i18n 'discourse_subscriptions.admin.coupons.discount'}}</label>
+      <label for="amount">{{i18n "discourse_subscriptions.admin.coupons.discount"}}</label>
       {{combo-box
         content=discountTypes
         value=discountType
@@ -15,7 +15,7 @@
     </p>
     <p>
       <label for="active">
-        {{i18n 'discourse_subscriptions.admin.coupons.active'}}
+        {{i18n "discourse_subscriptions.admin.coupons.active"}}
       </label>
       {{input type="checkbox" name="active" checked=active}}
     </p>

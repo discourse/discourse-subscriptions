@@ -92,6 +92,21 @@ export default Component.extend({
     }
   },
 
+  @discourseComputed("backgroundImageUrl")
+  bannerInfoStyle(backgroundImageUrl) {
+    if (!backgroundImageUrl) {
+      return "";
+    }
+
+    return `background-image: linear-gradient(
+        0deg,
+        rgba(var(--secondary-rgb), 0.75) 0%,
+        rgba(var(--secondary-rgb), 0.75) 100%),
+        var(--campaign-background-image);
+      background-size: cover;
+      background-repeat: no-repeat;`;
+  },
+
   @discourseComputed(
     "router.currentRouteName",
     "currentUser",

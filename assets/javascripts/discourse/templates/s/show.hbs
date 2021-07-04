@@ -1,4 +1,3 @@
-
 <div class="discourse-subscriptions-section-columns">
   <div class="section-column discourse-subscriptions-confirmation-billing">
     <h2>
@@ -14,7 +13,7 @@
   <div class="section-column">
     {{#if canPurchase}}
       <h2>
-        {{i18n 'discourse_subscriptions.subscribe.card.title'}}
+        {{i18n "discourse_subscriptions.subscribe.card.title"}}
       </h2>
 
       <hr>
@@ -33,7 +32,7 @@
       {{else if isAnonymous}}
         {{login-required}}
       {{else}}
-        <div class='promo-code'>
+        <div class="promo-code">
           {{input type="text" name="promo_code" placeholderKey="discourse_subscriptions.subscribe.promo_code" value=promoCode}}
         </div>
 
@@ -45,9 +44,10 @@
         }}
       {{/if}}
     {{else}}
-      <h2>{{i18n 'discourse_subscriptions.subscribe.already_purchased'}}</h2>
+      <h2>{{i18n "discourse_subscriptions.subscribe.already_purchased"}}</h2>
+
       {{#link-to "user.billing.subscriptions" currentUser.username class="btn btn-primary"}}
-        {{i18n 'discourse_subscriptions.subscribe.go_to_billing'}}
+        {{i18n "discourse_subscriptions.subscribe.go_to_billing"}}
       {{/link-to}}
     {{/if}}
   </div>
