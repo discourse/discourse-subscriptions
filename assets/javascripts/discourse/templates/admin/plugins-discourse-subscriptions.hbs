@@ -1,5 +1,4 @@
-
-<h2>{{i18n 'discourse_subscriptions.title' site_name=siteSettings.title}}</h2>
+<h2>{{i18n "discourse_subscriptions.title" site_name=siteSettings.title}}</h2>
 
 {{#if stripeConfigured}}
   <div class="discourse-subscriptions-buttons">
@@ -7,14 +6,14 @@
       {{d-button
         label="discourse_subscriptions.campaign.refresh_campaign"
         icon="sync-alt"
-        action=(action 'triggerManualRefresh')
+        action=(action "triggerManualRefresh")
       }}
     {{else}}
       {{#unless campaignProductSet}}
         {{d-button
           label="discourse_subscriptions.campaign.one_click_campaign"
           icon="plus-square"
-          action=(action 'createOneClickCampaign')
+          action=(action "createOneClickCampaign")
           isLoading=loading
         }}
       {{/unless}}
@@ -22,9 +21,9 @@
   </div>
 
   <ul class="nav nav-pills">
-    {{nav-item route='adminPlugins.discourse-subscriptions.products' label='discourse_subscriptions.admin.products.title'}}
-    {{nav-item route='adminPlugins.discourse-subscriptions.coupons' label='discourse_subscriptions.admin.coupons.title'}}
-    {{nav-item route='adminPlugins.discourse-subscriptions.subscriptions' label='discourse_subscriptions.admin.subscriptions.title'}}
+    {{nav-item route="adminPlugins.discourse-subscriptions.products" label="discourse_subscriptions.admin.products.title"}}
+    {{nav-item route="adminPlugins.discourse-subscriptions.coupons" label="discourse_subscriptions.admin.coupons.title"}}
+    {{nav-item route="adminPlugins.discourse-subscriptions.subscriptions" label="discourse_subscriptions.admin.subscriptions.title"}}
   </ul>
 
   <hr>
@@ -33,6 +32,6 @@
     {{outlet}}
   </div>
 {{else}}
-  <p>{{i18n 'discourse_subscriptions.admin.unconfigured'}}</p>
-  <p><a href="https://meta.discourse.org/t/discourse-subscriptions/140818/">{{i18n 'discourse_subscriptions.admin.on_meta'}}</a></p>
+  <p>{{i18n "discourse_subscriptions.admin.unconfigured"}}</p>
+  <p><a href="https://meta.discourse.org/t/discourse-subscriptions/140818/">{{i18n "discourse_subscriptions.admin.on_meta"}}</a></p>
 {{/if}}

@@ -70,8 +70,7 @@ en:
             week: Weekly
             month: Monthly
             year: Yearly
-        payment_button:
-          Subscribe
+        payment_button: Subscribe
         success: Thank you! Your subscription has been created.
         incomplete: The payment is incomplete. Your subscription will be updated when payment is complete.
         validate:
@@ -143,7 +142,7 @@ en:
             update: Update Product
             new: New Product
             destroy:
-                confirm: Are you sure you want to destroy this product?
+              confirm: Are you sure you want to destroy this product?
           product:
             product_id: Product ID
             name: Product Name

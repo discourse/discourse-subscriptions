@@ -1,5 +1,5 @@
 {{#if emptyProducts}}
-  <p>{{i18n 'discourse_subscriptions.subscribe.no_products'}}</p>
+  <p>{{i18n "discourse_subscriptions.subscribe.no_products"}}</p>
 {{else}}
   {{#each products as |product|}}
     {{product-item product=product isLoggedIn=isLoggedIn}}
