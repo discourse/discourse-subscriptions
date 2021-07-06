@@ -63,6 +63,7 @@ module DiscourseSubscriptions
       end
 
       SiteSetting.discourse_subscriptions_campaign_goal_met = current_volume > goal
+      SiteSetting.discourse_subscriptions_campaign_goal_met_date = Time.now.to_f * 1000 # convert to ms so client can parse
     end
 
     def create_campaign_group

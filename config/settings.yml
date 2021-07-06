@@ -77,3 +77,7 @@ plugins:
     client: true
     default: false
     hidden: true
+  discourse_subscriptions_campaign_goal_met_date:
+    client: true
+    default: ""
+    hidden: true
