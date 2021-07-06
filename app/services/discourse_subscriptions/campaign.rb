@@ -17,7 +17,7 @@ module DiscourseSubscriptions
         product_ids = product_ids.include?(campaign_product) ? [campaign_product] : []
       end
 
-      amount = 0
+      amount = 0.00
       subscriptions = get_subscription_data
       subscriptions = filter_to_subscriptions_products(subscriptions, product_ids)
 
@@ -27,10 +27,10 @@ module DiscourseSubscriptions
       # calculate amount raised
       subscriptions&.each do |sub|
         sub_amount = calculate_monthly_amount(sub)
-        amount += sub_amount
+        amount += sub_amount / 100.00
       end
 
-      SiteSetting.discourse_subscriptions_campaign_amount_raised = amount
+      SiteSetting.discourse_subscriptions_campaign_amount_raised = amount.round(2)
 
       check_goal_status
     end
@@ -62,8 +62,13 @@ module DiscourseSubscriptions
         current_volume = SiteSetting.discourse_subscriptions_campaign_subscribers
       end
 
-      SiteSetting.discourse_subscriptions_campaign_goal_met = current_volume > goal
-      SiteSetting.discourse_subscriptions_campaign_goal_met_date = Time.now.to_f * 1000 # convert to ms so client can parse
+      SiteSetting.discourse_subscriptions_campaign_goal_met = current_volume >= goal
+      current_status = SiteSetting.discourse_subscriptions_campaign_goal_met
+
+      SiteSetting.discourse_subscriptions_campaign_goal_met_date = Time.now.to_f * 1000 if original_status != current_status && current_status
+
+      # if the goal is below 90% met, ensure date setting cleared to show the banner again
+      SiteSetting.discourse_subscriptions_campaign_goal_met_date = nil if SiteSetting.discourse_subscriptions_campaign_goal_met_date && current_volume / goal <= 0.90
     end
 
     def create_campaign_group
@@ -179,10 +184,10 @@ module DiscourseSubscriptions
       when "week"
         unit_amount = unit_amount * 4
       when "year"
-        unit_amount = unit_amount / 12
+        unit_amount = unit_amount / 12.00
       end
 
-      unit_amount
+      unit_amount.to_f
     end
   end
 end

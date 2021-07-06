@@ -27,6 +27,7 @@ export default Component.extend({
     "Subscribers"
   ),
   currency: setting("discourse_subscriptions_currency"),
+  amountRaised: setting("discourse_subscriptions_campaign_amount_raised"),
   goalTarget: setting("discourse_subscriptions_campaign_goal"),
   isGoalMet: setting("discourse_subscriptions_campaign_goal_met"),
   goalMetDate: setting("discourse_subscriptions_campaign_goal_met_date"),
@@ -127,7 +128,7 @@ export default Component.extend({
     const goalDate = new Date(parseFloat(this.goalMetDate));
     const goalComparison = now - goalDate > 86400000 * 7;
 
-    if (this.isGoalMet && this.goalMetDate && goalComparison) {
+    if (this.goalMetDate && goalComparison) {
       return false;
     }
 
@@ -162,13 +163,6 @@ export default Component.extend({
     return (
       (!dismissedBannerKey || now - bannerDismissedTime > threeMonths) &&
       !dismissed
-    );
-  },
-
-  @discourseComputed
-  amountRaised() {
-    return (
-      this.siteSettings.discourse_subscriptions_campaign_amount_raised / 100
     );
   },
 

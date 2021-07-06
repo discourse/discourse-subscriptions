@@ -39,7 +39,7 @@ describe DiscourseSubscriptions::Campaign do
           DiscourseSubscriptions::Campaign.new.refresh_data
 
           expect(SiteSetting.discourse_subscriptions_campaign_subscribers).to eq 1
-          expect(SiteSetting.discourse_subscriptions_campaign_amount_raised).to eq 1000
+          expect(SiteSetting.discourse_subscriptions_campaign_amount_raised).to eq 10.00
         end
 
         it "checks if the goal is completed or not" do
@@ -49,6 +49,28 @@ describe DiscourseSubscriptions::Campaign do
           DiscourseSubscriptions::Campaign.new.refresh_data
           expect(SiteSetting.discourse_subscriptions_campaign_goal_met).to be true
           expect(SiteSetting.discourse_subscriptions_campaign_goal_met_date).to be_present
+        end
+
+        it "doesn't clear the date setting if the campaign dips below 90%" do
+          SiteSetting.discourse_subscriptions_campaign_goal = 11
+          SiteSetting.discourse_subscriptions_campaign_goal_met = true
+          SiteSetting.discourse_subscriptions_campaign_goal_met_date = (Time.now - 10.days).to_f * 1000
+          ::Stripe::Subscription.expects(:list).returns(data: [subscription], has_more: false)
+
+          DiscourseSubscriptions::Campaign.new.refresh_data
+          expect(SiteSetting.discourse_subscriptions_campaign_goal_met).to be false
+          expect(SiteSetting.discourse_subscriptions_campaign_goal_met_date).to be_present
+        end
+
+        it "clears the campaign goal met setting only if goal is < 90% met after being met" do
+          SiteSetting.discourse_subscriptions_campaign_goal = 15
+          SiteSetting.discourse_subscriptions_campaign_goal_met = true
+          SiteSetting.discourse_subscriptions_campaign_goal_met_date = (Time.now - 10.days).to_f * 1000
+          ::Stripe::Subscription.expects(:list).returns(data: [subscription], has_more: false)
+
+          DiscourseSubscriptions::Campaign.new.refresh_data
+          expect(SiteSetting.discourse_subscriptions_campaign_goal_met).to be false
+          expect(SiteSetting.discourse_subscriptions_campaign_goal_met_date).to be_blank
         end
       end
 
@@ -85,9 +107,8 @@ describe DiscourseSubscriptions::Campaign do
           DiscourseSubscriptions::Campaign.new.refresh_data
 
           expect(SiteSetting.discourse_subscriptions_campaign_subscribers).to eq 1
-          expect(SiteSetting.discourse_subscriptions_campaign_amount_raised).to eq 833
+          expect(SiteSetting.discourse_subscriptions_campaign_amount_raised).to eq 8.33
         end
-
       end
     end
   end
