@@ -78,6 +78,14 @@ describe DiscourseSubscriptions::Campaign do
           expect(SiteSetting.discourse_subscriptions_campaign_subscribers).to eq 1
           expect(SiteSetting.discourse_subscriptions_campaign_amount_raised).to eq 833
         end
+
+        it "checks if the goal is completed or not" do
+          SiteSetting.discourse_subscriptions_campaign_goal = 5
+          ::Stripe::Subscription.expects(:list).returns(data: [subscription, campaign_subscription], has_more: false)
+
+          DiscourseSubscriptions::Campaign.new.refresh_data
+          expect(SiteSetting.discourse_subscriptions_campaign_goal_met).to be true
+        end
       end
     end
   end

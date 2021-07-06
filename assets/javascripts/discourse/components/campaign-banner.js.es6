@@ -28,6 +28,7 @@ export default Component.extend({
   ),
   currency: setting("discourse_subscriptions_currency"),
   goalTarget: setting("discourse_subscriptions_campaign_goal"),
+  isGoalMet: setting("discourse_subscriptions_campaign_goal_met"),
   product: setting("discourse_subscriptions_campaign_product"),
   showContributors: setting(
     "discourse_subscriptions_campaign_show_contributors"
@@ -159,14 +160,6 @@ export default Component.extend({
     return (
       this.siteSettings.discourse_subscriptions_campaign_amount_raised / 100
     );
-  },
-
-  @discourseComputed
-  isGoalMet() {
-    const currentVolume = this.subscriberGoal
-      ? this.subscribers
-      : this.amountRaised;
-    return currentVolume >= this.goalTarget;
   },
 
   @action

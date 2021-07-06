@@ -73,3 +73,7 @@ plugins:
   discourse_subscriptions_campaign_group:
     default: ""
     hidden: true
+  discourse_subscriptions_campaign_goal_met:
+    client: true
+    default: false
+    hidden: true

@@ -31,6 +31,8 @@ module DiscourseSubscriptions
       end
 
       SiteSetting.discourse_subscriptions_campaign_amount_raised = amount
+
+      check_goal_status
     end
 
     def create_campaign
@@ -47,6 +49,21 @@ module DiscourseSubscriptions
     end
 
     protected
+
+    def check_goal_status
+      original_status = SiteSetting.discourse_subscriptions_campaign_goal_met.dup
+      goal = SiteSetting.discourse_subscriptions_campaign_goal
+      goal_type = SiteSetting.discourse_subscriptions_campaign_type
+
+      case goal_type
+      when "Amount"
+        current_volume = SiteSetting.discourse_subscriptions_campaign_amount_raised
+      when "Subscribers"
+        current_volume = SiteSetting.discourse_subscriptions_campaign_subscribers
+      end
+
+      SiteSetting.discourse_subscriptions_campaign_goal_met = current_volume > goal
+    end
 
     def create_campaign_group
       campaign_group = SiteSetting.discourse_subscriptions_campaign_group
