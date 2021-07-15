@@ -64,7 +64,7 @@ plugins:
     default: ""
   discourse_subscriptions_campaign_amount_raised:
     client: true
-    default: 0
+    default: 0.00
     hidden: true
   discourse_subscriptions_campaign_subscribers:
     client: true

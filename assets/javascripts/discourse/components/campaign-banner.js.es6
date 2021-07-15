@@ -27,6 +27,7 @@ export default Component.extend({
     "Subscribers"
   ),
   currency: setting("discourse_subscriptions_currency"),
+  amountRaised: setting("discourse_subscriptions_campaign_amount_raised"),
   goalTarget: setting("discourse_subscriptions_campaign_goal"),
   product: setting("discourse_subscriptions_campaign_product"),
   showContributors: setting(
@@ -120,6 +121,10 @@ export default Component.extend({
       !currentRoute.split(".")[0].includes("admin") &&
       currentRoute.split(".")[0] !== "s";
 
+    if (!this.site.show_campaign_banner) {
+      return false;
+    }
+
     // make sure not to render above main container when inside a topic
     if (
       this.connectorName === "above-main-container" &&
@@ -151,13 +156,6 @@ export default Component.extend({
     return (
       (!dismissedBannerKey || now - bannerDismissedTime > threeMonths) &&
       !dismissed
-    );
-  },
-
-  @discourseComputed
-  amountRaised() {
-    return (
-      this.siteSettings.discourse_subscriptions_campaign_amount_raised / 100
     );
   },
 

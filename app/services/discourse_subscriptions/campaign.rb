@@ -17,7 +17,7 @@ module DiscourseSubscriptions
         product_ids = product_ids.include?(campaign_product) ? [campaign_product] : []
       end
 
-      amount = 0
+      amount = 0.00
       subscriptions = get_subscription_data
       subscriptions = filter_to_subscriptions_products(subscriptions, product_ids)
 
@@ -27,10 +27,12 @@ module DiscourseSubscriptions
       # calculate amount raised
       subscriptions&.each do |sub|
         sub_amount = calculate_monthly_amount(sub)
-        amount += sub_amount
+        amount += sub_amount / 100.00
       end
 
-      SiteSetting.discourse_subscriptions_campaign_amount_raised = amount
+      SiteSetting.discourse_subscriptions_campaign_amount_raised = amount.round(2)
+
+      check_goal_status
     end
 
     def create_campaign
@@ -47,6 +49,31 @@ module DiscourseSubscriptions
     end
 
     protected
+
+    def goal_met_date_key
+      'subscriptions_goal_met_date'
+    end
+
+    def check_goal_status
+      goal = SiteSetting.discourse_subscriptions_campaign_goal
+      goal_type = SiteSetting.discourse_subscriptions_campaign_type
+
+      case goal_type
+      when "Amount"
+        current_volume = SiteSetting.discourse_subscriptions_campaign_amount_raised
+      when "Subscribers"
+        current_volume = SiteSetting.discourse_subscriptions_campaign_subscribers
+      end
+
+      goal_met_date = Discourse.redis.get(goal_met_date_key)
+
+      if goal_met_date
+        # delete the key if we're at or below 90% of the goal
+        Discourse.redis.del(goal_met_date_key) if current_volume / goal <= 0.90
+      else
+        Discourse.redis.set(goal_met_date_key, Time.now) if current_volume > goal
+      end
+    end
 
     def create_campaign_group
       campaign_group = SiteSetting.discourse_subscriptions_campaign_group
@@ -161,10 +188,10 @@ module DiscourseSubscriptions
       when "week"
         unit_amount = unit_amount * 4
       when "year"
-        unit_amount = unit_amount / 12
+        unit_amount = unit_amount / 12.00
       end
 
-      unit_amount
+      unit_amount.to_f
     end
   end
 end
