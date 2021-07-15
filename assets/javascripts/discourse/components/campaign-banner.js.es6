@@ -29,8 +29,6 @@ export default Component.extend({
   currency: setting("discourse_subscriptions_currency"),
   amountRaised: setting("discourse_subscriptions_campaign_amount_raised"),
   goalTarget: setting("discourse_subscriptions_campaign_goal"),
-  isGoalMet: setting("discourse_subscriptions_campaign_goal_met"),
-  goalMetDate: setting("discourse_subscriptions_campaign_goal_met_date"),
   product: setting("discourse_subscriptions_campaign_product"),
   showContributors: setting(
     "discourse_subscriptions_campaign_show_contributors"
@@ -123,12 +121,7 @@ export default Component.extend({
       !currentRoute.split(".")[0].includes("admin") &&
       currentRoute.split(".")[0] !== "s";
 
-    // if the goal is met and the date is > 7 days, don't show
-    const now = Date.now();
-    const goalDate = new Date(parseFloat(this.goalMetDate));
-    const goalComparison = now - goalDate > 86400000 * 7;
-
-    if (this.goalMetDate && goalComparison) {
+    if (!this.site.show_campaign_banner) {
       return false;
     }
 
@@ -164,6 +157,14 @@ export default Component.extend({
       (!dismissedBannerKey || now - bannerDismissedTime > threeMonths) &&
       !dismissed
     );
+  },
+
+  @discourseComputed
+  isGoalMet() {
+    const currentVolume = this.subscriberGoal
+      ? this.subscribers
+      : this.amountRaised;
+    return currentVolume >= this.goalTarget;
   },
 
   @action

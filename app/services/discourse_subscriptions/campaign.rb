@@ -50,8 +50,11 @@ module DiscourseSubscriptions
 
     protected
 
+    def goal_met_date_key
+      'subscriptions_goal_met_date'
+    end
+
     def check_goal_status
-      original_status = SiteSetting.discourse_subscriptions_campaign_goal_met.dup
       goal = SiteSetting.discourse_subscriptions_campaign_goal
       goal_type = SiteSetting.discourse_subscriptions_campaign_type
 
@@ -62,13 +65,14 @@ module DiscourseSubscriptions
         current_volume = SiteSetting.discourse_subscriptions_campaign_subscribers
       end
 
-      SiteSetting.discourse_subscriptions_campaign_goal_met = current_volume >= goal
-      current_status = SiteSetting.discourse_subscriptions_campaign_goal_met
+      goal_met_date = Discourse.redis.get(goal_met_date_key)
 
-      SiteSetting.discourse_subscriptions_campaign_goal_met_date = Time.now.to_f * 1000 if original_status != current_status && current_status
-
-      # if the goal is below 90% met, ensure date setting cleared to show the banner again
-      SiteSetting.discourse_subscriptions_campaign_goal_met_date = nil if SiteSetting.discourse_subscriptions_campaign_goal_met_date && current_volume / goal <= 0.90
+      if goal_met_date
+        # delete the key if we're at or below 90% of the goal
+        Discourse.redis.del(goal_met_date_key) if current_volume / goal <= 0.90
+      else
+        Discourse.redis.set(goal_met_date_key, Time.now) if current_volume > goal
+      end
     end
 
     def create_campaign_group
