@@ -59,10 +59,14 @@ after_initialize do
   end
 
   add_to_serializer(:site, :show_campaign_banner) do
-    enabled = SiteSetting.discourse_subscriptions_enabled
-    campaign_enabled = SiteSetting.discourse_subscriptions_campaign_enabled
-    goal_met = Discourse.redis.get("subscriptions_goal_met_date")
+    begin
+      enabled = SiteSetting.discourse_subscriptions_enabled
+      campaign_enabled = SiteSetting.discourse_subscriptions_campaign_enabled
+      goal_met = Discourse.redis.get("subscriptions_goal_met_date")
 
-    enabled && campaign_enabled && (!goal_met || 7.days.ago <= Date.parse(goal_met))
+      enabled && campaign_enabled && (!goal_met || 7.days.ago <= Date.parse(goal_met))
+    rescue
+      false
+    end
   end
 end
