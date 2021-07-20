@@ -7,7 +7,7 @@
 {{#if isLoggedIn}}
   <div class="product-purchase">
     {{#if product.repurchaseable}}
-      {{#link-to "s.show" product.id class="btn btn-primary"}}
+      {{#link-to "subscribe.show" product.id class="btn btn-primary"}}
         {{i18n "discourse_subscriptions.subscribe.title"}}
       {{/link-to}}
       {{#if product.subscribed}}
@@ -22,7 +22,7 @@
           {{i18n "discourse_subscriptions.subscribe.go_to_billing"}}
         {{/link-to}}
       {{else}}
-        {{#link-to "s.show" product.id disabled=product.subscribed class="btn btn-primary"}}
+        {{#link-to "subscribe.show" product.id disabled=product.subscribed class="btn btn-primary"}}
           {{i18n "discourse_subscriptions.subscribe.title"}}
         {{/link-to}}
       {{/if}}

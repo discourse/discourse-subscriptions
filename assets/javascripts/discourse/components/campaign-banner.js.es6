@@ -119,7 +119,7 @@ export default Component.extend({
     const showOnRoute =
       currentRoute !== "discovery.s" &&
       !currentRoute.split(".")[0].includes("admin") &&
-      currentRoute.split(".")[0] !== "s";
+      currentRoute.split(".")[0] !== "subscribe";
 
     if (!this.site.show_campaign_banner) {
       return false;
