@@ -3,11 +3,17 @@
 require 'stripe'
 require 'highline/import'
 
-desc 'Import data from Procourse Memberships'
-task 'subscriptions:procourse_import' => :environment do
+desc 'Import subscriptions from Stripe'
+task 'subscriptions:subscriptions_import' => :environment do
   setup_api
-  products = get_procourse_stripe_products
+  products = get_stripe_products
   strip_products_to_import = []
+
+  procourse_import = false
+  procourse_import_response = ask("Were the subscriptions you are importing created in Procourse Memberships?: (y/N)")
+  if procourse_import_response.downcase != 'y'
+    procourse_import = true
+  end
 
   products.each do |product|
     confirm_import = ask("Do you wish to import product #{product[:name]} (id: #{product[:id]}): (y/N)")
@@ -15,11 +21,11 @@ task 'subscriptions:procourse_import' => :environment do
     strip_products_to_import << product
   end
 
-  import_procourse_products(strip_products_to_import)
-  run_import
+  import_products(strip_products_to_import)
+  import_subscriptions(procourse_import)
 end
 
-def get_procourse_stripe_products(starting_after: nil)
+def get_stripe_products(starting_after: nil)
   puts 'Getting products from Stripe API'
 
   all_products = []
@@ -35,8 +41,8 @@ def get_procourse_stripe_products(starting_after: nil)
 
 end
 
-def get_procourse_stripe_subs(starting_after: nil)
-  puts 'Getting Procourse Subscriptions from Stripe API'
+def get_stripe_subscriptions(starting_after: nil)
+  puts 'Getting Subscriptions from Stripe API'
 
   all_subscriptions = []
 
@@ -50,8 +56,8 @@ def get_procourse_stripe_subs(starting_after: nil)
   all_subscriptions
 end
 
-def get_procourse_stripe_customers(starting_after: nil)
-  puts 'Getting Procourse Customers from Stripe API'
+def get_stripe_customers(starting_after: nil)
+  puts 'Getting Customers from Stripe API'
 
   all_customers = []
 
@@ -65,7 +71,7 @@ def get_procourse_stripe_customers(starting_after: nil)
   all_customers
 end
 
-def import_procourse_products(products)
+def import_products(products)
   puts 'Importing products:'
 
   products.each do |product|
@@ -79,36 +85,48 @@ def import_procourse_products(products)
   end
 end
 
-def run_import
-  puts 'Importing Procourse subscriptions'
+def import_subscriptions(procourse_import)
+  puts 'Importing subscriptions'
   product_ids = DiscourseSubscriptions::Product.all.pluck(:external_id)
 
-  all_customers = get_procourse_stripe_customers
+  all_customers = get_stripe_customers
   puts "Total available Stripe Customers: #{all_customers.length.to_s}, the first of which is customer id: #{all_customers[0][:description]}"
 
-  all_subscriptions = get_procourse_stripe_subs
-  puts "Total Active Procourse Subscriptions available: #{all_subscriptions.length.to_s}"
+  subscriptions = get_stripe_subscriptions
+  puts "Total Active Subscriptions available: #{subscriptions.length.to_s}"
 
-  subscriptions_for_products = all_subscriptions.select { |sub| product_ids.include?(sub[:items][:data][0][:price][:product]) }
+  subscriptions_for_products = subscriptions.select { |sub| product_ids.include?(sub[:items][:data][0][:price][:product]) }
   puts "Total Subscriptions matching Products to Import: #{subscriptions_for_products.length.to_s}"
 
   subscriptions_for_products.each do |subscription|
     product_id = subscription[:items][:data][0][:plan][:product]
     customer_id = subscription[:customer]
     subscription_id = subscription[:id]
-    stripe_customer = all_customers.select { |cust| cust[:id] == customer_id }
-    user_id = stripe_customer[0][:description].to_i
+
+    if procourse_import
+      stripe_customer = all_customers.select { |cust| cust[:id] == customer_id }
+      user_id = stripe_customer[0][:description].to_i
+      username = nil
+    else
+      user_id = subscription[:metadata][:user_id].to_i
+      username = subscription[:metadata][:username]
+    end
 
     if product_id && customer_id && subscription_id
       subscriptions_customer = DiscourseSubscriptions::Customer.find_by(user_id: user_id, customer_id: customer_id, product_id: product_id)
 
       if subscriptions_customer.nil? && user_id && user_id > 0
-        subscriptions_customer = DiscourseSubscriptions::Customer.create(
+        # create the customer record if doesn't exist only if the user_id and username match, which
+        # prevents issues if multiple sites use the same Stripe account. Does not apply to a Procourse import.
+        user = User.find(user_id)
+        if procourse_import || (user && (user.username == username))
+          subscriptions_customer = DiscourseSubscriptions::Customer.create(
           user_id: user_id,
           customer_id: customer_id,
           product_id: product_id
         )
         puts "Subscriptions Customer user_id: #{user_id}, customer_id: #{customer_id}, product_id: #{product_id}) CREATED"
+        end
       else
         puts "Subscriptions Customer user_id: #{user_id}, customer_id: #{customer_id}, product_id: #{product_id}) already exists"
       end
@@ -124,18 +142,19 @@ def run_import
           puts "Discourse Subscription customer_id: #{subscriptions_customer.id}, external_id: #{subscription_id}) already exists"
         end
 
-        # Update Stripe data for use with discourse_subscriptions
-        discourse_user = User.find(user_id)
-        puts "Discourse User: #{discourse_user.username_lower} found for Strip metadata update ..."
+        if procourse_import
+          # Update Procourse Stripe data as it would be if it were created by discourse_subscriptions
+          discourse_user = User.find(user_id)
+          puts "Discourse User: #{discourse_user.username_lower} found for Strip metadata update ..."
 
-        updated_subsciption = Stripe::Subscription.update(subscription_id,
-                                                          { metadata: { user_id: user_id,
-                                                                        username: discourse_user.username_lower } })
-        puts "Stripe Subscription: #{updated_subsciption[:id]}, metadata: #{updated_subsciption[:metadata]} UPDATED"
+          updated_subsciption = Stripe::Subscription.update(subscription_id,
+                                                            { metadata: { user_id: user_id,
+                                                                          username: discourse_user.username_lower } })
+          puts "Stripe Subscription: #{updated_subsciption[:id]}, metadata: #{updated_subsciption[:metadata]} UPDATED"
 
-        updated_customer = Stripe::Customer.update(customer_id, { email: discourse_user.email })
-        puts "Stripe Customer: #{updated_customer[:id]}, email: #{updated_customer[:email]} UPDATED"
-
+          updated_customer = Stripe::Customer.update(customer_id, { email: discourse_user.email })
+          puts "Stripe Customer: #{updated_customer[:id]}, email: #{updated_customer[:email]} UPDATED"
+        end
       end
     end
   end
