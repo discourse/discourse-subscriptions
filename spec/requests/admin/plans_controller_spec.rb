@@ -79,9 +79,12 @@ module DiscourseSubscriptions
           end
 
           it "upcases the currency" do
-            ::Stripe::Price.expects(:retrieve).with('plan_12345').returns(currency: 'aud')
+            ::Stripe::Price.expects(:retrieve).with('plan_12345').returns(currency: 'aud', recurring: { interval: 'year' })
             get "/s/admin/plans/plan_12345.json"
-            expect(response.parsed_body["currency"]).to eq 'AUD'
+
+            plan = response.parsed_body
+            expect(plan["currency"]).to eq 'AUD'
+            expect(plan["interval"]).to eq 'year'
           end
         end
 
