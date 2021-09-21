@@ -55,7 +55,11 @@ module DiscourseSubscriptions
             trial_days = plan[:recurring][:trial_period_days]
           end
 
-          serialized = plan.to_h.merge(trial_period_days: trial_days, currency: plan[:currency].upcase)
+          if plan[:recurring] && plan[:recurring][:interval]
+            interval = plan[:recurring][:interval]
+          end
+
+          serialized = plan.to_h.merge(trial_period_days: trial_days, currency: plan[:currency].upcase, interval: interval)
 
           render_json_dump serialized
 
