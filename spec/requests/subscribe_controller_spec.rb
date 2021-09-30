@@ -210,12 +210,18 @@ module DiscourseSubscriptions
           end
 
           it "creates a customer model" do
-            ::Stripe::Price.expects(:retrieve).returns(type: 'recurring', metadata: {})
+            ::Stripe::Price.expects(:retrieve).returns(type: 'recurring', metadata: {}).twice
             ::Stripe::Subscription.expects(:create).returns(status: 'active', customer: 'cus_1234')
 
             expect {
               post "/s/create.json", params: { plan: 'plan_1234', source: 'tok_1234' }
             }.to change { DiscourseSubscriptions::Customer.count }
+
+            ::Stripe::Customer.expects(:retrieve).with('cus_1234')
+
+            expect {
+              post "/s/create.json", params: { plan: 'plan_5678', source: 'tok_5678' }
+            }.not_to change { DiscourseSubscriptions::Customer.count }
           end
 
           context "with promo code" do
