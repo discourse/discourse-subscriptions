@@ -21,7 +21,7 @@ const AdminSubscription = EmberObject.extend({
 
   destroy(refund) {
     const data = {
-      refund: refund,
+      refund,
     };
     return ajax(`/s/admin/subscriptions/${this.id}`, {
       method: "delete",
