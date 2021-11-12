@@ -55,7 +55,10 @@ module DiscourseSubscriptions
             trial_days = plan[:recurring][:trial_period_days]
           end
 
-          interval = plan.dig(:recurring, :interval)
+          interval = nil
+          if plan[:recurring] && plan[:recurring][:interval]
+            interval = plan[:recurring][:interval]
+          end
 
           serialized = plan.to_h.merge(trial_period_days: trial_days, currency: plan[:currency].upcase, interval: interval)
 
