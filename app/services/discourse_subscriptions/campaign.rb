@@ -21,6 +21,12 @@ module DiscourseSubscriptions
       subscriptions = get_subscription_data
       subscriptions = filter_to_subscriptions_products(subscriptions, product_ids)
 
+      # Fetch product purchases
+      one_time_payments = get_one_time_payments(product_ids)
+      one_time_payments.each do |c|
+        amount += c[:price].to_f / 100.00
+      end
+
       # get number of subscribers
       SiteSetting.discourse_subscriptions_campaign_subscribers = subscriptions&.length.to_i
 
@@ -142,6 +148,50 @@ module DiscourseSubscriptions
       }
 
       plan = ::Stripe::Price.create(price_object)
+    end
+
+    def get_one_time_payments(product_ids)
+      one_time_payments = []
+      current_set = {
+        has_more: true,
+        last_record: nil
+      }
+
+      if product_ids.present?
+        # lots of matching because the Stripe API doesn't make it easy to match products => payments except from invoices
+        until current_set[:has_more] == false
+          all_invoices = ::Stripe::Invoice.list(
+            limit: 100,
+            starting_after: current_set[:last_record]
+          )
+
+          current_set[:last_record] = all_invoices[:data].last[:id] if all_invoices[:data].present?
+          current_set[:has_more] = all_invoices[:has_more]
+
+          all_invoices[:data].each do |invoice|
+            customer_id = invoice[:customer]
+            line_item = invoice[:lines][:data][0] if invoice[:lines] && invoice[:lines][:data] # Discourse only makes single-line item charges
+            # check if non-subscription and that the plan is active
+            if line_item[:plan] == nil &&
+               line_item[:price] &&
+               line_item[:price][:recurring] == nil &&
+               line_item[:price][:active] == true
+
+              product_id = line_item[:price][:product]
+              if product_ids.include? product_id
+                line_data = {
+                  customer_id: customer_id,
+                  product_id: product_id,
+                  price: line_item[:price][:unit_amount],
+                }
+                one_time_payments << line_data
+              end
+            end
+          end
+        end
+      end
+
+      one_time_payments
     end
 
     def get_subscription_data
