@@ -43,7 +43,6 @@ describe DiscourseSubscriptions::Campaign do
       }
     end
 
-
     before do
       Fabricate(:product, external_id: "prodct_23456")
       Fabricate(:customer, product_id: "prodct_23456", user_id: user.id, customer_id: 'x')
