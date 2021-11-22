@@ -5,6 +5,7 @@ require 'rails_helper'
 describe DiscourseSubscriptions::Campaign do
   describe 'campaign data is refreshed' do
     let (:user) { Fabricate(:user) }
+    let (:user2) { Fabricate(:user) }
     let(:subscription) do
       {
         id: "sub_1234",
@@ -23,10 +24,30 @@ describe DiscourseSubscriptions::Campaign do
         }
       }
     end
+    let(:invoice) do
+      {
+        id: "in_1234",
+        lines: {
+          data: [
+            {
+              plan: nil,
+              price: {
+                product: "prodct_65432",
+                active: true,
+                unit_amount: 1000,
+                recurring: nil,
+              }
+            }
+          ]
+        }
+      }
+    end
 
     before do
       Fabricate(:product, external_id: "prodct_23456")
       Fabricate(:customer, product_id: "prodct_23456", user_id: user.id, customer_id: 'x')
+      Fabricate(:product, external_id: "prodct_65432")
+      Fabricate(:customer, product_id: "prodct_65432", user_id: user2.id, customer_id: 'y')
       SiteSetting.discourse_subscriptions_public_key = "public-key"
       SiteSetting.discourse_subscriptions_secret_key = "secret-key"
     end
@@ -35,25 +56,28 @@ describe DiscourseSubscriptions::Campaign do
       context "for all subscription purchases" do
         it "refreshes the campaign data properly" do
           ::Stripe::Subscription.expects(:list).returns(data: [subscription], has_more: false)
+          ::Stripe::Invoice.expects(:list).returns(data: [invoice], has_more: false)
 
           DiscourseSubscriptions::Campaign.new.refresh_data
 
           expect(SiteSetting.discourse_subscriptions_campaign_subscribers).to eq 1
-          expect(SiteSetting.discourse_subscriptions_campaign_amount_raised).to eq 10.00
+          expect(SiteSetting.discourse_subscriptions_campaign_amount_raised).to eq 20.00
         end
 
         it "checks if the goal is completed or not" do
           SiteSetting.discourse_subscriptions_campaign_goal = 5
           ::Stripe::Subscription.expects(:list).returns(data: [subscription], has_more: false)
+          ::Stripe::Invoice.expects(:list).returns(data: [invoice], has_more: false)
 
           DiscourseSubscriptions::Campaign.new.refresh_data
           expect(Discourse.redis.get('subscriptions_goal_met_date')).to be_present
         end
 
         it "checks if goal is < 90% met after being met" do
-          SiteSetting.discourse_subscriptions_campaign_goal = 15
+          SiteSetting.discourse_subscriptions_campaign_goal = 25
           Discourse.redis.set('subscriptions_goal_met_date', 10.days.ago)
           ::Stripe::Subscription.expects(:list).returns(data: [subscription], has_more: false)
+          ::Stripe::Invoice.expects(:list).returns(data: [invoice], has_more: false)
 
           DiscourseSubscriptions::Campaign.new.refresh_data
           expect(Discourse.redis.get('subscriptions_goal_met_date')).to be_blank
@@ -89,6 +113,7 @@ describe DiscourseSubscriptions::Campaign do
 
         it "refreshes campaign data with only the campaign product/subscriptions" do
           ::Stripe::Subscription.expects(:list).returns(data: [subscription, campaign_subscription], has_more: false)
+          ::Stripe::Invoice.expects(:list).returns(data: [invoice], has_more: false)
 
           DiscourseSubscriptions::Campaign.new.refresh_data
 
