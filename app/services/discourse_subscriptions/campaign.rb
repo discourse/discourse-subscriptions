@@ -170,6 +170,7 @@ module DiscourseSubscriptions
 
           all_invoices[:data].each do |invoice|
             customer_id = invoice[:customer]
+            next if invoice[:paid] != true
             line_item = invoice[:lines][:data][0] if invoice[:lines] && invoice[:lines][:data] # Discourse only makes single-line item charges
             # check if non-subscription and that the plan is active
             if line_item[:plan] == nil &&

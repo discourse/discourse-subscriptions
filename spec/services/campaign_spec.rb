@@ -27,6 +27,7 @@ describe DiscourseSubscriptions::Campaign do
     let(:invoice) do
       {
         id: "in_1234",
+        paid: true,
         lines: {
           data: [
             {
@@ -42,12 +43,33 @@ describe DiscourseSubscriptions::Campaign do
         }
       }
     end
+    let(:invoice2) do
+      {
+        id: "in_1235",
+        paid: false,
+        lines: {
+          data: [
+            {
+              plan: nil,
+              price: {
+                product: "prodct_65433",
+                active: true,
+                unit_amount: 600,
+                recurring: nil,
+              }
+            }
+          ]
+        }
+      }
+    end
 
     before do
       Fabricate(:product, external_id: "prodct_23456")
       Fabricate(:customer, product_id: "prodct_23456", user_id: user.id, customer_id: 'x')
       Fabricate(:product, external_id: "prodct_65432")
       Fabricate(:customer, product_id: "prodct_65432", user_id: user2.id, customer_id: 'y')
+      Fabricate(:product, external_id: "prodct_65433")
+      Fabricate(:customer, product_id: "prodct_65433", user_id: user2.id, customer_id: 'y')
       SiteSetting.discourse_subscriptions_public_key = "public-key"
       SiteSetting.discourse_subscriptions_secret_key = "secret-key"
     end
@@ -56,7 +78,7 @@ describe DiscourseSubscriptions::Campaign do
       context "for all subscription purchases" do
         it "refreshes the campaign data properly" do
           ::Stripe::Subscription.expects(:list).returns(data: [subscription], has_more: false)
-          ::Stripe::Invoice.expects(:list).returns(data: [invoice], has_more: false)
+          ::Stripe::Invoice.expects(:list).returns(data: [invoice, invoice2], has_more: false)
 
           DiscourseSubscriptions::Campaign.new.refresh_data
 
