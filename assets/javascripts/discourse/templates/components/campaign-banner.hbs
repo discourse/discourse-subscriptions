@@ -64,7 +64,7 @@
         {{#if subscriberGoal}}
           <progress class="campaign-banner-progress-bar" value={{subscribers}} max={{siteSettings.discourse_subscriptions_campaign_goal}}/>
           <p class="campaign-banner-progress-description">
-            {{i18n "discourse_subscriptions.campaign.goal_comparison" current=subscribers goal=goalTarget}}
+            {{html-safe (i18n "discourse_subscriptions.campaign.goal_comparison" current=subscribers goal=goalTarget)}}
             {{i18n "discourse_subscriptions.campaign.subscribers"}}
           </p>
         {{else}}
