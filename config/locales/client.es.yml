@@ -29,6 +29,11 @@ es:
         subscribe: Suscribirse
         user_activity:
           payments: Pagos
+      campaign:
+        title: Apoyanos
+        body: '¡Necesitamos su ayuda para mantener esta comunidad en funcionamiento!'
+        goal_comparison: "<strong>%{current}</strong> de <strong>%{goal}</strong>"
+        button: Apoyo
       one_time_payment: Pago único
       plans:
         purchase: Comprar una suscripción
