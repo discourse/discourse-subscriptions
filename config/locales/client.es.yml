@@ -30,10 +30,10 @@ es:
         user_activity:
           payments: Pagos
       campaign:
-        title: Apoyanos
-        body: '¡Necesitamos su ayuda para mantener esta comunidad en funcionamiento!'
+        title: Apoya esta comunidad
+        body: '¡Necesitamos tu ayuda para mantener esta comunidad en funcionamiento!'
         goal_comparison: "<strong>%{current}</strong> de <strong>%{goal}</strong>"
-        button: Apoyo
+        button: Apoya
       one_time_payment: Pago único
       plans:
         purchase: Comprar una suscripción
