@@ -5,3 +5,7 @@
 # https://translate.discourse.org/
 
 ar:
+  discourse_subscriptions:
+    customer_not_found: لم يتم العثور على العميل
+    card:
+      declined: تم رفض البطاقة

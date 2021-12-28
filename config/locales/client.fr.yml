@@ -6,140 +6,205 @@
 
 fr:
   site_settings:
-    discourse_subscriptions_enabled: Activer le plugin Discourse Subscription
-    discourse_subscriptions_extra_nav_subscribe: Afficher le bouton Souscrire dans le menu de navigation.
+    discourse_subscriptions_enabled: Activer l'extension Discourse Subscription
+    discourse_subscriptions_extra_nav_subscribe: Afficher le bouton « S'abonner » dans le menu de navigation.
     discourse_subscriptions_public_key: Clé publique Stripe
     discourse_subscriptions_secret_key: Clé secrète Stripe
-    discourse_subscriptions_webhook_secret: Clé Webhook Stripe
-    discourse_subscriptions_currency: Monnaie par défaut. Cette option peut être remplacée lors de la création d'un plan.
+    discourse_subscriptions_webhook_secret: Secret du Webhook de Stripe
+    discourse_subscriptions_currency: Code de devise par défaut. Cette option peut être remplacée lors de la création d'un plan d'abonnement.
+    discourse_subscriptions_campaign_enabled: Permet de créer une bannière de campagne pour promouvoir le soutien financier de cette communauté.
+    discourse_subscriptions_campaign_goal: L'objectif numérique de votre campagne de soutien (abonnés ou montant récolté).
+    discourse_subscriptions_campaign_type: Sélectionne le type de campagne à mener (abonnés ou montant mensuel collecté).
+    discourse_subscriptions_campaign_banner_location: Sélectionne l'emplacement de la bannière de la campagne (en haut ou dans la barre latérale).
+    discourse_subscriptions_campaign_banner_shadow_color: Sélectionne la couleur de l'ombre portée de la bannière de la campagne.
+    discourse_subscriptions_campaign_banner_bg_image: Téléverse une image personnalisée à utiliser comme arrière-plan de la bannière de la campagne.
+    discourse_subscriptions_campaign_show_contributors: Afficher les avatars des achats les plus récents de produits d'abonnement.
+    discourse_subscriptions_campaign_product: L'identifiant du produit Stripe à envoyer aux supporters lorsqu'ils cliquent sur le bouton de la campagne. Si ce paramètre est vide, les supporters seront dirigés vers la page principale des produits.
     errors:
-      discourse_patrons_amount_must_be_currency: "Le montant doit être indiqué sans le symbole de la monnaie (ex. 1.50)"
+      discourse_patrons_amount_must_be_currency: "Les montants doivent être indiqués sans le symbole du dollar (p. ex., 1,50)"
   js:
+    filters:
+      subscribe:
+        help: Soutenez ce site en vous abonnant
     discourse_subscriptions:
       title: Discourse Subscriptions
-      admin_navigation: Souscriptions
-      optional: Optionnel
+      admin_navigation: Abonnements
+      optional: Facultatif
       navigation:
         billing: Facturation
         payments: Paiements
-        subscriptions: Souscriptions
-        subscribe: Souscrire
+        subscriptions: Abonnements
+        subscribe: S'abonner
         user_activity:
           payments: Paiements
+      campaign:
+        title: Soutenez-nous
+        body: Nous avons besoin de votre aide pour maintenir cette communauté en activité !
+        success_title: Succès !
+        success_body: Merci de votre aide pour maintenir cette communauté en activité !
+        subscribers: Abonnés
+        goal_comparison: "<strong>%{current}</strong> sur <strong>%{goal}</strong>"
+        raised: Récoltés
+        button: Soutenir
+        recent_contributors: Contributeurs récents
+        goal: Nous avons atteint notre objectif
+        one_click_campaign: Créer automatiquement une campagne d'assistance
+        refresh_campaign: Actualiser les données de campagne
+        refresh_page: Les données de campagne sont maintenant synchronisées à partir de Stripe en arrière-plan. Actualisez la page dans quelques instants pour charger les informations mises à jour.
+        supporter: Supporter
+        supporters: Supporters
+        confirm_creation: |-
+          <p>Vous souhaitez créer automatiquement une campagne pour votre communauté ?</p>
+
+          <p>En continuant, vous créerez :</p>
+
+          <ul>
+          <li>Un groupe pour récompenser vos supporters avec un titre et un avatar personnalisés</li>
+          <li>Un produit Stripe avec des prix prédéfinis (mensuels et annuels) que vos utilisateurs pourront acheter pour soutenir votre site.</li>
+          </ul>
+
+          <p>Souhaitez-vous continuer ?</p>
+        created: Votre campagne en un clic est créée et prête à être lancée ! Redirection vers les paramètres de la campagne.
+      one_time_payment: Paiement unique
       plans:
-        purchase: Abonnement
-        select: Choisir une formule
+        purchase: Acheter un abonnement
+        select: Sélectionnez le plan d'abonnement
         interval:
           adverb:
+            day: Quotidien
             week: Hebdomadaire
             month: Mensuel
             year: Annuel
-        payment_button: Valider
-        success: Merci ! Votre souscription a été validée.
-        incomplete: Le paiement n'a pas fonctionné. Votre souscription sera activée lorsque le paiement aura été validé.
+        payment_button: S'abonner
+        success: Merci ! Votre abonnement a été créé.
+        incomplete: Le paiement n'a pas fonctionné. Votre abonnement sera activé lorsque le paiement aura été validé.
         validate:
           payment_options:
-            required: Merci de sélectionner une option de paiement
+            required: Veuillez sélectionner un plan d'abonnement.
       user:
         payments:
-          id: Code du paiement
+          id: Identifiant du paiement
           amount: Montant
           created_at: Création
-        payments_help: Il n'y a pas de paiements
+        payments_help: Il n'y a aucun paiement
         plans:
           rate: Taux
           product: Nom
-        subscriptions_help: Vous n'avez pas de souscriptions active
+        subscriptions_help: Vous n'avez aucun abonnement actif.
         subscriptions:
-          id: Code de la souscription
+          id: Identifiant de l'abonnement
           status: Statut
+          discounted: Remise
+          renews: Renouvellements
           created_at: Création
+          cancel: annuler
+          cancelled: annulée
           operations:
             destroy:
-              confirm: Êtes-vous sûrs de vouloir annuler cette souscription ?
+              confirm: Voulez-vous vraiment annuler cet abonnement ?
       subscribe:
-        title: Souscrire
-        no_products: Aucun produit disponible pour le moment.
+        title: S'abonner
+        view_past: Afficher les achats précédents
+        no_products: Il n'y a actuellement aucun produit disponible.
+        unauthenticated: Connectez-vous ou créez un compte pour vous abonner.
+        invalid_coupon: Vous avez saisi un code de coupon invalide. Veuillez réessayer.
         card:
           title: Paiement
         customer:
-          title: Informations client
+          title: Informations du client
+        promo_code: Coupon
         buttons:
-          subscribe: Souscrire
-        purchased: Acheté
-        go_to_billing: Procéder au paiement
+          subscribe: S'abonner
+        purchased: Achetée
+        go_to_billing: Accéder à la facturation
+        already_purchased: Merci beaucoup pour votre achat préalable de ce produit !
       billing:
-        name: Nom
-        email: Courriel
-        phone: Téléphone
+        name: Nom complet
+        email: E-mail
+        phone: Numéro de téléphone
       confirmation:
-        amount: Amount
-        last4: Card number
+        amount: Montant
+        last4: Numéro de carte
       buttons:
-        make_payment: Payer
+        make_payment: Effectuer un paiement
         confirm_payment: Confirmer le paiement
         success: Retour
       admin:
-        unconfigured: 'Stripe n''est pas configuré correctement. Veuillez consulter Discourse Meta pour plus d''informations.'
+        unconfigured: 'Stripe n''est pas configuré correctement. Veuillez consulter Discourse Meta pour obtenir plus d''informations.'
+        on_meta: Discourse Subscriptions sur Meta
         dashboard:
           title: Tableau de bord
           table:
             head:
               user: Utilisateur
-              payment_intent: Code du paiement
-              receipt_email: Reçu email
+              payment_intent: Identifiant du paiement
+              receipt_email: E-mail de réception
               amount: Montant
         products:
           title: Produits
           operations:
-            create: Créer nouveau produit
-            update: Modifier produit
+            create: Créer un nouveau produit
+            update: Mettre à jour le produit
             new: Nouveau produit
             destroy:
-              confirm: Êtes-vous sûrs de vouloir supprimer ce produit ?
+              confirm: Voulez-vous vraiment supprimer ce produit ?
           product:
-            product_id: Code produit
-            name: Product Nom
-            statement_descriptor: Intitulé
-            statement_descriptor_help: Information sur le produit qui apparaîtra sur le reçu de carte bancaire.
-            plan_help: Créer une grille tarifaire pour souscrire à ce produit.
+            product_id: Identifiant du produit
+            name: Nom du produit
+            statement_descriptor: Descripteur du relevé
+            statement_descriptor_help: Informations supplémentaires relatives à un produit qui apparaîtront sur le relevé de carte de crédit de votre client.
+            plan_help: Créez un plan tarifaire pour abonner les clients à ce produit.
             description: Description
-            description_help: Description de la souscription du produit.
-            active: Actif
-            active_help: N'activez le produit que s'il est prêt à être rendu public.
+            description_help: Description de votre produit d'abonnement.
+            repurchaseable: Achat renouvelable ?
+            repurchase_help: Autoriser l'achat multiple du produit et des plans associés
+            active: Actifs
+            active_help: Désactivez cette option jusqu'à ce que votre produit soit prêt pour être rendu public.
             created_at: Création
             updated_at: Modification
-          product_help: Avant que les utilisateurs puissent souscrire, vous devez créer au moins un produit et un plan tarifaire associé.
+          product_help: Avant que les clients puissent s'abonner à votre site, vous devez créer au moins un produit et un plan associé.
         plans:
-          title: Grille tarifaire
+          title: Plans tarifaires
           operations:
-            add: Ajouter un plan
+            add: Ajouter un nouveau plan
             create: Créer un plan
-            update: Modifier un plan
-            create_help: Une fois le plan tarifaire créé, seuls son surnom, la période d'essai et le groupe associé peuvent être modifiés.
+            update: Mettre à jour le plan
+            create_help: Une fois qu'un plan tarifaire est créé, seuls son surnom, sa période d'essai et son groupe d'utilisateurs peuvent être mis à jour.
             new: Nouveau plan
             destroy:
-              confirm: Êtes-vous sûrs de vouloir supprimer ce plan ?
+              confirm: Voulez-vous vraiment supprimer ce plan ?
           plan:
-            nickname: Surnom
-            nickname_help: Ceci ne sera pas visible à tous mais vous servira à retrouver ce plan
-            plan_id: ID Plan
+            nickname: Surnom du plan
+            nickname_help: Cette information ne sera pas visible pour les clients, mais vous aidera à retrouver ce plan plus tard
+            plan_id: ID du plan
             product: Produit
-            interval: Intervalle de paiement
+            interval: Intervalle de facturation
             amount: Montant
-            trial: Jours d'essais
-            trial_help: Les souscriptions à ce plan auront automatiquement droit à cette période d'essai
+            trial: Nombre de jours de la période d'essai
+            trial_help: Les abonnements à ce plan donneront automatiquement droit à cette période d'essai
             group: Groupe d'utilisateurs
-            group_help: L'utilisateur aura accès à ce groupe quand il aura souscrit à ce produit.
-            active: Actif
+            group_help: Il s'agit du groupe d'utilisateurs de Discourse auquel le client est ajouté lors de la création de l'abonnement.
+            active: Actifs
             created_at: Création
+            recurring: Plan récurrent ?
+        coupons:
+          title: Coupons
+          code: Code promotionnel
+          discount: Remise
+          times_redeemed: Nombre d'utilisations
+          active: Actif ?
+          actions: Actions
+          create: Créer un coupon
+          promo_code: Code promotionnel (insensible à la casse)
         subscriptions:
-          title: Souscriptions
+          title: Abonnements
           subscription:
             user: Utilisateur
-            subscription_id: Code souscription
+            subscription_id: Identifiant de l'abonnement
             customer: Client
             product: Produit
             plan: Plan
             status: Statut
             created_at: Création
+        ask_refund: Rembourser le dernier paiement effectué par le client ?
+        canceled: "L'abonnement est annulé."
