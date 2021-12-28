@@ -6,6 +6,6 @@
 
 fr:
   discourse_subscriptions:
-    customer_not_found: Client non trouvé
+    customer_not_found: Client introuvable
     card:
       declined: Carte refusée

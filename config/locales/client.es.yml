@@ -6,20 +6,28 @@
 
 es:
   site_settings:
-    discourse_subscriptions_enabled: Habilitar el plugin Discourse Suscripciones.
+    discourse_subscriptions_enabled: Habilita el complemento Discourse Subscriptions.
     discourse_subscriptions_extra_nav_subscribe: Mostrar el botón de suscripción en la navegación principal
-    discourse_subscriptions_public_key: Stripe Publishable Key
-    discourse_subscriptions_secret_key: Stripe Secret Key
-    discourse_subscriptions_webhook_secret: Stripe Webhook Secret
+    discourse_subscriptions_public_key: Clave publicable de Stripe
+    discourse_subscriptions_secret_key: Clave secreta de Stripe
+    discourse_subscriptions_webhook_secret: Secreto del Webhook de Stripe
     discourse_subscriptions_currency: Código de moneda predeterminado. Esto puede anularse al crear un plan de suscripción.
+    discourse_subscriptions_campaign_enabled: Permite un banner de campaña para promover el apoyo financiero a esta comunidad.
+    discourse_subscriptions_campaign_goal: El objetivo numérico de tu campaña de apoyo (suscriptores o cantidad recaudada).
+    discourse_subscriptions_campaign_type: Selecciona el tipo de campaña a realizar (suscriptores o cantidad mensual recaudada).
+    discourse_subscriptions_campaign_banner_location: Selecciona la ubicación del banner de la campaña (arriba o en la barra lateral).
+    discourse_subscriptions_campaign_banner_shadow_color: Selecciona el color de la sombra del banner de la campaña.
+    discourse_subscriptions_campaign_banner_bg_image: Sube una imagen personalizada para utilizarla como fondo en el banner de la campaña.
+    discourse_subscriptions_campaign_show_contributors: Muestra los avatares de las compras más recientes de productos de suscripción.
+    discourse_subscriptions_campaign_product: El identificador de producto de Stripe que se enviará a los seguidores cuando hagan clic en el botón de la campaña. Si esta configuración está en blanco,  se dirigirá a los colaboradores a la página principal de productos.
     errors:
-      discourse_patrons_amount_must_be_currency: "Las cantidades de moneda deben ser monedas sin símbolo de dólar (ej.: 1.50)"
+      discourse_patrons_amount_must_be_currency: "Los importes de moneda deben ser monedas sin el símbolo de dólar (por ejemplo, 1,50)"
   js:
     filters:
       subscribe:
         help: Apoya este sitio suscribiéndote
     discourse_subscriptions:
-      title: Discourse Suscripciones
+      title: Discourse Subscriptions
       admin_navigation: Suscripciones
       optional: Opcional
       navigation:
@@ -30,10 +38,33 @@ es:
         user_activity:
           payments: Pagos
       campaign:
-        title: Apoya esta comunidad
+        title: Apóyanos
         body: '¡Necesitamos tu ayuda para mantener esta comunidad en funcionamiento!'
+        success_title: '¡Éxito!'
+        success_body: '¡Gracias por tu ayuda para mantener esta comunidad en funcionamiento!'
+        subscribers: Suscriptores
         goal_comparison: "<strong>%{current}</strong> de <strong>%{goal}</strong>"
-        button: Apoya
+        raised: Recaudado
+        button: Apoyar
+        recent_contributors: Colaboradores recientes
+        goal: Hemos cumplido nuestro objetivo
+        one_click_campaign: Crear automáticamente una campaña de apoyo
+        refresh_campaign: Actualizar los datos de la campaña
+        refresh_page: Los datos de la campaña se están sincronizando desde Stripe en segundo plano. Actualiza la página en unos momentos para cargar la información actualizada.
+        supporter: Colaborador
+        supporters: Colaboradores
+        confirm_creation: |-
+          <p>¿Quieres crear automáticamente una campaña para tu comunidad?</p>
+
+          <p>Si continúas, se creará:</p>
+
+          <ul>
+          <li>Un grupo para recompensar a tus colaboradores con un título y un avatar personalizado</li>
+          <li>Un producto de Stripe con precios preestablecidos (mensuales y anuales) que tus usuarios pueden comprar para apoyar tu sitio.</li>
+          </ul>
+
+          <p>¿Deseas continuar?</p>
+        created: '¡Tu campaña de un clic está creada y lista para funcionar! Redirigiendo a la configuración de la campaña.'
       one_time_payment: Pago único
       plans:
         purchase: Comprar una suscripción
@@ -45,11 +76,11 @@ es:
             month: Mensual
             year: Anual
         payment_button: Suscribirse
-        success: '¡Gracias! Tu suscripción ha sido creada.'
+        success: '¡Gracias! Se ha creado tu suscripción.'
         incomplete: El pago está incompleto. Tu suscripción se actualizará cuando se complete el pago.
         validate:
           payment_options:
-            required: Por favor, selecciona un plan de suscripción.
+            required: Selecciona un plan de suscripción.
       user:
         payments:
           id: ID de pago
@@ -63,6 +94,7 @@ es:
         subscriptions:
           id: ID de suscripción
           status: Estado
+          discounted: Con descuento
           renews: Se renueva
           created_at: Creado
           cancel: cancelar
@@ -72,16 +104,20 @@ es:
               confirm: '¿Seguro que quieres cancelar esta suscripción?'
       subscribe:
         title: Suscribirse
+        view_past: Ver compras anteriores
         no_products: No hay productos disponibles en este momento.
         unauthenticated: Inicia sesión o crea una cuenta para suscribirte.
+        invalid_coupon: Has introducido un código de cupón no válido. Inténtalo de nuevo.
         card:
-          title: Pagos
+          title: Pago
         customer:
           title: Detalles del cliente
+        promo_code: Cupón
         buttons:
           subscribe: Suscribir
         purchased: Comprado
         go_to_billing: Ir a facturación
+        already_purchased: '¡Muchas gracias por la compra previa de este producto!'
       billing:
         name: Nombre completo
         email: Correo electrónico
@@ -95,8 +131,9 @@ es:
         success: Volver
       admin:
         unconfigured: 'Stripe no está configurado correctamente. Consulta Discourse Meta para obtener más información.'
+        on_meta: Discourse Subscriptions en Meta
         dashboard:
-          title: Tablero
+          title: Panel de control
           table:
             head:
               user: Usuario
@@ -119,10 +156,12 @@ es:
             plan_help: Crear un plan de precios para suscribir clientes a este producto.
             description: Descripción
             description_help: Esto describe el producto de suscripción.
-            active: Activo
+            repurchaseable: '¿Se puede recomprar?'
+            repurchase_help: Permitir que el producto y los planes asociados se compren varias veces
+            active: Activa
             active_help: Desactiva esto hasta que el producto esté listo para el consumidor final.
-            created_at: Creado
-            updated_at: Actualizado
+            created_at: Creada
+            updated_at: Actualizada
           product_help: Antes de que los clientes puedan suscribirse al sitio, debes crear al menos un producto y un plan asociado.
         plans:
           title: Planes de precios
@@ -130,7 +169,7 @@ es:
             add: Añadir nuevo plan
             create: Crear plan
             update: Actualizar plan
-            create_help: Una vez que se crea un plan de precios, solo se puede actualizar su apodo, período de prueba y grupo de usuarios.
+            create_help: Una vez que se crea un plan de precios, solo se puede actualizar su apodo, el período de prueba y el grupo de usuarios.
             new: Nuevo plan
             destroy:
               confirm: '¿Seguro que quieres destruir este plan?'
@@ -143,11 +182,20 @@ es:
             amount: Cantidad
             trial: Días del período de prueba
             trial_help: Las suscripciones a este plan comenzarán automáticamente con una prueba gratuita de esta duración
-            group: Grupo de usuario
+            group: Grupo de usuarios
             group_help: Este es el grupo de usuarios en Discourse al que se añadirá el cliente cuando se cree la suscripción.
             active: Activo
             created_at: Creado
             recurring: '¿Plan recurrente?'
+        coupons:
+          title: Cupones
+          code: Código promocional
+          discount: Descuento
+          times_redeemed: Veces canjeado
+          active: '¿Activo?'
+          actions: Acciones
+          create: Crear un cupón
+          promo_code: Código promocional (no distingue entre mayúsculas y minúsculas)
         subscriptions:
           title: Suscripciones
           subscription:

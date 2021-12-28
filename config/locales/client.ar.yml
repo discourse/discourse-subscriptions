@@ -5,40 +5,206 @@
 # https://translate.discourse.org/
 
 ar:
+  site_settings:
+    discourse_subscriptions_enabled: تفعيل المكوِّن الإضافي لاشتراكات Discourse.
+    discourse_subscriptions_extra_nav_subscribe: عرض زر الاشتراك في التنقل الأساسي
+    discourse_subscriptions_public_key: مفتاح قابل للنشر من Stripe
+    discourse_subscriptions_secret_key: مفتاح سري من Stripe
+    discourse_subscriptions_webhook_secret: سر خطاف ويب من Stripe
+    discourse_subscriptions_currency: رمز العملة الافتراضي. يمكن تجاوز هذا عند إنشاء خطة اشتراك.
+    discourse_subscriptions_campaign_enabled: يفعِّل بانر حملة للترويج لدعم هذا المجتمع ماديًا.
+    discourse_subscriptions_campaign_goal: الهدف العددي لحملة الدعم الخاصة بك (المشتركون أو المبلغ الذي تم جمعه).
+    discourse_subscriptions_campaign_type: يحدِّد نوع الحملة المراد تشغيلها (المشتركون أو المبلغ الشهري الذي تم جمعه).
+    discourse_subscriptions_campaign_banner_location: يحدِّد موقع بانر الحملة (الشريط العلوي أو الجانبي).
+    discourse_subscriptions_campaign_banner_shadow_color: يحدِّد لون الظل الخلفي لبانر الحملة.
+    discourse_subscriptions_campaign_banner_bg_image: تحميل صورة مخصَّصة لاستخدامها كخلفية في بانر الحملة
+    discourse_subscriptions_campaign_show_contributors: عرض الصور الرمزية لأحدث المشتريات من منتجات الاشتراكات
+    discourse_subscriptions_campaign_product: مُعرِّف منتج Stripe الذي سيتم إرساله إلى الداعمين عندما ينقرون على الزر في الحملة. إذا كان هذا الإعداد فارغًا، فسيتم توجيه الداعمين إلى الصفحة الرئيسية للمنتجات.
+    errors:
+      discourse_patrons_amount_must_be_currency: "يجب أن تكون مبالغ العملات عبارة عن عملات دون رمز الدولار (مثل 1.50)"
   js:
+    filters:
+      subscribe:
+        help: ادعم هذا الموقع عن طريق الاشتراك
     discourse_subscriptions:
+      title: اشتراكات Discourse
+      admin_navigation: الاشتراكات
       optional: اختياري
+      navigation:
+        billing: الفوترة
+        payments: المدفوعات
+        subscriptions: الاشتراكات
+        subscribe: اشتراك
+        user_activity:
+          payments: المدفوعات
+      campaign:
+        title: ادعمنا
+        body: نحن بحاجة إلى مساعدتك للحفاظ على هذا المجتمع قائمًا!
+        success_title: تم بنجاح!
+        success_body: شكرًا لك على مساعدتك في الحفاظ على هذا المجتمع قائمًا!
+        subscribers: المشتركون
+        goal_comparison: "<strong>%{current}</strong> من <strong>%{goal}</strong>"
+        raised: تم جمعه
+        button: الدعم
+        recent_contributors: آخر المساهمين
+        goal: لقد حقَّقنا هدفنا
+        one_click_campaign: إنشاء حملة دعم تلقائيًا
+        refresh_campaign: تحديث بيانات الحملة
+        refresh_page: تتم الآن مزامنة بيانات الحملة من Stripe في الخلفية. حدِّث الصفحة خلال لحظات لتحميل المعلومات المحدَّثة.
+        supporter: الداعم
+        supporters: الداعمون
+        confirm_creation: |-
+          <p>هل تريد إنشاء حملة لمجتمعك تلقائيًا؟</p>
+
+          <p>ستؤدي المتابعة إلى إنشاء:</p>
+
+          <ul>
+          <li>مجموعة لمكافأة مؤيديك بلقب مخصَّص وطابع للصورة الرمزية</li>
+          <li>منتج Stripe بأسعار محدَّدة مسبقًا (شهرية وسنوية) يمكن للمستخدمين شراؤه لدعم موقعك.</li>
+          </ul>
+
+          <p>هل ترغب في المتابعة؟</p>
+        created: تم إنشاء حملتك ذات النقرة الواحدة وهي جاهزة للانطلاق! جارٍ إعادة التوجيه إلى إعدادات الحملة.
+      one_time_payment: الدفع لمرة واحدة
       plans:
+        purchase: شراء اشتراك
+        select: تحديد خطة اشتراك
         interval:
           adverb:
-            week: اسبوع
-            month: شهر
-            year: سنة
+            day: يوميًا
+            week: أسبوعيًا
+            month: شهريًا
+            year: سنويًا
+        payment_button: اشتراك
+        success: شكرًا لك! تم إنشاء اشتراكك.
+        incomplete: الدفع غير مكتمل. سيتم تحديث اشتراكك عند اكتمال الدفع.
+        validate:
+          payment_options:
+            required: يُرجى تحديد خطة اشتراك.
       user:
         payments:
-          created_at: أُنشئ في
+          id: مُعرِّف الدفع
+          amount: المبلغ
+          created_at: تاريخ الإنشاء
+        payments_help: لا توجد مدفوعات
         plans:
-          product: الإسم
+          rate: السعر
+          product: الاسم
+        subscriptions_help: ليس لديك أي اشتراكات نشطة.
         subscriptions:
-          created_at: أُنشئ في
+          id: مُعرِّف الإشتراك
+          status: الحالة
+          discounted: مخفَّض
+          renews: يتجدَّد في
+          created_at: تاريخ الإنشاء
+          cancel: إلغاء
+          cancelled: تم الإلغاء
+          operations:
+            destroy:
+              confirm: هل تريد بالتأكيد إلغاء هذا الاشتراك؟
+      subscribe:
+        title: اشتراك
+        view_past: عرض المشتريات السابقة
+        no_products: لا توجد أي منتجات متوفرة حاليًا.
+        unauthenticated: سجِّل الدخول أو أنشئ حسابًا للاشتراك.
+        invalid_coupon: لقد أدخلت رمز قسيمة غير صالح. يُرجى إعادة المحاولة.
+        card:
+          title: الدفع
+        customer:
+          title: تفاصيل العميل
+        promo_code: القسيمة
+        buttons:
+          subscribe: اشتراك
+        purchased: تم الشراء
+        go_to_billing: الانتقال إلى الفوترة
+        already_purchased: شكرًا جزيلًا على عملية الشراء السابقة لهذا المنتج!
       billing:
+        name: الاسم بالكامل
         email: البريد الإلكتروني
+        phone: رقم الهاتف
+      confirmation:
+        amount: المبلغ
+        last4: رقم البطاقة
+      buttons:
+        make_payment: إجراء الدفع
+        confirm_payment: تأكيد الدفع
+        success: العودة
       admin:
+        unconfigured: 'لم يتم إعداد Stripe بشكلٍ صحيح. يُرجى الاطلاع على Discourse Meta للحصول على المعلومات.'
+        on_meta: اشتراكات Discourse على Meta
         dashboard:
-          title: لوحة التحكم
+          title: لوحة المعلومات
           table:
             head:
-              user: مستخدم
+              user: المستخدم
+              payment_intent: مُعرِّف الدفع
+              receipt_email: الرسالة الإلكترونية للإيصال
+              amount: المبلغ
         products:
+          title: المنتجات
+          operations:
+            create: إنشاء منتج جديد
+            update: تحديث المنتج
+            new: منتج جديد
+            destroy:
+              confirm: هل تريد بالتأكيد تدمير هذا المنتج؟
           product:
+            product_id: مُعرِّف المنتج
+            name: اسم المنتج
+            statement_descriptor: واصف العبارة
+            statement_descriptor_help: ستظهر معلومات إضافية بشأن المنتج في كشف حساب البطاقة الائتمانية للعميل.
+            plan_help: أنشئ خطة أسعار للاشتراك للعملاء في هذا المنتج.
             description: الوصف
-            active: فعل
-            created_at: أُنشئ في
+            description_help: هذا يصف منتج الاشتراك الخاص بك.
+            repurchaseable: هل هو قابل لإعادة الشراء؟
+            repurchase_help: السماح بشراء المنتج والخطط المرتبطة به عدة مرات
+            active: نشط
+            active_help: شغِّل هذا الخيار حتى يصبح منتجك جاهزًا للمستهلكين.
+            created_at: تاريخ الإنشاء
+            updated_at: تاريخ التحديث
+          product_help: أنت بحاجة إلى إنشاء منتج واحد على الأقل وخطة مرتبطة به قبل أن يتمكن العملاء من الاشتراك في موقعك.
         plans:
+          title: خطط الأسعار
+          operations:
+            add: إضافة خطة جديدة
+            create: إنشاء خطة
+            update: تحديث الخطة
+            create_help: بعد إنشاء خطة أسعار، لا يمكن تحديث أي تفاصيل سوى الاسم المستعار والفترة التجريبية ومجموعة المستخدمين.
+            new: خطة جديدة
+            destroy:
+              confirm: هل تريد بالتأكيد تدمير هذه الخطة؟
           plan:
-            active: فعل
-            created_at: أُنشئ في
+            nickname: الاسم المستعار للخطة
+            nickname_help: لن يكون هذا مرئيًا للعملاء، لكنه سيساعدك في العثور على هذه الخطة لاحقًا
+            plan_id: مُعرِّف الخطة
+            product: المنتج
+            interval: فترة الفوترة
+            amount: المبلغ
+            trial: عدد أيام الفترة التجريبية
+            trial_help: ستبدأ الاشتراكات في هذه الخطة تلقائيًا بفترة تجريبية مجانية بهذا الطول
+            group: مجموعة المستخدمين
+            group_help: هذه هي مجموعة مستخدمي Discourse التي تمت إضافة العميل إليها عند إنشاء الاشتراك.
+            active: نشط
+            created_at: تاريخ الإنشاء
+            recurring: هل هي خطة متكررة؟
+        coupons:
+          title: القسائم
+          code: الرمز الترويجي
+          discount: الخصم
+          times_redeemed: عدد مرات الاسترداد
+          active: نشط؟
+          actions: الإجراءات
+          create: إنشاء قسيمة
+          promo_code: الرمز الترويجي (حساس لحالة الأحرف)
         subscriptions:
+          title: الاشتراكات
           subscription:
-            user: مستخدم
-            created_at: أُنشئ في
+            user: المستخدم
+            subscription_id: مُعرِّف الاشتراك
+            customer: العميل
+            product: المنتج
+            plan: الخطة
+            status: الحالة
+            created_at: تاريخ الإنشاء
+        ask_refund: هل تريد رد أموال آخر عملية دفع أجراها العميل؟
+        canceled: "تم إلغاء الاشتراك."

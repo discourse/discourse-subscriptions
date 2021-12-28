@@ -6,9 +6,28 @@
 
 de:
   site_settings:
+    discourse_subscriptions_enabled: Aktiviere das Discourse-Subscriptions-Plug-in.
+    discourse_subscriptions_extra_nav_subscribe: Zeige die Schaltfläche „Abonnieren“ in der Hauptnavigation
+    discourse_subscriptions_public_key: Veröffentlichbarer Striple-Schlüssel
     discourse_subscriptions_secret_key: Geheimer Stripe-Schlüssel
+    discourse_subscriptions_webhook_secret: Stripe-Webhook-Geheimnis
+    discourse_subscriptions_currency: Standardwährungscode. Dieser kann beim Erstellen eines Abonnementplans überschrieben werden.
+    discourse_subscriptions_campaign_enabled: Aktiviert ein Kampagnenbanner, um für die finanzielle Unterstützung dieser Community zu werben.
+    discourse_subscriptions_campaign_goal: Das numerische Ziel für deine Unterstützungskampagne (Abonnenten oder Spendenbetrag).
+    discourse_subscriptions_campaign_type: Wählt die Art der Kampagne aus (Abonnenten oder monatlicher Spendenbetrag).
+    discourse_subscriptions_campaign_banner_location: Wählt die Position des Kampagnenbanners aus (oben oder in der Seitenleiste).
+    discourse_subscriptions_campaign_banner_shadow_color: Wählt die Farbe für den Schlagschatten des Kampagnenbanners aus.
+    discourse_subscriptions_campaign_banner_bg_image: Lade ein benutzerdefiniertes Bild hoch, das als Hintergrund für das Kampagnenbanner verwendet werden soll.
+    discourse_subscriptions_campaign_show_contributors: Zeige Avatare für die zuletzt gekauften Abonnementprodukte.
+    discourse_subscriptions_campaign_product: Die Stripe-Produkt-ID, die an die Unterstützer gesendet werden soll, wenn sie auf die Schaltfläche der Kampagne klicken. Wenn diese Einstellung leer ist, werden die Unterstützer auf die Hauptseite der Produkte weitergeleitet.
+    errors:
+      discourse_patrons_amount_must_be_currency: "Währungsbeträge müssen Währungen ohne Dollarzeichen sein (z. B. 1,50)"
   js:
+    filters:
+      subscribe:
+        help: Unterstütze diese Website, indem du ein Abonnement abschließt
     discourse_subscriptions:
+      title: Discourse-Abonnements
       admin_navigation: Abonnements
       optional: Optional
       navigation:
@@ -18,32 +37,87 @@ de:
         subscribe: Abonnieren
         user_activity:
           payments: Zahlungen
+      campaign:
+        title: Unterstütze uns
+        body: Wir brauchen deine Hilfe, um diese Community am Laufen zu halten!
+        success_title: Erfolg!
+        success_body: Vielen Dank für deine Hilfe, diese Community am Laufen zu halten!
+        subscribers: Abonnenten
+        goal_comparison: "<strong>%{current}</strong> von <strong>%{goal}</strong>"
+        raised: Eingenommen
+        button: Unterstützen
+        recent_contributors: Aktuelle Unterstützer
+        goal: Wir haben unser Ziel erreicht
+        one_click_campaign: Unterstützungskampagne automatisch erstellen
+        refresh_campaign: Kampagnendaten aktualisieren
+        refresh_page: Die Kampagnendaten werden jetzt im Hintergrund mit Stripe synchronisiert. Aktualisiere die Seite in ein paar Augenblicken, um die aktualisierten Daten zu laden.
+        supporter: Unterstützer
+        supporters: Unterstützer
+        confirm_creation: |-
+          <p>Möchtest du automatisch eine Kampagne für deine Community erstellen?</p>
+
+          <p>Wenn du fortfährst, wird Folgendes angelegt:</p>
+
+          <ul>
+          <li>eine Gruppe, um deine Unterstützer mit einem benutzerdefinierten Titel und Avatar-Flair zu belohnen</li>
+          <li>ein Stripe-Produkt mit voreingestellten Preisen (monatlich und jährlich), das Benutzer kaufen können, um deine Website zu unterstützen</li>
+          </ul>
+
+          <p>Möchtest du fortfahren?</p>
+        created: Deine Ein-Klick-Kampagne wurde erstellt und ist bereit! Weiterleitung zu den Kampagneneinstellungen erfolgt.
+      one_time_payment: Einmalige Zahlung
       plans:
+        purchase: Ein Abonnement abschließen
+        select: Abonnementplan auswählen
         interval:
           adverb:
+            day: Täglich
             week: Wöchentlich
             month: Monatlich
             year: Jährlich
         payment_button: Abonnieren
+        success: Vielen Dank! Dein Abonnement wurde erstellt.
+        incomplete: Die Zahlung ist unvollständig. Dein Abonnement wird aktualisiert, sobald die Zahlung abgeschlossen ist.
+        validate:
+          payment_options:
+            required: Bitte Abonnementplan auswählen.
       user:
         payments:
-          id: Zahlungs-Kennung
+          id: Zahlungs-ID
           amount: Betrag
           created_at: Erstellt
         payments_help: Es gibt keine Zahlungen
         plans:
+          rate: Tarif
           product: Name
         subscriptions_help: Du hast keine aktiven Abonnements.
         subscriptions:
-          id: Abonnement-Kennung
+          id: Abonnement-ID
           status: Status
+          discounted: Ermäßigt
+          renews: Verlängerung am
           created_at: Erstellt
+          cancel: kündigen
+          cancelled: gekündigt
+          operations:
+            destroy:
+              confirm: Bist du sicher, dass du dieses Abonnement kündigen möchtest?
       subscribe:
         title: Abonnieren
+        view_past: Vergangene Käufe ansehen
+        no_products: Es sind derzeit keine Produkte verfügbar.
+        unauthenticated: Melde dich an oder erstelle ein Konto, um zu abonnieren.
+        invalid_coupon: Du hast einen ungültigen Gutscheincode eingegeben. Bitte versuche es erneut.
         card:
           title: Zahlung
+        customer:
+          title: Kundendetails
+        promo_code: Gutschein
         buttons:
           subscribe: Abonnieren
+        purchased: Gekauft
+        go_to_billing: Zur Abrechnung gehen
+        already_purchased: Vielen Dank, dass du dieses Produkt bereits gekauft hast!
       billing:
         name: Vollständiger Name
         email: E-Mail
@@ -54,13 +128,17 @@ de:
       buttons:
         make_payment: Zahlung vornehmen
         confirm_payment: Zahlung bestätigen
+        success: Zurück
       admin:
+        unconfigured: 'Stripe ist nicht richtig konfiguriert. Weitere Informationen findest du unter Discourse Meta.'
+        on_meta: Discourse-Abonnements bei Meta
         dashboard:
           title: Dashboard
           table:
             head:
               user: Benutzer
-              payment_intent: Zahlungs-Kennung
+              payment_intent: Zahlungs-ID
+              receipt_email: Belegs-E-Mail
               amount: Betrag
         products:
           title: Produkte
@@ -68,35 +146,65 @@ de:
             create: Neues Produkt erstellen
             update: Produkt aktualisieren
             new: Neues Produkt
+            destroy:
+              confirm: Bist du sicher, dass du dieses Produkt löschen willst?
           product:
-            product_id: Produkt-Kennung
+            product_id: Produkt-ID
             name: Produktname
+            statement_descriptor: Abrechnungsbeschreibung
+            statement_descriptor_help: Zusätzliche Informationen über ein Produkt, die auf der Kreditkartenabrechnung deines Kunden erscheinen.
+            plan_help: Erstelle einen Preisplan, damit Kunden dieses Produkt abonnieren können.
             description: Beschreibung
+            description_help: Dies beschreibt dein Abonnementprodukt.
+            repurchaseable: Nachkaufbar?
+            repurchase_help: Erlaube den mehrfachen Kauf von Produkten und zugehörigen Plänen
             active: Aktiv
+            active_help: Schalte dies aus, bis dein Produkt für Verbraucher bereit ist.
             created_at: Erstellt
             updated_at: Aktualisiert
+          product_help: Bevor Kunden deine Website abonnieren können, musst du mindestens ein Produkt und einen dazugehörigen Plan erstellen.
         plans:
           title: Preispläne
           operations:
             add: Neuen Plan hinzufügen
             create: Plan erstellen
             update: Plan aktualisieren
+            create_help: Sobald ein Preisplan erstellt wurde, können nur noch sein Spitzname, der Testzeitraum und die Benutzergruppe aktualisiert werden.
             new: Neuer Plan
+            destroy:
+              confirm: Bist du sicher, dass du diesen Plan löschen willst?
           plan:
-            plan_id: Plan-Kennung
+            nickname: Plan-Spitzname
+            nickname_help: Dies ist für die Kunden nicht sichtbar, hilft dir aber später, den Plan zu finden.
+            plan_id: Plan-ID
             product: Produkt
             interval: Abrechnungsintervall
             amount: Betrag
+            trial: Testzeitraum (Tage)
+            trial_help: Abonnements für diesen Plan beginnen automatisch mit einer kostenlosen Testphase dieser Länge
             group: Benutzergruppe
+            group_help: Dies ist die Discourse-Benutzergruppe, der der Kunde bei der Erstellung des Abonnements hinzugefügt wird.
             active: Aktiv
             created_at: Erstellt
+            recurring: Wiederkehrender Plan?
+        coupons:
+          title: Gutscheine
+          code: Promo-Code
+          discount: Rabatt
+          times_redeemed: Mal eingelöst
+          active: Aktiv?
+          actions: Aktionen
+          create: Gutschein erstellen
+          promo_code: Promo-Code (Groß- und Kleinschreibung wird nicht berücksichtigt)
         subscriptions:
           title: Abonnements
           subscription:
             user: Benutzer
-            subscription_id: Abonnement-Kennung
+            subscription_id: Abonnement-ID
             customer: Kunde
             product: Produkt
             plan: Plan
             status: Status
             created_at: Erstellt
+        ask_refund: Die letzte vom Kunden geleistete Zahlung zurückerstatten?
+        canceled: "Das Abonnement wird gekündigt."

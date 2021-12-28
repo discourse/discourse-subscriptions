@@ -5,3 +5,7 @@
 # https://translate.discourse.org/
 
 zh_CN:
+  discourse_subscriptions:
+    customer_not_found: 找不到客户
+    card:
+      declined: 银行卡被拒绝

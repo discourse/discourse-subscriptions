@@ -5,43 +5,206 @@
 # https://translate.discourse.org/
 
 zh_CN:
+  site_settings:
+    discourse_subscriptions_enabled: 启用 Discourse Subscriptions 插件。
+    discourse_subscriptions_extra_nav_subscribe: 在主导航中显示订阅按钮
+    discourse_subscriptions_public_key: Stripe 可发布密钥
+    discourse_subscriptions_secret_key: Stripe 密钥
+    discourse_subscriptions_webhook_secret: Stripe 网络钩子密钥
+    discourse_subscriptions_currency: 默认货币代码。创建订阅方案时可以替换此代码。
+    discourse_subscriptions_campaign_enabled: 启用活动横幅以促进对此社区的财务支持。
+    discourse_subscriptions_campaign_goal: 您的支持活动的数字目标（订阅者或筹集金额）。
+    discourse_subscriptions_campaign_type: 选择要运行的活动类型（订阅者或每月筹集金额）。
+    discourse_subscriptions_campaign_banner_location: 选择活动横幅的位置（顶部或边栏）。
+    discourse_subscriptions_campaign_banner_shadow_color: 选择活动横幅投影的颜色。
+    discourse_subscriptions_campaign_banner_bg_image: 上传自定义图片以用作活动横幅的背景。
+    discourse_subscriptions_campaign_show_contributors: 显示最近购买的订阅产品的头像。
+    discourse_subscriptions_campaign_product: 当支持者点击活动上的按钮时向支持者发送的 Stripe 产品 ID。如果此设置为空，则支持者将被定向到主要产品页面。
+    errors:
+      discourse_patrons_amount_must_be_currency: "货币金额必须为无美元符号的金额（例如 1.50）"
   js:
+    filters:
+      subscribe:
+        help: 订阅以支持此网站
     discourse_subscriptions:
+      title: Discourse Subscriptions
+      admin_navigation: 订阅
       optional: 可选
+      navigation:
+        billing: 结算
+        payments: 付款
+        subscriptions: 订阅
+        subscribe: 订阅
+        user_activity:
+          payments: 付款
+      campaign:
+        title: 支持我们
+        body: 我们需要您的帮助来使此社区保持正常运转！
+        success_title: 成功！
+        success_body: 感谢您帮助此社区保持正常运转！
+        subscribers: 订阅者
+        goal_comparison: "<strong>%{current}</strong>/<strong>%{goal}</strong>"
+        raised: 已筹集
+        button: 支持
+        recent_contributors: 最近的贡献者
+        goal: 我们已达成目标
+        one_click_campaign: 自动创建支持活动
+        refresh_campaign: 刷新活动数据
+        refresh_page: 现在正在后台从 Stripe 同步活动数据。请稍后刷新页面以加载更新的信息。
+        supporter: 支持者
+        supporters: 支持者
+        confirm_creation: |-
+          <p>您想为您的社区自动创建活动吗？</p>
+
+          <p>继续将创建：</p>
+
+          <ul>
+          <li>用于奖励您的支持者的具有自定义标题和头像风格的群组</li>
+          <li>您的用户可以购买以支持您的网站的具有预设价格（包月和包年）的 Stripe 产品。</li>
+          </ul>
+
+          <p>您想继续吗？</p>
+        created: 您的一键式活动已创建并准备就绪！正在重定向到活动设置。
+      one_time_payment: 一次性付款
       plans:
+        purchase: 购买订阅
+        select: 选择订阅方案
         interval:
           adverb:
+            day: 每天
             week: 每周
-            month: 月度
-            year: 年度
+            month: 每月
+            year: 每年
+        payment_button: 订阅
+        success: 谢谢！您的订阅已创建。
+        incomplete: 未完成付款。您的订阅将在付款完成后更新。
+        validate:
+          payment_options:
+            required: 请选择订阅方案。
       user:
         payments:
-          created_at: 创建日期
+          id: 付款 ID
+          amount: 金额
+          created_at: 创建时间
+        payments_help: 没有付款
         plans:
+          rate: 费率
           product: 名称
+        subscriptions_help: 您没有有效订阅。
         subscriptions:
+          id: 订阅 ID
           status: 状态
-          created_at: 创建日期
+          discounted: 折扣价
+          renews: 续订
+          created_at: 创建时间
+          cancel: 取消
+          cancelled: 已取消
+          operations:
+            destroy:
+              confirm: 确定要取消此订阅吗？
+      subscribe:
+        title: 订阅
+        view_past: 查看以前的购买记录
+        no_products: 当前没有可用产品。
+        unauthenticated: 登录或创建帐户以订阅。
+        invalid_coupon: 您输入的优惠码无效。请重试。
+        card:
+          title: 付款
+        customer:
+          title: 客户详细信息
+        promo_code: 优惠券
+        buttons:
+          subscribe: 订阅
+        purchased: 已购买
+        go_to_billing: 前往结算
+        already_purchased: 非常感谢您之前购买此产品！
       billing:
-        email: 邮箱
+        name: 全名
+        email: 电子邮件
+        phone: 电话号码
+      confirmation:
+        amount: 金额
+        last4: 卡号
+      buttons:
+        make_payment: 付款
+        confirm_payment: 确认付款
+        success: 返回
       admin:
+        unconfigured: 'Stripe 配置不正确。有关信息，请参阅 Discourse Meta。'
+        on_meta: Meta 上的 Discourse Subscriptions
         dashboard:
-          title: 仪表盘
+          title: 信息中心
           table:
             head:
               user: 用户
+              payment_intent: 付款 ID
+              receipt_email: 收据电子邮件
+              amount: 金额
         products:
+          title: 产品
+          operations:
+            create: 创建新产品
+            update: 更新产品
+            new: 新产品
+            destroy:
+              confirm: 确定要销毁此产品吗？
           product:
+            product_id: 产品 ID
+            name: 产品名称
+            statement_descriptor: 对账单标注
+            statement_descriptor_help: 您客户的信用卡对账单上将显示的有关产品的额外信息。
+            plan_help: 创建客户订阅此产品的定价方案。
             description: 描述
-            active: 启用
-            created_at: 创建日期
-            updated_at: 已更新
+            description_help: 此为您的订阅产品描述。
+            repurchaseable: 可重复购买？
+            repurchase_help: 允许多次购买产品和关联方案
+            active: 有效
+            active_help: 在您的产品准备好向客户开放前请关闭此项。
+            created_at: 创建时间
+            updated_at: 更新时间
+          product_help: 您需要至少创建一个产品及关联方案，然后客户才可以订阅您的网站。
         plans:
+          title: 定价方案
+          operations:
+            add: 添加新方案
+            create: 创建方案
+            update: 更新方案
+            create_help: 在定价方案创建完成后，只能更新其昵称、试用期和用户群组。
+            new: 新建方案
+            destroy:
+              confirm: 确定要销毁此方案吗？
           plan:
-            active: 启用
-            created_at: 创建日期
+            nickname: 方案昵称
+            nickname_help: 此信息对客户不可见，但可以帮助您稍后查找此方案
+            plan_id: 方案 ID
+            product: 产品
+            interval: 结算间隔
+            amount: 金额
+            trial: 试用期天数
+            trial_help: 订阅此方案将自动开始以此为时长的免费试用期
+            group: 用户群组
+            group_help: 这是创建订阅时客户将被添加到的 Discourse 用户群组。
+            active: 有效
+            created_at: 创建时间
+            recurring: 定期重复的方案？
+        coupons:
+          title: 优惠券
+          code: 促销代码
+          discount: 折扣
+          times_redeemed: 已兑换次数
+          active: 有效？
+          actions: 操作
+          create: 创建优惠券
+          promo_code: 促销代码（不区分大小写）
         subscriptions:
+          title: 订阅
           subscription:
             user: 用户
+            subscription_id: 订阅 ID
+            customer: 客户
+            product: 产品
+            plan: 方案
             status: 状态
-            created_at: 创建日期
+            created_at: 创建时间
+        ask_refund: 对客户最近一笔付款进行退款？
+        canceled: "该订阅已被取消。"
