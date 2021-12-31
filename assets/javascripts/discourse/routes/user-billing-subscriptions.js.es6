@@ -1,6 +1,7 @@
 import Route from "@ember/routing/route";
 import UserSubscription from "discourse/plugins/discourse-subscriptions/discourse/models/user-subscription";
 import I18n from "I18n";
+import { action } from "@ember/object";
 
 export default Route.extend({
   templateName: "user/billing/subscriptions",
@@ -9,31 +10,30 @@ export default Route.extend({
     return UserSubscription.findAll();
   },
 
-  actions: {
-    cancelSubscription(subscription) {
-      bootbox.confirm(
-        I18n.t(
-          "discourse_subscriptions.user.subscriptions.operations.destroy.confirm"
-        ),
-        I18n.t("no_value"),
-        I18n.t("yes_value"),
-        (confirmed) => {
-          if (confirmed) {
-            subscription.set("loading", true);
+  @action
+  cancelSubscription(subscription) {
+    bootbox.confirm(
+      I18n.t(
+        "discourse_subscriptions.user.subscriptions.operations.destroy.confirm"
+      ),
+      I18n.t("no_value"),
+      I18n.t("yes_value"),
+      (confirmed) => {
+        if (confirmed) {
+          subscription.set("loading", true);
 
-            subscription
-              .destroy()
-              .then((result) => subscription.set("status", result.status))
-              .catch((data) =>
-                bootbox.alert(data.jqXHR.responseJSON.errors.join("\n"))
-              )
-              .finally(() => {
-                subscription.set("loading", false);
-                this.refresh();
-              });
-          }
+          subscription
+            .destroy()
+            .then((result) => subscription.set("status", result.status))
+            .catch((data) =>
+              bootbox.alert(data.jqXHR.responseJSON.errors.join("\n"))
+            )
+            .finally(() => {
+              subscription.set("loading", false);
+              this.refresh();
+            });
         }
-      );
-    },
+      }
+    );
   },
 });

@@ -3,6 +3,7 @@ import AdminProduct from "discourse/plugins/discourse-subscriptions/discourse/mo
 import AdminPlan from "discourse/plugins/discourse-subscriptions/discourse/models/admin-plan";
 import I18n from "I18n";
 import { hash } from "rsvp";
+import { action } from "@ember/object";
 
 export default Route.extend({
   model(params) {
@@ -20,31 +21,30 @@ export default Route.extend({
     return hash({ plans, product });
   },
 
-  actions: {
-    destroyPlan(plan) {
-      bootbox.confirm(
-        I18n.t(
-          "discourse_subscriptions.admin.plans.operations.destroy.confirm"
-        ),
-        I18n.t("no_value"),
-        I18n.t("yes_value"),
-        (confirmed) => {
-          if (confirmed) {
-            plan
-              .destroy()
-              .then(() => {
-                this.controllerFor(
-                  "adminPluginsDiscourseSubscriptionsProductsShow"
-                )
-                  .get("model.plans")
-                  .removeObject(plan);
-              })
-              .catch((data) =>
-                bootbox.alert(data.jqXHR.responseJSON.errors.join("\n"))
-              );
-          }
+  @action
+  destroyPlan(plan) {
+    bootbox.confirm(
+      I18n.t(
+        "discourse_subscriptions.admin.plans.operations.destroy.confirm"
+      ),
+      I18n.t("no_value"),
+      I18n.t("yes_value"),
+      (confirmed) => {
+        if (confirmed) {
+          plan
+            .destroy()
+            .then(() => {
+              this.controllerFor(
+                "adminPluginsDiscourseSubscriptionsProductsShow"
+              )
+                .get("model.plans")
+                .removeObject(plan);
+            })
+            .catch((data) =>
+              bootbox.alert(data.jqXHR.responseJSON.errors.join("\n"))
+            );
         }
-      );
-    },
+      }
+    );
   },
 });
