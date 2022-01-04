@@ -5,42 +5,206 @@
 # https://translate.discourse.org/
 
 ja:
+  site_settings:
+    discourse_subscriptions_enabled: Discourse サブスクリプションプラグインを有効にします。
+    discourse_subscriptions_extra_nav_subscribe: プライマリーナビゲーションに購読ボタンを表示する
+    discourse_subscriptions_public_key: Stripe の公開可能キー
+    discourse_subscriptions_secret_key: Stripe のシークレットキー
+    discourse_subscriptions_webhook_secret: Stripe の Webhook シークレット
+    discourse_subscriptions_currency: デフォルトの通貨コード。これは、サブスクリプションプランを作成する際にオーバーライドできます。
+    discourse_subscriptions_campaign_enabled: このコミュニティーの財政的支援を促進するキャンペーンバナーを有効にします。
+    discourse_subscriptions_campaign_goal: 支援キャンペーンの数値目標（購読者数または集金額）。
+    discourse_subscriptions_campaign_type: 実施するキャンペーンのタイプを選択します（購読者数または月間集金額）。
+    discourse_subscriptions_campaign_banner_location: キャンペーンバナーの場所を選択します（トップまたはサイドバー）。
+    discourse_subscriptions_campaign_banner_shadow_color: キャンペーンバナーのドロップシャドウの色を選択します。
+    discourse_subscriptions_campaign_banner_bg_image: キャンペーンバナーの背景として使用するカスタム画像をアップロードします。
+    discourse_subscriptions_campaign_show_contributors: 直近のサブスクリプション商品のアバターを表示します。
+    discourse_subscriptions_campaign_product: サポーターがキャンペーンのボタンをクリックしたときにサポーターを送信するための Stripe 商品 ID。この設定が空白である場合、サポーターはメインの商品ページにリダイレクトされます。
+    errors:
+      discourse_patrons_amount_must_be_currency: "通貨の金額は、ドル記号なしの通貨である必要があります（例: 1.50）"
   js:
+    filters:
+      subscribe:
+        help: 購読してこのサイトを支援する
     discourse_subscriptions:
-      optional: 任意
+      title: Discourse サブスクリプション
+      admin_navigation: サブスクリプション
+      optional: オプション
+      navigation:
+        billing: 請求
+        payments: 支払い
+        subscriptions: サブスクリプション
+        subscribe: 購読
+        user_activity:
+          payments: 支払い
+      campaign:
+        title: ご支援ください
+        body: このコミュニティーを運営し続けるには、あなたの支援が必要です！
+        success_title: 成功！
+        success_body: このコミュニティーの運営をご支援いただきありがとうございます！
+        subscribers: 購読者数
+        goal_comparison: "<strong>%{current}</strong> / <strong>%{goal}</strong>"
+        raised: 集金額
+        button: 支援する
+        recent_contributors: 最近の貢献者
+        goal: 目標を達成しました
+        one_click_campaign: 支援キャンペーンを自動作成
+        refresh_campaign: キャンペーンデータを更新
+        refresh_page: キャンペーンデータはバックグラウンドで Stripe から同期しています。しばらくしてからページを更新し、最新の情報を読み込んでください。
+        supporter: サポーター
+        supporters: サポーター
+        confirm_creation: |-
+          <p>コミュニティーのキャンぺーを自動的に作成しますか？</p>
+
+          <p>次へ進むと、以下が作成されます。</p>
+
+          <ul>
+          <li>サポーターにカスタムタイトルとアバターを報酬として提供するグループ</li>
+          <li>ユーザーがあなたのサイトを支援するために購入する既定の金額（月間または年間）が設定された Stripe 商品。</li>
+          </ul>
+
+          <p>次へ進みますか？</p>
+        created: ワンクリックキャンペーンが作成され、実施準備が整いました！キャンペーン設定にリダイレクトします。
+      one_time_payment: 一回払い
       plans:
+        purchase: サブスクリプションを購入する
+        select: サブスクリプションプランを選択する
         interval:
           adverb:
+            day: 毎日
             week: 毎週
-            month: 月ごと
-            year: 年ごと
+            month: 毎月
+            year: 毎年
+        payment_button: 購読
+        success: ありがとうございました！サブスクリプションが作成されました。
+        incomplete: お支払いは未完了です。あなたのサブスクリプションはお支払いが完了してから更新されます。
+        validate:
+          payment_options:
+            required: サブスクリプションプランを選択してください。
       user:
         payments:
-          created_at: 作成者
+          id: 支払い ID
+          amount: 金額
+          created_at: 作成
+        payments_help: 支払いはありません
         plans:
+          rate: 料金
           product: 名前
+        subscriptions_help: アクティブなサブスクリプションはありません。
         subscriptions:
+          id: サブスクリプション ID
           status: ステータス
-          created_at: 作成者
+          discounted: 割引適用
+          renews: 更新
+          created_at: 作成
+          cancel: キャンセル
+          cancelled: キャンセル済み
+          operations:
+            destroy:
+              confirm: このサブスクリプションをキャンセルしてもよろしいですか？
+      subscribe:
+        title: 購読
+        view_past: 過去の購入を表示
+        no_products: 現在、利用可能な商品はありません。
+        unauthenticated: 購読するにはログインするか、アカウントを作成してください。
+        invalid_coupon: 無効なクーポンコードを入力しました。もう一度お試しください。
+        card:
+          title: 支払い
+        customer:
+          title: お客様情報
+        promo_code: クーポン
+        buttons:
+          subscribe: 購読
+        purchased: 購入済み
+        go_to_billing: 請求に移動
+        already_purchased: この商品をご購入いただきありがとうございました！
       billing:
+        name: 氏名
         email: Eメール
+        phone: 電話番号
+      confirmation:
+        amount: 金額
+        last4: カード番号
+      buttons:
+        make_payment: 支払う
+        confirm_payment: 支払いを確認
+        success: 戻る
       admin:
+        unconfigured: 'Stripe が正しく構成されていません。詳細は、Discourse メタをご覧ください。'
+        on_meta: メタの Discourse サブスクリプション
         dashboard:
           title: ダッシュボード
           table:
             head:
               user: ユーザー
+              payment_intent: 支払い ID
+              receipt_email: 領収書メール
+              amount: 金額
         products:
+          title: 商品
+          operations:
+            create: 商品の新規作成
+            update: 商品を更新
+            new: 新しい商品
+            destroy:
+              confirm: この商品を破棄してもよろしいですか？
           product:
+            product_id: 商品 ID
+            name: 商品名
+            statement_descriptor: 明細書の記述
+            statement_descriptor_help: お客様のクレジットカード明細書に表示される商品に関する追加情報。
+            plan_help: お客様がこの商品に購読するための料金プランを作成します。
             description: 説明
+            description_help: これは、サブスクリプション商品の説明です。
+            repurchaseable: 再購入可能？
+            repurchase_help: 商品と関連するプランを複数回購入できるようにします
             active: アクティブ
-            created_at: 作成者
+            active_help: 商品を消費者に提供する準備が整うまで、これをオフにします。
+            created_at: 作成
+            updated_at: 更新
+          product_help: お客様がサイトを購読するまでに、少なくとも 1 つの商品と関連するプランを作成する必要があります。
         plans:
+          title: 料金プラン
+          operations:
+            add: 新しいプランを追加
+            create: プランを作成
+            update: プランを更新
+            create_help: 料金プランが作成されると、ニックネーム、試用期間、およびユーザーグループのみを更新できます。
+            new: 新しいプラン
+            destroy:
+              confirm: このプランを破棄してもよろしいですか？
           plan:
+            nickname: プランのニックネーム
+            nickname_help: これはお客様には表示されませんが、後でこのプランを見つけるのに役立ちます
+            plan_id: プラン ID
+            product: 商品
+            interval: 請求頻度
+            amount: 金額
+            trial: 試用期間の日数
+            trial_help: このプランのサブスクリプションは、この期間の無料の試用期間で自動的に開始されます。
+            group: ユーザーグループ
+            group_help: これは、サブスクリプションが作成されたときにお客様が追加される Discourse ユーザーグループです。
             active: アクティブ
-            created_at: 作成者
+            created_at: 作成
+            recurring: 定期プラン？
+        coupons:
+          title: クーポン
+          code: プロモコ―ド
+          discount: 割引
+          times_redeemed: 引き換え回数
+          active: アクティブ？
+          actions: アクション
+          create: クーポンを作成
+          promo_code: プロモコ―ド（大文字と小文字を区別しない）
         subscriptions:
+          title: サブスクリプション
           subscription:
             user: ユーザー
+            subscription_id: サブスクリプション ID
+            customer: お客様
+            product: 商品
+            plan: プラン
             status: ステータス
-            created_at: 作成者
+            created_at: 作成
+        ask_refund: お客様が最後に行った支払いを返金しますか？
+        canceled: "サブスクリプションはキャンセルされました。"

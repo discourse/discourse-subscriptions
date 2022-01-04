@@ -5,3 +5,7 @@
 # https://translate.discourse.org/
 
 ja:
+  discourse_subscriptions:
+    customer_not_found: お客様が見つかりません
+    card:
+      declined: カードが拒否されました

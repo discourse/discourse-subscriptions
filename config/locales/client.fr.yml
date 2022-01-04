@@ -98,7 +98,7 @@ fr:
           renews: Renouvellements
           created_at: Création
           cancel: annuler
-          cancelled: annulée
+          cancelled: annulé
           operations:
             destroy:
               confirm: Voulez-vous vraiment annuler cet abonnement ?
@@ -115,7 +115,7 @@ fr:
         promo_code: Coupon
         buttons:
           subscribe: S'abonner
-        purchased: Achetée
+        purchased: Acheté
         go_to_billing: Accéder à la facturation
         already_purchased: Merci beaucoup pour votre achat préalable de ce produit !
       billing:
