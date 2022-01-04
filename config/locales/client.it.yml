@@ -192,7 +192,7 @@ it:
           code: Codice promozionale
           discount: Sconto
           times_redeemed: Date di riscossione
-          active: Attivi?
+          active: Attivo?
           actions: Azioni
           create: Crea coupon
           promo_code: Codice promozionale (non distingue maiuscole e minuscole)

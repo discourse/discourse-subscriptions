@@ -6,20 +6,28 @@
 
 pt_BR:
   site_settings:
-    discourse_subscriptions_enabled: Habilitar o Plugin de Assinaturas no Discourse.
+    discourse_subscriptions_enabled: Ativar o Plugin de Assinaturas no Discourse.
     discourse_subscriptions_extra_nav_subscribe: Mostrar o botão de assinatura na navegação principal
-    discourse_subscriptions_public_key: Chave Publicável Stripe
-    discourse_subscriptions_secret_key: Chave Secreta Stripe
-    discourse_subscriptions_webhook_secret: Chave Webhook Stripe
+    discourse_subscriptions_public_key: Chave Publicável da Stripe
+    discourse_subscriptions_secret_key: Chave Secreta da Stripe
+    discourse_subscriptions_webhook_secret: Segredo do Webhook da Stripe
     discourse_subscriptions_currency: Símbolo da Moeda Padrão. Isso pode ser modificado no momento da criação de um plano de assinatura.
+    discourse_subscriptions_campaign_enabled: Ativa um banner de campanha para promover o apoio financeiro a esta comunidade.
+    discourse_subscriptions_campaign_goal: A meta em números para nossa campanha de apoio (assinantes ou quantia recebida).
+    discourse_subscriptions_campaign_type: Seleciona o tipo de campanha para realizar (assinantes ou quantia mensal recebida).
+    discourse_subscriptions_campaign_banner_location: Seleciona o local do banner da campanha (topo ou barra lateral).
+    discourse_subscriptions_campaign_banner_shadow_color: Seleciona a cor da sombra projetada pelo banner da campanha.
+    discourse_subscriptions_campaign_banner_bg_image: Envie uma imagem personalizada para usar como plano de fundo no banner da campanha.
+    discourse_subscriptions_campaign_show_contributors: Mostre avatares das compras mais recentes dos produtos de assinatura.
+    discourse_subscriptions_campaign_product: A ID do produto da Stripe para enviar aos(às) apoiadores(as) quando clicam no botão da campanha. Se esta configuração estiver em branco, eles(as) serão direcionados(as) para a página de produtos principais.
     errors:
-      discourse_patrons_amount_must_be_currency: "As quantias no valor devem ser escritas sem o símbolo de dólar (ex 1.50)"
+      discourse_patrons_amount_must_be_currency: "As quantias devem ser escritas sem o símbolo de dólar (ex 1,50)"
   js:
     filters:
       subscribe:
         help: Apoie este site assinando
     discourse_subscriptions:
-      title: Assinaturas Discourse
+      title: Assinaturas do Discourse
       admin_navigation: Assinaturas
       optional: Opcional
       navigation:
@@ -29,6 +37,30 @@ pt_BR:
         subscribe: Assinar
         user_activity:
           payments: Pagamentos
+      campaign:
+        title: Apoie-nos
+        body: Precisamos da sua ajuda para manter esta comunidade no ar!
+        success_title: Sucesso!
+        success_body: Obrigado por ajudar a manter esta comunidade no ar!
+        subscribers: Assinantes
+        goal_comparison: "<strong>%{current}</strong> de <strong>%{goal}</strong>"
+        raised: Recebido(s)
+        button: Apoio
+        recent_contributors: Contribuidores(as) recentes
+        goal: Atingimos a nossa meta
+        one_click_campaign: Criar automaticamente campanha de apoio
+        refresh_campaign: Renovar dados da campanha
+        refresh_page: Agora os dados da campanha estão sendo sincronizados com o Stripe em segundo plano. Aguarde um pouco e atualize a página para carregar as informações mais recentes.
+        supporter: Apoiador(a)
+        supporters: Apoiadores(as)
+        confirm_creation: |-
+          <ul>
+          <li>Um grupo para recompensas os(as) apoiadores(as) com um estilo de título e avatar personalizado</li>
+          <li>Um produto da Stripe com preços predefinidos (mensal e anual) que os(as) usuários(as) podem comprar para apoiar o nosso site.</li>
+          </ul>
+
+          <p>Deseja continuar?</p>
+        created: Sua campanha de um clique foi criada e já está pronta! Redirecionando para configurações da campanha.
       one_time_payment: Pagamento Único
       plans:
         purchase: Adquirir uma assinatura
@@ -59,8 +91,8 @@ pt_BR:
           id: ID da Assinatura
           status: Status
           discounted: Descontado
-          renews: Renova
-          created_at: Criado
+          renews: Renovada
+          created_at: Criada
           cancel: cancelar
           cancelled: cancelado
           operations:
@@ -70,16 +102,18 @@ pt_BR:
         title: Assinar
         view_past: Ver compras anteriores
         no_products: No momento não existem produtos disponíveis.
-        unauthenticated: Faça login ou crie uma conta para se inscrever.
+        unauthenticated: Entre ou crie uma conta para se inscrever.
+        invalid_coupon: Você inseriu um código de cupom inválido. Tente novamente.
         card:
           title: Pagamento
         customer:
-          title: Informações do consumidor
+          title: Informações do(a) consumidor(a)
         promo_code: Cupom
         buttons:
-          subscribe: Assinar
+          subscribe: Fazer assinatura
         purchased: Comprado
         go_to_billing: Vá para o Faturamento
+        already_purchased: Muito obrigado por ter comprado este produto!
       billing:
         name: Nome completo
         email: E-mail
@@ -92,14 +126,15 @@ pt_BR:
         confirm_payment: Confirmar pagamento
         success: Voltar
       admin:
-        unconfigured: 'Stripe não está configurado correntamente. Por favor acesse meta.discourse.org para mais informações.'
+        unconfigured: 'O Stripe não está configurado corretamente. Acesse o Meta do Discourse para mais informações.'
+        on_meta: Assinaturas do Discourse no Meta
         dashboard:
           title: Painel de Controle
           table:
             head:
-              user: Usuário
+              user: Usuário(a)
               payment_intent: ID do Pagamento
-              receipt_email: E-mail Recibo
+              receipt_email: E-mail do Recibo
               amount: Quantia
         products:
           title: Produtos
@@ -113,38 +148,38 @@ pt_BR:
             product_id: ID do Produto
             name: Nome do Produto
             statement_descriptor: Descrição da Declaração
-            statement_descriptor_help: Informação adicional sobre o produto que aparecerá no extrato do cartão de crédito do seu cliente.
-            plan_help: Crie um plano de preços para assinar clientes neste produto.
+            statement_descriptor_help: Informação adicional sobre o produto que aparecerá no extrato do cartão de crédito do(a) cliente.
+            plan_help: Crie um plano de preços para os(as) clientes assinarem este produto.
             description: Descrição
             description_help: Isso descreve o seu produto de assinatura.
-            repurchaseable: Recomprável?
+            repurchaseable: É possível comprar novamente?
             repurchase_help: Permitir que produtos e planos associados sejam comprados várias vezes
             active: Ativos
-            active_help: Desative isso até que seu produto esteja pronto para os consumidores.
+            active_help: Desative isso até que seu produto esteja pronto para os(as) consumidores(as).
             created_at: Criado
             updated_at: Atualizado
-          product_help: Antes que os clientes possam assinar em seu site, deve criar pelo menos um produto e um plano associado.
+          product_help: Antes que os(as) clientes possam fazer assinatura no seu site, é preciso criar pelo menos um produto e um plano associado.
         plans:
           title: Preços dos planos
           operations:
             add: Adicionar Novo Plano
             create: Criar Plano
             update: Atualizar Plano
-            create_help: Uma vez precificado o plano, somente o apelido, período de avaliação e grupo de usuários podem ser atualizados.
+            create_help: Após criar os preços dos planos, é possível atualizar apenas seu apelido, período de teste e grupo de usuários(as).
             new: Novo Plano
             destroy:
               confirm: Tem certeza que deseja excluir este plano?
           plan:
             nickname: Apelido do plano
-            nickname_help: Isso não será visível para os clientes, porém o ajudará a encontrar esse plano depois.
+            nickname_help: Isso não será visível para os(as) clientes, porém ajudará a encontrar esse plano depois.
             plan_id: ID do Plano
             product: Produto
             interval: Período de Cobrança
             amount: Quantia
             trial: Período (em dias) da avaliação
             trial_help: As assinaturas para esse plano iniciarão automaticamente com a avaliação gratuita com essa duração.
-            group: Grupo de Usuários
-            group_help: Esse é o grupo de usuários em que o cliente será adicionado ao realizar a assinatura.
+            group: Grupo de Usuários(as)
+            group_help: Esse é o grupo de usuários(as) em que o cliente será adicionado ao criar a assinatura.
             active: Ativos
             created_at: Criado
             recurring: Plano recorrente?
@@ -160,12 +195,12 @@ pt_BR:
         subscriptions:
           title: Assinaturas
           subscription:
-            user: Usuário
+            user: Usuário(a)
             subscription_id: ID de Assinatura
-            customer: Consumidor
+            customer: Consumidor(a)
             product: Produto
             plan: Plano
             status: Status
             created_at: Criado
-        ask_refund: Reembolsar o último pagamento efetuado pelo cliente?
+        ask_refund: Reembolsar o último pagamento efetuado pelo(a) cliente?
         canceled: "A assinatura foi cancelada."
