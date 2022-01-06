@@ -20,9 +20,7 @@ export default Route.extend({
         this.send("closeModal");
         bootbox.alert(I18n.t("discourse_subscriptions.admin.canceled"));
       })
-      .catch((data) =>
-        bootbox.alert(data.jqXHR.responseJSON.errors.join("\n"))
-      )
+      .catch((data) => bootbox.alert(data.jqXHR.responseJSON.errors.join("\n")))
       .finally(() => {
         subscription.set("loading", false);
         this.refresh();
