@@ -40,6 +40,7 @@ ru:
       campaign:
         title: Поддержите нас
         body: Нам нужна ваша помощь для поддержки и продуктивной работы этого сообщества!
+        success_title: Успех!
         success_body: Спасибо за вашу помощь в поддержании работы сообщества!
         subscribers: Подписчики
         goal_comparison: "<strong>%{current}</strong> из <strong>%{goal}</strong>"
@@ -130,6 +131,7 @@ ru:
         success: Назад
       admin:
         unconfigured: 'Сервис Stripe настроен неправильно. За дополнительной информацией обратитесь к описанию плагина: meta.discourse.org/t/discourse-subscriptions'
+        on_meta: Подписки на Discourse на Meta
         dashboard:
           title: Админка
           table:
