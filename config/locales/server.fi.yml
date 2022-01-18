@@ -5,3 +5,7 @@
 # https://translate.discourse.org/
 
 fi:
+  discourse_subscriptions:
+    customer_not_found: Asiakasta ei löydy
+    card:
+      declined: Kortti hylätty
