@@ -7,6 +7,8 @@ import discourseComputed, { observes } from "discourse-common/utils/decorators";
 import { later } from "@ember/runloop";
 import { inject as service } from "@ember/service";
 
+const SIDEBAR_BODY_CLASS = "subscription-campaign-sidebar";
+
 export default Component.extend({
   router: service(),
   dismissed: false,
@@ -68,9 +70,9 @@ export default Component.extend({
   didInsertElement() {
     this._super(...arguments);
     if (this.isSidebar && this.shouldShow && !this.site.mobileView) {
-      document.body.classList.add("subscription-campaign-sidebar");
+      document.body.classList.add(SIDEBAR_BODY_CLASS);
     } else {
-      document.body.classList.remove("subscription-campaign-sidebar");
+      document.body.classList.remove(SIDEBAR_BODY_CLASS);
     }
 
     // makes sure to only play animation once, & not repeat on reload
@@ -91,6 +93,10 @@ export default Component.extend({
         document.body.classList.add("success-animation-off");
       }
     }
+  },
+
+  willDestroyElement() {
+    document.body.classList.remove(SIDEBAR_BODY_CLASS);
   },
 
   @discourseComputed("backgroundImageUrl")
@@ -139,7 +145,7 @@ export default Component.extend({
   @observes("dismissed")
   _updateBodyClasses() {
     if (this.dismissed) {
-      document.body.classList.remove("subscription-campaign-sidebar");
+      document.body.classList.remove(SIDEBAR_BODY_CLASS);
     }
   },
 
