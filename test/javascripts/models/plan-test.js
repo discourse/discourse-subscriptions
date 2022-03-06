@@ -1,35 +1,40 @@
+import { module, test } from "qunit";
 import Plan from "discourse/plugins/discourse-subscriptions/discourse/models/plan";
 
-QUnit.module("discourse-patrons:model:plan");
+module("discourse-patrons:model:plan", function () {
+  test("subscriptionRate", function (assert) {
+    const plan = Plan.create({
+      unit_amount: "2399",
+      currency: "aud",
+      recurring: {
+        interval: "month",
+      },
+    });
 
-QUnit.test("subscriptionRate", (assert) => {
-  const plan = Plan.create({
-    unit_amount: "2399",
-    currency: "aud",
-    recurring: {
-      interval: "month",
-    },
+    assert.strictEqual(
+      plan.get("subscriptionRate"),
+      "23.99 AUD / month",
+      "it returns the formatted subscription rate"
+    );
   });
 
-  assert.equal(
-    plan.get("subscriptionRate"),
-    "23.99 AUD / month",
-    "it returns the formatted subscription rate"
-  );
-});
+  test("amountDollars", function (assert) {
+    const plan = Plan.create({ unit_amount: 2399 });
 
-QUnit.test("amountDollars", (assert) => {
-  const plan = Plan.create({ unit_amount: 2399 });
+    assert.strictEqual(
+      plan.get("amountDollars"),
+      "23.99",
+      "it returns the formatted dollar amount"
+    );
+  });
 
-  assert.equal(
-    plan.get("amountDollars"),
-    23.99,
-    "it returns the formatted dollar amount"
-  );
-});
+  test("amount", function (assert) {
+    const plan = Plan.create({ amountDollars: "22.12" });
 
-QUnit.test("amount", (assert) => {
-  const plan = Plan.create({ amountDollars: "22.12" });
-
-  assert.equal(plan.get("unit_amount"), 2212, "it returns the cents amount");
+    assert.strictEqual(
+      plan.get("unit_amount"),
+      2212,
+      "it returns the cents amount"
+    );
+  });
 });

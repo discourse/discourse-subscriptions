@@ -2,6 +2,7 @@ import discourseComputed from "discourse-common/utils/decorators";
 import DiscourseURL from "discourse/lib/url";
 import Controller from "@ember/controller";
 import { alias } from "@ember/object/computed";
+import bootbox from "bootbox";
 
 const RECURRING = "recurring";
 const ONE_TIME = "one_time";

@@ -1,16 +1,17 @@
-import { acceptance } from "discourse/tests/helpers/qunit-helpers";
+import { acceptance, count } from "discourse/tests/helpers/qunit-helpers";
 import { stubStripe } from "discourse/plugins/discourse-subscriptions/helpers/stripe";
+import { visit } from "@ember/test-helpers";
 
 acceptance("Discourse Subscriptions", function (needs) {
   needs.user();
-  needs.hooks.beforeEach(() => {
+  needs.hooks.beforeEach(function () {
     stubStripe();
   });
 
-  test("viewing product page", async (assert) => {
+  test("viewing product page", async function (assert) {
     await visit("/s");
 
-    assert.ok($(".product-list").length, "has product page");
-    assert.ok($(".product:first-child a").length, "has a link");
+    assert.ok(count(".product-list") > 0, "has product page");
+    assert.ok(count(".product:first-child a") > 0, "has a link");
   });
 });

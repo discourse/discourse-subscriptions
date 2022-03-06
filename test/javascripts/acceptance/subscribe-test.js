@@ -1,24 +1,24 @@
-import { acceptance } from "discourse/tests/helpers/qunit-helpers";
+import { acceptance, count } from "discourse/tests/helpers/qunit-helpers";
 import { stubStripe } from "discourse/plugins/discourse-subscriptions/helpers/stripe";
+import { click, visit } from "@ember/test-helpers";
 
 acceptance("Discourse Subscriptions", function (needs) {
   needs.user();
-  needs.hooks.beforeEach(() => {
+  needs.hooks.beforeEach(function () {
     stubStripe();
   });
 
-  test("subscribing", async (assert) => {
+  test("subscribing", async function (assert) {
     await visit("/s");
-
     await click(".product:first-child a");
 
     assert.ok(
-      $(".discourse-subscriptions-section-columns").length,
+      count(".discourse-subscriptions-section-columns") > 0,
       "has the sections for billing"
     );
 
     assert.ok(
-      $(".subscribe-buttons button").length,
+      count(".subscribe-buttons button") > 0,
       "has buttons for subscribe"
     );
   });

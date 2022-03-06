@@ -4,6 +4,7 @@ import Transaction from "discourse/plugins/discourse-subscriptions/discourse/mod
 import I18n from "I18n";
 import { not } from "@ember/object/computed";
 import discourseComputed from "discourse-common/utils/decorators";
+import bootbox from "bootbox";
 
 export default Controller.extend({
   selectedPlan: null,
