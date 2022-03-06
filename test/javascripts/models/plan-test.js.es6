@@ -2,7 +2,7 @@ import { module, test } from "qunit";
 import Plan from "discourse/plugins/discourse-subscriptions/discourse/models/plan";
 
 module("discourse-patrons:model:plan", function () {
-  test("subscriptionRate", (assert) => {
+  test("subscriptionRate", function (assert) {
     const plan = Plan.create({
       unit_amount: "2399",
       currency: "aud",
@@ -18,17 +18,17 @@ module("discourse-patrons:model:plan", function () {
     );
   });
 
-  test("amountDollars", (assert) => {
+  test("amountDollars", function (assert) {
     const plan = Plan.create({ unit_amount: 2399 });
 
     assert.strictEqual(
       plan.get("amountDollars"),
-      23.99,
+      "23.99",
       "it returns the formatted dollar amount"
     );
   });
 
-  test("amount", (assert) => {
+  test("amount", function (assert) {
     const plan = Plan.create({ amountDollars: "22.12" });
 
     assert.strictEqual(
