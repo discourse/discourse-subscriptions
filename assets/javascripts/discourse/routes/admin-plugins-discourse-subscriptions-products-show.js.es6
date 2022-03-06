@@ -4,6 +4,7 @@ import AdminPlan from "discourse/plugins/discourse-subscriptions/discourse/model
 import I18n from "I18n";
 import { hash } from "rsvp";
 import { action } from "@ember/object";
+import bootbox from "bootbox";
 
 export default Route.extend({
   model(params) {

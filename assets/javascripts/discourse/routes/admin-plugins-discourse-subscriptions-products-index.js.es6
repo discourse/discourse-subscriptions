@@ -2,6 +2,7 @@ import Route from "@ember/routing/route";
 import AdminProduct from "discourse/plugins/discourse-subscriptions/discourse/models/admin-product";
 import I18n from "I18n";
 import { action } from "@ember/object";
+import bootbox from "bootbox";
 
 export default Route.extend({
   model() {

@@ -2,6 +2,7 @@ import Route from "@ember/routing/route";
 import UserSubscription from "discourse/plugins/discourse-subscriptions/discourse/models/user-subscription";
 import I18n from "I18n";
 import { action } from "@ember/object";
+import bootbox from "bootbox";
 
 export default Route.extend({
   templateName: "user/billing/subscriptions",

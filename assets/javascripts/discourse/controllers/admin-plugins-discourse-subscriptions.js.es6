@@ -4,6 +4,7 @@ import { popupAjaxError } from "discourse/lib/ajax-error";
 import Controller from "@ember/controller";
 import discourseComputed from "discourse-common/utils/decorators";
 import I18n from "I18n";
+import bootbox from "bootbox";
 
 export default Controller.extend({
   loading: false,
