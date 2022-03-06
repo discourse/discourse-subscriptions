@@ -45,7 +45,7 @@ discourseModule("payment-options", function (hooks) {
     async test(assert) {
       assert.strictEqual(
         this.selectedPlan,
-        null,
+        undefined,
         "No plans are selected by default"
       );
     },
