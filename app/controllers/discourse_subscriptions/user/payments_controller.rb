@@ -23,7 +23,7 @@ module DiscourseSubscriptions
               invoice_ids = invoices_with_products.map { |invoice| invoice[:id] }
               payments = ::Stripe::PaymentIntent.list(customer: customer_id)
               payments_from_invoices = payments[:data].select { |payment| invoice_ids.include?(payment[:invoice]) }
-              data.concat(payments_from_invoices)
+              data = data | payments_from_invoices
             end
           end
 
