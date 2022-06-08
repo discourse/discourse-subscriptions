@@ -2,32 +2,58 @@
 
 <form class="form-horizontal">
   <p>
-    <label for="product">{{i18n "discourse_subscriptions.admin.products.product.name"}}</label>
-    {{input type="text" name="product_name" value=model.product.name disabled=true}}
+    <label for="product">
+      {{i18n "discourse_subscriptions.admin.products.product.name"}}
+    </label>
+
+    {{input
+      type="text"
+      name="product_name"
+      value=model.product.name
+      disabled=true
+    }}
   </p>
+
   <p>
-    <label for="name">{{i18n "discourse_subscriptions.admin.plans.plan.nickname"}}</label>
+    <label for="name">
+      {{i18n "discourse_subscriptions.admin.plans.plan.nickname"}}
+    </label>
+
     {{input type="text" name="name" value=model.plan.nickname}}
+
     <div class="control-instructions">
       {{i18n "discourse_subscriptions.admin.plans.plan.nickname_help"}}
     </div>
   </p>
+
   <p>
-    <label for="interval">{{i18n "discourse_subscriptions.admin.plans.plan.group"}}</label>
+    <label for="interval">
+      {{i18n "discourse_subscriptions.admin.plans.plan.group"}}
+    </label>
+
     {{combo-box
       valueProperty="name"
       content=availableGroups
       value=selectedGroup
       onChange=(action (mut model.plan.metadata.group_name))
     }}
+
     <div class="control-instructions">
       {{i18n "discourse_subscriptions.admin.plans.plan.group_help"}}
     </div>
   </p>
+
   <p>
-    <label for="amount">{{i18n "discourse_subscriptions.admin.plans.plan.amount"}}</label>
+    <label for="amount">
+      {{i18n "discourse_subscriptions.admin.plans.plan.amount"}}
+    </label>
+
     {{#if planFieldDisabled}}
-      {{input class="plan-amount plan-currency" disabled=true value=model.plan.currency}}
+      {{input
+        class="plan-amount plan-currency"
+        disabled=true
+        value=model.plan.currency
+      }}
     {{else}}
       {{combo-box
         disabled=planFieldDisabled
@@ -36,12 +62,21 @@
         onChange=(action (mut model.plan.currency))
       }}
     {{/if}}
-    {{input class="plan-amount" type="text" name="name" value=model.plan.amountDollars disabled=planFieldDisabled}}
+
+    {{input
+      class="plan-amount"
+      type="text"
+      name="name"
+      value=model.plan.amountDollars
+      disabled=planFieldDisabled
+    }}
   </p>
+
   <p>
     <label for="recurring">
       {{i18n "discourse_subscriptions.admin.plans.plan.recurring"}}
     </label>
+
     {{#if planFieldDisabled}}
       {{input
         type="checkbox"
@@ -58,11 +93,13 @@
       }}
     {{/if}}
   </p>
+
   {{#if model.plan.isRecurring}}
     <p>
       <label for="interval">
         {{i18n "discourse_subscriptions.admin.plans.plan.interval"}}
       </label>
+
       {{#if planFieldDisabled}}
         {{input disabled=true value=selectedInterval}}
       {{else}}
@@ -74,17 +111,21 @@
         }}
       {{/if}}
     </p>
+
     <p>
       <label for="trial">
         {{i18n "discourse_subscriptions.admin.plans.plan.trial"}}
         ({{i18n "discourse_subscriptions.optional"}})
       </label>
+
       {{input type="text" name="trial" value=model.plan.trial_period_days}}
+
       <div class="control-instructions">
         {{i18n "discourse_subscriptions.admin.plans.plan.trial_help"}}
       </div>
     </p>
   {{/if}}
+
   <p>
     <label for="active">
       {{i18n "discourse_subscriptions.admin.plans.plan.active"}}

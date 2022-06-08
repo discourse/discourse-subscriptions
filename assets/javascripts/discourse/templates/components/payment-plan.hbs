@@ -5,11 +5,17 @@
 }}
   <div class="interval">
     {{#if recurringPlan}}
-      {{i18n (concat "discourse_subscriptions.plans.interval.adverb." plan.recurring.interval)}}
+      {{i18n
+        (concat
+          "discourse_subscriptions.plans.interval.adverb."
+          plan.recurring.interval
+        )
+      }}
     {{else}}
       {{i18n "discourse_subscriptions.one_time_payment"}}
     {{/if}}
   </div>
+
   <span class="amount">
     {{format-currency plan.currency plan.amountDollars}}
   </span>

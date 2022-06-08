@@ -10,6 +10,7 @@
       {{html-safe model.product.description}}
     </p>
   </div>
+
   <div class="section-column">
     {{#if canPurchase}}
       <h2>
@@ -18,10 +19,7 @@
 
       <hr>
 
-      {{payment-options
-        plans=model.plans
-        selectedPlan=selectedPlan
-      }}
+      {{payment-options plans=model.plans selectedPlan=selectedPlan}}
 
       <hr>
 
@@ -33,7 +31,12 @@
         {{login-required}}
       {{else}}
         <div class="promo-code">
-          {{input type="text" name="promo_code" placeholderKey="discourse_subscriptions.subscribe.promo_code" value=promoCode}}
+          {{input
+            type="text"
+            name="promo_code"
+            placeholderKey="discourse_subscriptions.subscribe.promo_code"
+            value=promoCode
+          }}
         </div>
 
         {{d-button
@@ -46,7 +49,11 @@
     {{else}}
       <h2>{{i18n "discourse_subscriptions.subscribe.already_purchased"}}</h2>
 
-      {{#link-to "user.billing.subscriptions" currentUser.username class="btn btn-primary"}}
+      {{#link-to
+        "user.billing.subscriptions"
+        currentUser.username
+        class="btn btn-primary"
+      }}
         {{i18n "discourse_subscriptions.subscribe.go_to_billing"}}
       {{/link-to}}
     {{/if}}

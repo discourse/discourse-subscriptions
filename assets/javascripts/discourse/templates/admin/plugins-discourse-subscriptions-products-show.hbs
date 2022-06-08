@@ -2,37 +2,71 @@
 
 <form class="form-horizontal">
   <p>
-    <label for="name">{{i18n "discourse_subscriptions.admin.products.product.name"}}</label>
+    <label for="name">
+      {{i18n "discourse_subscriptions.admin.products.product.name"}}
+    </label>
     {{input type="text" name="name" value=model.product.name}}
   </p>
+
   <p>
     <label for="description">
       {{i18n "discourse_subscriptions.admin.products.product.description"}}
     </label>
-    {{textarea name="description" value=model.product.metadata.description class="discourse-subscriptions-admin-textarea"}}
+
+    {{textarea
+      name="description"
+      value=model.product.metadata.description
+      class="discourse-subscriptions-admin-textarea"
+    }}
+
     <div class="control-instructions">
       {{i18n "discourse_subscriptions.admin.products.product.description_help"}}
     </div>
   </p>
+
   <p>
     <label for="statement_descriptor">
-      {{i18n "discourse_subscriptions.admin.products.product.statement_descriptor"}}
+      {{i18n
+        "discourse_subscriptions.admin.products.product.statement_descriptor"
+      }}
     </label>
-    {{input type="text" name="statement_descriptor" value=model.product.statement_descriptor}}
+
+    {{input
+      type="text"
+      name="statement_descriptor"
+      value=model.product.statement_descriptor
+    }}
+
     <div class="control-instructions">
-      {{i18n "discourse_subscriptions.admin.products.product.statement_descriptor_help"}}
+      {{i18n
+        "discourse_subscriptions.admin.products.product.statement_descriptor_help"
+      }}
     </div>
   </p>
+
   <p>
-    <label for="repurchaseable">{{i18n "discourse_subscriptions.admin.products.product.repurchaseable"}}</label>
-    {{input type="checkbox" name="repurchaseable" checked=model.product.metadata.repurchaseable}}
+    <label for="repurchaseable">
+      {{i18n "discourse_subscriptions.admin.products.product.repurchaseable"}}
+    </label>
+
+    {{input
+      type="checkbox"
+      name="repurchaseable"
+      checked=model.product.metadata.repurchaseable
+    }}
+
     <div class="control-instructions">
       {{i18n "discourse_subscriptions.admin.products.product.repurchase_help"}}
     </div>
   </p>
+
   <p>
-    <label for="active">{{i18n "discourse_subscriptions.admin.products.product.active"}}</label>
+    <label for="active">
+      {{i18n "discourse_subscriptions.admin.products.product.active"}}
+    </label>
+
     {{input type="checkbox" name="active" checked=model.product.active}}
+
     <div class="control-instructions">
       {{i18n "discourse_subscriptions.admin.products.product.active_help"}}
     </div>
@@ -50,13 +84,21 @@
         <th>{{i18n "discourse_subscriptions.admin.plans.plan.created_at"}}</th>
         <th>{{i18n "discourse_subscriptions.admin.plans.plan.group"}}</th>
         <th>{{i18n "discourse_subscriptions.admin.plans.plan.active"}}</th>
-        <th class="td-right">{{i18n "discourse_subscriptions.admin.plans.plan.amount"}}</th>
         <th class="td-right">
-          {{#link-to "adminPlugins.discourse-subscriptions.products.show.plans.show" model.product.id "new" class="btn"}}
+          {{i18n "discourse_subscriptions.admin.plans.plan.amount"}}
+        </th>
+        <th class="td-right">
+          {{#link-to
+            "adminPlugins.discourse-subscriptions.products.show.plans.show"
+            model.product.id
+            "new"
+            class="btn"
+          }}
             {{i18n "discourse_subscriptions.admin.plans.operations.add"}}
           {{/link-to}}
         </th>
       </thead>
+
       <tbody>
         {{#each model.plans as |plan|}}
           <tr>
@@ -65,9 +107,16 @@
             <td>{{format-unix-date plan.created}}</td>
             <td>{{plan.metadata.group_name}}</td>
             <td>{{plan.active}}</td>
-            <td class="td-right">{{format-currency plan.currency plan.amountDollars}}</td>
             <td class="td-right">
-              {{#link-to "adminPlugins.discourse-subscriptions.products.show.plans.show" model.product.id plan.id class="btn no-text btn-icon"}}
+              {{format-currency plan.currency plan.amountDollars}}
+            </td>
+            <td class="td-right">
+              {{#link-to
+                "adminPlugins.discourse-subscriptions.products.show.plans.show"
+                model.product.id
+                plan.id
+                class="btn no-text btn-icon"
+              }}
                 {{d-icon "far-edit"}}
               {{/link-to}}
             </td>
@@ -76,7 +125,9 @@
           <tr>
             <td colspan="8">
               <hr>
-              {{i18n "discourse_subscriptions.admin.products.product.plan_help"}}
+              {{i18n
+                "discourse_subscriptions.admin.products.product.plan_help"
+              }}
             </td>
           </tr>
         {{/each}}

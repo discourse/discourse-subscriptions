@@ -1,21 +1,57 @@
 {{#if model.unconfigured}}
   <p>{{i18n "discourse_subscriptions.admin.unconfigured"}}</p>
-  <p><a href="https://meta.discourse.org/t/discourse-subscriptions/140818/">{{i18n "discourse_subscriptions.admin.on_meta"}}</a></p>
+  <p>
+    <a href="https://meta.discourse.org/t/discourse-subscriptions/140818/">
+      {{i18n "discourse_subscriptions.admin.on_meta"}}
+    </a>
+  </p>
 {{else}}
-  {{#load-more selector=".discourse-patrons-table tr" action=(action "loadMore")}}
+  {{#load-more
+    selector=".discourse-patrons-table tr"
+    action=(action "loadMore")
+  }}
     <table class="table discourse-patrons-table">
       <thead>
         <tr>
-          <th>{{i18n "discourse_subscriptions.admin.subscriptions.subscription.user"}}</th>
-          <th>{{i18n "discourse_subscriptions.admin.subscriptions.subscription.subscription_id"}}</th>
-          <th>{{i18n "discourse_subscriptions.admin.subscriptions.subscription.customer"}}</th>
-          <th>{{i18n "discourse_subscriptions.admin.subscriptions.subscription.product"}}</th>
-          <th>{{i18n "discourse_subscriptions.admin.subscriptions.subscription.plan"}}</th>
-          <th>{{i18n "discourse_subscriptions.admin.subscriptions.subscription.status"}}</th>
-          <th class="td-right">{{i18n "discourse_subscriptions.admin.subscriptions.subscription.created_at"}}</th>
+          <th>
+            {{i18n
+              "discourse_subscriptions.admin.subscriptions.subscription.user"
+            }}
+          </th>
+          <th>
+            {{i18n
+              "discourse_subscriptions.admin.subscriptions.subscription.subscription_id"
+            }}
+          </th>
+          <th>
+            {{i18n
+              "discourse_subscriptions.admin.subscriptions.subscription.customer"
+            }}
+          </th>
+          <th>
+            {{i18n
+              "discourse_subscriptions.admin.subscriptions.subscription.product"
+            }}
+          </th>
+          <th>
+            {{i18n
+              "discourse_subscriptions.admin.subscriptions.subscription.plan"
+            }}
+          </th>
+          <th>
+            {{i18n
+              "discourse_subscriptions.admin.subscriptions.subscription.status"
+            }}
+          </th>
+          <th class="td-right">
+            {{i18n
+              "discourse_subscriptions.admin.subscriptions.subscription.created_at"
+            }}
+          </th>
           <th></th>
         </tr>
       </thead>
+
       <tbody>
         {{#each model.data as |subscription|}}
           <tr>

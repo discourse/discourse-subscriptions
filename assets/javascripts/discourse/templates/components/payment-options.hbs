@@ -4,6 +4,10 @@
 
 <div class="subscribe-buttons">
   {{#each orderedPlans as |plan|}}
-    {{payment-plan plan=plan selectedPlan=selectedPlan clickPlan=(action "clickPlan")}}
+    {{payment-plan
+      plan=plan
+      selectedPlan=selectedPlan
+      clickPlan=(action "clickPlan")
+    }}
   {{/each}}
 </div>
