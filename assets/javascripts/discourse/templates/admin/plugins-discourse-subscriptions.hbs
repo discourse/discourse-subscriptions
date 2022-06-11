@@ -21,9 +21,18 @@
   </div>
 
   <ul class="nav nav-pills">
-    {{nav-item route="adminPlugins.discourse-subscriptions.products" label="discourse_subscriptions.admin.products.title"}}
-    {{nav-item route="adminPlugins.discourse-subscriptions.coupons" label="discourse_subscriptions.admin.coupons.title"}}
-    {{nav-item route="adminPlugins.discourse-subscriptions.subscriptions" label="discourse_subscriptions.admin.subscriptions.title"}}
+    {{nav-item
+      route="adminPlugins.discourse-subscriptions.products"
+      label="discourse_subscriptions.admin.products.title"
+    }}
+    {{nav-item
+      route="adminPlugins.discourse-subscriptions.coupons"
+      label="discourse_subscriptions.admin.coupons.title"
+    }}
+    {{nav-item
+      route="adminPlugins.discourse-subscriptions.subscriptions"
+      label="discourse_subscriptions.admin.subscriptions.title"
+    }}
   </ul>
 
   <hr>
@@ -33,5 +42,9 @@
   </div>
 {{else}}
   <p>{{i18n "discourse_subscriptions.admin.unconfigured"}}</p>
-  <p><a href="https://meta.discourse.org/t/discourse-subscriptions/140818/">{{i18n "discourse_subscriptions.admin.on_meta"}}</a></p>
+  <p>
+    <a href="https://meta.discourse.org/t/discourse-subscriptions/140818/">
+      {{i18n "discourse_subscriptions.admin.on_meta"}}
+    </a>
+  </p>
 {{/if}}

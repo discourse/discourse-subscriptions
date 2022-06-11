@@ -25,9 +25,17 @@
               {{loading-spinner size="small"}}
             {{else}}
               {{#if subscription.canceled_at}}
-                {{d-button disabled=subscription.canceled_at label="discourse_subscriptions.user.subscriptions.cancelled"}}
+                {{d-button
+                  disabled=subscription.canceled_at
+                  label="discourse_subscriptions.user.subscriptions.cancelled"
+                }}
               {{else}}
-                {{d-button disabled=subscription.canceled_at label="discourse_subscriptions.user.subscriptions.cancel" action=(route-action "cancelSubscription" subscription) icon="times"}}
+                {{d-button
+                  disabled=subscription.canceled_at
+                  label="discourse_subscriptions.user.subscriptions.cancel"
+                  action=(route-action "cancelSubscription" subscription)
+                  icon="times"
+                }}
               {{/if}}
             {{/if}}
           </td>
