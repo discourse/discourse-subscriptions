@@ -1,10 +1,11 @@
-import { registerUnbound } from "discourse-common/lib/helpers";
-import User from "discourse/models/user";
+import { helperContext, registerUnbound } from "discourse-common/lib/helpers";
 
 export default registerUnbound("user-viewing-self", function (model) {
-  if (User.current()) {
+  let currentUser = helperContext().currentUser;
+  if (currentUser) {
     return (
-      User.current().username.toLowerCase() === model.username.toLowerCase()
+      currentUser.admin ||
+      currentUser.username?.toLowerCase() === model.username?.toLowerCase()
     );
   }
 
