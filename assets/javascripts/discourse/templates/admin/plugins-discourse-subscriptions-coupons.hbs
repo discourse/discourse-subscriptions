@@ -1,6 +1,12 @@
 {{#if model.unconfigured}}
   <p>{{i18n "discourse_subscriptions.admin.unconfigured"}}</p>
-  <p><a href="https://meta.discourse.org/t/discourse-subscriptions/140818/">{{i18n "discourse_subscriptions.admin.on_meta"}}</a></p>
+  <p>
+    <a
+      href="https://meta.discourse.org/t/discourse-subscriptions/140818/"
+    >
+      {{i18n "discourse_subscriptions.admin.on_meta"}}
+    </a>
+  </p>
 {{else}}
   {{#if model}}
     <table class="table discourse-patrons-table">
@@ -17,7 +23,13 @@
             <td>{{coupon.code}}</td>
             <td>{{coupon.discount}}</td>
             <td>{{coupon.times_redeemed}}</td>
-            <td>{{input type="checkbox" checked=coupon.active click=(action "toggleActive" coupon)}}</td>
+            <td>
+              {{input
+                type="checkbox"
+                checked=coupon.active
+                click=(action "toggleActive" coupon)
+              }}
+            </td>
             <td>
               {{d-button
                 action=(action "deleteCoupon")
@@ -43,6 +55,9 @@
   {{/unless}}
 
   {{#if creating}}
-    {{create-coupon-form cancel=(action "closeCreateForm") create=(action "createNewCoupon")}}
+    {{create-coupon-form
+      cancel=(action "closeCreateForm")
+      create=(action "createNewCoupon")
+    }}
   {{/if}}
 {{/if}}
