@@ -91,6 +91,9 @@ en:
           status: Status
           discounted: Discounted
           renews: Renews
+          update_card:
+            title: "Update Card"
+            single: "Update"
           created_at: Created
           cancel: cancel
           cancelled: cancelled
