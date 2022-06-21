@@ -67,7 +67,7 @@ module DiscourseSubscriptions
       def update
         subscription = Subscription.where(external_id: params[:id]).first
         attach_method_to_customer(subscription.customer_id, params[:payment_method])
-        subscription = ::Stripe::Subscription.update(params[:id], { default_payment_method: params[:payment_method]})
+        subscription = ::Stripe::Subscription.update(params[:id], { default_payment_method: params[:payment_method] })
         render json: subscription.to_h
       end
 
