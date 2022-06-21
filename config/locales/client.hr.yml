@@ -1,0 +1,45 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+hr:
+  js:
+    discourse_subscriptions:
+      plans:
+        interval:
+          adverb:
+            week: Tjedno
+            month: Mjesečno
+            year: Godišnje
+      user:
+        payments:
+          created_at: Stvoreno
+        plans:
+          product: Ime i prezime
+        subscriptions:
+          status: Statust
+          created_at: Stvoreno
+      billing:
+        email: Email
+      admin:
+        dashboard:
+          title: Nadzorna ploča
+          table:
+            head:
+              user: Korisnik
+        products:
+          product:
+            description: Opis
+            active: Aktivno
+            created_at: Stvoreno
+        plans:
+          plan:
+            active: Aktivno
+            created_at: Stvoreno
+        subscriptions:
+          subscription:
+            user: Korisnik
+            status: Statust
+            created_at: Stvoreno
