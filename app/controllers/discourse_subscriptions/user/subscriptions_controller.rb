@@ -63,6 +63,25 @@ module DiscourseSubscriptions
           render_json_error e.message
         end
       end
+
+      def update
+        subscription = Subscription.where(external_id: params[:id]).first
+        attach_method_to_customer(subscription.customer_id, params[:payment_method])
+        subscription = ::Stripe::Subscription.update(params[:id], { default_payment_method: params[:payment_method]})
+        render json: subscription.to_h
+      end
+
+      private
+
+      def attach_method_to_customer(customer_id, method)
+        customer = Customer.find(customer_id)
+        ::Stripe::PaymentMethod.attach(
+          method,
+          {
+            customer: customer.customer_id
+          }
+        )
+      end
     end
   end
 end

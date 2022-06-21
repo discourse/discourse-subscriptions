@@ -18,7 +18,7 @@ DiscourseSubscriptions::Engine.routes.draw do
 
   namespace :user do
     resources :payments, only: [:index]
-    resources :subscriptions, only: [:index, :destroy]
+    resources :subscriptions, only: [:index, :update, :destroy]
   end
 
   get '/' => 'subscribe#index'
