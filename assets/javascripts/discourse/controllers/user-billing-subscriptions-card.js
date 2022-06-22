@@ -15,10 +15,10 @@ export default Controller.extend({
   },
 
   @action
-  async updatePaymentMethod(){
+  async updatePaymentMethod() {
     const paymentMethodObject = await this.stripe.createPaymentMethod({
-      type: 'card',
-      card: this.cardElement
+      type: "card",
+      card: this.cardElement,
     });
 
     if (paymentMethodObject.error) {
@@ -28,11 +28,15 @@ export default Controller.extend({
 
     const paymentMethod = paymentMethodObject.paymentMethod.id;
 
-    const result = await ajax(`/s/user/subscriptions/${this.model}`, {
-      method: "PUT",
-      data: {
-        payment_method: paymentMethod
-      }
-    })
-  }
+    try {
+      await ajax(`/s/user/subscriptions/${this.model}`, {
+        method: "PUT",
+        data: {
+          payment_method: paymentMethod,
+        },
+      });
+    } catch (err) {
+      popupAjaxError(err);
+    }
+  },
 });
