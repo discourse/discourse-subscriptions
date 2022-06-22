@@ -11,7 +11,7 @@ task 'subscriptions:subscriptions_import' => :environment do
 
   procourse_import = false
   procourse_import_response = ask("Were the subscriptions you are importing created in Procourse Memberships?: (y/N)")
-  if procourse_import_response.downcase != 'y'
+  if procourse_import_response.downcase == 'y'
     procourse_import = true
   end
 
@@ -147,10 +147,10 @@ def import_subscriptions(procourse_import)
           discourse_user = User.find(user_id)
           puts "Discourse User: #{discourse_user.username_lower} found for Strip metadata update ..."
 
-          updated_subsciption = Stripe::Subscription.update(subscription_id,
+          updated_subscription = Stripe::Subscription.update(subscription_id,
                                                             { metadata: { user_id: user_id,
                                                                           username: discourse_user.username_lower } })
-          puts "Stripe Subscription: #{updated_subsciption[:id]}, metadata: #{updated_subsciption[:metadata]} UPDATED"
+          puts "Stripe Subscription: #{updated_subscription[:id]}, metadata: #{updated_subscription[:metadata]} UPDATED"
 
           updated_customer = Stripe::Customer.update(customer_id, { email: discourse_user.email })
           puts "Stripe Customer: #{updated_customer[:id]}, email: #{updated_customer[:email]} UPDATED"
