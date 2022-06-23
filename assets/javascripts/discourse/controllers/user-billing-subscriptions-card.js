@@ -2,8 +2,11 @@ import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
+import I18n from "I18n";
+import bootbox from "bootbox";
 
 export default Controller.extend({
+  loading: false,
   init() {
     this._super(...arguments);
     this.set(
@@ -16,13 +19,17 @@ export default Controller.extend({
 
   @action
   async updatePaymentMethod() {
+    this.set("loading", true);
     const paymentMethodObject = await this.stripe.createPaymentMethod({
       type: "card",
       card: this.cardElement,
     });
 
     if (paymentMethodObject.error) {
-      popupAjaxError(paymentMethodObject.error);
+      bootbox.alert(
+        paymentMethodObject.error?.message || I18n.t("generic_error")
+      );
+      this.set("loading", false);
       return;
     }
 
@@ -37,6 +44,8 @@ export default Controller.extend({
       });
     } catch (err) {
       popupAjaxError(err);
+    } finally {
+      this.set("loading", false);
     }
   },
 });
