@@ -7,8 +7,8 @@
       <th>{{i18n "discourse_subscriptions.user.subscriptions.discounted"}}</th>
       <th>{{i18n "discourse_subscriptions.user.subscriptions.status"}}</th>
       <th>{{i18n "discourse_subscriptions.user.subscriptions.renews"}}</th>
-      <th>{{i18n "discourse_subscriptions.user.subscriptions.update_card.title"}}</th>
       <th>{{i18n "discourse_subscriptions.user.subscriptions.created_at"}}</th>
+      <th>{{i18n "discourse_subscriptions.user.subscriptions.update_card.title"}}</th>
       <th></th>
     </thead>
     <tbody>
@@ -20,9 +20,6 @@
           <td>{{subscription.discounted}}</td>
           <td>{{subscription.status}}</td>
           <td>{{subscription.endDate}}</td>
-          <td>
-            {{link-to (i18n "discourse_subscriptions.user.subscriptions.update_card.single") "user.billing.subscriptions.card" subscription.id}}
-          </td>
           <td>{{format-unix-date subscription.created}}</td>
           <td class="td-right">
             {{#if subscription.loading}}
@@ -35,10 +32,15 @@
                 }}
               {{else}}
                 {{d-button
+                  action= (route-action "updateCard" subscription.id)
+                  icon="far-edit"
+                  class="btn no-text btn-icon"
+                }}
+                {{d-button
+                  class="btn-danger btn no-text btn-icon"
+                  icon="trash-alt"
                   disabled=subscription.canceled_at
-                  label="discourse_subscriptions.user.subscriptions.cancel"
                   action=(route-action "cancelSubscription" subscription)
-                  icon="times"
                 }}
               {{/if}}
             {{/if}}

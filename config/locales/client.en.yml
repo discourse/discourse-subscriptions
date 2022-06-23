@@ -93,7 +93,7 @@ en:
           renews: Renews
           update_card:
             heading: "Update Card"
-            title: "Update Card"
+            title: "Update|Cancel"
             single: "Update"
           created_at: Created
           cancel: cancel
