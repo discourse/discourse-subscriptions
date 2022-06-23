@@ -11,7 +11,8 @@ export default Component.extend({
     const root = document.querySelector(":root");
     const computedStyle = getComputedStyle(root);
     const primaryColor = computedStyle.getPropertyValue("--primary");
-    const placeholderColor = computedStyle.getPropertyValue("--secondary-medium");
+    const placeholderColor =
+      computedStyle.getPropertyValue("--secondary-medium");
     this.cardElement.update({
       style: {
         base: {
