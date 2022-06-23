@@ -92,6 +92,7 @@ en:
           discounted: Discounted
           renews: Renews
           update_card:
+            heading: "Update Card"
             title: "Update Card"
             single: "Update"
           created_at: Created

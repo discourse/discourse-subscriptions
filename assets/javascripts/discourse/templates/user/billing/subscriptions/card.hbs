@@ -1,7 +1,16 @@
-{{subscribe-card cardElement=cardElement}}
-{{d-button
-  disabled=loading
-  action="updatePaymentMethod"
-  class="btn btn-primary btn-payment"
-  label="discourse_subscriptions.user.subscriptions.update_card.title"
-}}
+<h3>{{i18n "discourse_subscriptions.user.subscriptions.update_card.heading"}}</h3>
+
+<div class="form-vertical">
+  <div class="control-group">
+    {{subscribe-card
+    cardElement=cardElement
+    class="input-xxlarge"
+    }}
+  </div>
+  {{d-button
+    disabled=loading
+    action="updatePaymentMethod"
+    class="btn btn-primary"
+    label="discourse_subscriptions.user.subscriptions.update_card.title"
+  }}
+</div>
