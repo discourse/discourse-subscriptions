@@ -15,7 +15,7 @@ export function stubStripe() {
               on() {},
               card() {},
               mount() {},
-              update() {}
+              update() {},
             };
           },
         };

@@ -13,7 +13,6 @@ export default Component.extend({
     const primaryColor = computedStyle.getPropertyValue("--primary");
     const placeholderColor =
       computedStyle.getPropertyValue("--secondary-medium");
-      debugger
     this.cardElement.update({
       style: {
         base: {
