@@ -7,6 +7,7 @@ import bootbox from "bootbox";
 
 export default Controller.extend({
   loading: false,
+  saved: false,
   init() {
     this._super(...arguments);
     this.set(
@@ -20,6 +21,8 @@ export default Controller.extend({
   @action
   async updatePaymentMethod() {
     this.set("loading", true);
+    this.set("saved", false);
+
     const paymentMethodObject = await this.stripe.createPaymentMethod({
       type: "card",
       card: this.cardElement,
@@ -42,10 +45,12 @@ export default Controller.extend({
           payment_method: paymentMethod,
         },
       });
+      this.set("saved", true);
     } catch (err) {
       popupAjaxError(err);
     } finally {
       this.set("loading", false);
+      this.cardElement?.clear();
     }
   },
 });
