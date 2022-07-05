@@ -145,14 +145,14 @@
     {{#if model.plan.isNew}}
       {{d-button
         label="discourse_subscriptions.admin.plans.operations.create"
-        action="createPlan"
+        action=(action "createPlan")
         icon="plus"
         class="btn btn-primary"
       }}
     {{else}}
       {{d-button
         label="discourse_subscriptions.admin.plans.operations.update"
-        action="updatePlan"
+        action=(action "updatePlan")
         icon="check"
         class="btn btn-primary"
       }}
