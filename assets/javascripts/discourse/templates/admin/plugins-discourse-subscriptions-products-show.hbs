@@ -142,14 +142,14 @@
   {{#if model.product.isNew}}
     {{d-button
       label="discourse_subscriptions.admin.products.operations.create"
-      action="createProduct"
+      action=(action "createProduct")
       icon="plus"
       class="btn btn-primary"
     }}
   {{else}}
     {{d-button
       label="discourse_subscriptions.admin.products.operations.update"
-      action="updateProduct"
+      action=(action "updateProduct")
       icon="check"
       class="btn btn-primary"
     }}
