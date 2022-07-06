@@ -48,12 +48,12 @@ table.discourse-subscriptions-user-table {
   width: 100%;
   th,
   td {
-    padding: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 8px;
   }
   th:first-child,
-  td:first-child,
-  th:last-child,
-  td:last-child {
+  td:first-child {
     padding-left: 0;
   }
 }
