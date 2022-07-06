@@ -91,6 +91,9 @@ en:
           status: Status
           discounted: Discounted
           renews: Renews
+          update_card:
+            heading: "Update Card for subscription: %{sub_id}"
+            single: "Update"
           created_at: Created
           cancel: cancel
           cancelled: cancelled

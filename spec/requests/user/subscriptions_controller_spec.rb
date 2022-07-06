@@ -18,6 +18,12 @@ module DiscourseSubscriptions
         ::Stripe::Subscription.expects(:delete).never
         patch "/s/user/subscriptions/sub_12345.json"
       end
+
+      it "doesn't update payment method for subscription" do
+        ::Stripe::Subscription.expects(:update).never
+        ::Stripe::PaymentMethod.expects(:attach).never
+        put "/s/user/subscriptions/sub_12345.json", params: { payment_method: "pm_abc123abc" }
+      end
     end
 
     context "authenticated" do
@@ -80,6 +86,14 @@ module DiscourseSubscriptions
             "plan" => { "id" => "plan_1", "product" => { "name" => "ACME Subscriptions" } },
             "product" => { "name" => "ACME Subscriptions" }
           )
+        end
+      end
+
+      describe "update" do
+        it "updates the payment method for subscription" do
+          ::Stripe::Subscription.expects(:update).once
+          ::Stripe::PaymentMethod.expects(:attach).once
+          put "/s/user/subscriptions/sub_1234.json", params: { payment_method: "pm_abc123abc" }
         end
       end
     end

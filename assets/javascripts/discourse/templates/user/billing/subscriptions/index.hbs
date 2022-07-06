@@ -31,10 +31,15 @@
                 }}
               {{else}}
                 {{d-button
+                  action= (route-action "updateCard" subscription.id)
+                  icon="far-edit"
+                  class="btn no-text btn-icon"
+                }}
+                {{d-button
+                  class="btn-danger btn no-text btn-icon"
+                  icon="trash-alt"
                   disabled=subscription.canceled_at
-                  label="discourse_subscriptions.user.subscriptions.cancel"
                   action=(route-action "cancelSubscription" subscription)
-                  icon="times"
                 }}
               {{/if}}
             {{/if}}

@@ -63,6 +63,31 @@ module DiscourseSubscriptions
           render_json_error e.message
         end
       end
+
+      def update
+        params.require(:payment_method)
+
+        subscription = Subscription.where(external_id: params[:id]).first
+        begin
+          attach_method_to_customer(subscription.customer_id, params[:payment_method])
+          subscription = ::Stripe::Subscription.update(params[:id], { default_payment_method: params[:payment_method] })
+          render json: success_json
+        rescue ::Stripe::InvalidRequestError
+          render_json_error I18n.t("discourse_subscriptions.card.invalid")
+        end
+      end
+
+      private
+
+      def attach_method_to_customer(customer_id, method)
+        customer = Customer.find(customer_id)
+        ::Stripe::PaymentMethod.attach(
+          method,
+          {
+            customer: customer.customer_id
+          }
+        )
+      end
     end
   end
 end
