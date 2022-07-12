@@ -9,3 +9,4 @@ sv:
     customer_not_found: Kunden hittades inte
     card:
       declined: Kort avvisat
+      invalid: Kortet är ogiltigt

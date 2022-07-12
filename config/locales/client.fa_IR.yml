@@ -34,6 +34,9 @@ fa_IR:
         subscriptions:
           status: وضعیت
           discounted: با تخفیف
+          update_card:
+            heading: "به‌روزرسانی کارت برای اشتراک: %{sub_id}"
+            single: "به‌روزرسانی"
           created_at: ساخته شده
       subscribe:
         card:

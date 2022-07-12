@@ -9,3 +9,4 @@ ru:
     customer_not_found: Клиент не найден
     card:
       declined: Карта отклонена
+      invalid: Карта недействительна

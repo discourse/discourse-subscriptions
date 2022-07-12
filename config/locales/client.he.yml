@@ -96,6 +96,9 @@ he:
           status: מצב
           discounted: בהנחה
           renews: חידושים
+          update_card:
+            heading: "עדכון כרטיס למינוי: %{sub_id}"
+            single: "עדכון"
           created_at: נוצר
           cancel: ביטול
           cancelled: בוטל
