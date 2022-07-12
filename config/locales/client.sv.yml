@@ -96,6 +96,9 @@ sv:
           status: Status
           discounted: Rabatterad
           renews: Förnyar
+          update_card:
+            heading: "Uppdatera kort för prenumeration: %{sub_id}"
+            single: "Uppdatera"
           created_at: Skapad
           cancel: avbryt
           cancelled: avbruten

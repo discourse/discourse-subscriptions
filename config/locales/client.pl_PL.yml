@@ -28,6 +28,12 @@ pl_PL:
         subscribe: Subskrybuj
         user_activity:
           payments: Płatności
+      campaign:
+        title: Wesprzyj nas
+        success_title: Sukces!
+        subscribers: Subskrybenci
+        supporter: Wspierający
+        supporters: Wspierający
       one_time_payment: Płatność jednorazowa
       plans:
         purchase: Kup subskrypcję
@@ -59,6 +65,8 @@ pl_PL:
           status: Status
           discounted: Zniżka
           renews: Odnawia się
+          update_card:
+            single: "Aktualizuj"
           created_at: Utworzono
           cancel: anuluj
           cancelled: anulowane

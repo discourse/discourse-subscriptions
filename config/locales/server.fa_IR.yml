@@ -9,3 +9,4 @@ fa_IR:
     customer_not_found: مشتری پیدا نشد
     card:
       declined: کارت رد شد
+      invalid: کارت نامعتبر است

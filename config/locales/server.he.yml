@@ -9,3 +9,4 @@ he:
     customer_not_found: הלקוח לא נמצא
     card:
       declined: הכרטיס נדחה
+      invalid: כרטיס שגוי
