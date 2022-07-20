@@ -24,28 +24,6 @@ module DiscourseSubscriptions
               payments = ::Stripe::PaymentIntent.list(customer: customer_id)
               payments_from_invoices = payments[:data].select { |payment| invoice_ids.include?(payment[:invoice]) }
               data = data | payments_from_invoices
-
-              #bank transfer
-              bank_transfer_payment = Stripe::PaymentIntent.create({
-                amount: 1099,
-                currency: 'eur',
-                customer: customer['id'],
-                payment_method_types: ['customer_balance'],
-                payment_method_data: {
-                  type: 'customer_balance',
-                },
-                payment_method_options: {
-                  customer_balance: {
-                    funding_type: 'bank_transfer',
-                    bank_transfer: {
-                      type: 'eu_bank_transfer',
-                      eu_bank_transfer: {
-                        country: 'FR',
-                      }
-                    },
-                  },
-                },
-              })
             end
           end
 
