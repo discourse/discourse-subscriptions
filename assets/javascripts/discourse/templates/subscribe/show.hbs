@@ -1,6 +1,6 @@
 <div class="discourse-subscriptions-section-columns">
   <div class="section-column discourse-subscriptions-confirmation-billing">
-    <h1>Tchoupe martin junior</h1>
+   
     <h2>
       {{model.product.name}}
     </h2>
@@ -22,6 +22,16 @@
 
       {{payment-options plans=model.plans selectedPlan=selectedPlan}}
 
+      <hr>
+      <h2> Comment souhaitez vous payer </h2>
+      <ul>
+        <li>
+          <a href=#> Virement bancaire </a>
+        </li>
+        <li>
+          <a href=#> Carte bancaire </a>
+        </li>
+      </ul>
       <hr>
 
       {{subscribe-card cardElement=cardElement}}
