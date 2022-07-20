@@ -1,3 +1,7 @@
+<head>
+  <title>Checkout</title>
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
 <div class="discourse-subscriptions-section-columns">
   <div class="section-column discourse-subscriptions-confirmation-billing">
    
@@ -23,7 +27,7 @@
       {{payment-options plans=model.plans selectedPlan=selectedPlan}}
 
       <hr>
-      <h2> Comment souhaitez vous payer </h2>
+      <h2> Comment souhaitez vous payer ?</h2>
       <ul>
         <li>
           <a href=#> Virement bancaire </a>

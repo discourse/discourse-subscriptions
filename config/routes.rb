@@ -8,6 +8,8 @@ DiscourseSubscriptions::Engine.routes.draw do
     post '/create-campaign' => 'admin#create_campaign'
   end
 
+  #base url
+  # https://test.community.world-like-home.com/admin/plugins/discourse-subscriptions/
   namespace :admin, constraints: AdminConstraint.new do
     resources :plans
     resources :subscriptions, only: [:index, :destroy]
