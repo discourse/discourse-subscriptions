@@ -15,6 +15,15 @@ export default {
           href: "/s",
         });
       }
+
+      const user = api.getCurrentUser();
+      if (user) {
+        api.addQuickAccessProfileItem({
+          icon: "far-credit-card",
+          href: `/u/${user.username}/billing/subscriptions`,
+          content: "Billing",
+        });
+      }
     });
   },
 };
