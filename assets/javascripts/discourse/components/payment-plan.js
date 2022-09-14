@@ -5,8 +5,8 @@ const RECURRING = "recurring";
 
 export default Component.extend({
   @discourseComputed("selectedPlan")
-  selected(planId) {
-    return planId === this.plan.id;
+  selectedClass(planId) {
+    return planId === this.plan.id ? "btn-primary" : "";
   },
 
   @discourseComputed("plan.type")

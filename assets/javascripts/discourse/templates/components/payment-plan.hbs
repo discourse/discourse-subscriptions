@@ -1,14 +1,11 @@
-{{#ds-button
-  action=(action "planClick")
-  selected=selected
-  class="btn-discourse-subscriptions-subscribe"
-}}
+<DButton
+  @action={{action "planClick"}} @class={{concat "btn-discourse-subscriptions-subscribe " selectedClass}}>
   <div class="interval">
-    {{#if recurringPlan}}
+    {{#if this.recurringPlan}}
       {{i18n
         (concat
           "discourse_subscriptions.plans.interval.adverb."
-          plan.recurring.interval
+          this.plan.recurring.interval
         )
       }}
     {{else}}
@@ -17,6 +14,6 @@
   </div>
 
   <span class="amount">
-    {{format-currency plan.currency plan.amountDollars}}
+    {{format-currency this.plan.currency this.plan.amountDollars}}
   </span>
-{{/ds-button}}
+</DButton>
