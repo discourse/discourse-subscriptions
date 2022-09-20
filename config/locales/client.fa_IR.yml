@@ -5,17 +5,27 @@
 # https://translate.discourse.org/
 
 fa_IR:
+  site_settings:
+    discourse_subscriptions_enabled: فعال کردن افزونه اشتراک دیسکورس
+    discourse_subscriptions_extra_nav_subscribe: دکمه اشتراک در منو اصلی نشان داده شود
   js:
     filters:
       subscribe:
         help: با خرید اشتراک از این سایت پشتیبانی کنید
     discourse_subscriptions:
+      title: اشتراک دیسکورس
+      admin_navigation: اشتراک‌ها
       optional: اختیاری
       navigation:
         billing: صورت‌حساب
         payments: پرداخت‌ها
+        subscriptions: اشتراک‌ها
+        subscribe: اشتراک
         user_activity:
           payments: پرداخت‌ها
+      campaign:
+        title: از ما حمایت کنید
+        goal_comparison: "<strong>%{current}</strong> از <strong>%{goal}</strong>"
       plans:
         interval:
           adverb:
