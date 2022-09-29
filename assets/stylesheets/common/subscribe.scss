@@ -24,9 +24,9 @@
 
   padding: 10px;
   height: 40px;
-  margin-bottom: 20px;
+  margin-bottom: 9px;
 
-  border: 1px solid var(--primary);
+  border: 1px solid var(--primary-medium);
   background-color: var(--secondary);
 
   font-size: $base-font-size;
@@ -34,7 +34,9 @@
 }
 
 .StripeElement--focus {
+  border-color: var(--tertiary);
   box-shadow: shadow("focus");
+  outline: 1px solid var(--tertiary);
 }
 
 .StripeElement--invalid {
@@ -43,4 +45,8 @@
 
 .StripeElement--webkit-autofill {
   color: var(--quaternary);
+}
+
+.subscribe-promo-code {
+  width: 100%;
 }
