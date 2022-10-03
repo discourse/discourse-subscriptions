@@ -30,14 +30,13 @@
       {{else if isAnonymous}}
         {{login-required}}
       {{else}}
-        <div class="promo-code">
-          {{input
-            type="text"
-            name="promo_code"
-            placeholder=(i18n "discourse_subscriptions.subscribe.promo_code")
-            value=promoCode
-          }}
-        </div>
+        {{input
+          type="text"
+          name="promo_code"
+          placeholder=(i18n "discourse_subscriptions.subscribe.promo_code")
+          value=promoCode
+          class="subscribe-promo-code"
+        }}
 
         {{d-button
           disabled=loading

@@ -1,6 +1,8 @@
 <DButton
-  @action={{action "planClick"}} @class={{concat "btn-discourse-subscriptions-subscribe " selectedClass}}>
-  <div class="interval">
+  @action={{action "planClick"}}
+  @class={{concat-class "btn-discourse-subscriptions-subscribe" selectedClass}}
+>
+  <span class="interval">
     {{#if this.recurringPlan}}
       {{i18n
         (concat
@@ -11,7 +13,7 @@
     {{else}}
       {{i18n "discourse_subscriptions.one_time_payment"}}
     {{/if}}
-  </div>
+  </span>
 
   <span class="amount">
     {{format-currency this.plan.currency this.plan.amountDollars}}
