@@ -16,7 +16,7 @@ module DiscourseSubscriptions
       Fabricate(:subscription, external_id: "sub_77777", customer_id: customer.id)
     end
 
-    context 'unauthenticated' do
+    context 'when unauthenticated' do
       it "does nothing" do
         ::Stripe::Subscription.expects(:list).never
         get "/s/admin/subscriptions.json"
@@ -29,7 +29,7 @@ module DiscourseSubscriptions
       end
     end
 
-    context 'authenticated' do
+    context 'when authenticated' do
       let(:admin) { Fabricate(:admin) }
 
       before { sign_in(admin) }

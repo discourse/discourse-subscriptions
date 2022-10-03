@@ -7,7 +7,7 @@ module DiscourseSubscriptions
     let (:user) { Fabricate(:user) }
     let (:campaign_user) { Fabricate(:user) }
 
-    context "showing products" do
+    context "when showing products" do
       let(:product) do
         {
           id: "prodct_23456",
@@ -80,7 +80,7 @@ module DiscourseSubscriptions
           Fabricate(:customer, product_id: "prodct_23456", user_id: user.id, customer_id: 'x')
           Fabricate(:customer, product_id: "prod_campaign", user_id: campaign_user.id, customer_id: 'y')
         end
-        context 'not showing contributors' do
+        context 'when not showing contributors' do
           it 'returns nothing if not set to show contributors' do
             SiteSetting.discourse_subscriptions_campaign_show_contributors = false
             get "/s/contributors.json"
@@ -90,7 +90,7 @@ module DiscourseSubscriptions
           end
         end
 
-        context 'showing contributors' do
+        context 'when showing contributors' do
           before do
             SiteSetting.discourse_subscriptions_campaign_show_contributors = true
           end
@@ -140,8 +140,8 @@ module DiscourseSubscriptions
       end
     end
 
-    context "creating subscriptions" do
-      context "unauthenticated" do
+    context "when creating subscriptions" do
+      context "when unauthenticated" do
         it "does not create a subscription" do
           ::Stripe::Customer.expects(:create).never
           ::Stripe::Price.expects(:retrieve).never
@@ -150,7 +150,7 @@ module DiscourseSubscriptions
         end
       end
 
-      context "authenticated" do
+      context "when authenticated" do
         before do
           sign_in(user)
         end
@@ -225,7 +225,7 @@ module DiscourseSubscriptions
           end
 
           context "with promo code" do
-            context "invalid code" do
+            context "with invalid code" do
               it "prevents use of invalid coupon codes" do
                 ::Stripe::Price.expects(:retrieve).returns(
                   type: 'recurring',
@@ -247,7 +247,7 @@ module DiscourseSubscriptions
               end
             end
 
-            context "valid code" do
+            context "with valid code" do
               before do
                 ::Stripe::PromotionCode.expects(:list).with({ code: '123' }).returns(
                   data: [{
@@ -338,7 +338,7 @@ module DiscourseSubscriptions
           let(:group_name) { 'group-123' }
           let(:group) { Fabricate(:group, name: group_name) }
 
-          context "unauthorized group" do
+          context "with unauthorized group" do
             before do
               ::Stripe::Customer.expects(:create).returns(id: 'cus_1234')
               ::Stripe::Subscription.expects(:create).returns(status: 'active')
@@ -357,7 +357,7 @@ module DiscourseSubscriptions
             end
           end
 
-          context "plan has group in metadata" do
+          context "when plan has group in metadata" do
             before do
               ::Stripe::Customer.expects(:create).returns(id: 'cus_1234')
               ::Stripe::Price.expects(:retrieve).returns(type: 'recurring', metadata: { group_name: group_name })

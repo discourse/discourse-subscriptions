@@ -9,7 +9,7 @@ module DiscourseSubscriptions
         expect(DiscourseSubscriptions::Admin::ProductsController < ::Admin::AdminController).to eq(true)
       end
 
-      context 'unauthenticated' do
+      context 'when unauthenticated' do
         it "does not list the products" do
           ::Stripe::Product.expects(:list).never
           get "/s/admin/products.json"
@@ -41,7 +41,7 @@ module DiscourseSubscriptions
         end
       end
 
-      context 'authenticated' do
+      context 'when authenticated' do
         let(:admin) { Fabricate(:admin) }
 
         before { sign_in(admin) }

@@ -8,7 +8,7 @@ module DiscourseSubscriptions
       expect(DiscourseSubscriptions::User::PaymentsController < ::ApplicationController).to eq(true)
     end
 
-    context "not authenticated" do
+    context "when not authenticated" do
       it "does not get the payment intents" do
         ::Stripe::PaymentIntent.expects(:list).never
         get "/s/user/payments.json"
@@ -16,7 +16,7 @@ module DiscourseSubscriptions
       end
     end
 
-    context "authenticated" do
+    context "when authenticated" do
       let(:user) { Fabricate(:user, email: 'zasch@example.com') }
 
       before do
