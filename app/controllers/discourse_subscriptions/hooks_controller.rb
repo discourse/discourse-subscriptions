@@ -52,7 +52,7 @@ module DiscourseSubscriptions
         Subscription.find_by(
           customer_id: customer.id,
           external_id: event[:data][:object][:id]
-        )&.destroy
+        )&.destroy!
 
         user = ::User.find(customer.user_id)
         return render_json_error 'user not found' if !user
@@ -61,7 +61,7 @@ module DiscourseSubscriptions
           group.remove(user)
         end
 
-        customer.destroy
+        customer.destroy!
       end
 
       head 200
