@@ -8,7 +8,7 @@ module DiscourseSubscriptions
       expect(DiscourseSubscriptions::User::SubscriptionsController < ::ApplicationController).to eq(true)
     end
 
-    context "not authenticated" do
+    context "when not authenticated" do
       it "does not get the subscriptions" do
         ::Stripe::Customer.expects(:list).never
         get "/s/user/subscriptions.json"
@@ -26,7 +26,7 @@ module DiscourseSubscriptions
       end
     end
 
-    context "authenticated" do
+    context "when authenticated" do
       let(:user) { Fabricate(:user, email: 'beanie@example.com') }
       let(:customer) { Fabricate(:customer, user_id: user.id, customer_id: "cus_23456", product_id: "prod_123") }
 

@@ -9,7 +9,7 @@ module DiscourseSubscriptions
         expect(DiscourseSubscriptions::Admin::PlansController < ::Admin::AdminController).to eq(true)
       end
 
-      context 'not authenticated' do
+      context 'when not authenticated' do
         describe "index" do
           it "does not get the plans" do
             ::Stripe::Price.expects(:list).never
@@ -54,7 +54,7 @@ module DiscourseSubscriptions
         end
       end
 
-      context 'authenticated' do
+      context 'when authenticated' do
         let(:admin) { Fabricate(:admin) }
 
         before { sign_in(admin) }
