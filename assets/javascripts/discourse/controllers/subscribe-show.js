@@ -4,9 +4,10 @@ import Transaction from "discourse/plugins/discourse-subscriptions/discourse/mod
 import I18n from "I18n";
 import { not } from "@ember/object/computed";
 import discourseComputed from "discourse-common/utils/decorators";
-import bootbox from "bootbox";
+import { inject as service } from "@ember/service";
 
 export default Controller.extend({
+  dialog: service(),
   selectedPlan: null,
   promoCode: null,
   isAnonymous: not("currentUser"),
@@ -23,7 +24,7 @@ export default Controller.extend({
   },
 
   alert(path) {
-    bootbox.alert(I18n.t(`discourse_subscriptions.${path}`));
+    this.dialog.alert(I18n.t(`discourse_subscriptions.${path}`));
   },
 
   @discourseComputed("model.product.repurchaseable", "model.product.subscribed")
@@ -63,7 +64,7 @@ export default Controller.extend({
           return result;
         } else {
           this.set("loading", false);
-          bootbox.alert(result.error.message || result.error);
+          this.dialog.alert(result.error.message || result.error);
           return result;
         }
       });
@@ -99,7 +100,7 @@ export default Controller.extend({
       transaction
         .then((result) => {
           if (result.error) {
-            bootbox.alert(result.error.message || result.error);
+            this.dialog.alert(result.error.message || result.error);
           } else if (
             result.status === "incomplete" ||
             result.status === "open"
@@ -122,7 +123,7 @@ export default Controller.extend({
           }
         })
         .catch((result) => {
-          bootbox.alert(
+          this.dialog.alert(
             result.jqXHR.responseJSON.errors[0] || result.errorThrown
           );
           this.set("loading", false);

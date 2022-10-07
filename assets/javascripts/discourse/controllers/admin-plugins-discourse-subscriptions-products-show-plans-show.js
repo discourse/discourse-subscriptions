@@ -2,7 +2,7 @@ import discourseComputed from "discourse-common/utils/decorators";
 import DiscourseURL from "discourse/lib/url";
 import Controller from "@ember/controller";
 import { alias } from "@ember/object/computed";
-import bootbox from "bootbox";
+import { popupAjaxError } from "discourse/lib/ajax-error";
 
 const RECURRING = "recurring";
 const ONE_TIME = "one_time";
@@ -83,9 +83,7 @@ export default Controller.extend({
       this.get("model.plan")
         .save()
         .then(() => this.redirect(this.productId))
-        .catch((data) =>
-          bootbox.alert(data.jqXHR.responseJSON.errors.join("\n"))
-        );
+        .catch(popupAjaxError);
     },
 
     updatePlan() {
@@ -95,9 +93,7 @@ export default Controller.extend({
       this.get("model.plan")
         .update()
         .then(() => this.redirect(this.productId))
-        .catch((data) =>
-          bootbox.alert(data.jqXHR.responseJSON.errors.join("\n"))
-        );
+        .catch(popupAjaxError);
     },
   },
 });

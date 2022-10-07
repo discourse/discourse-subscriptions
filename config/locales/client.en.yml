@@ -47,9 +47,8 @@ en:
         refresh_page: Campaign data is now syncing from Stripe in the background. Refresh the page in a few moments to load the updated info.
         supporter: Supporter
         supporters: Supporters
+        confirm_creation_title: Do you want to automatically create a campaign for your community?
         confirm_creation: |-
-          <p>Do you want to automatically create a campaign for your community?</p>
-
           <p>Continuing will create:</p>
 
           <ul>

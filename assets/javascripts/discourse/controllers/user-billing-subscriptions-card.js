@@ -4,8 +4,10 @@ import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 import I18n from "I18n";
 import bootbox from "bootbox";
+import { inject as service } from "@ember/service";
 
 export default Controller.extend({
+  dialog: service(),
   loading: false,
   saved: false,
   init() {
@@ -29,7 +31,7 @@ export default Controller.extend({
     });
 
     if (paymentMethodObject.error) {
-      bootbox.alert(
+      this.dialog.alert(
         paymentMethodObject.error?.message || I18n.t("generic_error")
       );
       this.set("loading", false);
