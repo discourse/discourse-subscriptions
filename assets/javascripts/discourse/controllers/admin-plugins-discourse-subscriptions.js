@@ -4,10 +4,12 @@ import { popupAjaxError } from "discourse/lib/ajax-error";
 import Controller from "@ember/controller";
 import discourseComputed from "discourse-common/utils/decorators";
 import I18n from "I18n";
-import bootbox from "bootbox";
+import { inject as service } from "@ember/service";
+import { htmlSafe } from "@ember/template";
 
 export default Controller.extend({
   loading: false,
+  dialog: service(),
 
   @discourseComputed
   stripeConfigured() {
@@ -29,26 +31,20 @@ export default Controller.extend({
     ajax(`/s/admin/refresh`, {
       method: "post",
     }).then(() => {
-      bootbox.alert(
-        I18n.t("discourse_subscriptions.campaign.refresh_page"),
-        () => {
-          this.transitionToRoute(
-            "adminPlugins.discourse-subscriptions.products"
-          );
-        }
+      this.dialog.alert(
+        I18n.t("discourse_subscriptions.campaign.refresh_page")
       );
     });
   },
 
   @action
   createOneClickCampaign() {
-    bootbox.confirm(
-      I18n.t("discourse_subscriptions.campaign.confirm_creation"),
-      (result) => {
-        if (!result) {
-          return;
-        }
-
+    this.dialog.yesNoConfirm({
+      title: I18n.t("discourse_subscriptions.campaign.confirm_creation_title"),
+      message: htmlSafe(
+        I18n.t("discourse_subscriptions.campaign.confirm_creation")
+      ),
+      didConfirm: () => {
         this.set("loading", true);
 
         ajax(`/s/admin/create-campaign`, {
@@ -56,15 +52,15 @@ export default Controller.extend({
         })
           .then(() => {
             this.set("loading", false);
-            bootbox.alert(
-              I18n.t("discourse_subscriptions.campaign.created"),
-              () => {
-                this.send("showSettings");
-              }
-            );
+            this.dialog.confirm({
+              message: I18n.t("discourse_subscriptions.campaign.created"),
+              shouldDisplayCancel: false,
+              didConfirm: () => this.send("showSettings"),
+              didCancel: () => this.send("showSettings"),
+            });
           })
           .catch(popupAjaxError);
-      }
-    );
+      },
+    });
   },
 });

@@ -4,9 +4,10 @@ import AdminPlan from "discourse/plugins/discourse-subscriptions/discourse/model
 import I18n from "I18n";
 import { hash } from "rsvp";
 import { action } from "@ember/object";
-import bootbox from "bootbox";
+import { inject as service } from "@ember/service";
 
 export default Route.extend({
+  dialog: service(),
   model(params) {
     const product_id = params["product-id"];
     let product;
@@ -24,26 +25,22 @@ export default Route.extend({
 
   @action
   destroyPlan(plan) {
-    bootbox.confirm(
-      I18n.t("discourse_subscriptions.admin.plans.operations.destroy.confirm"),
-      I18n.t("no_value"),
-      I18n.t("yes_value"),
-      (confirmed) => {
-        if (confirmed) {
-          plan
-            .destroy()
-            .then(() => {
-              this.controllerFor(
-                "adminPluginsDiscourseSubscriptionsProductsShow"
-              )
-                .get("model.plans")
-                .removeObject(plan);
-            })
-            .catch((data) =>
-              bootbox.alert(data.jqXHR.responseJSON.errors.join("\n"))
-            );
-        }
-      }
-    );
+    this.dialog.yesNoConfirm({
+      message: I18n.t(
+        "discourse_subscriptions.admin.plans.operations.destroy.confirm"
+      ),
+      didConfirm: () => {
+        plan
+          .destroy()
+          .then(() => {
+            this.controllerFor("adminPluginsDiscourseSubscriptionsProductsShow")
+              .get("model.plans")
+              .removeObject(plan);
+          })
+          .catch((data) =>
+            this.dialog.alert(data.jqXHR.responseJSON.errors.join("\n"))
+          );
+      },
+    });
   },
 });
