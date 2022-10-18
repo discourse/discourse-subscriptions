@@ -53,17 +53,6 @@ sv:
         refresh_page: Kampanjdata synkroniseras nu från Stripe i bakgrunden. Uppdatera sidan om en stund för att ladda den uppdaterade informationen.
         supporter: Understödjare
         supporters: Understödjare
-        confirm_creation: |-
-          <p>Vill du automatiskt skapa en kampanj för ditt forum?</p>
-
-          <p>Om du fortsätter skapas det:</p>
-
-          <ul>
-          <li>En grupp som belönar dina understödjare med en egen titel och avatarstil</li>
-          <li>En Stripe-produkt med förinställda priser (per månad och år) som dina användare kan köpa för att stödja din webbplats.</li>
-          </ul>
-
-          <p>Vill du fortsätta?</p>
         created: Din kampanj genom ett klick är skapad och klar att börja! Omdirigerar till kampanjinställningarna.
       one_time_payment: Engångsbetalning
       plans:

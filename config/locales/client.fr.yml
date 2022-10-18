@@ -53,17 +53,6 @@ fr:
         refresh_page: Les données de campagne sont maintenant synchronisées à partir de Stripe en arrière-plan. Actualisez la page dans quelques instants pour charger les informations mises à jour.
         supporter: Supporter
         supporters: Supporters
-        confirm_creation: |-
-          <p>Vous souhaitez créer automatiquement une campagne pour votre communauté ?</p>
-
-          <p>En continuant, vous créerez :</p>
-
-          <ul>
-          <li>Un groupe pour récompenser vos supporters avec un titre et un avatar personnalisés</li>
-          <li>Un produit Stripe avec des prix prédéfinis (mensuels et annuels) que vos utilisateurs pourront acheter pour soutenir votre site.</li>
-          </ul>
-
-          <p>Souhaitez-vous continuer ?</p>
         created: Votre campagne en un clic est créée et prête à être lancée ! Redirection vers les paramètres de la campagne.
       one_time_payment: Paiement unique
       plans:

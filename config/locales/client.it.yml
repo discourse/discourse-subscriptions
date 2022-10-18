@@ -53,17 +53,6 @@ it:
         refresh_page: I dati della campagna vengono ora sincronizzati da Stripe in background. Aggiorna la pagina tra poco per caricare le informazioni aggiornate.
         supporter: Sostenitore
         supporters: Sostenitori
-        confirm_creation: |-
-          <p>Vuoi creare automaticamente una campagna per la tua community?</p>
-
-          <p>Se scegli di continuare, procederai alla creazione:</p>
-
-          <ul>
-          <li>Un gruppo per premiare i tuoi sostenitori con un titolo personalizzato e un avatar elegante</li>
-          <li>Un prodotto Stripe con prezzi predefiniti (mensili e annuali) che i tuoi utenti possono acquistare per sostenere il tuo sito.</li>
-          </ul>
-
-          <p>Vuoi continuare?</p>
         created: Hai creato la tua campagna in un solo clic ed ora è pronta all'uso! Sarai reindirizzato alle impostazioni della campagna.
       one_time_payment: Pagamento una tantum
       plans:

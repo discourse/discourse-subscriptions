@@ -53,17 +53,6 @@ zh_CN:
         refresh_page: 现在正在后台从 Stripe 同步活动数据。请稍后刷新页面以加载更新的信息。
         supporter: 支持者
         supporters: 支持者
-        confirm_creation: |-
-          <p>您想为您的社区自动创建活动吗？</p>
-
-          <p>继续将创建：</p>
-
-          <ul>
-          <li>用于奖励您的支持者的具有自定义标题和头像风格的群组</li>
-          <li>您的用户可以购买以支持您的网站的具有预设价格（包月和包年）的 Stripe 产品。</li>
-          </ul>
-
-          <p>您想继续吗？</p>
         created: 您的一键式活动已创建并准备就绪！正在重定向到活动设置。
       one_time_payment: 一次性付款
       plans:
