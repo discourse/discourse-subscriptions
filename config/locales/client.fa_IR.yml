@@ -26,6 +26,7 @@ fa_IR:
       campaign:
         title: از ما حمایت کنید
         goal_comparison: "<strong>%{current}</strong> از <strong>%{goal}</strong>"
+        confirm_creation_title: آیا می‌خواهید به طور خودکار یک کمپین برای انجمن خود ایجاد کنید؟
       plans:
         interval:
           adverb:

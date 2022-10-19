@@ -53,13 +53,6 @@ pt_BR:
         refresh_page: Agora os dados da campanha estão sendo sincronizados com o Stripe em segundo plano. Aguarde um pouco e atualize a página para carregar as informações mais recentes.
         supporter: Apoiador(a)
         supporters: Apoiadores(as)
-        confirm_creation: |-
-          <ul>
-          <li>Um grupo para recompensas os(as) apoiadores(as) com um estilo de título e avatar personalizado</li>
-          <li>Um produto da Stripe com preços predefinidos (mensal e anual) que os(as) usuários(as) podem comprar para apoiar o nosso site.</li>
-          </ul>
-
-          <p>Deseja continuar?</p>
         created: Sua campanha de um clique foi criada e já está pronta! Redirecionando para configurações da campanha.
       one_time_payment: Pagamento Único
       plans:
