@@ -66,7 +66,7 @@ module DiscourseSubscriptions
           end
 
           it "lists the plans for the product" do
-            ::Stripe::Price.expects(:list).with(product: 'prod_id123')
+            ::Stripe::Price.expects(:list).with({ product: 'prod_id123' })
             get "/s/admin/plans.json", params: { product_id: 'prod_id123' }
           end
         end

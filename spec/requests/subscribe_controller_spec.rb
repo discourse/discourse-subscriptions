@@ -42,7 +42,7 @@ module DiscourseSubscriptions
       describe "#index" do
 
         it "gets products" do
-          ::Stripe::Product.expects(:list).with(ids: product_ids, active: true).returns(data: [product])
+          ::Stripe::Product.expects(:list).with({ ids: product_ids, active: true }).returns(data: [product])
 
           get "/s.json"
 
@@ -57,7 +57,7 @@ module DiscourseSubscriptions
 
         it "is subscribed" do
           Fabricate(:customer, product_id: product[:id], user_id: user.id, customer_id: 'x')
-          ::Stripe::Product.expects(:list).with(ids: product_ids, active: true).returns(data: [product])
+          ::Stripe::Product.expects(:list).with({ ids: product_ids, active: true }).returns(data: [product])
 
           get "/s.json"
           data = response.parsed_body
@@ -66,7 +66,7 @@ module DiscourseSubscriptions
 
         it "is not subscribed" do
           ::DiscourseSubscriptions::Customer.delete_all
-          ::Stripe::Product.expects(:list).with(ids: product_ids, active: true).returns(data: [product])
+          ::Stripe::Product.expects(:list).with({ ids: product_ids, active: true }).returns(data: [product])
 
           get "/s.json"
           data = response.parsed_body
