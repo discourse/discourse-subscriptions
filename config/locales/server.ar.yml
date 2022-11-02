@@ -9,3 +9,4 @@ ar:
     customer_not_found: لم يتم العثور على العميل
     card:
       declined: تم رفض البطاقة
+      invalid: البطاقة غير صالحة

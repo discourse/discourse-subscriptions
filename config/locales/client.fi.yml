@@ -53,6 +53,16 @@ fi:
         refresh_page: Kampanjan tietoja synkronoidaan nyt Stripesta taustalla. Päivitä sivu hetken kuluttua ladataksesi päivitetyt tiedot.
         supporter: Tukija
         supporters: Tukijat
+        confirm_creation_title: Haluatko luoda automaattisesti kampanjan yhteisöllesi?
+        confirm_creation: |-
+          <p>Jatkaminen luo:</p>
+
+          <ul>
+          <li>ryhmän, joka palkitsee tukijasi mukautetulla otsikolla ja avatarilla</li>
+          <li>Stripe-tuotteen ennalta määritetyillä hinnoilla (kuukausittainen ja vuosittainen), jonka käyttäjät voivat ostaa tukeakseen sivustoasi.</li>
+          </ul>
+
+          <p>Haluatko jatkaa?</p>
         created: Yhden napsautuksen kampanjasi on luotu ja valmis käytettäväksi! Sinut ohjataan kampanja-asetuksiin.
       one_time_payment: Kertamaksu
       plans:
@@ -85,6 +95,9 @@ fi:
           status: Tila
           discounted: Alennettu
           renews: Uusiutuu
+          update_card:
+            heading: "Päivitä kortti tilaukselle: %{sub_id}"
+            single: "Päivitä"
           created_at: Luotu
           cancel: peruuta
           cancelled: peruutettu

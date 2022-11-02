@@ -53,6 +53,16 @@ pt_BR:
         refresh_page: Agora os dados da campanha estão sendo sincronizados com o Stripe em segundo plano. Aguarde um pouco e atualize a página para carregar as informações mais recentes.
         supporter: Apoiador(a)
         supporters: Apoiadores(as)
+        confirm_creation_title: Deseja criar automaticamente uma campanha para sua comunidade?
+        confirm_creation: |-
+          <p>Ao, continuar, você criará:</p>
+
+          <ul>
+          <li>Um grupo para recompensar seus apoiadores com um título personalizado e um estilo de avatar</li>
+          <li>Um produto Stripe com preços predefinidos (mensal e anual) que seus usuários podem comprar para ter compatibilidade com o seu site.</li>
+          </ul>
+
+          <p>Deseja continuar?</p>
         created: Sua campanha de um clique foi criada e já está pronta! Redirecionando para configurações da campanha.
       one_time_payment: Pagamento Único
       plans:
@@ -85,6 +95,9 @@ pt_BR:
           status: Status
           discounted: Descontado
           renews: Renovada
+          update_card:
+            heading: "Atualizar Cartão para assinatura: %{sub_id}"
+            single: "Atualizar"
           created_at: Criada
           cancel: cancelar
           cancelled: cancelado

@@ -9,3 +9,4 @@ fr:
     customer_not_found: Client introuvable
     card:
       declined: Carte refusée
+      invalid: Carte invalide

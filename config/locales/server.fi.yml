@@ -9,3 +9,4 @@ fi:
     customer_not_found: Asiakasta ei löydy
     card:
       declined: Kortti hylätty
+      invalid: Kortti ei kelpaa

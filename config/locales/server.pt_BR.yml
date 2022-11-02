@@ -9,3 +9,4 @@ pt_BR:
     customer_not_found: Cliente não encontrado(a)
     card:
       declined: Cartão recusado
+      invalid: Cartão inválido
