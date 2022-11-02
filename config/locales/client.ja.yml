@@ -53,6 +53,16 @@ ja:
         refresh_page: キャンペーンデータはバックグラウンドで Stripe から同期しています。しばらくしてからページを更新し、最新の情報を読み込んでください。
         supporter: サポーター
         supporters: サポーター
+        confirm_creation_title: コミュニティーのキャンペーンを自動的に作成しますか？
+        confirm_creation: |-
+          <p>続行すると、以下が作成されます。</p>
+
+          <ul>
+          <li>カスタムタイトルとアバターフレアを報酬として与えるサポーターグループ</li>
+          <li>あなたのサイトを支援するためにユーザーが購入する既定の価格（月間および年間）の Stripe 商品</li>
+          </ul>
+
+          <p>続行しますか？</p>
         created: ワンクリックキャンペーンが作成され、実施準備が整いました！キャンペーン設定にリダイレクトします。
       one_time_payment: 一回払い
       plans:
@@ -85,6 +95,9 @@ ja:
           status: ステータス
           discounted: 割引適用
           renews: 更新
+          update_card:
+            heading: "サブスクリプション用カードの更新: %{sub_id}"
+            single: "更新"
           created_at: 作成
           cancel: キャンセル
           cancelled: キャンセル済み

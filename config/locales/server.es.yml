@@ -9,3 +9,4 @@ es:
     customer_not_found: Cliente no encontrado
     card:
       declined: Tarjeta rechazada
+      invalid: Tarjeta no válida

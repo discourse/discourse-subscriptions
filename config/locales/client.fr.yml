@@ -53,6 +53,16 @@ fr:
         refresh_page: Les données de campagne sont maintenant synchronisées à partir de Stripe en arrière-plan. Actualisez la page dans quelques instants pour charger les informations mises à jour.
         supporter: Supporter
         supporters: Supporters
+        confirm_creation_title: Vous souhaitez créer automatiquement une campagne pour votre communauté ?
+        confirm_creation: |-
+          <p>En continuant, vous créerez :</p>
+
+          <ul>
+          <li>Un groupe pour récompenser vos supporters avec un titre et un avatar personnalisés</li>
+          <li>Un produit Stripe avec des prix prédéfinis (mensuels et annuels) que vos utilisateurs pourront acheter pour soutenir votre site.</li>
+          </ul>
+
+          <p>Souhaitez-vous continuer ?</p>
         created: Votre campagne en un clic est créée et prête à être lancée ! Redirection vers les paramètres de la campagne.
       one_time_payment: Paiement unique
       plans:
@@ -85,6 +95,9 @@ fr:
           status: Statut
           discounted: Remise
           renews: Renouvellements
+          update_card:
+            heading: "Mettre à jour la carte pour l'abonnement : %{sub_id}"
+            single: "Mettre à jour"
           created_at: Création
           cancel: annuler
           cancelled: annulé

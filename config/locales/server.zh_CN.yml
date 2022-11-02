@@ -9,3 +9,4 @@ zh_CN:
     customer_not_found: 找不到客户
     card:
       declined: 银行卡被拒绝
+      invalid: 卡片无效
