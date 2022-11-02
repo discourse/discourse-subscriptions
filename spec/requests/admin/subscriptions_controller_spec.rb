@@ -134,7 +134,7 @@ module DiscourseSubscriptions
             )
           ::Stripe::Subscription.expects(:retrieve).with('sub_12345').returns(latest_invoice: 'in_123')
           ::Stripe::Invoice.expects(:retrieve).with('in_123').returns(payment_intent: 'pi_123')
-          ::Stripe::Refund.expects(:create).with(payment_intent: 'pi_123')
+          ::Stripe::Refund.expects(:create).with({ payment_intent: 'pi_123' })
 
           delete "/s/admin/subscriptions/sub_12345.json", params: { refund: true }
         end

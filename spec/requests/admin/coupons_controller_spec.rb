@@ -23,7 +23,7 @@ module DiscourseSubscriptions
 
       describe "#index" do
         it "returns a list of promo codes" do
-          ::Stripe::PromotionCode.expects(:list).with(limit: 100).returns({
+          ::Stripe::PromotionCode.expects(:list).with({ limit: 100 }).returns({
           data: [{
               id: 'promo_123',
               coupon: {
@@ -38,7 +38,7 @@ module DiscourseSubscriptions
         end
 
         it "only returns valid promo codes" do
-          ::Stripe::PromotionCode.expects(:list).with(limit: 100).returns({
+          ::Stripe::PromotionCode.expects(:list).with({ limit: 100 }).returns({
           data: [{
               id: 'promo_123',
               coupon: {
