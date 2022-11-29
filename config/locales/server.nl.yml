@@ -9,3 +9,4 @@ nl:
     customer_not_found: Klant niet gevonden
     card:
       declined: Kaart geweigerd
+      invalid: Kaart ongeldig
