@@ -6,33 +6,68 @@
 
 nl:
   site_settings:
-    discourse_subscriptions_enabled: De Discourse Subscriptions-plug-in inschakelen.
-    discourse_subscriptions_extra_nav_subscribe: De abonneerknop in de primaire navigatie tonen
-    discourse_subscriptions_public_key: Publiceerbare sleutel van Stripe
-    discourse_subscriptions_secret_key: Geheime sleutel van Stripe
-    discourse_subscriptions_webhook_secret: Webhookgeheim van Stripe
-    discourse_subscriptions_currency: Standaard valutacode. Deze kan worden overschreven bij het aanmaken van een abonnementsvorm.
+    discourse_subscriptions_enabled: Schakel de Discourse Subscriptions-plug-in in.
+    discourse_subscriptions_extra_nav_subscribe: Geef de abonneerknop knop weer in de primaire navigatie
+    discourse_subscriptions_public_key: Publiceerbare Stripe-sleutel
+    discourse_subscriptions_secret_key: Geheime Stripe-sleutel
+    discourse_subscriptions_webhook_secret: Stripe-webhookgeheim
+    discourse_subscriptions_currency: Standaard valutacode. Deze kan worden overschreven bij het maken van een abonnement.
+    discourse_subscriptions_campaign_enabled: Schakelt een campagnebanner in om de financiële ondersteuning van deze community te promoten.
+    discourse_subscriptions_campaign_goal: Het numerieke doel voor je steuncampagne (abonnees of ingezameld bedrag).
+    discourse_subscriptions_campaign_type: Selecteert het type campagne dat moet worden uitgevoerd (abonnees of maandelijks ingezameld bedrag).
+    discourse_subscriptions_campaign_banner_location: Selecteert de locatie van de campagnebanner (bovenaan of zijbalk).
+    discourse_subscriptions_campaign_banner_shadow_color: Selecteert de kleur van de slagschaduw van de campagnebanner.
+    discourse_subscriptions_campaign_banner_bg_image: Upload een aangepaste afbeelding als achtergrond voor de campagnebanner.
+    discourse_subscriptions_campaign_show_contributors: Toon avatars van de meest recente aankopen van abonnementsproducten.
+    discourse_subscriptions_campaign_product: De Stripe-product-ID om naar supporters te sturen wanneer ze op de knop van de campagne klikken. Als deze instelling leeg is, worden supporters doorverwezen naar de hoofdpagina met producten.
     errors:
-      discourse_patrons_amount_must_be_currency: "Valutabedragen moeten valuta zonder dollarsymbool zijn (bv. 1.50)"
+      discourse_patrons_amount_must_be_currency: "Valutabedragen moeten valuta zonder valutateken zijn (bijvoorbeeld 1,50)"
   js:
     filters:
       subscribe:
-        help: Steun deze website door u te abonneren
+        help: Steun deze website door je te abonneren
     discourse_subscriptions:
       title: Discourse-abonnementen
       admin_navigation: Abonnementen
       optional: Optioneel
       navigation:
-        billing: Facturering
+        billing: Facturatie
         payments: Betalingen
         subscriptions: Abonnementen
         subscribe: Abonneren
         user_activity:
           payments: Betalingen
+      campaign:
+        title: Steun ons
+        body: We hebben je hulp nodig om deze community draaiende te houden!
+        success_title: Succes!
+        success_body: Bedankt voor je hulp om deze community draaiende te houden!
+        subscribers: Abonnees
+        goal_comparison: "<strong>%{current}</strong> van <strong>%{goal}</strong>"
+        raised: Ingezameld
+        button: Steunen
+        recent_contributors: Recente bijdragers
+        goal: We hebben ons doel bereikt
+        one_click_campaign: Ondersteuningscampagne automatisch maken
+        refresh_campaign: Campagnegegevens vernieuwen
+        refresh_page: Campagnegegevens worden nu gesynchroniseerd vanuit Stripe op de achtergrond. Vernieuw de pagina over enkele ogenblikken om de bijgewerkte gegevens te laden.
+        supporter: Supporter
+        supporters: Supporters
+        confirm_creation_title: Wil je automatisch een campagne maken voor je community?
+        confirm_creation: |-
+          <p>Als je doorgaat, wordt het volgende gemaakt:</p>
+
+          <ul>
+          <li>Een groep om je supporters te belonen met een aangepaste titel en avatarflair</li>
+          <li>Een Stripe-product met vooraf ingestelde prijzen (maandelijks en jaarlijks) die je gebruikers kunnen kopen om je site te steunen.</li>
+          </ul>
+
+          <p>Wil je doorgaan?</p>
+        created: Je één-klik-campagne is gemaakt en klaar voor gebruik! Je wordt naar de campagne-instellingen geleid.
       one_time_payment: Eenmalige betaling
       plans:
-        purchase: Een abonnement aanschaffen
-        select: Abonnementsvorm selecteren
+        purchase: Koop een abonnement
+        select: Selecteer abonnement
         interval:
           adverb:
             day: Dagelijks
@@ -40,11 +75,11 @@ nl:
             month: Maandelijks
             year: Jaarlijks
         payment_button: Abonneren
-        success: Bedankt! Uw abonnement is aangemaakt.
-        incomplete: De betaling is onvolledig. Uw abonnement wordt bijgewerkt zodra de betaling is voltooid.
+        success: Bedankt!, je abonnement is gemaakt.
+        incomplete: De betaling is niet voltooid. Je abonnement wordt bijgewerkt zodra de betaling is voltooid.
         validate:
           payment_options:
-            required: Selecteer een abonnementsvorm.
+            required: Selecteer een abonnement.
       user:
         payments:
           id: Betalings-ID
@@ -54,28 +89,37 @@ nl:
         plans:
           rate: Tarief
           product: Naam
-        subscriptions_help: U hebt geen actieve abonnementen.
+        subscriptions_help: Je hebt geen actieve abonnementen.
         subscriptions:
           id: Abonnements-ID
           status: Status
-          renews: Vernieuwt
+          discounted: Met korting
+          renews: Wordt verlengd
+          update_card:
+            heading: "Kaart bijwerken voor abonnement: %{sub_id}"
+            single: "Bijwerken"
           created_at: Gemaakt
           cancel: annuleren
           cancelled: geannuleerd
           operations:
             destroy:
-              confirm: Weet u zeker dat u dit abonnement wilt annuleren?
+              confirm: Weet je zeker dat je dit abonnement wilt annuleren?
       subscribe:
         title: Abonneren
+        view_past: Eerdere aankopen weergeven
         no_products: Er zijn momenteel geen producten beschikbaar.
+        unauthenticated: Meld je aan of maak een account aan om je te abonneren.
+        invalid_coupon: Je hebt een ongeldige couponcode ingevoerd. Probeer het opnieuw.
         card:
           title: Betaling
         customer:
           title: Klantgegevens
+        promo_code: Coupon
         buttons:
           subscribe: Abonneren
-        purchased: Aangeschaft
-        go_to_billing: Naar Facturering
+        purchased: Gekocht
+        go_to_billing: Naar facturatie
+        already_purchased: Hartelijk dank voor je eerdere aankoop van dit product!
       billing:
         name: Volledige naam
         email: E-mailadres
@@ -84,18 +128,19 @@ nl:
         amount: Bedrag
         last4: Kaartnummer
       buttons:
-        make_payment: Betaling doen
+        make_payment: Betalen
         confirm_payment: Betaling bevestigen
         success: Terug
       admin:
-        unconfigured: 'Stripe is niet goed geconfigureerd. Bekijk Discourse Meta voor informatie.'
+        unconfigured: 'Stripe is niet goed geconfigureerd. Zie Discourse Meta voor informatie.'
+        on_meta: Discourse-abonnementen op Meta
         dashboard:
           title: Dashboard
           table:
             head:
               user: Gebruiker
               payment_intent: Betalings-ID
-              receipt_email: E-mailadres voor ontvangstbewijs
+              receipt_email: E-mailadres voor betalingsbewijs
               amount: Bedrag
         products:
           title: Producten
@@ -104,53 +149,64 @@ nl:
             update: Product bijwerken
             new: Nieuw product
             destroy:
-              confirm: Weet u zeker dat u dit product wilt verwijderen?
+              confirm: Weet je zeker dat je dit product wilt verwijderen?
           product:
             product_id: Product-ID
             name: Productnaam
-            statement_descriptor: Afschriftomschrijving
-            statement_descriptor_help: Extra informatie over een product die in het afschrift van de creditcard van uw klant verschijnt.
-            plan_help: Een tariefvorm maken om klanten op dit product te abonneren.
-            description: Omschrijving
-            description_help: Dit beschrijft uw abonnementsproduct.
+            statement_descriptor: Beschrijving op afschrift
+            statement_descriptor_help: Extra informatie over een product die op het afschrift van de creditcard van je klant wordt vermeld.
+            plan_help: Maak een tariefplan om klanten op dit product te abonneren.
+            description: Beschrijving
+            description_help: Dit beschrijft je abonnementsproduct.
+            repurchaseable: Opnieuw koopbaar?
+            repurchase_help: Toestaan dat producten en bijbehorende abonnementen meerdere keren worden gekocht
             active: Actief
-            active_help: Schakel dit uit totdat uw product gereed is voor consumenten.
+            active_help: Schakel dit uit totdat je product gereed is voor consumenten.
             created_at: Gemaakt
             updated_at: Bijgewerkt
-          product_help: Voordat klanten zich op uw website kunnen abonneren, dient u minstens één product en een gekoppelde abonnementsvorm aan te maken.
+          product_help: Voordat klanten zich op je website kunnen abonneren, moet je minimaal één product en een bijbehorend abonnement maken.
         plans:
-          title: Tariefvormen
+          title: Prijsplannen
           operations:
-            add: Nieuwe vorm toevoegen
-            create: Vorm aanmaken
-            update: Vorm bijwerken
-            create_help: Zodra een tariefvorm is aangemaakt, kunnen alleen de bijnaam, proefperiode en gebruikersgroep ervan worden bijgewerkt.
-            new: Nieuwe vorm
+            add: Nieuwe plan toevoegen
+            create: Plan maken
+            update: Plan bijwerken
+            create_help: Wanneer een prijsplan is gemaakt, kunnen alleen de alias, proefperiode en gebruikersgroep ervan worden bijgewerkt.
+            new: Nieuw plan
             destroy:
-              confirm: Weet u zeker dat u deze vorm wilt verwijderen?
+              confirm: Weet je zeker dat je dit plan wilt verwijderen?
           plan:
-            nickname: Bijnaam van vorm
-            nickname_help: Dit is niet zichtbaar voor klanten, maar helpt u deze vorm later te vinden
-            plan_id: Vorm-ID
+            nickname: Planalias
+            nickname_help: Dit is niet zichtbaar voor klanten, maar helpt je dit plan terug te vinden
+            plan_id: Plan-ID
             product: Product
-            interval: Factureringsinterval
+            interval: Facturatie-interval
             amount: Bedrag
-            trial: Dagen voor proefperiode
-            trial_help: Abonnementen op deze vorm beginnen automatisch met een gratis proefperiode van deze lengte
+            trial: Proefperiodedagen
+            trial_help: Abonnementen op dit plan beginnen automatisch met een gratis proefperiode van deze duur
             group: Gebruikersgroep
-            group_help: Dit is de discourse-gebruikersgroep waaraan de gebruiker wordt toegevoegd wanneer het abonnement wordt aangemaakt.
+            group_help: Dit is de Discourse-gebruikersgroep waaraan de gebruiker wordt toegevoegd wanneer het abonnement wordt gemaakt.
             active: Actief
             created_at: Gemaakt
-            recurring: Herhalend abonnement?
+            recurring: Automatisch verlengd abonnement?
+        coupons:
+          title: Coupons
+          code: Promotiecode
+          discount: Korting
+          times_redeemed: Keren verzilverd
+          active: Actief?
+          actions: Acties
+          create: Coupon maken
+          promo_code: Promotiecode (niet hoofdlettergevoelig)
         subscriptions:
           title: Abonnementen
           subscription:
             user: Gebruiker
-            subscription_id: Abonnements-ID
+            subscription_id: Abonnement-ID
             customer: Klant
             product: Product
-            plan: Vorm
+            plan: Plan
             status: Status
             created_at: Gemaakt
-        ask_refund: De laatste betaling door de klant terugbetalen?
+        ask_refund: Laatste betaling door klant terugbetalen?
         canceled: "Het abonnement is geannuleerd."
