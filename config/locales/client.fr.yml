@@ -160,7 +160,7 @@ fr:
             description_help: Description de votre produit d'abonnement.
             repurchaseable: Achat renouvelable ?
             repurchase_help: Autoriser l'achat multiple du produit et des plans associés
-            active: Actifs
+            active: Actif
             active_help: Désactivez cette option jusqu'à ce que votre produit soit prêt pour être rendu public.
             created_at: Création
             updated_at: Modification
@@ -186,7 +186,7 @@ fr:
             trial_help: Les abonnements à ce plan donneront automatiquement droit à cette période d'essai
             group: Groupe d'utilisateurs
             group_help: Il s'agit du groupe d'utilisateurs de Discourse auquel le client est ajouté lors de la création de l'abonnement.
-            active: Actifs
+            active: Actif
             created_at: Création
             recurring: Plan récurrent ?
         coupons:
