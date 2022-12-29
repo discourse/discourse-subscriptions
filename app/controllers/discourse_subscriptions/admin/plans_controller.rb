@@ -27,15 +27,11 @@ module DiscourseSubscriptions
             active: params[:active],
             metadata: {
               group_name: params[:metadata][:group_name],
-              trial_period_days: params[:trial_period_days]
-            }
+              trial_period_days: params[:trial_period_days],
+            },
           }
 
-          if params[:type] == 'recurring'
-            price_object[:recurring] = {
-              interval: params[:interval]
-            }
-          end
+          price_object[:recurring] = { interval: params[:interval] } if params[:type] == "recurring"
 
           plan = ::Stripe::Price.create(price_object)
 
@@ -56,14 +52,16 @@ module DiscourseSubscriptions
           end
 
           interval = nil
-          if plan[:recurring] && plan[:recurring][:interval]
-            interval = plan[:recurring][:interval]
-          end
+          interval = plan[:recurring][:interval] if plan[:recurring] && plan[:recurring][:interval]
 
-          serialized = plan.to_h.merge(trial_period_days: trial_days, currency: plan[:currency].upcase, interval: interval)
+          serialized =
+            plan.to_h.merge(
+              trial_period_days: trial_days,
+              currency: plan[:currency].upcase,
+              interval: interval,
+            )
 
           render_json_dump serialized
-
         rescue ::Stripe::InvalidRequestError => e
           render_json_error e.message
         end
@@ -71,15 +69,16 @@ module DiscourseSubscriptions
 
       def update
         begin
-          plan = ::Stripe::Price.update(
-            params[:id],
-            nickname: params[:nickname],
-            active: params[:active],
-            metadata: {
-              group_name: params[:metadata][:group_name],
-              trial_period_days: params[:trial_period_days]
-            }
-          )
+          plan =
+            ::Stripe::Price.update(
+              params[:id],
+              nickname: params[:nickname],
+              active: params[:active],
+              metadata: {
+                group_name: params[:metadata][:group_name],
+                trial_period_days: params[:trial_period_days],
+              },
+            )
 
           render_json_dump plan
         rescue ::Stripe::InvalidRequestError => e

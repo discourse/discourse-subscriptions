@@ -22,7 +22,8 @@ module DiscourseSubscriptions
               invoices_with_products = parse_invoices(all_invoices, product_ids)
               invoice_ids = invoices_with_products.map { |invoice| invoice[:id] }
               payments = ::Stripe::PaymentIntent.list(customer: customer_id)
-              payments_from_invoices = payments[:data].select { |payment| invoice_ids.include?(payment[:invoice]) }
+              payments_from_invoices =
+                payments[:data].select { |payment| invoice_ids.include?(payment[:invoice]) }
               data = data | payments_from_invoices
             end
           end
@@ -30,7 +31,6 @@ module DiscourseSubscriptions
           data = data.sort_by { |pmt| pmt[:created] }.reverse
 
           render_json_dump data
-
         rescue ::Stripe::InvalidRequestError => e
           render_json_error e.message
         end
@@ -39,16 +39,19 @@ module DiscourseSubscriptions
       private
 
       def parse_invoices(all_invoices, product_ids)
-        invoices_with_products = all_invoices[:data].select do |invoice|
-          invoice_lines = invoice[:lines][:data][0] if invoice[:lines] && invoice[:lines][:data]
-          invoice_product_id = parse_invoice_lines(invoice_lines)
-          product_ids.include?(invoice_product_id)
-        end
+        invoices_with_products =
+          all_invoices[:data].select do |invoice|
+            invoice_lines = invoice[:lines][:data][0] if invoice[:lines] && invoice[:lines][:data]
+            invoice_product_id = parse_invoice_lines(invoice_lines)
+            product_ids.include?(invoice_product_id)
+          end
       end
 
       def parse_invoice_lines(invoice_lines)
-        invoice_product_id = invoice_lines[:price][:product] if invoice_lines[:price] && invoice_lines[:price][:product]
-        invoice_product_id = invoice_lines[:plan][:product] if invoice_lines[:plan] && invoice_lines[:plan][:product]
+        invoice_product_id = invoice_lines[:price][:product] if invoice_lines[:price] &&
+          invoice_lines[:price][:product]
+        invoice_product_id = invoice_lines[:plan][:product] if invoice_lines[:plan] &&
+          invoice_lines[:plan][:product]
         invoice_product_id
       end
     end

@@ -27,20 +27,15 @@ module DiscourseSubscriptions
 
       def create
         begin
-          create_params = product_params.merge!(type: 'service')
+          create_params = product_params.merge!(type: "service")
 
-          if params[:statement_descriptor].blank?
-            create_params.except!(:statement_descriptor)
-          end
+          create_params.except!(:statement_descriptor) if params[:statement_descriptor].blank?
 
           product = ::Stripe::Product.create(create_params)
 
-          Product.create(
-            external_id: product[:id]
-          )
+          Product.create(external_id: product[:id])
 
           render_json_dump product
-
         rescue ::Stripe::InvalidRequestError => e
           render_json_error e.message
         end
@@ -51,7 +46,6 @@ module DiscourseSubscriptions
           product = ::Stripe::Product.retrieve(params[:id])
 
           render_json_dump product
-
         rescue ::Stripe::InvalidRequestError => e
           render_json_error e.message
         end
@@ -59,13 +53,9 @@ module DiscourseSubscriptions
 
       def update
         begin
-          product = ::Stripe::Product.update(
-            params[:id],
-            product_params
-          )
+          product = ::Stripe::Product.update(params[:id], product_params)
 
           render_json_dump product
-
         rescue ::Stripe::InvalidRequestError => e
           render_json_error e.message
         end
@@ -78,7 +68,6 @@ module DiscourseSubscriptions
           Product.delete_by(external_id: params[:id])
 
           render_json_dump product
-
         rescue ::Stripe::InvalidRequestError => e
           render_json_error e.message
         end
@@ -95,8 +84,8 @@ module DiscourseSubscriptions
           statement_descriptor: params[:statement_descriptor],
           metadata: {
             description: params.dig(:metadata, :description),
-            repurchaseable: params.dig(:metadata, :repurchaseable)
-          }
+            repurchaseable: params.dig(:metadata, :repurchaseable),
+          },
         }
       end
     end

@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module DiscourseSubscriptions
   RSpec.describe AdminController do
-
     let(:admin) { Fabricate(:admin) }
 
     before { sign_in(admin) }
 
-    it 'is a subclass of AdminController' do
+    it "is a subclass of AdminController" do
       expect(DiscourseSubscriptions::AdminController < ::Admin::AdminController).to eq(true)
     end
 

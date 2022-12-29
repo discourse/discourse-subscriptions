@@ -2,14 +2,14 @@
 
 module DiscourseSubscriptions
   class PaymentSerializer < ApplicationSerializer
-    attributes  :payment_intent_id,
-                :receipt_email,
-                :url,
-                :created_at_age,
-                :amount,
-                :amount_currency,
-                :username,
-                :user_id
+    attributes :payment_intent_id,
+               :receipt_email,
+               :url,
+               :created_at_age,
+               :amount,
+               :amount_currency,
+               :username,
+               :user_id
 
     def created_at_age
       Time.now - object.created_at
@@ -19,7 +19,7 @@ module DiscourseSubscriptions
       ActiveSupport::NumberHelper.number_to_currency(
         object.amount / 100,
         precision: 2,
-        unit: currency_unit
+        unit: currency_unit,
       )
     end
 
@@ -32,7 +32,7 @@ module DiscourseSubscriptions
     def user
       begin
         User.find(object.user_id)
-      rescue
+      rescue StandardError
         nil
       end
     end

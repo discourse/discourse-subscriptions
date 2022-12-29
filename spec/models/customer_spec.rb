@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module DiscourseSubscriptions
   RSpec.describe Customer do
     let(:user) { Fabricate(:user) }
-    let(:stripe_customer) { { id: 'cus_id4567' } }
+    let(:stripe_customer) { { id: "cus_id4567" } }
 
     it "has a table name" do
       expect(described_class.table_name).to eq "discourse_subscriptions_customers"
@@ -13,14 +13,14 @@ module DiscourseSubscriptions
 
     it "creates" do
       customer = described_class.create_customer(user, stripe_customer)
-      expect(customer.customer_id).to eq 'cus_id4567'
+      expect(customer.customer_id).to eq "cus_id4567"
       expect(customer.user_id).to eq user.id
     end
 
     it "has a user scope" do
       described_class.create_customer(user, stripe_customer)
       customer = described_class.find_user(user)
-      expect(customer.customer_id).to eq 'cus_id4567'
+      expect(customer.customer_id).to eq "cus_id4567"
     end
   end
 end

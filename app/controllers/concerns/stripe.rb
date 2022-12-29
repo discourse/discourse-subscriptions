@@ -9,7 +9,8 @@ module DiscourseSubscriptions
     end
 
     def is_stripe_configured?
-      SiteSetting.discourse_subscriptions_public_key.present? && SiteSetting.discourse_subscriptions_secret_key.present?
+      SiteSetting.discourse_subscriptions_public_key.present? &&
+        SiteSetting.discourse_subscriptions_secret_key.present?
     end
   end
 end

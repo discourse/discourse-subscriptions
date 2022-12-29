@@ -23,9 +23,7 @@ module DiscourseSubscriptions
 
       # Fetch product purchases
       one_time_payments = get_one_time_payments(product_ids)
-      one_time_payments.each do |c|
-        amount += c[:price].to_f / 100.00
-      end
+      one_time_payments.each { |c| amount += c[:price].to_f / 100.00 }
 
       # get number of subscribers
       SiteSetting.discourse_subscriptions_campaign_subscribers = subscriptions&.length.to_i
@@ -57,7 +55,7 @@ module DiscourseSubscriptions
     protected
 
     def goal_met_date_key
-      'subscriptions_goal_met_date'
+      "subscriptions_goal_met_date"
     end
 
     def check_goal_status
@@ -91,9 +89,9 @@ module DiscourseSubscriptions
         SiteSetting.discourse_subscriptions_campaign_group = group[:id]
 
         params = {
-          full_name: I18n.t('js.discourse_subscriptions.campaign.supporters'),
-          title: I18n.t('js.discourse_subscriptions.campaign.supporter'),
-          flair_icon: "donate"
+          full_name: I18n.t("js.discourse_subscriptions.campaign.supporters"),
+          title: I18n.t("js.discourse_subscriptions.campaign.supporter"),
+          flair_icon: "donate",
         }
 
         group.update(params)
@@ -104,11 +102,11 @@ module DiscourseSubscriptions
 
     def create_campaign_product
       product_params = {
-        name: I18n.t('js.discourse_subscriptions.campaign.title'),
+        name: I18n.t("js.discourse_subscriptions.campaign.title"),
         active: true,
         metadata: {
-          description: I18n.t('js.discourse_subscriptions.campaign.body'),
-        }
+          description: I18n.t("js.discourse_subscriptions.campaign.body"),
+        },
       }
 
       product = ::Stripe::Product.create(product_params)
@@ -123,13 +121,9 @@ module DiscourseSubscriptions
       monthly_prices = [3, 5, 10, 25]
       yearly_prices = [50, 100]
 
-      monthly_prices.each do |price|
-        create_price(product[:id], group, price, "month")
-      end
+      monthly_prices.each { |price| create_price(product[:id], group, price, "month") }
 
-      yearly_prices.each do |price|
-        create_price(product[:id], group, price, "year")
-      end
+      yearly_prices.each { |price| create_price(product[:id], group, price, "year") }
     end
 
     def create_price(product_id, group_name, amount, recurrence)
@@ -140,11 +134,11 @@ module DiscourseSubscriptions
         currency: SiteSetting.discourse_subscriptions_currency,
         active: true,
         recurring: {
-          interval: recurrence
+          interval: recurrence,
         },
         metadata: {
-          group_name: group_name
-        }
+          group_name: group_name,
+        },
       }
 
       plan = ::Stripe::Price.create(price_object)
@@ -152,18 +146,13 @@ module DiscourseSubscriptions
 
     def get_one_time_payments(product_ids)
       one_time_payments = []
-      current_set = {
-        has_more: true,
-        last_record: nil
-      }
+      current_set = { has_more: true, last_record: nil }
 
       if product_ids.present?
         # lots of matching because the Stripe API doesn't make it easy to match products => payments except from invoices
         until current_set[:has_more] == false
-          all_invoices = ::Stripe::Invoice.list(
-            limit: 100,
-            starting_after: current_set[:last_record]
-          )
+          all_invoices =
+            ::Stripe::Invoice.list(limit: 100, starting_after: current_set[:last_record])
 
           current_set[:last_record] = all_invoices[:data].last[:id] if all_invoices[:data].present?
           current_set[:has_more] = all_invoices[:has_more]
@@ -173,11 +162,8 @@ module DiscourseSubscriptions
             next if invoice[:paid] != true
             line_item = invoice[:lines][:data][0] if invoice[:lines] && invoice[:lines][:data] # Discourse only makes single-line item charges
             # check if non-subscription and that the plan is active
-            if line_item[:plan] == nil &&
-               line_item[:price] &&
-               line_item[:price][:recurring] == nil &&
-               line_item[:price][:active] == true
-
+            if line_item[:plan] == nil && line_item[:price] &&
+                 line_item[:price][:recurring] == nil && line_item[:price][:active] == true
               product_id = line_item[:price][:product]
               if product_ids.include? product_id
                 line_data = {
@@ -197,17 +183,15 @@ module DiscourseSubscriptions
 
     def get_subscription_data
       subscriptions = []
-      current_set = {
-        has_more: true,
-        last_record: nil
-      }
+      current_set = { has_more: true, last_record: nil }
 
       until current_set[:has_more] == false
-        current_set = ::Stripe::Subscription.list(
-          expand: ['data.plan.product'],
-          limit: 100,
-          starting_after: current_set[:last_record]
-        )
+        current_set =
+          ::Stripe::Subscription.list(
+            expand: ["data.plan.product"],
+            limit: 100,
+            starting_after: current_set[:last_record],
+          )
 
         current_set[:last_record] = current_set[:data].last[:id] if current_set[:data].present?
         subscriptions.concat(current_set[:data].to_a)
@@ -217,13 +201,14 @@ module DiscourseSubscriptions
     end
 
     def filter_to_subscriptions_products(data, ids)
-      valid = data.select do |sub|
-        # cannot .dig stripe objects
-        items = sub[:items][:data][0] if sub[:items] && sub[:items][:data]
-        product = items[:price][:product] if items[:price] && items[:price][:product]
+      valid =
+        data.select do |sub|
+          # cannot .dig stripe objects
+          items = sub[:items][:data][0] if sub[:items] && sub[:items][:data]
+          product = items[:price][:product] if items[:price] && items[:price][:product]
 
-        ids.include?(product)
-      end
+          ids.include?(product)
+        end
       valid.empty? ? nil : valid
     end
 

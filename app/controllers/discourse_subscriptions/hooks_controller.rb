@@ -14,7 +14,7 @@ module DiscourseSubscriptions
     def create
       begin
         payload = request.body.read
-        sig_header = request.env['HTTP_STRIPE_SIGNATURE']
+        sig_header = request.env["HTTP_STRIPE_SIGNATURE"]
         webhook_secret = SiteSetting.discourse_subscriptions_webhook_secret
 
         event = ::Stripe::Webhook.construct_event(payload, sig_header, webhook_secret)
@@ -25,37 +25,39 @@ module DiscourseSubscriptions
       end
 
       case event[:type]
-      when 'customer.subscription.created'
-      when 'customer.subscription.updated'
-        customer = Customer.find_by(
-          customer_id: event[:data][:object][:customer],
-          product_id: event[:data][:object][:plan][:product],
-        )
+      when "customer.subscription.created"
+      when "customer.subscription.updated"
+        customer =
+          Customer.find_by(
+            customer_id: event[:data][:object][:customer],
+            product_id: event[:data][:object][:plan][:product],
+          )
 
-        return render_json_error 'customer not found' if !customer
-        return head 200 if event[:data][:object][:status] != 'complete'
+        return render_json_error "customer not found" if !customer
+        return head 200 if event[:data][:object][:status] != "complete"
 
         user = ::User.find_by(id: customer.user_id)
-        return render_json_error 'user not found' if !user
+        return render_json_error "user not found" if !user
 
         if group = plan_group(event[:data][:object][:plan])
           group.add(user)
         end
-      when 'customer.subscription.deleted'
-        customer = Customer.find_by(
-          customer_id: event[:data][:object][:customer],
-          product_id: event[:data][:object][:plan][:product],
-        )
+      when "customer.subscription.deleted"
+        customer =
+          Customer.find_by(
+            customer_id: event[:data][:object][:customer],
+            product_id: event[:data][:object][:plan][:product],
+          )
 
-        return render_json_error 'customer not found' if !customer
+        return render_json_error "customer not found" if !customer
 
         Subscription.find_by(
           customer_id: customer.id,
-          external_id: event[:data][:object][:id]
+          external_id: event[:data][:object][:id],
         )&.destroy!
 
         user = ::User.find(customer.user_id)
-        return render_json_error 'user not found' if !user
+        return render_json_error "user not found" if !user
 
         if group = plan_group(event[:data][:object][:plan])
           group.remove(user)
