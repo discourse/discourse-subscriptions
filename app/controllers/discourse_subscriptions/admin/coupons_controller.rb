@@ -18,23 +18,24 @@ module DiscourseSubscriptions
       end
 
       def create
-        params.require([:promo, :discount_type, :discount, :active])
+        params.require(%i[promo discount_type discount active])
         begin
-          coupon_params = {
-            duration: 'forever',
-          }
+          coupon_params = { duration: "forever" }
 
           case params[:discount_type]
-          when 'amount'
+          when "amount"
             coupon_params[:amount_off] = params[:discount].to_i * 100
             coupon_params[:currency] = SiteSetting.discourse_subscriptions_currency
-          when 'percent'
+          when "percent"
             coupon_params[:percent_off] = params[:discount]
           end
 
           coupon = ::Stripe::Coupon.create(coupon_params)
 
-          promo_code = ::Stripe::PromotionCode.create({ coupon: coupon[:id], code: params[:promo] }) if coupon.present?
+          promo_code =
+            ::Stripe::PromotionCode.create(
+              { coupon: coupon[:id], code: params[:promo] },
+            ) if coupon.present?
 
           render_json_dump promo_code
         rescue ::Stripe::InvalidRequestError => e
@@ -43,14 +44,9 @@ module DiscourseSubscriptions
       end
 
       def update
-        params.require([:id, :active])
+        params.require(%i[id active])
         begin
-          promo_code = ::Stripe::PromotionCode.update(
-            params[:id],
-            {
-              active: params[:active]
-            }
-          )
+          promo_code = ::Stripe::PromotionCode.update(params[:id], { active: params[:active] })
 
           render_json_dump promo_code
         rescue ::Stripe::InvalidRequestError => e

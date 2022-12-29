@@ -1,22 +1,26 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module DiscourseSubscriptions
   RSpec.describe Admin::SubscriptionsController do
-    it 'is a subclass of AdminController' do
-      expect(DiscourseSubscriptions::Admin::SubscriptionsController < ::Admin::AdminController).to eq(true)
+    it "is a subclass of AdminController" do
+      expect(
+        DiscourseSubscriptions::Admin::SubscriptionsController < ::Admin::AdminController,
+      ).to eq(true)
     end
 
     let(:user) { Fabricate(:user) }
-    let(:customer) { Fabricate(:customer, user_id: user.id, customer_id: 'c_123', product_id: 'pr_34578') }
+    let(:customer) do
+      Fabricate(:customer, user_id: user.id, customer_id: "c_123", product_id: "pr_34578")
+    end
 
     before do
       Fabricate(:subscription, external_id: "sub_12345", customer_id: customer.id)
       Fabricate(:subscription, external_id: "sub_77777", customer_id: customer.id)
     end
 
-    context 'when unauthenticated' do
+    context "when unauthenticated" do
       it "does nothing" do
         ::Stripe::Subscription.expects(:list).never
         get "/s/admin/subscriptions.json"
@@ -29,7 +33,7 @@ module DiscourseSubscriptions
       end
     end
 
-    context 'when authenticated' do
+    context "when authenticated" do
       let(:admin) { Fabricate(:admin) }
 
       before { sign_in(admin) }
@@ -41,15 +45,10 @@ module DiscourseSubscriptions
         end
 
         it "gets the subscriptions and products" do
-          ::Stripe::Subscription.expects(:list)
-            .with(expand: ['data.plan.product'], limit: 10, starting_after: nil)
-            .returns(
-              has_more: false,
-              data: [
-                { id: "sub_12345" },
-                { id: "sub_nope" }
-              ]
-            )
+          ::Stripe::Subscription
+            .expects(:list)
+            .with(expand: ["data.plan.product"], limit: 10, starting_after: nil)
+            .returns(has_more: false, data: [{ id: "sub_12345" }, { id: "sub_nope" }])
           get "/s/admin/subscriptions.json"
           subscriptions = response.parsed_body["data"][0]["id"]
 
@@ -58,16 +57,11 @@ module DiscourseSubscriptions
         end
 
         it "handles starting at a different point in the set" do
-          ::Stripe::Subscription.expects(:list)
-            .with(expand: ['data.plan.product'], limit: 10, starting_after: 'sub_nope')
-            .returns(
-              has_more: false,
-              data: [
-                { id: "sub_77777" },
-                { id: "sub_yepnoep" }
-              ]
-            )
-          get "/s/admin/subscriptions.json", params: { last_record: 'sub_nope' }
+          ::Stripe::Subscription
+            .expects(:list)
+            .with(expand: ["data.plan.product"], limit: 10, starting_after: "sub_nope")
+            .returns(has_more: false, data: [{ id: "sub_77777" }, { id: "sub_yepnoep" }])
+          get "/s/admin/subscriptions.json", params: { last_record: "sub_nope" }
           subscriptions = response.parsed_body["data"][0]["id"]
 
           expect(response.status).to eq(200)
@@ -76,65 +70,70 @@ module DiscourseSubscriptions
       end
 
       describe "destroy" do
-        let(:group) { Fabricate(:group, name: 'subscribers') }
+        let(:group) { Fabricate(:group, name: "subscribers") }
 
-        before do
-          group.add(user)
-        end
+        before { group.add(user) }
 
         it "deletes a customer" do
           ::Stripe::Subscription
             .expects(:delete)
-            .with('sub_12345')
-            .returns(
-              plan: { product: 'pr_34578' },
-              customer: 'c_123'
-            )
+            .with("sub_12345")
+            .returns(plan: { product: "pr_34578" }, customer: "c_123")
 
-          expect {
-            delete "/s/admin/subscriptions/sub_12345.json"
-          }.to change { DiscourseSubscriptions::Customer.count }.by(-1)
+          expect { delete "/s/admin/subscriptions/sub_12345.json" }.to change {
+            DiscourseSubscriptions::Customer.count
+          }.by(-1)
         end
 
         it "removes the user from the group" do
           ::Stripe::Subscription
             .expects(:delete)
-            .with('sub_12345')
+            .with("sub_12345")
             .returns(
-              plan: { product: 'pr_34578', metadata: { group_name: 'subscribers' } },
-              customer: 'c_123'
+              plan: {
+                product: "pr_34578",
+                metadata: {
+                  group_name: "subscribers",
+                },
+              },
+              customer: "c_123",
             )
 
-          expect {
-            delete "/s/admin/subscriptions/sub_12345.json"
-          }.to change { user.groups.count }.by(-1)
+          expect { delete "/s/admin/subscriptions/sub_12345.json" }.to change {
+            user.groups.count
+          }.by(-1)
         end
 
         it "does not remove the user from the group" do
           ::Stripe::Subscription
             .expects(:delete)
-            .with('sub_12345')
+            .with("sub_12345")
             .returns(
-              plan: { product: 'pr_34578', metadata: { group_name: 'group_does_not_exist' } },
-              customer: 'c_123'
+              plan: {
+                product: "pr_34578",
+                metadata: {
+                  group_name: "group_does_not_exist",
+                },
+              },
+              customer: "c_123",
             )
 
-          expect {
-            delete "/s/admin/subscriptions/sub_12345.json"
-          }.not_to change { user.groups.count }
+          expect { delete "/s/admin/subscriptions/sub_12345.json" }.not_to change {
+            user.groups.count
+          }
         end
 
         it "refunds if params[:refund] present" do
           ::Stripe::Subscription
             .expects(:delete)
-            .with('sub_12345')
-            .returns(
-              plan: { product: 'pr_34578' },
-              customer: 'c_123'
-            )
-          ::Stripe::Subscription.expects(:retrieve).with('sub_12345').returns(latest_invoice: 'in_123')
-          ::Stripe::Invoice.expects(:retrieve).with('in_123').returns(payment_intent: 'pi_123')
-          ::Stripe::Refund.expects(:create).with({ payment_intent: 'pi_123' })
+            .with("sub_12345")
+            .returns(plan: { product: "pr_34578" }, customer: "c_123")
+          ::Stripe::Subscription
+            .expects(:retrieve)
+            .with("sub_12345")
+            .returns(latest_invoice: "in_123")
+          ::Stripe::Invoice.expects(:retrieve).with("in_123").returns(payment_intent: "pi_123")
+          ::Stripe::Refund.expects(:create).with({ payment_intent: "pi_123" })
 
           delete "/s/admin/subscriptions/sub_12345.json", params: { refund: true }
         end

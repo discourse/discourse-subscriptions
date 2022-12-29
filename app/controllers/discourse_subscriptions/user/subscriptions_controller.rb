@@ -12,24 +12,21 @@ module DiscourseSubscriptions
         begin
           customer = Customer.where(user_id: current_user.id)
           customer_ids = customer.map { |c| c.id } if customer
-          subscription_ids = Subscription.where("customer_id in (?)", customer_ids).pluck(:external_id) if customer_ids
+          subscription_ids =
+            Subscription.where("customer_id in (?)", customer_ids).pluck(
+              :external_id,
+            ) if customer_ids
 
           subscriptions = []
 
           if subscription_ids
-            plans = ::Stripe::Price.list(
-              expand: ['data.product'],
-              limit: 100
-            )
+            plans = ::Stripe::Price.list(expand: ["data.product"], limit: 100)
 
-            customers = ::Stripe::Customer.list(
-              email: current_user.email,
-              expand: ['data.subscriptions']
-            )
+            customers =
+              ::Stripe::Customer.list(email: current_user.email, expand: ["data.subscriptions"])
 
-            subscriptions = customers[:data].map do |sub_customer|
-              sub_customer[:subscriptions][:data]
-            end.flatten(1)
+            subscriptions =
+              customers[:data].map { |sub_customer| sub_customer[:subscriptions][:data] }.flatten(1)
 
             subscriptions = subscriptions.select { |sub| subscription_ids.include?(sub[:id]) }
 
@@ -41,7 +38,6 @@ module DiscourseSubscriptions
           end
 
           render_json_dump subscriptions
-
         rescue ::Stripe::InvalidRequestError => e
           render_json_error e.message
         end
@@ -51,14 +47,13 @@ module DiscourseSubscriptions
         # we cancel but don't remove until the end of the period
         # full removal is done via webhooks
         begin
-          subscription = ::Stripe::Subscription.update(params[:id], { cancel_at_period_end: true, })
+          subscription = ::Stripe::Subscription.update(params[:id], { cancel_at_period_end: true })
 
           if subscription
             render_json_dump subscription
           else
-            render_json_error I18n.t('discourse_subscriptions.customer_not_found')
+            render_json_error I18n.t("discourse_subscriptions.customer_not_found")
           end
-
         rescue ::Stripe::InvalidRequestError => e
           render_json_error e.message
         end
@@ -70,7 +65,11 @@ module DiscourseSubscriptions
         subscription = Subscription.where(external_id: params[:id]).first
         begin
           attach_method_to_customer(subscription.customer_id, params[:payment_method])
-          subscription = ::Stripe::Subscription.update(params[:id], { default_payment_method: params[:payment_method] })
+          subscription =
+            ::Stripe::Subscription.update(
+              params[:id],
+              { default_payment_method: params[:payment_method] },
+            )
           render json: success_json
         rescue ::Stripe::InvalidRequestError
           render_json_error I18n.t("discourse_subscriptions.card.invalid")
@@ -81,12 +80,7 @@ module DiscourseSubscriptions
 
       def attach_method_to_customer(customer_id, method)
         customer = Customer.find(customer_id)
-        ::Stripe::PaymentMethod.attach(
-          method,
-          {
-            customer: customer.customer_id
-          }
-        )
+        ::Stripe::PaymentMethod.attach(method, { customer: customer.customer_id })
       end
     end
   end

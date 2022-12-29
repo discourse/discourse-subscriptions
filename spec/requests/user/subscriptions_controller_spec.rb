@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module DiscourseSubscriptions
   RSpec.describe User::SubscriptionsController do
-    it 'is a subclass of ApplicationController' do
-      expect(DiscourseSubscriptions::User::SubscriptionsController < ::ApplicationController).to eq(true)
+    it "is a subclass of ApplicationController" do
+      expect(DiscourseSubscriptions::User::SubscriptionsController < ::ApplicationController).to eq(
+        true,
+      )
     end
 
     context "when not authenticated" do
@@ -27,8 +29,10 @@ module DiscourseSubscriptions
     end
 
     context "when authenticated" do
-      let(:user) { Fabricate(:user, email: 'beanie@example.com') }
-      let(:customer) { Fabricate(:customer, user_id: user.id, customer_id: "cus_23456", product_id: "prod_123") }
+      let(:user) { Fabricate(:user, email: "beanie@example.com") }
+      let(:customer) do
+        Fabricate(:customer, user_id: user.id, customer_id: "cus_23456", product_id: "prod_123")
+      end
 
       before do
         sign_in(user)
@@ -39,42 +43,35 @@ module DiscourseSubscriptions
         let(:plans) do
           {
             data: [
-              {
-                id: "plan_1",
-                product: { name: 'ACME Subscriptions' },
-              },
-              {
-                id: "plan_2",
-                product: { name: 'ACME Other Subscriptions' },
-              }
-            ]
+              { id: "plan_1", product: { name: "ACME Subscriptions" } },
+              { id: "plan_2", product: { name: "ACME Other Subscriptions" } },
+            ],
           }
         end
 
         let(:customers) do
           {
-            data: [{
-              id: "cus_23456",
-              subscriptions: {
-                data: [
-                  { id: "sub_1234", items: { data: [price: { id: "plan_1" }] } },
-                  { id: "sub_4567", items: { data: [price: { id: "plan_2" }] } }
-                ]
+            data: [
+              {
+                id: "cus_23456",
+                subscriptions: {
+                  data: [
+                    { id: "sub_1234", items: { data: [price: { id: "plan_1" }] } },
+                    { id: "sub_4567", items: { data: [price: { id: "plan_2" }] } },
+                  ],
+                },
               },
-            }]
+            ],
           }
         end
 
         it "gets subscriptions" do
-          ::Stripe::Price.expects(:list).with(
-            expand: ['data.product'],
-            limit: 100
-          ).returns(plans)
+          ::Stripe::Price.expects(:list).with(expand: ["data.product"], limit: 100).returns(plans)
 
-          ::Stripe::Customer.expects(:list).with(
-            email: user.email,
-            expand: ['data.subscriptions']
-          ).returns(customers)
+          ::Stripe::Customer
+            .expects(:list)
+            .with(email: user.email, expand: ["data.subscriptions"])
+            .returns(customers)
 
           get "/s/user/subscriptions.json"
 
@@ -82,9 +79,18 @@ module DiscourseSubscriptions
 
           expect(subscription).to eq(
             "id" => "sub_1234",
-            "items" => { "data" => [{ "price" => { "id" => "plan_1" } }] },
-            "plan" => { "id" => "plan_1", "product" => { "name" => "ACME Subscriptions" } },
-            "product" => { "name" => "ACME Subscriptions" }
+            "items" => {
+              "data" => [{ "price" => { "id" => "plan_1" } }],
+            },
+            "plan" => {
+              "id" => "plan_1",
+              "product" => {
+                "name" => "ACME Subscriptions",
+              },
+            },
+            "product" => {
+              "name" => "ACME Subscriptions",
+            },
           )
         end
       end

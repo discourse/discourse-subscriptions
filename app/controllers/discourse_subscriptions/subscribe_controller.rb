@@ -5,7 +5,7 @@ module DiscourseSubscriptions
     include DiscourseSubscriptions::Stripe
     include DiscourseSubscriptions::Group
     before_action :set_api_key
-    requires_login except: [:index, :contributors, :show]
+    requires_login except: %i[index contributors show]
 
     def index
       begin
@@ -13,19 +13,12 @@ module DiscourseSubscriptions
         products = []
 
         if product_ids.present? && is_stripe_configured?
-          response = ::Stripe::Product.list({
-            ids: product_ids,
-            active: true
-          })
+          response = ::Stripe::Product.list({ ids: product_ids, active: true })
 
-          products = response[:data].map do |p|
-            serialize_product(p)
-          end
-
+          products = response[:data].map { |p| serialize_product(p) }
         end
 
         render_json_dump products
-
       rescue ::Stripe::InvalidRequestError => e
         render_json_error e.message
       end
@@ -36,7 +29,11 @@ module DiscourseSubscriptions
       contributor_ids = Set.new
 
       campaign_product = SiteSetting.discourse_subscriptions_campaign_product
-      campaign_product.present? ? contributor_ids.merge(Customer.where(product_id: campaign_product).last(5).pluck(:user_id)) : contributor_ids.merge(Customer.last(5).pluck(:user_id))
+      if campaign_product.present?
+        contributor_ids.merge(Customer.where(product_id: campaign_product).last(5).pluck(:user_id))
+      else
+        contributor_ids.merge(Customer.last(5).pluck(:user_id))
+      end
 
       contributors = ::User.where(id: contributor_ids)
 
@@ -49,10 +46,7 @@ module DiscourseSubscriptions
         product = ::Stripe::Product.retrieve(params[:id])
         plans = ::Stripe::Price.list(active: true, product: params[:id])
 
-        response = {
-          product: serialize_product(product),
-          plans: serialize_plans(plans)
-        }
+        response = { product: serialize_product(product), plans: serialize_plans(plans) }
 
         render_json_dump response
       rescue ::Stripe::InvalidRequestError => e
@@ -61,7 +55,7 @@ module DiscourseSubscriptions
     end
 
     def create
-      params.require([:source, :plan])
+      params.require(%i[source plan])
       begin
         customer = find_or_create_customer(params[:source])
         plan = ::Stripe::Price.retrieve(params[:plan])
@@ -70,38 +64,46 @@ module DiscourseSubscriptions
           promo_code = ::Stripe::PromotionCode.list({ code: params[:promo] })
           promo_code = promo_code[:data][0] # we assume promo codes have a unique name
 
-          return render_json_error I18n.t("js.discourse_subscriptions.subscribe.invalid_coupon") if promo_code.blank?
+          if promo_code.blank?
+            return render_json_error I18n.t("js.discourse_subscriptions.subscribe.invalid_coupon")
+          end
         end
 
-        recurring_plan = plan[:type] == 'recurring'
+        recurring_plan = plan[:type] == "recurring"
 
         if recurring_plan
-          trial_days = plan[:metadata][:trial_period_days] if plan[:metadata] && plan[:metadata][:trial_period_days]
+          trial_days = plan[:metadata][:trial_period_days] if plan[:metadata] &&
+            plan[:metadata][:trial_period_days]
 
           promo_code_id = promo_code[:id] if promo_code
 
-          transaction = ::Stripe::Subscription.create(
-            customer: customer[:id],
-            items: [{ price: params[:plan] }],
-            metadata: metadata_user,
-            trial_period_days: trial_days,
-            promotion_code: promo_code_id
-          )
+          transaction =
+            ::Stripe::Subscription.create(
+              customer: customer[:id],
+              items: [{ price: params[:plan] }],
+              metadata: metadata_user,
+              trial_period_days: trial_days,
+              promotion_code: promo_code_id,
+            )
 
-          payment_intent = retrieve_payment_intent(transaction[:latest_invoice]) if transaction[:status] == 'incomplete'
+          payment_intent = retrieve_payment_intent(transaction[:latest_invoice]) if transaction[
+            :status
+          ] == "incomplete"
         else
-          coupon_id = promo_code[:coupon][:id] if promo_code && promo_code[:coupon] && promo_code[:coupon][:id]
-          invoice_item = ::Stripe::InvoiceItem.create(
-            customer: customer[:id],
-            price: params[:plan],
-            discounts: [{ coupon: coupon_id }]
-          )
-          invoice = ::Stripe::Invoice.create(
-            customer: customer[:id]
-          )
+          coupon_id = promo_code[:coupon][:id] if promo_code && promo_code[:coupon] &&
+            promo_code[:coupon][:id]
+          invoice_item =
+            ::Stripe::InvoiceItem.create(
+              customer: customer[:id],
+              price: params[:plan],
+              discounts: [{ coupon: coupon_id }],
+            )
+          invoice = ::Stripe::Invoice.create(customer: customer[:id])
           transaction = ::Stripe::Invoice.finalize_invoice(invoice[:id])
-          payment_intent = retrieve_payment_intent(transaction[:id]) if transaction[:status] == 'open'
-          transaction = ::Stripe::Invoice.pay(invoice[:id]) if payment_intent[:status] == 'successful'
+          payment_intent = retrieve_payment_intent(transaction[:id]) if transaction[:status] ==
+            "open"
+          transaction = ::Stripe::Invoice.pay(invoice[:id]) if payment_intent[:status] ==
+            "successful"
         end
 
         finalize_transaction(transaction, plan) if transaction_ok(transaction)
@@ -115,7 +117,7 @@ module DiscourseSubscriptions
     end
 
     def finalize
-      params.require([:plan, :transaction])
+      params.require(%i[plan transaction])
       begin
         price = ::Stripe::Price.retrieve(params[:plan])
         transaction = retrieve_transaction(params[:transaction])
@@ -132,17 +134,15 @@ module DiscourseSubscriptions
 
       group.add(current_user) if group
 
-      customer = Customer.create(
-        user_id: current_user.id,
-        customer_id: transaction[:customer],
-        product_id: plan[:product]
-      )
-
-      if transaction[:object] == 'subscription'
-        Subscription.create(
-          customer_id: customer.id,
-          external_id: transaction[:id]
+      customer =
+        Customer.create(
+          user_id: current_user.id,
+          customer_id: transaction[:customer],
+          product_id: plan[:product],
         )
+
+      if transaction[:object] == "subscription"
+        Subscription.create(customer_id: customer.id, external_id: transaction[:id])
       end
     end
 
@@ -154,23 +154,20 @@ module DiscourseSubscriptions
         name: product[:name],
         description: PrettyText.cook(product[:metadata][:description]),
         subscribed: current_user_products.include?(product[:id]),
-        repurchaseable: product[:metadata][:repurchaseable]
+        repurchaseable: product[:metadata][:repurchaseable],
       }
     end
 
     def current_user_products
       return [] if current_user.nil?
 
-      Customer
-        .select(:product_id)
-        .where(user_id: current_user.id)
-        .map { |c| c.product_id }.compact
+      Customer.select(:product_id).where(user_id: current_user.id).map { |c| c.product_id }.compact
     end
 
     def serialize_plans(plans)
-      plans[:data].map do |plan|
-        plan.to_h.slice(:id, :unit_amount, :currency, :type, :recurring)
-      end.sort_by { |plan| plan[:amount] }
+      plans[:data]
+        .map { |plan| plan.to_h.slice(:id, :unit_amount, :currency, :type, :recurring) }
+        .sort_by { |plan| plan[:amount] }
     end
 
     def find_or_create_customer(source)
@@ -179,10 +176,7 @@ module DiscourseSubscriptions
       if customer.present?
         ::Stripe::Customer.retrieve(customer.customer_id)
       else
-        ::Stripe::Customer.create(
-          email: current_user.email,
-          source: source
-        )
+        ::Stripe::Customer.create(email: current_user.email, source: source)
       end
     end
 

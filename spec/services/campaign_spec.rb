@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 describe DiscourseSubscriptions::Campaign do
-  describe 'campaign data is refreshed' do
-    let (:user) { Fabricate(:user) }
-    let (:user2) { Fabricate(:user) }
+  describe "campaign data is refreshed" do
+    let (:user) {
+      Fabricate(:user)
+    }
+    let (:user2) {
+      Fabricate(:user)
+    }
     let(:subscription) do
       {
         id: "sub_1234",
@@ -16,12 +20,12 @@ describe DiscourseSubscriptions::Campaign do
                 product: "prodct_23456",
                 unit_amount: 1000,
                 recurring: {
-                  interval: "month"
-                }
-              }
-            }
-          ]
-        }
+                  interval: "month",
+                },
+              },
+            },
+          ],
+        },
       }
     end
     let(:invoice) do
@@ -37,10 +41,10 @@ describe DiscourseSubscriptions::Campaign do
                 active: true,
                 unit_amount: 1000,
                 recurring: nil,
-              }
-            }
-          ]
-        }
+              },
+            },
+          ],
+        },
       }
     end
     let(:invoice2) do
@@ -56,20 +60,20 @@ describe DiscourseSubscriptions::Campaign do
                 active: true,
                 unit_amount: 600,
                 recurring: nil,
-              }
-            }
-          ]
-        }
+              },
+            },
+          ],
+        },
       }
     end
 
     before do
       Fabricate(:product, external_id: "prodct_23456")
-      Fabricate(:customer, product_id: "prodct_23456", user_id: user.id, customer_id: 'x')
+      Fabricate(:customer, product_id: "prodct_23456", user_id: user.id, customer_id: "x")
       Fabricate(:product, external_id: "prodct_65432")
-      Fabricate(:customer, product_id: "prodct_65432", user_id: user2.id, customer_id: 'y')
+      Fabricate(:customer, product_id: "prodct_65432", user_id: user2.id, customer_id: "y")
       Fabricate(:product, external_id: "prodct_65433")
-      Fabricate(:customer, product_id: "prodct_65433", user_id: user2.id, customer_id: 'y')
+      Fabricate(:customer, product_id: "prodct_65433", user_id: user2.id, customer_id: "y")
       SiteSetting.discourse_subscriptions_public_key = "public-key"
       SiteSetting.discourse_subscriptions_secret_key = "secret-key"
     end
@@ -92,17 +96,17 @@ describe DiscourseSubscriptions::Campaign do
           ::Stripe::Invoice.expects(:list).returns(data: [invoice], has_more: false)
 
           DiscourseSubscriptions::Campaign.new.refresh_data
-          expect(Discourse.redis.get('subscriptions_goal_met_date')).to be_present
+          expect(Discourse.redis.get("subscriptions_goal_met_date")).to be_present
         end
 
         it "checks if goal is < 90% met after being met" do
           SiteSetting.discourse_subscriptions_campaign_goal = 25
-          Discourse.redis.set('subscriptions_goal_met_date', 10.days.ago)
+          Discourse.redis.set("subscriptions_goal_met_date", 10.days.ago)
           ::Stripe::Subscription.expects(:list).returns(data: [subscription], has_more: false)
           ::Stripe::Invoice.expects(:list).returns(data: [invoice], has_more: false)
 
           DiscourseSubscriptions::Campaign.new.refresh_data
-          expect(Discourse.redis.get('subscriptions_goal_met_date')).to be_blank
+          expect(Discourse.redis.get("subscriptions_goal_met_date")).to be_blank
         end
       end
 
@@ -116,25 +120,28 @@ describe DiscourseSubscriptions::Campaign do
                 {
                   price: {
                     product: "prod_use",
-                    unit_amount: 10000,
+                    unit_amount: 10_000,
                     recurring: {
-                      interval: "year"
-                    }
-                  }
-                }
-              ]
-            }
+                      interval: "year",
+                    },
+                  },
+                },
+              ],
+            },
           }
         end
 
         before do
           Fabricate(:product, external_id: "prod_use")
-          Fabricate(:customer, product_id: "prod_use", user_id: user2.id, customer_id: 'y')
+          Fabricate(:customer, product_id: "prod_use", user_id: user2.id, customer_id: "y")
           SiteSetting.discourse_subscriptions_campaign_product = "prod_use"
         end
 
         it "refreshes campaign data with only the campaign product/subscriptions" do
-          ::Stripe::Subscription.expects(:list).returns(data: [subscription, campaign_subscription], has_more: false)
+          ::Stripe::Subscription.expects(:list).returns(
+            data: [subscription, campaign_subscription],
+            has_more: false,
+          )
           ::Stripe::Invoice.expects(:list).returns(data: [invoice], has_more: false)
 
           DiscourseSubscriptions::Campaign.new.refresh_data

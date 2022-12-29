@@ -16,20 +16,23 @@ module DiscourseSubscriptions
             has_more: false,
             data: [],
             length: 0,
-            last_record: params[:last_record]
+            last_record: params[:last_record],
           }
 
           if subscription_ids.present? && is_stripe_configured?
             while subscriptions[:length] < PAGE_LIMIT
               current_set = get_subscriptions(subscriptions[:last_record])
 
-              until valid_subscriptions = find_valid_subscriptions(current_set[:data], subscription_ids) do
+              until valid_subscriptions =
+                      find_valid_subscriptions(current_set[:data], subscription_ids)
                 current_set = get_subscriptions(current_set[:data].last)
                 break if current_set[:has_more] == false
               end
 
               subscriptions[:data] = subscriptions[:data].concat(valid_subscriptions.to_a)
-              subscriptions[:last_record] = current_set[:data].last[:id] if current_set[:data].present?
+              subscriptions[:last_record] = current_set[:data].last[:id] if current_set[
+                :data
+              ].present?
               subscriptions[:length] = subscriptions[:data].length
               subscriptions[:has_more] = current_set[:has_more]
               break if subscriptions[:has_more] == false
@@ -50,10 +53,11 @@ module DiscourseSubscriptions
           refund_subscription(params[:id]) if params[:refund]
           subscription = ::Stripe::Subscription.delete(params[:id])
 
-          customer = Customer.find_by(
-            product_id: subscription[:plan][:product],
-            customer_id: subscription[:customer]
-          )
+          customer =
+            Customer.find_by(
+              product_id: subscription[:plan][:product],
+              customer_id: subscription[:customer],
+            )
 
           Subscription.delete_by(external_id: params[:id])
 
@@ -65,7 +69,6 @@ module DiscourseSubscriptions
           end
 
           render_json_dump subscription
-
         rescue ::Stripe::InvalidRequestError => e
           render_json_error e.message
         end
@@ -74,7 +77,11 @@ module DiscourseSubscriptions
       private
 
       def get_subscriptions(start)
-        ::Stripe::Subscription.list(expand: ['data.plan.product'], limit: PAGE_LIMIT, starting_after: start)
+        ::Stripe::Subscription.list(
+          expand: ["data.plan.product"],
+          limit: PAGE_LIMIT,
+          starting_after: start,
+        )
       end
 
       def find_valid_subscriptions(data, ids)
@@ -85,11 +92,11 @@ module DiscourseSubscriptions
       # this will only refund the most recent subscription payment
       def refund_subscription(subscription_id)
         subscription = ::Stripe::Subscription.retrieve(subscription_id)
-        invoice = ::Stripe::Invoice.retrieve(subscription[:latest_invoice]) if subscription[:latest_invoice]
+        invoice = ::Stripe::Invoice.retrieve(subscription[:latest_invoice]) if subscription[
+          :latest_invoice
+        ]
         payment_intent = invoice[:payment_intent] if invoice[:payment_intent]
-        refund = ::Stripe::Refund.create({
-          payment_intent: payment_intent,
-        })
+        refund = ::Stripe::Refund.create({ payment_intent: payment_intent })
       end
     end
   end
