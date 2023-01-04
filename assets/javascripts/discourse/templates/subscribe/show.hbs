@@ -4,7 +4,7 @@
       {{model.product.name}}
     </h2>
 
-    <hr>
+    <hr />
 
     <p>
       {{html-safe model.product.description}}
@@ -17,11 +17,11 @@
         {{i18n "discourse_subscriptions.subscribe.card.title"}}
       </h2>
 
-      <hr>
+      <hr />
 
       {{payment-options plans=model.plans selectedPlan=selectedPlan}}
 
-      <hr>
+      <hr />
 
       {{subscribe-card cardElement=cardElement}}
 
