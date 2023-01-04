@@ -423,7 +423,9 @@ body:not(.archetype-regular):not(.success-animation-off) {
   }
 }
 
-body.subscription-campaign-sidebar:not(.archetype-regular):not(.success-animation-off) {
+body.subscription-campaign-sidebar:not(.archetype-regular):not(
+    .success-animation-off
+  ) {
   .fireworks > .before,
   .fireworks > .after {
     position: absolute;
