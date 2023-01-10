@@ -5,3 +5,8 @@
 # https://translate.discourse.org/
 
 tr_TR:
+  discourse_subscriptions:
+    customer_not_found: Müşteri bulunamadı
+    card:
+      declined: Kart Reddedildi
+      invalid: Kart Geçersiz
