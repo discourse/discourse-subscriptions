@@ -15,9 +15,9 @@ tr_TR:
     discourse_subscriptions_campaign_enabled: Bu topluluğu finansal olarak desteklemeyi teşvik etmek için bir kampanya afişi etkinleştirir.
     discourse_subscriptions_campaign_goal: Destek kampanyanız için sayısal hedef (aboneler veya toplanan miktar).
     discourse_subscriptions_campaign_type: Yürütülecek kampanya türünü seçer (aboneler veya aylık toplanan miktar).
-    discourse_subscriptions_campaign_banner_location: Kampanya afişinin konumunu seçer (üst veya kenar çubuğu).
-    discourse_subscriptions_campaign_banner_shadow_color: Kampanya afişinin alt gölgesinin rengini seçer.
-    discourse_subscriptions_campaign_banner_bg_image: Kampanya afişinde arka plan olarak kullanmak için özel bir görsel yükleyin.
+    discourse_subscriptions_campaign_banner_location: Kampanya banner'ının konumunu seçer (üst veya kenar çubuğu).
+    discourse_subscriptions_campaign_banner_shadow_color: Kampanya banner'ının alt gölgesinin rengini seçer.
+    discourse_subscriptions_campaign_banner_bg_image: Kampanya banner'ında arka plan olarak kullanmak için özel bir görsel yükleyin.
     discourse_subscriptions_campaign_show_contributors: En son satın alınan abonelik ürünlerinin avatarlarını gösterin.
     discourse_subscriptions_campaign_product: Destekçiler kampanyadaki düğmeye tıkladıklarında gönderilecek Stripe ürün kimliği. Bu ayar boş bırakılırsa destekçiler ana ürünler sayfasına yönlendirilir.
     errors:
@@ -39,12 +39,12 @@ tr_TR:
           payments: Ödemeler
       campaign:
         title: Bize Destek Olun
-        body: Bu topluluğu çalışır halde tutmak için yardımınıza ihtiyacımız var!
+        body: Bu topluluğu işler halde tutmak için yardımınıza ihtiyacımız var!
         success_title: Başarılı!
-        success_body: Bu topluluğu çalışır durumda tutmaya yardımcı olduğunuz için teşekkür ederiz!
+        success_body: Bu topluluğu işler durumda tutmaya yardımcı olduğunuz için teşekkür ederiz!
         subscribers: Aboneler
         goal_comparison: "<strong>%{current}</strong> / <strong>%{goal}</strong>"
-        raised: Yükseltilmiş
+        raised: Toplandı
         button: Destek
         recent_contributors: Son Katkıda Bulunanlar
         goal: Hedefimize ulaştık
@@ -122,7 +122,7 @@ tr_TR:
         already_purchased: Bu ürünü daha önce satın aldığınız için çok teşekkürler!
       billing:
         name: Ad soyad
-        email: Eposta
+        email: E-posta
         phone: Telefon Numarası
       confirmation:
         amount: Miktar
@@ -135,7 +135,7 @@ tr_TR:
         unconfigured: 'Stripe doğru yapılandırılmamış. Bilgi için lütfen Discourse Meta''ya bakın.'
         on_meta: Meta'da Discourse Abonelikleri
         dashboard:
-          title: Gösterge Paneli
+          title: Pano
           table:
             head:
               user: Kullanıcı
