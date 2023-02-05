@@ -21,6 +21,28 @@ export default Controller.extend({
     const elements = this.get("stripe").elements();
 
     this.set("cardElement", elements.create("card", { hidePostalCode: true }));
+  
+    this.initButtonPay();
+  },
+
+  initButtonPay() {
+    const elements = this.get("stripe").elements();
+    const paymentRequest = this.get("stripe").paymentRequest({
+      currency: "usd",
+      country: "US",
+      requestPayerName: true,
+      requestPayerEmail: true,
+      total: {
+        label: "test payment apple",
+        amount: 99,
+      }
+    });
+    this.set("buttonElement", 
+      elements.create('paymentRequestButton', {
+        paymentRequest: paymentRequest,
+      })
+    );
+    this.set("paymentRequest", paymentRequest);
   },
 
   alert(path) {
