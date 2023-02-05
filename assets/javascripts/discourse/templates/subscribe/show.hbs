@@ -24,7 +24,6 @@
       <hr />
 
       {{subscribe-card cardElement=cardElement}}
-      {{subscribe-google-pay buttonElement=buttonElement paymentRequest=paymentRequest}}
 
       {{#if loading}}
         {{loading-spinner}}
@@ -45,6 +44,8 @@
           class="btn btn-primary btn-payment"
           label="discourse_subscriptions.plans.payment_button"
         }}
+        
+        {{subscribe-google-pay buttonElement=buttonElement paymentRequest=paymentRequest}}
       {{/if}}
     {{else}}
       <h2>{{i18n "discourse_subscriptions.subscribe.already_purchased"}}</h2>
