@@ -1,5 +1,3 @@
-@use "sass:math";
-
 .subscription-campaign-sidebar {
   #main-outlet
     .container.list-container
@@ -331,10 +329,11 @@ $sidebar-box-shadow2: ();
 
 @for $i from 0 through $particles {
   $box-shadow: $box-shadow,
-    random($width)-$width *
-      0.5 +
+    random($width)-$width /
+      2 +
       px
-      random($height)-math.div($height, 1.2) +
+      random($height)-$height /
+      1.2 +
       px
       hsl(random(360), 100, 50);
   $box-shadow2: $box-shadow2, 0 0 #fff;
@@ -342,10 +341,11 @@ $sidebar-box-shadow2: ();
 
 @for $i from 0 through $sidebar-particles {
   $sidebar-box-shadow: $sidebar-box-shadow,
-    random($sidebar-width)-$sidebar-width *
-      0.5 +
+    random($sidebar-width)-$sidebar-width /
+      2 +
       px
-      random($sidebar-height)-math.div($sidebar-height, 1.2) +
+      random($sidebar-height)-$sidebar-height /
+      1.2 +
       px
       hsl(random(360), 100, 50);
   $sidebar-box-shadow2: $sidebar-box-shadow2, 0 0 #fff;
