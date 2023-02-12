@@ -45,7 +45,16 @@
           label="discourse_subscriptions.plans.payment_button"
         }}
         
-        {{subscribe-google-pay buttonElement=buttonElement paymentRequest=paymentRequest}}
+        {{subscribe-google-pay
+          alert=alert
+          stripe=stripe
+          plans=model.plans
+          selectedPlan=selectedPlan
+          promoCode=promoCode
+          advanceSuccessfulTransaction=(action "advanceSuccessfulTransaction")
+          handleAuthentication=(action "handleAuthentication")
+        }}
+        
       {{/if}}
     {{else}}
       <h2>{{i18n "discourse_subscriptions.subscribe.already_purchased"}}</h2>
