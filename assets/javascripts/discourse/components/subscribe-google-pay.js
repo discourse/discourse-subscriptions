@@ -28,7 +28,8 @@ export default Component.extend({
         total: {
           label: plan.subscriptionRate,
           amount: plan.unit_amount,
-        }
+        },
+        disableWallets: ["link", "browserCard"],
       });
       this.set("buttonElement",
         elements.create('paymentRequestButton', {
