@@ -83,15 +83,6 @@ export default Controller.extend({
   },
 
   actions: {
-    alert(path) {
-      this.alert(path)
-    },
-    handleAuthentication(plan, transaction) {
-      this.handleAuthentication(plan, transaction)
-    },
-    advanceSuccessfulTransaction(plan) {
-      this._advanceSuccessfulTransaction(plan)
-    },
     stripePaymentHandler() {
       this.set("loading", true);
       const plan = this.get("model.plans")

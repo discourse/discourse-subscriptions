@@ -79,28 +79,28 @@ export default Component.extend({
                 if (authenticationResult && !authenticationResult.error) {
                   return Transaction.finalize(transactionId, planId).then(
                     () => {
-                      this.advanceSuccessfulTransaction(plan);
+                      this._advanceSuccessfulTransaction(plan);
                       e.complete("success");
                       console.log(`Success: ${authenticationResult.paymentIntent.id}`);
                     }
                   );
                 } else if (authenticationResult.error) {
-                  console.log("Payment fail");
+                  console.log("Payment fail", authenticationResult.error);
                   e.complete("fail");
                 }
               }
             );
           } else {
-            this.advanceSuccessfulTransaction(plan);
+            this._advanceSuccessfulTransaction(plan);
             e.complete("success");
             console.log(`Success`);
           }
         })
         .catch((result) => {
           e.complete("fail");
-          console.log("Payment fail");
+          console.log("Catch Payment fail");
           this.dialog.alert(
-            result.jqXHR.responseJSON?.errors[0] || result.errorThrown
+            result.jqXHR?.responseJSON?.errors[0] || result.errorThrown
           );
         });
 
