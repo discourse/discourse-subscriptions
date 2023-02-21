@@ -25,6 +25,7 @@ fa_IR:
           payments: پرداخت‌ها
       campaign:
         title: از ما حمایت کنید
+        success_title: موفقیت!
         goal_comparison: "<strong>%{current}</strong> از <strong>%{goal}</strong>"
         confirm_creation_title: آیا می‌خواهید به طور خودکار یک کمپین برای انجمن خود ایجاد کنید؟
       plans:
@@ -34,6 +35,7 @@ fa_IR:
             week: هفتگی
             month: ماهانه
             year: سالیانه
+        payment_button: اشتراک
       user:
         payments:
           id: شناسه پرداخت‌
@@ -49,10 +51,14 @@ fa_IR:
             heading: "به‌روزرسانی کارت برای اشتراک: %{sub_id}"
             single: "به‌روزرسانی"
           created_at: ساخته شده
+          cancel: لغو
       subscribe:
+        title: اشتراک
         card:
           title: پرداخت‌
         promo_code: تخفیف
+        buttons:
+          subscribe: اشتراک
       billing:
         name: نام کامل
         email: ایمیل
@@ -97,6 +103,7 @@ fa_IR:
           create: ایجاد تخفیف
           promo_code: کد تبلیغاتی (حساس به حروف کوچک و بزرگ)
         subscriptions:
+          title: اشتراک‌ها
           subscription:
             user: کاربر
             customer: مشتری

@@ -8,9 +8,12 @@ lt:
   js:
     discourse_subscriptions:
       optional: Pasirinktinai
+      campaign:
+        success_title: Sėkmingai!
       plans:
         interval:
           adverb:
+            day: Kasdien
             week: Kas savaitę
             month: Kas mėnesį
             year: Kasmet
@@ -20,7 +23,11 @@ lt:
         plans:
           product: Vardas
         subscriptions:
+          status: Statusas
+          update_card:
+            single: "Atnaujinti"
           created_at: Sukurta
+          cancel: atšaukti
       billing:
         email: Epaštas
       admin:
@@ -34,11 +41,16 @@ lt:
             description: Aprašymas
             active: Aktyvus
             created_at: Sukurta
+            updated_at: Atnaujinta
         plans:
           plan:
             active: Aktyvus
             created_at: Sukurta
+        coupons:
+          active: Aktyvus?
+          actions: Veiksmai
         subscriptions:
           subscription:
             user: Narys
+            status: Statusas
             created_at: Sukurta

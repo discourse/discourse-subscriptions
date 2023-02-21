@@ -8,9 +8,12 @@ sl:
   js:
     discourse_subscriptions:
       optional: Neobvezno
+      campaign:
+        success_title: Uspeh!
       plans:
         interval:
           adverb:
+            day: Dnevno
             week: Tedensko
             month: Mesečno
             year: V letu
@@ -22,6 +25,7 @@ sl:
         subscriptions:
           status: Stanje
           created_at: Ustvarjeno
+          cancel: prekliči
       billing:
         email: E-sporočila
       admin:
@@ -39,6 +43,9 @@ sl:
           plan:
             active: Aktivni
             created_at: Ustvarjeno
+        coupons:
+          active: Aktivni?
+          actions: Akcije
         subscriptions:
           subscription:
             user: Uporabnik

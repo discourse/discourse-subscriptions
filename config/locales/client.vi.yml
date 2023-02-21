@@ -8,9 +8,12 @@ vi:
   js:
     discourse_subscriptions:
       optional: Tuỳ chọn
+      campaign:
+        success_title: Thành công!
       plans:
         interval:
           adverb:
+            day: hằng ngày
             week: Hàng tuần
             month: Hàng tháng
             year: Hàng năm
@@ -21,7 +24,10 @@ vi:
           product: Tên
         subscriptions:
           status: Trạng thái
+          update_card:
+            single: "Cập nhật"
           created_at: Tạo bởi
+          cancel: hủy
       billing:
         email: Email
       admin:
@@ -35,10 +41,14 @@ vi:
             description: Mô tả
             active: Kích hoạt
             created_at: Tạo bởi
+            updated_at: Đã cập nhật
         plans:
           plan:
             active: Kích hoạt
             created_at: Tạo bởi
+        coupons:
+          active: Kích hoạt?
+          actions: Hành động
         subscriptions:
           subscription:
             user: Người dùng

@@ -8,9 +8,12 @@ uk:
   js:
     discourse_subscriptions:
       optional: Опціонально
+      campaign:
+        success_title: Успіх!
       plans:
         interval:
           adverb:
+            day: За день
             week: Щотижня
             month: Щомісяця
             year: Щорічно
@@ -21,7 +24,10 @@ uk:
           product: Назва
         subscriptions:
           status: Статус
+          update_card:
+            single: "Оновити"
           created_at: Створено
+          cancel: скасувати
       billing:
         email: Електронна пошта
       admin:
@@ -40,6 +46,9 @@ uk:
           plan:
             active: Активний
             created_at: Створено
+        coupons:
+          active: Активний?
+          actions: Дії
         subscriptions:
           subscription:
             user: Користувач

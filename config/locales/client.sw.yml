@@ -8,9 +8,12 @@ sw:
   js:
     discourse_subscriptions:
       optional: Sio Muhimu
+      campaign:
+        success_title: Mafanikio!
       plans:
         interval:
           adverb:
+            day: Kila siku
             week: Kila wiki
             month: Klla mwezi
             year: Kila Mwaka
@@ -21,6 +24,7 @@ sw:
           product: Jina
         subscriptions:
           created_at: Imetengenezwa
+          cancel: ghairi
       billing:
         email: Barua Pepe
       admin:
@@ -38,6 +42,9 @@ sw:
           plan:
             active: Amilifu
             created_at: Imetengenezwa
+        coupons:
+          active: Amilifu?
+          actions: Vitendo
         subscriptions:
           subscription:
             user: Mtumiaji

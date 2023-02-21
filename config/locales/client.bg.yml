@@ -7,9 +7,11 @@
 bg:
   js:
     discourse_subscriptions:
+      optional: По избор
       plans:
         interval:
           adverb:
+            day: Дневно
             week: Седмично
             month: Месечно
             year: Годишно
@@ -20,7 +22,10 @@ bg:
           product: Име
         subscriptions:
           status: Статус
+          update_card:
+            single: "Актуализация"
           created_at: Създадени
+          cancel: прекрати
       billing:
         email: Имейл
       admin:
@@ -38,6 +43,9 @@ bg:
           plan:
             active: Активни
             created_at: Създадени
+        coupons:
+          active: Активни?
+          actions: Действия
         subscriptions:
           subscription:
             user: Потребител

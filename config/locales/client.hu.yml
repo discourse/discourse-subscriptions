@@ -8,9 +8,12 @@ hu:
   js:
     discourse_subscriptions:
       optional: Opcionális
+      campaign:
+        success_title: Siker!
       plans:
         interval:
           adverb:
+            day: Napi
             week: Heti
             month: Havi
             year: Éves
@@ -21,7 +24,10 @@ hu:
           product: Név
         subscriptions:
           status: Állapot
+          update_card:
+            single: "Frissítés"
           created_at: Létrehozott
+          cancel: mégse
       billing:
         email: E-mail
       admin:
@@ -35,10 +41,14 @@ hu:
             description: Leírás
             active: Aktív
             created_at: Létrehozott
+            updated_at: Frissítve
         plans:
           plan:
             active: Aktív
             created_at: Létrehozott
+        coupons:
+          active: Aktív?
+          actions: Műveletek
         subscriptions:
           subscription:
             user: Felhasználó

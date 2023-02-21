@@ -8,9 +8,12 @@ et:
   js:
     discourse_subscriptions:
       optional: Valikuline
+      campaign:
+        success_title: Korras!
       plans:
         interval:
           adverb:
+            day: Igapäevaselt
             week: Iganädalaselt
             month: Igakuiselt
             year: Iga-aastaselt
@@ -20,7 +23,9 @@ et:
         plans:
           product: Nimi
         subscriptions:
+          status: Staatus
           created_at: Loodud
+          cancel: tühista
       billing:
         email: E-post
       admin:
@@ -38,7 +43,11 @@ et:
           plan:
             active: Aktiivne
             created_at: Loodud
+        coupons:
+          active: Aktiivne?
+          actions: Tegevused
         subscriptions:
           subscription:
             user: Kasutaja
+            status: Staatus
             created_at: Loodud

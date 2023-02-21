@@ -8,9 +8,12 @@ bs_BA:
   js:
     discourse_subscriptions:
       optional: Opcionalno
+      campaign:
+        success_title: Uspjeh!
       plans:
         interval:
           adverb:
+            day: Dnevno
             week: Popularne Sedmično
             month: Popularne Mjesečno
             year: Popularne Godišnje
@@ -22,6 +25,7 @@ bs_BA:
         subscriptions:
           status: Status
           created_at: Kreiran
+          cancel: otkaži
       billing:
         email: Email
       admin:
@@ -35,10 +39,14 @@ bs_BA:
             description: Opis
             active: Active
             created_at: Kreiran
+            updated_at: Ažurirano
         plans:
           plan:
             active: Active
             created_at: Kreiran
+        coupons:
+          active: Active?
+          actions: Akcije
         subscriptions:
           subscription:
             user: User

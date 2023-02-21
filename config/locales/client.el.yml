@@ -8,9 +8,12 @@ el:
   js:
     discourse_subscriptions:
       optional: Προαιρετικό
+      campaign:
+        success_title: Επιτυχία!
       plans:
         interval:
           adverb:
+            day: Ημερήσιες
             week: Εβδομαδιαία
             month: Μηνιαία
             year: Ετήσια
@@ -20,7 +23,9 @@ el:
         plans:
           product: Όνομα
         subscriptions:
+          status: Κατάσταση
           created_at: Δημιουργήθηκε
+          cancel: ακύρωση
       billing:
         email: Διεύθυνση Email
       admin:
@@ -34,11 +39,16 @@ el:
             description: Περιγραφή
             active: Ενεργοί
             created_at: Δημιουργήθηκε
+            updated_at: Ενημερώθηκε
         plans:
           plan:
             active: Ενεργοί
             created_at: Δημιουργήθηκε
+        coupons:
+          active: Ενεργοί?
+          actions: Ενέργειες
         subscriptions:
           subscription:
             user: Χρήστης
+            status: Κατάσταση
             created_at: Δημιουργήθηκε

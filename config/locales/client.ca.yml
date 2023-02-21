@@ -8,9 +8,12 @@ ca:
   js:
     discourse_subscriptions:
       optional: Opcional
+      campaign:
+        success_title: Èxit!
       plans:
         interval:
           adverb:
+            day: Diàriament
             week: Setmanalment
             month: Mensualment
             year: Anualment
@@ -22,6 +25,7 @@ ca:
         subscriptions:
           status: Estat
           created_at: Creat
+          cancel: cancel·la
       billing:
         email: Correu electrònic
       admin:
@@ -40,6 +44,9 @@ ca:
           plan:
             active: Actiu
             created_at: Creat
+        coupons:
+          active: Actiu?
+          actions: Accions
         subscriptions:
           subscription:
             user: Usuari

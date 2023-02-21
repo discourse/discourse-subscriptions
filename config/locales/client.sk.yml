@@ -11,6 +11,7 @@ sk:
       plans:
         interval:
           adverb:
+            day: Denne
             week: Týždenne
             month: Mesačne
             year: Ročne
@@ -21,6 +22,7 @@ sk:
           product: Meno
         subscriptions:
           created_at: Vytvorené
+          cancel: zrušiť
       billing:
         email: Email
       admin:
@@ -38,6 +40,9 @@ sk:
           plan:
             active: Aktívny
             created_at: Vytvorené
+        coupons:
+          active: Aktívny?
+          actions: Akcie
         subscriptions:
           subscription:
             user: Používateľ

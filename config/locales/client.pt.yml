@@ -60,6 +60,8 @@ pt:
           status: Estado
           discounted: Descontado
           renews: Renovações
+          update_card:
+            single: "Atualização"
           created_at: Criado
           cancel: cancelar
           cancelled: cancelada
@@ -154,6 +156,7 @@ pt:
           discount: Desconto
           times_redeemed: Vezes Resgatados
           active: Ativo?
+          actions: Ações
         subscriptions:
           title: Subscrições
           subscription:
