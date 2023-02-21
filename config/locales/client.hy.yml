@@ -8,9 +8,12 @@ hy:
   js:
     discourse_subscriptions:
       optional: Ընտրովի
+      campaign:
+        success_title: Հաջողություն!
       plans:
         interval:
           adverb:
+            day: Օրվա Ընթացքում
             week: Շաբաթվա Ընթացքում
             month: Ամսվա Ընթացքում
             year: Տարվա Ընթացքում
@@ -22,6 +25,7 @@ hy:
         subscriptions:
           status: Ստատուս
           created_at: Ստեղծված
+          cancel: չեղարկել
       billing:
         email: Էլ. հասցե
       admin:
@@ -40,6 +44,9 @@ hy:
           plan:
             active: Ակտիվ
             created_at: Ստեղծված
+        coupons:
+          active: Ակտիվ?
+          actions: Գործողություններ
         subscriptions:
           subscription:
             user: Օգտատեր

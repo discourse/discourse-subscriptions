@@ -7,6 +7,7 @@
 id:
   js:
     discourse_subscriptions:
+      optional: Opsional
       user:
         payments:
           created_at: Dibuat
@@ -15,6 +16,7 @@ id:
         subscriptions:
           status: Status
           created_at: Dibuat
+          cancel: batal
       billing:
         email: Email
       admin:
@@ -30,6 +32,9 @@ id:
           plan:
             active: Aktif
             created_at: Dibuat
+        coupons:
+          active: Aktif?
+          actions: Aksi
         subscriptions:
           subscription:
             user: Pengguna

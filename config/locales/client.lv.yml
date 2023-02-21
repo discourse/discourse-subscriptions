@@ -8,9 +8,12 @@ lv:
   js:
     discourse_subscriptions:
       optional: Pēc izvēles
+      campaign:
+        success_title: Veiksmīgi!
       plans:
         interval:
           adverb:
+            day: Dienas
             week: Nedēļas
             month: Mēneša
             year: Gada
@@ -22,6 +25,7 @@ lv:
         subscriptions:
           status: Statuss
           created_at: Radīts
+          cancel: atcelt
       billing:
         email: E-pasts
       admin:
@@ -39,6 +43,9 @@ lv:
           plan:
             active: Aktīvs
             created_at: Radīts
+        coupons:
+          active: Aktīvs?
+          actions: Darbības
         subscriptions:
           subscription:
             user: Lietotājs

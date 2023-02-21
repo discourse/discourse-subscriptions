@@ -8,9 +8,12 @@ gl:
   js:
     discourse_subscriptions:
       optional: Opcional
+      campaign:
+        success_title: Feito!
       plans:
         interval:
           adverb:
+            day: Diario
             week: Semanal
             month: Mensual
             year: Anual
@@ -21,7 +24,10 @@ gl:
           product: Nome
         subscriptions:
           status: Estado
+          update_card:
+            single: "Actualizar"
           created_at: Creado
+          cancel: cancelar
       billing:
         email: Correo electrónico
       admin:
@@ -40,6 +46,9 @@ gl:
           plan:
             active: Activo
             created_at: Creado
+        coupons:
+          active: Activo?
+          actions: Accións
         subscriptions:
           subscription:
             user: Usuario

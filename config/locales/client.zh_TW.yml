@@ -8,9 +8,12 @@ zh_TW:
   js:
     discourse_subscriptions:
       optional: 可選
+      campaign:
+        success_title: 成功!
       plans:
         interval:
           adverb:
+            day: 日
             week: 周
             month: 月
             year: 年
@@ -22,6 +25,7 @@ zh_TW:
         subscriptions:
           status: 狀態
           created_at: 已建立
+          cancel: 取消
       billing:
         email: 電子信箱
       admin:
@@ -39,6 +43,9 @@ zh_TW:
           plan:
             active: 啟用
             created_at: 已建立
+        coupons:
+          active: 啟用?
+          actions: 動作
         subscriptions:
           subscription:
             user: 使用者

@@ -8,9 +8,12 @@ nb_NO:
   js:
     discourse_subscriptions:
       optional: Valgfritt
+      campaign:
+        success_title: Suksess!
       plans:
         interval:
           adverb:
+            day: Daglig
             week: Ukentlig
             month: Månedlig
             year: Årlig
@@ -21,7 +24,10 @@ nb_NO:
           product: Navn
         subscriptions:
           status: Status
+          update_card:
+            single: "Oppdater"
           created_at: Opprettet
+          cancel: avbryt
       billing:
         email: E-post
       admin:
@@ -35,10 +41,14 @@ nb_NO:
             description: Beskrivelse
             active: Aktiv
             created_at: Opprettet
+            updated_at: Oppdatert
         plans:
           plan:
             active: Aktiv
             created_at: Opprettet
+        coupons:
+          active: Aktiv?
+          actions: Handlinger
         subscriptions:
           subscription:
             user: Bruker

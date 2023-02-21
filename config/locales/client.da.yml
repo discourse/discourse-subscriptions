@@ -8,9 +8,12 @@ da:
   js:
     discourse_subscriptions:
       optional: Valgfrit
+      campaign:
+        success_title: Succes!
       plans:
         interval:
           adverb:
+            day: Dagligt
             week: Ugentligt
             month: Månedligt
             year: Årligt
@@ -21,7 +24,10 @@ da:
           product: Navn
         subscriptions:
           status: Status
+          update_card:
+            single: "Opdater"
           created_at: Oprettet
+          cancel: annuller
       billing:
         email: Email
       admin:
@@ -35,10 +41,14 @@ da:
             description: Beskrivelse
             active: Aktiv
             created_at: Oprettet
+            updated_at: Opdateret
         plans:
           plan:
             active: Aktiv
             created_at: Oprettet
+        coupons:
+          active: Aktiv?
+          actions: Handlinger
         subscriptions:
           subscription:
             user: Bruger

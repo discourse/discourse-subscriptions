@@ -10,6 +10,7 @@ sr:
       plans:
         interval:
           adverb:
+            day: Top dnevne
             week: Top nedeljne
             month: Top mesečne
             year: Top godišnje
@@ -20,6 +21,7 @@ sr:
           product: Ime foruma
         subscriptions:
           created_at: Napravljeno
+          cancel: otkaži
       billing:
         email: E-mail
       admin:
@@ -37,6 +39,9 @@ sr:
           plan:
             active: Aktivni
             created_at: Napravljeno
+        coupons:
+          active: Aktivni?
+          actions: Akcije
         subscriptions:
           subscription:
             user: Korisnik

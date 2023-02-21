@@ -7,9 +7,12 @@
 be:
   js:
     discourse_subscriptions:
+      campaign:
+        success_title: поспех!
       plans:
         interval:
           adverb:
+            day: штодня
             week: штотыдзень
             month: штомесяц
             year: штогод
@@ -20,6 +23,7 @@ be:
           product: Імя
         subscriptions:
           created_at: створаны
+          cancel: адмена
       billing:
         email: Электронная пошта
       admin:
@@ -37,6 +41,9 @@ be:
           plan:
             active: актыўны
             created_at: створаны
+        coupons:
+          active: актыўны?
+          actions: дзеянні
         subscriptions:
           subscription:
             user: Карыстальнік

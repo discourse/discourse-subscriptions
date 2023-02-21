@@ -7,9 +7,13 @@
 hr:
   js:
     discourse_subscriptions:
+      optional: Neobvezno
+      campaign:
+        success_title: Uspjeh!
       plans:
         interval:
           adverb:
+            day: Dnevno
             week: Tjedno
             month: Mjesečno
             year: Godišnje
@@ -20,7 +24,10 @@ hr:
           product: Ime i prezime
         subscriptions:
           status: Statust
+          update_card:
+            single: "Ažuriraj"
           created_at: Stvoreno
+          cancel: otkaži
       billing:
         email: Email
       admin:
@@ -34,10 +41,14 @@ hr:
             description: Opis
             active: Aktivno
             created_at: Stvoreno
+            updated_at: Ažurirano
         plans:
           plan:
             active: Aktivno
             created_at: Stvoreno
+        coupons:
+          active: Aktivno?
+          actions: Akcije
         subscriptions:
           subscription:
             user: Korisnik

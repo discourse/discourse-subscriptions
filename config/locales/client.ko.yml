@@ -8,9 +8,12 @@ ko:
   js:
     discourse_subscriptions:
       optional: 선택사항
+      campaign:
+        success_title: 성공!
       plans:
         interval:
           adverb:
+            day: 일
             week: 주
             month: 월
             year: 연
@@ -21,7 +24,10 @@ ko:
           product: 이름
         subscriptions:
           status: 상태
+          update_card:
+            single: "업데이트"
           created_at: 생성일자
+          cancel: 취소
       billing:
         email: 이메일
       admin:
@@ -35,10 +41,14 @@ ko:
             description: 내용
             active: 활성화 사용자
             created_at: 생성일자
+            updated_at: 업데이트
         plans:
           plan:
             active: 활성화 사용자
             created_at: 생성일자
+        coupons:
+          active: 활성화 사용자?
+          actions: 작업
         subscriptions:
           subscription:
             user: 사용자

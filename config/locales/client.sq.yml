@@ -11,6 +11,7 @@ sq:
       plans:
         interval:
           adverb:
+            day: Ditore
             week: Javore
             month: Mujore
             year: Vjetore
@@ -21,6 +22,7 @@ sq:
           product: Emri
         subscriptions:
           created_at: Krijuar
+          cancel: anulo
       billing:
         email: Email
       admin:
@@ -38,6 +40,9 @@ sq:
           plan:
             active: Aktiv
             created_at: Krijuar
+        coupons:
+          active: Aktiv?
+          actions: Veprimet
         subscriptions:
           subscription:
             user: User

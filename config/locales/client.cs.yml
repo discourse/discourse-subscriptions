@@ -8,9 +8,12 @@ cs:
   js:
     discourse_subscriptions:
       optional: Volitelné
+      campaign:
+        success_title: Úspěch!
       plans:
         interval:
           adverb:
+            day: Denně
             week: Týdně
             month: Měsíčně
             year: Ročně
@@ -20,7 +23,9 @@ cs:
         plans:
           product: Jméno
         subscriptions:
+          status: Stav
           created_at: Vytvořený
+          cancel: zrušit
       billing:
         email: Email
       admin:
@@ -38,7 +43,11 @@ cs:
           plan:
             active: Aktivní
             created_at: Vytvořený
+        coupons:
+          active: Aktivní?
+          actions: Akce
         subscriptions:
           subscription:
             user: Uživatel
+            status: Stav
             created_at: Vytvořený
