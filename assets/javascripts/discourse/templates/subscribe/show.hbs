@@ -46,13 +46,13 @@
         }}
         
         {{subscribe-google-pay
-          alert=alert
           stripe=stripe
           plans=model.plans
           selectedPlan=selectedPlan
           promoCode=promoCode
-          advanceSuccessfulTransaction=(action "advanceSuccessfulTransaction")
-          handleAuthentication=(action "handleAuthentication")
+          alert=alert
+          _advanceSuccessfulTransaction=_advanceSuccessfulTransaction
+          handleAuthentication=handleAuthentication
         }}
         
       {{/if}}
