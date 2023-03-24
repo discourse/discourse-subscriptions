@@ -110,6 +110,17 @@
           class="btn btn-primary btn-payment"
           @label="discourse_subscriptions.plans.payment_button"
         />
+
+        {{subscribe-payments
+          stripe=stripe
+          plans=model.plans
+          selectedPlan=selectedPlan
+          promoCode=promoCode
+          alert=alert
+          _advanceSuccessfulTransaction=_advanceSuccessfulTransaction
+          handleAuthentication=handleAuthentication
+        }}
+
       {{/if}}
     {{else}}
       <h2>{{i18n "discourse_subscriptions.subscribe.already_purchased"}}</h2>
