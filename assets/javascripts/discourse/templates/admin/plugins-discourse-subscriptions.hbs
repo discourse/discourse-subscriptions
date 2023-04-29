@@ -3,36 +3,36 @@
 {{#if stripeConfigured}}
   <div class="discourse-subscriptions-buttons">
     {{#if campaignEnabled}}
-      {{d-button
-        label="discourse_subscriptions.campaign.refresh_campaign"
-        icon="sync-alt"
-        action=(action "triggerManualRefresh")
-      }}
+      <DButton
+        @label="discourse_subscriptions.campaign.refresh_campaign"
+        @icon="sync-alt"
+        @action={{action "triggerManualRefresh"}}
+      />
     {{else}}
       {{#unless campaignProductSet}}
-        {{d-button
-          label="discourse_subscriptions.campaign.one_click_campaign"
-          icon="plus-square"
-          action=(action "createOneClickCampaign")
-          isLoading=loading
-        }}
+        <DButton
+          @label="discourse_subscriptions.campaign.one_click_campaign"
+          @icon="plus-square"
+          @action={{action "createOneClickCampaign"}}
+          @isLoading="loading"
+        />
       {{/unless}}
     {{/if}}
   </div>
 
   <ul class="nav nav-pills">
-    {{nav-item
-      route="adminPlugins.discourse-subscriptions.products"
-      label="discourse_subscriptions.admin.products.title"
-    }}
-    {{nav-item
-      route="adminPlugins.discourse-subscriptions.coupons"
-      label="discourse_subscriptions.admin.coupons.title"
-    }}
-    {{nav-item
-      route="adminPlugins.discourse-subscriptions.subscriptions"
-      label="discourse_subscriptions.admin.subscriptions.title"
-    }}
+    <NavItem
+      @route="adminPlugins.discourse-subscriptions.products"
+      @label="discourse_subscriptions.admin.products.title"
+    />
+    <NavItem
+      @route="adminPlugins.discourse-subscriptions.coupons"
+      @label="discourse_subscriptions.admin.coupons.title"
+    />
+    <NavItem
+      @route="adminPlugins.discourse-subscriptions.subscriptions"
+      @label="discourse_subscriptions.admin.subscriptions.title"
+    />
   </ul>
 
   <hr />

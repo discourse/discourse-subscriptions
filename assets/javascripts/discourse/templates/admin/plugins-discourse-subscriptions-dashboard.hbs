@@ -1,6 +1,6 @@
 <h3>{{i18n "discourse_subscriptions.admin.dashboard.title"}}</h3>
 
-{{#load-more selector=".discourse-patrons-table tr" action=(action "loadMore")}}
+<LoadMore @selector=".discourse-patrons-table tr" @action={{action "loadMore"}}>
   {{#if model}}
     <table class="table discourse-patrons-table">
       <thead>
@@ -38,14 +38,20 @@
         {{#each model as |payment|}}
           <tr>
             <td>
-              {{#link-to "adminUser.index" payment.user_id payment.username}}
+              <LinkTo
+                @route="adminUser.index"
+                @models={{array payment.user_id payment.username}}
+              >
                 {{payment.username}}
-              {{/link-to}}
+              </LinkTo>
             </td>
             <td>
-              {{#link-to "patrons.show" payment.payment_intent_id}}
+              <LinkTo
+                @route="patrons.show"
+                @model={{payment.payment_intent_id}}
+              >
                 {{html-safe payment.payment_intent_id}}
-              {{/link-to}}
+              </LinkTo>
             </td>
             <td>{{payment.receipt_email}}</td>
             <td>{{html-safe (format-duration payment.created_at_age)}}</td>
@@ -55,4 +61,4 @@
       </tbody>
     </table>
   {{/if}}
-{{/load-more}}
+</LoadMore>

@@ -22,19 +22,19 @@
             <td>{{coupon.discount}}</td>
             <td>{{coupon.times_redeemed}}</td>
             <td>
-              {{input
-                type="checkbox"
-                checked=coupon.active
-                click=(action "toggleActive" coupon)
-              }}
+              <Input
+                @type="checkbox"
+                @checked={{coupon.active}}
+                {{on "click" (action "toggleActive" coupon)}}
+              />
             </td>
             <td>
-              {{d-button
-                action=(action "deleteCoupon")
-                actionParam=coupon
-                icon="trash-alt"
+              <DButton
+                @action={{this.deleteCoupon}}
+                @actionParam={{coupon}}
+                @icon="trash-alt"
                 class="btn-danger btn btn-icon btn-no-text"
-              }}
+              />
             </td>
           </tr>
         {{/each}}
@@ -43,13 +43,13 @@
   {{/if}}
 
   {{#unless creating}}
-    {{d-button
-      action=(action "openCreateForm")
-      label="discourse_subscriptions.admin.coupons.create"
-      title="discourse_subscriptions.admin.coupons.create"
-      icon="plus"
+    <DButton
+      @action={{this.openCreateForm}}
+      @label="discourse_subscriptions.admin.coupons.create"
+      @title="discourse_subscriptions.admin.coupons.create"
+      @icon="plus"
       class="btn btn-icon btn-primary create-coupon"
-    }}
+    />
   {{/unless}}
 
   {{#if creating}}

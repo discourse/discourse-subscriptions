@@ -8,10 +8,10 @@
     {{subscribe-card cardElement=cardElement class="input-xxlarge"}}
   </div>
 
-  {{save-controls
-    action=(action "updatePaymentMethod")
-    saved=saved
-    saveDisabled=loading
-    savingText="discourse_subscriptions.user.subscriptions.update_card.single"
-  }}
+  <SaveControls
+    @action={{action "updatePaymentMethod"}}
+    @saved={{saved}}
+    @saveDisabled={{loading}}
+    @savingText="discourse_subscriptions.user.subscriptions.update_card.single"
+  />
 </div>

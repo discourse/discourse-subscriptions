@@ -1,26 +1,26 @@
-{{#d-section
-  pageClass="user-billing"
-  class="user-secondary-navigation"
-  scrollTop="false"
-}}
-  {{#mobile-nav
-    class="activity-nav"
-    desktopClass="action-list nav-stacked"
-    currentPath=router._router.currentPath
-  }}
+<DSection
+  @pageClass="user-billing"
+  @class="user-secondary-navigation"
+  @scrollTop="false"
+>
+  <MobileNav
+    @class="activity-nav"
+    @desktopClass="action-list nav-stacked"
+    @currentPath={{router._router.currentPath}}
+  >
     <li>
-      {{#link-to "user.billing.subscriptions"}}
+      <LinkTo @route="user.billing.subscriptions">
         {{i18n "discourse_subscriptions.navigation.subscriptions"}}
-      {{/link-to}}
+      </LinkTo>
     </li>
 
     <li>
-      {{#link-to "user.billing.payments"}}
+      <LinkTo @route="user.billing.payments">
         {{i18n "discourse_subscriptions.navigation.payments"}}
-      {{/link-to}}
+      </LinkTo>
     </li>
-  {{/mobile-nav}}
-{{/d-section}}
+  </MobileNav>
+</DSection>
 
 <section class="user-content">
   {{outlet}}

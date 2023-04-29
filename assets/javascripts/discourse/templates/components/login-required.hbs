@@ -1,8 +1,8 @@
 <h3>{{i18n "discourse_subscriptions.subscribe.unauthenticated"}}</h3>
 
-{{d-button
-  label="log_in"
-  action=(action "createAccount")
-  icon="user"
+<DButton
+  @label="log_in"
+  @action={{this.createAccount}}
+  @icon="user"
   class="btn btn-primary"
-}}
+/>

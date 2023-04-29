@@ -30,31 +30,31 @@
       {{else if isAnonymous}}
         {{login-required}}
       {{else}}
-        {{input
-          type="text"
+        <Input
+          @type="text"
           name="promo_code"
-          placeholder=(i18n "discourse_subscriptions.subscribe.promo_code")
-          value=promoCode
+          placeholder={{i18n "discourse_subscriptions.subscribe.promo_code"}}
+          @value={{promoCode}}
           class="subscribe-promo-code"
-        }}
+        />
 
-        {{d-button
-          disabled=loading
-          action=(action "stripePaymentHandler")
+        <DButton
+          @disabled={{loading}}
+          @action={{this.stripePaymentHandler}}
           class="btn btn-primary btn-payment"
-          label="discourse_subscriptions.plans.payment_button"
-        }}
+          @label="discourse_subscriptions.plans.payment_button"
+        />
       {{/if}}
     {{else}}
       <h2>{{i18n "discourse_subscriptions.subscribe.already_purchased"}}</h2>
 
-      {{#link-to
-        "user.billing.subscriptions"
-        currentUser.username
+      <LinkTo
+        @route="user.billing.subscriptions"
+        @model={{currentUser.username}}
         class="btn btn-primary"
-      }}
+      >
         {{i18n "discourse_subscriptions.subscribe.go_to_billing"}}
-      {{/link-to}}
+      </LinkTo>
     {{/if}}
   </div>
 </div>

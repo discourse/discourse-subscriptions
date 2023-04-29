@@ -7,18 +7,22 @@
 {{#if isLoggedIn}}
   <div class="product-purchase">
     {{#if product.repurchaseable}}
-      {{#link-to "subscribe.show" product.id class="btn btn-primary"}}
+      <LinkTo
+        @route="subscribe.show"
+        @model={{product.id}}
+        class="btn btn-primary"
+      >
         {{i18n "discourse_subscriptions.subscribe.title"}}
-      {{/link-to}}
+      </LinkTo>
 
       {{#if product.subscribed}}
-        {{#link-to
-          "user.billing.subscriptions"
-          currentUser.username
+        <LinkTo
+          @route="user.billing.subscriptions"
+          @model={{currentUser.username}}
           class="billing-link"
-        }}
+        >
           {{i18n "discourse_subscriptions.subscribe.view_past"}}
-        {{/link-to}}
+        </LinkTo>
       {{/if}}
     {{else}}
       {{#if product.subscribed}}
@@ -27,22 +31,22 @@
           {{i18n "discourse_subscriptions.subscribe.purchased"}}
         </span>
 
-        {{#link-to
-          "user.billing.subscriptions"
-          currentUser.username
+        <LinkTo
+          @route="user.billing.subscriptions"
+          @model={{currentUser.username}}
           class="billing-link"
-        }}
+        >
           {{i18n "discourse_subscriptions.subscribe.go_to_billing"}}
-        {{/link-to}}
+        </LinkTo>
       {{else}}
-        {{#link-to
-          "subscribe.show"
-          product.id
-          disabled=product.subscribed
+        <LinkTo
+          @route="subscribe.show"
+          @model={{product.id}}
+          @disabled={{product.subscribed}}
           class="btn btn-primary"
-        }}
+        >
           {{i18n "discourse_subscriptions.subscribe.title"}}
-        {{/link-to}}
+        </LinkTo>
       {{/if}}
     {{/if}}
   </div>

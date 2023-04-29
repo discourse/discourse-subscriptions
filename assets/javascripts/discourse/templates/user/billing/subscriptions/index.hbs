@@ -25,22 +25,22 @@
               {{loading-spinner size="small"}}
             {{else}}
               {{#if subscription.canceled_at}}
-                {{d-button
-                  disabled=subscription.canceled_at
-                  label="discourse_subscriptions.user.subscriptions.cancelled"
-                }}
+                <DButton
+                  @disabled={{subscription.canceled_at}}
+                  @label="discourse_subscriptions.user.subscriptions.cancelled"
+                />
               {{else}}
-                {{d-button
-                  action=(route-action "updateCard" subscription.id)
-                  icon="far-edit"
+                <DButton
+                  @action={{route-action "updateCard" subscription.id}}
+                  @icon="far-edit"
                   class="btn no-text btn-icon"
-                }}
-                {{d-button
+                />
+                <DButton
                   class="btn-danger btn no-text btn-icon"
-                  icon="trash-alt"
-                  disabled=subscription.canceled_at
-                  action=(route-action "cancelSubscription" subscription)
-                }}
+                  @icon="trash-alt"
+                  @disabled={{subscription.canceled_at}}
+                  @action={{route-action "cancelSubscription" subscription}}
+                />
               {{/if}}
             {{/if}}
           </td>
