@@ -14,17 +14,17 @@
         <td>{{plan.interval}}</td>
         <td>{{plan.unit_amount}}</td>
         <td class="td-right">
-          {{d-button
-            action=(action "editPlan" plan.id)
-            icon="far-edit"
+          <DButton
+            @action={{action "editPlan" plan.id}}
+            @icon="far-edit"
             class="btn no-text btn-icon"
-          }}
-          {{d-button
-            action=(route-action "destroyPlan")
-            actionParam=plan
-            icon="trash-alt"
+          />
+          <DButton
+            @action={{route-action "destroyPlan"}}
+            @actionParam={{plan}}
+            @icon="trash-alt"
             class="btn-danger btn no-text btn-icon"
-          }}
+          />
         </td>
       </tr>
     {{/each}}

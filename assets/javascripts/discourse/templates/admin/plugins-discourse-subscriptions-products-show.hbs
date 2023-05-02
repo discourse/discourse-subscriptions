@@ -5,7 +5,7 @@
     <label for="name">
       {{i18n "discourse_subscriptions.admin.products.product.name"}}
     </label>
-    {{input type="text" name="name" value=model.product.name}}
+    <Input @type="text" name="name" @value={{model.product.name}} />
   </p>
 
   <p>
@@ -13,11 +13,11 @@
       {{i18n "discourse_subscriptions.admin.products.product.description"}}
     </label>
 
-    {{textarea
+    <Textarea
       name="description"
-      value=model.product.metadata.description
+      @value={{model.product.metadata.description}}
       class="discourse-subscriptions-admin-textarea"
-    }}
+    />
 
     <div class="control-instructions">
       {{i18n "discourse_subscriptions.admin.products.product.description_help"}}
@@ -31,11 +31,11 @@
       }}
     </label>
 
-    {{input
-      type="text"
+    <Input
+      @type="text"
       name="statement_descriptor"
-      value=model.product.statement_descriptor
-    }}
+      @value={{model.product.statement_descriptor}}
+    />
 
     <div class="control-instructions">
       {{i18n
@@ -49,11 +49,11 @@
       {{i18n "discourse_subscriptions.admin.products.product.repurchaseable"}}
     </label>
 
-    {{input
-      type="checkbox"
+    <Input
+      @type="checkbox"
       name="repurchaseable"
-      checked=model.product.metadata.repurchaseable
-    }}
+      @checked={{model.product.metadata.repurchaseable}}
+    />
 
     <div class="control-instructions">
       {{i18n "discourse_subscriptions.admin.products.product.repurchase_help"}}
@@ -65,7 +65,7 @@
       {{i18n "discourse_subscriptions.admin.products.product.active"}}
     </label>
 
-    {{input type="checkbox" name="active" checked=model.product.active}}
+    <Input @type="checkbox" name="active" @checked={{model.product.active}} />
 
     <div class="control-instructions">
       {{i18n "discourse_subscriptions.admin.products.product.active_help"}}
@@ -88,14 +88,13 @@
           {{i18n "discourse_subscriptions.admin.plans.plan.amount"}}
         </th>
         <th class="td-right">
-          {{#link-to
-            "adminPlugins.discourse-subscriptions.products.show.plans.show"
-            model.product.id
-            "new"
+          <LinkTo
+            @route="adminPlugins.discourse-subscriptions.products.show.plans.show"
+            @models={{array model.product.id "new"}}
             class="btn"
-          }}
+          >
             {{i18n "discourse_subscriptions.admin.plans.operations.add"}}
-          {{/link-to}}
+          </LinkTo>
         </th>
       </thead>
 
@@ -111,14 +110,13 @@
               {{format-currency plan.currency plan.amountDollars}}
             </td>
             <td class="td-right">
-              {{#link-to
-                "adminPlugins.discourse-subscriptions.products.show.plans.show"
-                model.product.id
-                plan.id
+              <LinkTo
+                @route="adminPlugins.discourse-subscriptions.products.show.plans.show"
+                @models={{array model.product.id plan.id}}
                 class="btn no-text btn-icon"
-              }}
+              >
                 {{d-icon "far-edit"}}
-              {{/link-to}}
+              </LinkTo>
             </td>
           </tr>
         {{else}}
@@ -137,22 +135,22 @@
 {{/unless}}
 
 <div class="pull-right">
-  {{d-button label="cancel" action=(action "cancelProduct") icon="times"}}
+  <DButton @label="cancel" @action={{this.cancelProduct}} @icon="times" />
 
   {{#if model.product.isNew}}
-    {{d-button
-      label="discourse_subscriptions.admin.products.operations.create"
-      action=(action "createProduct")
-      icon="plus"
+    <DButton
+      @label="discourse_subscriptions.admin.products.operations.create"
+      @action={{action "createProduct"}}
+      @icon="plus"
       class="btn btn-primary"
-    }}
+    />
   {{else}}
-    {{d-button
-      label="discourse_subscriptions.admin.products.operations.update"
-      action=(action "updateProduct")
-      icon="check"
+    <DButton
+      @label="discourse_subscriptions.admin.products.operations.update"
+      @action={{action "updateProduct"}}
+      @icon="check"
       class="btn btn-primary"
-    }}
+    />
   {{/if}}
 </div>
 

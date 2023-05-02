@@ -3,7 +3,7 @@
     class="campaign-banner"
     style={{html-safe (concat "box-shadow: 5px 5px #" dropShadowColor)}}
   >
-    {{d-button icon="times" action=(action "dismissBanner") class="close"}}
+    <DButton @icon="times" @action={{this.dismissBanner}} class="close" />
 
     <div class="campaign-banner-info" style={{html-safe this.bannerInfoStyle}}>
       {{#if isGoalMet}}
@@ -24,25 +24,25 @@
         </p>
 
         {{#if product}}
-          {{#link-to
-            "subscribe.show"
-            product
-            disabled=product.subscribed
+          <LinkTo
+            @route="subscribe.show"
+            @model={{product}}
+            @disabled={{product.subscribed}}
             class="btn btn-primary campaign-banner-info-button"
-          }}
+          >
             {{d-icon "far-heart"}}
             {{d-icon "heart" class="hover-heart"}}
             {{i18n "discourse_subscriptions.campaign.button"}}
-          {{/link-to}}
+          </LinkTo>
         {{else}}
-          {{#link-to
-            "subscribe"
+          <LinkTo
+            @route="subscribe"
             class="btn btn-primary campaign-banner-info-button"
-          }}
+          >
             {{d-icon "far-heart"}}
             {{d-icon "heart" class="hover-heart"}}
             {{i18n "discourse_subscriptions.campaign.button"}}
-          {{/link-to}}
+          </LinkTo>
         {{/if}}
       {{/if}}
     </div>
@@ -80,7 +80,7 @@
           </p>
 
           {{#if showContributors}}
-            {{#conditional-loading-spinner condition=loading size="small"}}
+            <ConditionalLoadingSpinner @condition={{loading}} @size="small">
               <div class="campaign-banner-progress-users">
                 <p class="campaign-banner-progress-users-title">
                   <strong>
@@ -102,7 +102,7 @@
                   {{/each}}
                 </div>
               </div>
-            {{/conditional-loading-spinner}}
+            </ConditionalLoadingSpinner>
           {{/if}}
         {{/if}}
       {{else}}
@@ -143,7 +143,7 @@
         {{/if}}
 
         {{#if showContributors}}
-          {{#conditional-loading-spinner condition=loading size="small"}}
+          <ConditionalLoadingSpinner @condition={{loading}} @size="small">
             <div class="campaign-banner-progress-users">
               <p class="campaign-banner-progress-users-title">
                 <strong>
@@ -165,7 +165,7 @@
                 {{/each}}
               </div>
             </div>
-          {{/conditional-loading-spinner}}
+          </ConditionalLoadingSpinner>
         {{/if}}
       {{/if}}
     </div>

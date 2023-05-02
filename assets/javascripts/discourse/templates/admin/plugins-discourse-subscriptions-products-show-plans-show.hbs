@@ -6,12 +6,12 @@
       {{i18n "discourse_subscriptions.admin.products.product.name"}}
     </label>
 
-    {{input
-      type="text"
+    <Input
+      @type="text"
       name="product_name"
-      value=model.product.name
-      disabled=true
-    }}
+      @value={{model.product.name}}
+      disabled={{true}}
+    />
   </p>
 
   <p>
@@ -19,7 +19,7 @@
       {{i18n "discourse_subscriptions.admin.plans.plan.nickname"}}
     </label>
 
-    {{input type="text" name="name" value=model.plan.nickname}}
+    <Input @type="text" name="name" @value={{model.plan.nickname}} />
 
     <div class="control-instructions">
       {{i18n "discourse_subscriptions.admin.plans.plan.nickname_help"}}
@@ -31,12 +31,12 @@
       {{i18n "discourse_subscriptions.admin.plans.plan.group"}}
     </label>
 
-    {{combo-box
-      valueProperty="name"
-      content=availableGroups
-      value=selectedGroup
-      onChange=(action (mut model.plan.metadata.group_name))
-    }}
+    <ComboBox
+      @valueProperty="name"
+      @content={{availableGroups}}
+      @value={{selectedGroup}}
+      @onChange={{action (mut model.plan.metadata.group_name)}}
+    />
 
     <div class="control-instructions">
       {{i18n "discourse_subscriptions.admin.plans.plan.group_help"}}
@@ -49,27 +49,27 @@
     </label>
 
     {{#if planFieldDisabled}}
-      {{input
+      <Input
         class="plan-amount plan-currency"
-        disabled=true
-        value=model.plan.currency
-      }}
+        disabled={{true}}
+        @value={{model.plan.currency}}
+      />
     {{else}}
-      {{combo-box
-        disabled=planFieldDisabled
-        content=currencies
-        value=model.plan.currency
-        onChange=(action (mut model.plan.currency))
-      }}
+      <ComboBox
+        @disabled={{planFieldDisabled}}
+        @content={{currencies}}
+        @value={{model.plan.currency}}
+        @onChange={{action (mut model.plan.currency)}}
+      />
     {{/if}}
 
-    {{input
+    <Input
       class="plan-amount"
-      type="text"
+      @type="text"
       name="name"
-      value=model.plan.amountDollars
-      disabled=planFieldDisabled
-    }}
+      @value={{model.plan.amountDollars}}
+      disabled={{planFieldDisabled}}
+    />
   </p>
 
   <p>
@@ -78,19 +78,19 @@
     </label>
 
     {{#if planFieldDisabled}}
-      {{input
-        type="checkbox"
+      <Input
+        @type="checkbox"
         name="recurring"
-        checked=model.plan.isRecurring
-        disabled=true
-      }}
+        @checked={{model.plan.isRecurring}}
+        disabled={{true}}
+      />
     {{else}}
-      {{input
-        type="checkbox"
+      <Input
+        @type="checkbox"
         name="recurring"
-        checked=model.plan.isRecurring
-        change=(action "changeRecurring")
-      }}
+        @checked={{model.plan.isRecurring}}
+        {{on "change" this.changeRecurring}}
+      />
     {{/if}}
   </p>
 
@@ -101,14 +101,14 @@
       </label>
 
       {{#if planFieldDisabled}}
-        {{input disabled=true value=selectedInterval}}
+        <Input disabled={{true}} @value={{selectedInterval}} />
       {{else}}
-        {{combo-box
-          valueProperty="name"
-          content=availableIntervals
-          value=selectedInterval
-          onChange=(action (mut selectedInterval))
-        }}
+        <ComboBox
+          @valueProperty="name"
+          @content={{availableIntervals}}
+          @value={{selectedInterval}}
+          @onChange={{action (mut selectedInterval)}}
+        />
       {{/if}}
     </p>
 
@@ -118,7 +118,11 @@
         ({{i18n "discourse_subscriptions.optional"}})
       </label>
 
-      {{input type="text" name="trial" value=model.plan.trial_period_days}}
+      <Input
+        @type="text"
+        name="trial"
+        @value={{model.plan.trial_period_days}}
+      />
 
       <div class="control-instructions">
         {{i18n "discourse_subscriptions.admin.plans.plan.trial_help"}}
@@ -130,7 +134,7 @@
     <label for="active">
       {{i18n "discourse_subscriptions.admin.plans.plan.active"}}
     </label>
-    {{input type="checkbox" name="active" checked=model.plan.active}}
+    <Input @type="checkbox" name="active" @checked={{model.plan.active}} />
   </p>
 </form>
 
@@ -143,19 +147,19 @@
 
   <div class="pull-right">
     {{#if model.plan.isNew}}
-      {{d-button
-        label="discourse_subscriptions.admin.plans.operations.create"
-        action=(action "createPlan")
-        icon="plus"
+      <DButton
+        @label="discourse_subscriptions.admin.plans.operations.create"
+        @action={{action "createPlan"}}
+        @icon="plus"
         class="btn btn-primary"
-      }}
+      />
     {{else}}
-      {{d-button
-        label="discourse_subscriptions.admin.plans.operations.update"
-        action=(action "updatePlan")
-        icon="check"
+      <DButton
+        @label="discourse_subscriptions.admin.plans.operations.update"
+        @action={{action "updatePlan"}}
+        @icon="check"
         class="btn btn-primary"
-      }}
+      />
     {{/if}}
   </div>
 </section>

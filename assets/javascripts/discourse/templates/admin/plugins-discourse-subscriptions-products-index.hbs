@@ -7,16 +7,16 @@
   </p>
 {{else}}
   <p class="btn-right">
-    {{#link-to
-      "adminPlugins.discourse-subscriptions.products.show"
-      "new"
+    <LinkTo
+      @route="adminPlugins.discourse-subscriptions.products.show"
+      @model="new"
       class="btn btn-primary"
-    }}
+    >
       {{d-icon "plus"}}
       <span>
         {{i18n "discourse_subscriptions.admin.products.operations.new"}}
       </span>
-    {{/link-to}}
+    </LinkTo>
   </p>
 
   {{#if model}}
@@ -46,20 +46,20 @@
             <td class="td-right">{{product.active}}</td>
             <td class="td-right">
               <div class="align-buttons">
-                {{#link-to
-                  "adminPlugins.discourse-subscriptions.products.show"
-                  product.id
+                <LinkTo
+                  @route="adminPlugins.discourse-subscriptions.products.show"
+                  @model={{product.id}}
                   class="btn no-text btn-icon"
-                }}
+                >
                   {{d-icon "far-edit"}}
-                {{/link-to}}
+                </LinkTo>
 
-                {{d-button
-                  action=(route-action "destroyProduct")
-                  actionParam=product
-                  icon="trash-alt"
+                <DButton
+                  @action={{route-action "destroyProduct"}}
+                  @actionParam="product"
+                  @icon="trash-alt"
                   class="btn-danger btn no-text btn-icon"
-                }}
+                />
               </div>
             </td>
           </tr>

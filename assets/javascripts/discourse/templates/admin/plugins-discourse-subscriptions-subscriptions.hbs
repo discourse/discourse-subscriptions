@@ -6,10 +6,10 @@
     </a>
   </p>
 {{else}}
-  {{#load-more
-    selector=".discourse-patrons-table tr"
-    action=(action "loadMore")
-  }}
+  <LoadMore
+    @selector=".discourse-patrons-table tr"
+    @action={{action "loadMore"}}
+  >
     <table class="table discourse-patrons-table">
       <thead>
         <tr>
@@ -72,19 +72,19 @@
               {{#if subscription.loading}}
                 {{loading-spinner size="small"}}
               {{else}}
-                {{d-button
-                  disabled=subscription.canceled
-                  label="cancel"
-                  action=(action "showCancelModal" subscription)
-                  icon="times"
-                }}
+                <DButton
+                  @disabled={{subscription.canceled}}
+                  @label="cancel"
+                  @action={{action "showCancelModal" subscription}}
+                  @icon="times"
+                />
               {{/if}}
             </td>
           </tr>
         {{/each}}
       </tbody>
     </table>
-  {{/load-more}}
+  </LoadMore>
 
-  {{conditional-loading-spinner condition=loading}}
+  <ConditionalLoadingSpinner @condition={{loading}} />
 {{/if}}
