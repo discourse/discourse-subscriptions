@@ -40,7 +40,7 @@
 
         <DButton
           @disabled={{loading}}
-          @action={{this.stripePaymentHandler}}
+          @action={{action "stripePaymentHandler"}}
           class="btn btn-primary btn-payment"
           @label="discourse_subscriptions.plans.payment_button"
         />
