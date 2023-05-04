@@ -18,6 +18,7 @@ export default Controller.extend({
     postalCode: null,
   },
   isAnonymous: not("currentUser"),
+  isCountryUS: false,
 
   init() {
     this._super(...arguments);
@@ -28,6 +29,8 @@ export default Controller.extend({
     const elements = this.get("stripe").elements();
 
     this.set("cardElement", elements.create("card", { hidePostalCode: true }));
+
+    this.set("isCountryUS", this.cardholderAddress.country === "US");
   },
 
   alert(path) {
@@ -93,6 +96,11 @@ export default Controller.extend({
   actions: {
     changeCountry(country) {
       this.set("cardholderAddress.country", country);
+      this.set("isCountryUS", country === "US");
+    },
+
+    changeState(state) {
+      this.set("cardholderAddress.state", state);
     },
 
     stripePaymentHandler() {
@@ -108,7 +116,11 @@ export default Controller.extend({
         return;
       }
 
-      if (Object.values(cardholderAddress).every((field) => field === null)) {
+      if (
+        !Object.values(cardholderAddress).every(
+          (fieldValue) => fieldValue !== null && fieldValue.length > 1
+        )
+      ) {
         this.alert("subscribe.invalid_cardholder_address");
         this.set("loading", false);
         return;

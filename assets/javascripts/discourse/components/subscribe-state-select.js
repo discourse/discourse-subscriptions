@@ -1,0 +1,88 @@
+import ComboBoxComponent from "select-kit/components/combo-box";
+import { computed } from "@ember/object";
+import I18n from "I18n";
+
+export default ComboBoxComponent.extend({
+  pluginApiIdentifiers: ["subscribe-state-select"],
+  classNames: ["subscribe-address-state-select"],
+  nameProperty: "name",
+  valueProperty: "value",
+
+  selectKitOptions: {
+    filterable: true,
+    allowAny: false,
+    translatedNone: I18n.t(
+      "discourse_subscriptions.subscribe.cardholder_address.state"
+    ),
+  },
+
+  content: computed(function () {
+    return [
+      ["AL", "Alabama"],
+      ["AK", "Alaska"],
+      ["AZ", "Arizona"],
+      ["AR", "Arkansas"],
+      ["CA", "California"],
+      ["CO", "Colorado"],
+      ["CT", "Connecticut"],
+      ["DE", "Delaware"],
+      ["US", "District"],
+      ["FL", "Florida"],
+      ["GA", "Georgia"],
+      ["HI", "Hawaii"],
+      ["ID", "Idaho"],
+      ["IL", "Illinois"],
+      ["IN", "Indiana"],
+      ["IA", "Iowa"],
+      ["KS", "Kansas"],
+      ["KY", "Kentucky"],
+      ["LA", "Louisiana"],
+      ["ME", "Maine"],
+      ["MD", "Maryland"],
+      ["MA", "Massachusetts"],
+      ["MI", "Michigan"],
+      ["MN", "Minnesota"],
+      ["MS", "Mississippi"],
+      ["MO", "Missouri"],
+      ["MT", "Montana"],
+      ["NE", "Nebraska"],
+      ["NV", "Nevada"],
+      ["NH", "New Hampshire"],
+      ["NJ", "New Jersey"],
+      ["NM", "New Mexico"],
+      ["NY", "New York"],
+      ["NC", "North Carolina"],
+      ["ND", "North Dakota"],
+      ["OH", "Ohio"],
+      ["OK", "Oklahoma"],
+      ["OR", "Oregon"],
+      ["PA", "Pennsylvania"],
+      ["RI", "Rhode"],
+      ["SC", "South"],
+      ["SD", "South"],
+      ["TN", "Tennessee"],
+      ["TX", "Texas"],
+      ["UT", "Utah"],
+      ["VT", "Vermont"],
+      ["VA", "Virginia"],
+      ["WA", "Washington"],
+      ["WV", "West"],
+      ["WI", "Wisconsin"],
+      ["WY", "Wyoming"],
+      ["AS", "American Samoa"],
+      ["GU", "Guam"],
+      ["MP", "Northern Mariana Islands"],
+      ["PR", "Puerto Rico"],
+      ["VI", "U.S. Virgin Islands"],
+      ["UM", "U.S. Minor Outlying Islands"],
+      ["MH", "Marshall Islands"],
+      ["FM", "Micronesia"],
+      ["PW", "Palau"],
+      ["AA", "U.S. Armed Forces – Americas"],
+      ["AE", "U.S. Armed Forces – Europe"],
+      ["AP", "U.S. Armed Forces – Pacific"],
+    ].map((arr) => {
+      return { value: arr[0], name: arr[1] };
+    });
+  }),
+});

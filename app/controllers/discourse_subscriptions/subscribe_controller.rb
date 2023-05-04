@@ -180,7 +180,7 @@ module DiscourseSubscriptions
               city: cardholder_address[:city],
               state: cardholder_address[:state],
               country: cardholder_address[:country],
-              postal_code: cardholder_address[:postal_code],
+              postal_code: cardholder_address[:postalCode],
             }
           else
             nil

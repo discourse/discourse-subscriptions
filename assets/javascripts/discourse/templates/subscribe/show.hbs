@@ -30,6 +30,21 @@
       {{else if isAnonymous}}
         {{login-required}}
       {{else}}
+        <div class="address-fields">
+          {{subscribe-country-select
+            value=cardholderAddress.country
+            onChange=(action "changeCountry")
+          }}
+          <Input
+            @type="text"
+            name="cardholder_postal_code"
+            placeholder={{i18n
+              "discourse_subscriptions.subscribe.cardholder_address.postal_code"
+            }}
+            @value={{cardholderAddress.postalCode}}
+            class="subscribe-address-postal-code"
+          />
+        </div>
         <Input
           @type="text"
           name="cardholder_line1"
@@ -49,30 +64,22 @@
             @value={{cardholderAddress.city}}
             class="subscribe-address-city"
           />
-          <Input
-            @type="text"
-            name="cardholder_state"
-            placeholder={{i18n
-              "discourse_subscriptions.subscribe.cardholder_address.state"
+          {{#if isCountryUS}}
+            {{subscribe-state-select
+              value=cardholderAddress.state
+              onChange=(action "changeState")
             }}
-            @value={{cardholderAddress.state}}
-            class="subscribe-address-state"
-          />
-        </div>
-        <div class="address-fields">
-          {{subscribe-country-select
-            value=cardholderAddress.country
-            onChange=(action "changeCountry")
-          }}
-          <Input
-            @type="text"
-            name="cardholder_postal_code"
-            placeholder={{i18n
-              "discourse_subscriptions.subscribe.cardholder_address.postal_code"
-            }}
-            @value={{cardholderAddress.postalCode}}
-            class="subscribe-address-postal-code"
-          />
+          {{else}}
+            <Input
+              @type="text"
+              name="cardholder_state"
+              placeholder={{i18n
+                "discourse_subscriptions.subscribe.cardholder_address.state"
+              }}
+              @value={{cardholderAddress.state}}
+              class="subscribe-address-state"
+            />
+          {{/if}}
         </div>
 
         <Input
