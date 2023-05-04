@@ -54,11 +54,13 @@
 .subscribe-address-city,
 .subscribe-address-state,
 .subscribe-address-country-select,
+.subscribe-address-state-select,
 .subscribe-address-postal-code {
   width: 100%;
 }
 
-.subscribe-address-country-select {
+.subscribe-address-country-select,
+.subscribe-address-state-select {
   margin-bottom: 9px;
 }
 
