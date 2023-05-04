@@ -91,6 +91,10 @@ export default Controller.extend({
   },
 
   actions: {
+    changeCountry(country) {
+      this.set("cardholderAddress.country", country);
+    },
+
     stripePaymentHandler() {
       this.set("loading", true);
       const plan = this.get("model.plans")

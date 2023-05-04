@@ -53,7 +53,21 @@
 .subscribe-address-line1,
 .subscribe-address-city,
 .subscribe-address-state,
-.subscribe-address-country,
+.subscribe-address-country-select,
 .subscribe-address-postal-code {
   width: 100%;
+}
+
+.subscribe-address-country-select {
+  margin-bottom: 9px;
+}
+
+@media all and (min-width: 1350px) {
+  .address-fields {
+    display: flex;
+    justify-content: space-between;
+    & > * {
+      width: calc(50% - 4.5px);
+    }
+  }
 }

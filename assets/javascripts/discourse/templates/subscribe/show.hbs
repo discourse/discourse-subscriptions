@@ -39,42 +39,41 @@
           @value={{cardholderAddress.line1}}
           class="subscribe-address-line1"
         />
-        <Input
-          @type="text"
-          name="cardholder_city"
-          placeholder={{i18n
-            "discourse_subscriptions.subscribe.cardholder_address.city"
+        <div class="address-fields">
+          <Input
+            @type="text"
+            name="cardholder_city"
+            placeholder={{i18n
+              "discourse_subscriptions.subscribe.cardholder_address.city"
+            }}
+            @value={{cardholderAddress.city}}
+            class="subscribe-address-city"
+          />
+          <Input
+            @type="text"
+            name="cardholder_state"
+            placeholder={{i18n
+              "discourse_subscriptions.subscribe.cardholder_address.state"
+            }}
+            @value={{cardholderAddress.state}}
+            class="subscribe-address-state"
+          />
+        </div>
+        <div class="address-fields">
+          {{subscribe-country-select
+            value=cardholderAddress.country
+            onChange=(action "changeCountry")
           }}
-          @value={{cardholderAddress.city}}
-          class="subscribe-address-city"
-        />
-        <Input
-          @type="text"
-          name="cardholder_state"
-          placeholder={{i18n
-            "discourse_subscriptions.subscribe.cardholder_address.state"
-          }}
-          @value={{cardholderAddress.state}}
-          class="subscribe-address-state"
-        />
-        <Input
-          @type="text"
-          name="cardholder_country"
-          placeholder={{i18n
-            "discourse_subscriptions.subscribe.cardholder_address.country"
-          }}
-          @value={{cardholderAddress.country}}
-          class="subscribe-address-country"
-        />
-        <Input
-          @type="text"
-          name="cardholder_postal_code"
-          placeholder={{i18n
-            "discourse_subscriptions.subscribe.cardholder_address.postal_code"
-          }}
-          @value={{cardholderAddress.postalCode}}
-          class="subscribe-address-postal-code"
-        />
+          <Input
+            @type="text"
+            name="cardholder_postal_code"
+            placeholder={{i18n
+              "discourse_subscriptions.subscribe.cardholder_address.postal_code"
+            }}
+            @value={{cardholderAddress.postalCode}}
+            class="subscribe-address-postal-code"
+          />
+        </div>
 
         <Input
           @type="text"

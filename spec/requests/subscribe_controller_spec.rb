@@ -313,6 +313,27 @@ module DiscourseSubscriptions
             }.not_to change { DiscourseSubscriptions::Customer.count }
           end
 
+          context "with customer address" do
+            it "creates a customer & subscription when a customer address is provided" do
+              ::Stripe::Price.expects(:retrieve).returns(type: "recurring", metadata: {})
+              ::Stripe::Subscription.expects(:create).returns(status: "active", customer: "cus_1234")
+              expect {
+                post "/s/create.json",
+                     params: {
+                       plan: "plan_1234",
+                       source: "tok_1234",
+                       cardholder_address: {
+                         line1: "123 Main Street",
+                         city: "Anywhere",
+                         state: "VT",
+                         country: "US",
+                         postal_code: "12345",
+                       }
+                     }
+              }.to change { DiscourseSubscriptions::Customer.count }
+            end
+          end
+
           context "with promo code" do
             context "with invalid code" do
               it "prevents use of invalid coupon codes" do
