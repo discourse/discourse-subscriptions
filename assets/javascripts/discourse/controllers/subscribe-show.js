@@ -10,6 +10,13 @@ export default Controller.extend({
   dialog: service(),
   selectedPlan: null,
   promoCode: null,
+  cardholderAddress: {
+    line1: null,
+    city: null,
+    state: null,
+    country: null,
+    postalCode: null,
+  },
   isAnonymous: not("currentUser"),
 
   init() {
@@ -46,6 +53,7 @@ export default Controller.extend({
           source: result.token.id,
           plan: plan.get("id"),
           promo: this.promoCode,
+          cardholderAddress: this.cardholderAddress,
         });
 
         return subscription.save();
@@ -88,9 +96,16 @@ export default Controller.extend({
       const plan = this.get("model.plans")
         .filterBy("id", this.selectedPlan)
         .get("firstObject");
+      const cardholderAddress = this.cardholderAddress;
 
       if (!plan) {
         this.alert("plans.validate.payment_options.required");
+        this.set("loading", false);
+        return;
+      }
+
+      if (Object.values(cardholderAddress).every(field => field === null)) {
+        this.alert("subscribe.invalid_cardholder_address");
         this.set("loading", false);
         return;
       }

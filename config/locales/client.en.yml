@@ -105,6 +105,7 @@ en:
         no_products: There are currently no products available.
         unauthenticated: Log in or create an account to subscribe.
         invalid_coupon: You entered an invalid coupon code. Please try again.
+        invalid_cardholder_address: Address fields are required.
         card:
           title: Payment
         customer:
@@ -115,6 +116,12 @@ en:
         purchased: Purchased
         go_to_billing: Go to Billing
         already_purchased: Thanks so much for your prior purchase of this product!
+        cardholder_address:
+          line1: Street Address
+          city: City
+          state: State
+          country: Country
+          postal_code: Postal Code
       billing:
         name: Full name
         email: Email
