@@ -316,7 +316,10 @@ module DiscourseSubscriptions
           context "with customer address" do
             it "creates a customer & subscription when a customer address is provided" do
               ::Stripe::Price.expects(:retrieve).returns(type: "recurring", metadata: {})
-              ::Stripe::Subscription.expects(:create).returns(status: "active", customer: "cus_1234")
+              ::Stripe::Subscription.expects(:create).returns(
+                status: "active",
+                customer: "cus_1234",
+              )
               expect {
                 post "/s/create.json",
                      params: {
@@ -328,7 +331,7 @@ module DiscourseSubscriptions
                          state: "VT",
                          country: "US",
                          postal_code: "12345",
-                       }
+                       },
                      }
               }.to change { DiscourseSubscriptions::Customer.count }
             end
