@@ -104,7 +104,7 @@ export default Controller.extend({
         return;
       }
 
-      if (Object.values(cardholderAddress).every(field => field === null)) {
+      if (Object.values(cardholderAddress).every((field) => field === null)) {
         this.alert("subscribe.invalid_cardholder_address");
         this.set("loading", false);
         return;
