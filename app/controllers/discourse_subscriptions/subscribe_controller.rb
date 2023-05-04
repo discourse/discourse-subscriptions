@@ -190,11 +190,7 @@ module DiscourseSubscriptions
       if customer.present?
         ::Stripe::Customer.retrieve(customer.customer_id)
       else
-        ::Stripe::Customer.create(
-          email: current_user.email,
-          source: source,
-          address: address,
-        )
+        ::Stripe::Customer.create(email: current_user.email, source: source, address: address)
       end
     end
 
