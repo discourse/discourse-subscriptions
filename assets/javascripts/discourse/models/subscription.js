@@ -13,6 +13,7 @@ const Subscription = EmberObject.extend({
       source: this.source,
       plan: this.plan,
       promo: this.promo,
+      cardholder_name: this.cardholderName,
       cardholder_address: this.cardholderAddress,
     };
 

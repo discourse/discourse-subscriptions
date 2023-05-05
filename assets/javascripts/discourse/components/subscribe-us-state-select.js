@@ -3,7 +3,7 @@ import { computed } from "@ember/object";
 import I18n from "I18n";
 
 export default ComboBoxComponent.extend({
-  pluginApiIdentifiers: ["subscribe-state-select"],
+  pluginApiIdentifiers: ["subscribe-us-state-select"],
   classNames: ["subscribe-address-state-select"],
   nameProperty: "name",
   valueProperty: "value",

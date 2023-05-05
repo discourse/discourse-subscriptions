@@ -57,7 +57,12 @@ module DiscourseSubscriptions
     def create
       params.require(%i[source plan])
       begin
-        customer = find_or_create_customer(params[:source], params[:cardholder_address])
+        customer =
+          find_or_create_customer(
+            params[:source],
+            params[:cardholder_name],
+            params[:cardholder_address],
+          )
         plan = ::Stripe::Price.retrieve(params[:plan])
 
         if params[:promo].present?
@@ -170,9 +175,9 @@ module DiscourseSubscriptions
         .sort_by { |plan| plan[:amount] }
     end
 
-    def find_or_create_customer(source, cardholder_address = nil)
+    def find_or_create_customer(source, cardholder_name = nil, cardholder_address = nil)
       customer = Customer.find_by_user_id(current_user.id)
-      address =
+      cardholder_address =
         (
           if cardholder_address.present?
             {
@@ -190,7 +195,12 @@ module DiscourseSubscriptions
       if customer.present?
         ::Stripe::Customer.retrieve(customer.customer_id)
       else
-        ::Stripe::Customer.create(email: current_user.email, source: source, address: address)
+        ::Stripe::Customer.create(
+          email: current_user.email,
+          source: source,
+          name: cardholder_name,
+          address: cardholder_address,
+        )
       end
     end
 
