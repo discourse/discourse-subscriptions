@@ -10,7 +10,17 @@ export default Controller.extend({
   dialog: service(),
   selectedPlan: null,
   promoCode: null,
+  cardholderName: null,
+  cardholderAddress: {
+    line1: null,
+    city: null,
+    state: null,
+    country: null,
+    postalCode: null,
+  },
   isAnonymous: not("currentUser"),
+  isCountryUS: false,
+  isCountryCA: false,
 
   init() {
     this._super(...arguments);
@@ -21,6 +31,9 @@ export default Controller.extend({
     const elements = this.get("stripe").elements();
 
     this.set("cardElement", elements.create("card", { hidePostalCode: true }));
+
+    this.set("isCountryUS", this.cardholderAddress.country === "US");
+    this.set("isCountryCA", this.cardholderAddress.country === "CA");
   },
 
   alert(path) {
@@ -37,20 +50,31 @@ export default Controller.extend({
   },
 
   createSubscription(plan) {
-    return this.stripe.createToken(this.get("cardElement")).then((result) => {
-      if (result.error) {
-        this.set("loading", false);
-        return result;
-      } else {
-        const subscription = Subscription.create({
-          source: result.token.id,
-          plan: plan.get("id"),
-          promo: this.promoCode,
-        });
+    return this.stripe
+      .createToken(this.get("cardElement"), {
+        name: this.cardholderName, // Recommended by Stripe
+        address_line1: this.cardholderAddress.line1 ?? "",
+        address_city: this.cardholderAddress.city ?? "",
+        address_state: this.cardholderAddress.state ?? "",
+        address_zip: this.cardholderAddress.postalCode ?? "",
+        address_country: this.cardholderAddress.country, // Recommended by Stripe
+      })
+      .then((result) => {
+        if (result.error) {
+          this.set("loading", false);
+          return result;
+        } else {
+          const subscription = Subscription.create({
+            source: result.token.id,
+            plan: plan.get("id"),
+            promo: this.promoCode,
+            cardholderName: this.cardholderName,
+            cardholderAddress: this.cardholderAddress,
+          });
 
-        return subscription.save();
-      }
-    });
+          return subscription.save();
+        }
+      });
   },
 
   handleAuthentication(plan, transaction) {
@@ -83,14 +107,50 @@ export default Controller.extend({
   },
 
   actions: {
+    changeCountry(country) {
+      this.set("cardholderAddress.country", country);
+      this.set("isCountryUS", country === "US");
+      this.set("isCountryCA", country === "CA");
+    },
+
+    changeState(stateOrProvince) {
+      this.set("cardholderAddress.state", stateOrProvince);
+    },
+
     stripePaymentHandler() {
       this.set("loading", true);
       const plan = this.get("model.plans")
         .filterBy("id", this.selectedPlan)
         .get("firstObject");
+      const cardholderAddress = this.cardholderAddress;
+      const cardholderName = this.cardholderName;
 
       if (!plan) {
         this.alert("plans.validate.payment_options.required");
+        this.set("loading", false);
+        return;
+      }
+
+      if (!cardholderName) {
+        this.alert("subscribe.invalid_cardholder_name");
+        this.set("loading", false);
+        return;
+      }
+
+      if (!cardholderAddress.country) {
+        this.alert("subscribe.invalid_cardholder_country");
+        this.set("loading", false);
+        return;
+      }
+
+      if (cardholderAddress.country === "US" && !cardholderAddress.state) {
+        this.alert("subscribe.invalid_cardholder_state");
+        this.set("loading", false);
+        return;
+      }
+
+      if (cardholderAddress.country === "CA" && !cardholderAddress.state) {
+        this.alert("subscribe.invalid_cardholder_province");
         this.set("loading", false);
         return;
       }

@@ -32,6 +32,72 @@
       {{else}}
         <Input
           @type="text"
+          name="cardholder_name"
+          placeholder={{i18n
+            "discourse_subscriptions.subscribe.cardholder_name"
+          }}
+          @value={{cardholderName}}
+          class="subscribe-name"
+        />
+        <div class="address-fields">
+          {{subscribe-country-select
+            value=cardholderAddress.country
+            onChange=(action "changeCountry")
+          }}
+          <Input
+            @type="text"
+            name="cardholder_postal_code"
+            placeholder={{i18n
+              "discourse_subscriptions.subscribe.cardholder_address.postal_code"
+            }}
+            @value={{cardholderAddress.postalCode}}
+            class="subscribe-address-postal-code"
+          />
+        </div>
+        <Input
+          @type="text"
+          name="cardholder_line1"
+          placeholder={{i18n
+            "discourse_subscriptions.subscribe.cardholder_address.line1"
+          }}
+          @value={{cardholderAddress.line1}}
+          class="subscribe-address-line1"
+        />
+        <div class="address-fields">
+          <Input
+            @type="text"
+            name="cardholder_city"
+            placeholder={{i18n
+              "discourse_subscriptions.subscribe.cardholder_address.city"
+            }}
+            @value={{cardholderAddress.city}}
+            class="subscribe-address-city"
+          />
+          {{#if isCountryUS}}
+            {{subscribe-us-state-select
+              value=cardholderAddress.state
+              onChange=(action "changeState")
+            }}
+          {{else if isCountryCA}}
+            {{subscribe-ca-province-select
+              value=cardholderAddress.state
+              onChange=(action "changeState")
+            }}
+          {{else}}
+            <Input
+              @type="text"
+              name="cardholder_state"
+              placeholder={{i18n
+                "discourse_subscriptions.subscribe.cardholder_address.state"
+              }}
+              @value={{cardholderAddress.state}}
+              class="subscribe-address-state"
+            />
+          {{/if}}
+        </div>
+
+        <Input
+          @type="text"
           name="promo_code"
           placeholder={{i18n "discourse_subscriptions.subscribe.promo_code"}}
           @value={{promoCode}}

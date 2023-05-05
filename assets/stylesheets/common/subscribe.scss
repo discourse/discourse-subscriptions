@@ -49,6 +49,29 @@
   color: var(--quaternary);
 }
 
-.subscribe-promo-code {
+.subscribe-promo-code,
+.subscribe-name,
+.subscribe-address-line1,
+.subscribe-address-city,
+.subscribe-address-state,
+.subscribe-address-country-select,
+.subscribe-address-state-select,
+.subscribe-address-postal-code {
   width: 100%;
+}
+
+.subscribe-address-country-select,
+.subscribe-address-state-select {
+  margin-bottom: 9px;
+}
+
+@media all and (min-width: 1350px) {
+  .address-fields {
+    display: flex;
+    justify-content: space-between;
+    & > input,
+    & > .select-kit {
+      width: calc(50% - 4.5px);
+    }
+  }
 }
