@@ -11,7 +11,9 @@ export default ComboBoxComponent.extend({
   selectKitOptions: {
     filterable: true,
     allowAny: false,
-    translatedNone: I18n.t("hosted_site.invoice_details.province_select"),
+    translatedNone: I18n.t(
+      "discourse_subscriptions.subscribe.cardholder_address.province"
+    ),
   },
 
   content: computed(function () {

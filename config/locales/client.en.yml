@@ -124,6 +124,7 @@ en:
           line1: Street Address
           city: City
           state: State
+          province: Province
           country: Country
           postal_code: Postal Code
       billing:

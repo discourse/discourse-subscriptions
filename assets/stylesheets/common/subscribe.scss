@@ -69,7 +69,8 @@
   .address-fields {
     display: flex;
     justify-content: space-between;
-    & > * {
+    & > input,
+    & > .select-kit {
       width: calc(50% - 4.5px);
     }
   }
