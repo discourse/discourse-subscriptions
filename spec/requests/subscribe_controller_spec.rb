@@ -313,7 +313,7 @@ module DiscourseSubscriptions
             }.not_to change { DiscourseSubscriptions::Customer.count }
           end
 
-          context "with customer address" do
+          context "with customer name & address" do
             it "creates a customer & subscription when a customer address is provided" do
               ::Stripe::Price.expects(:retrieve).returns(type: "recurring", metadata: {})
               ::Stripe::Subscription.expects(:create).returns(
@@ -325,6 +325,7 @@ module DiscourseSubscriptions
                      params: {
                        plan: "plan_1234",
                        source: "tok_1234",
+                       cardholder_name: "A. Customer",
                        cardholder_address: {
                          line1: "123 Main Street",
                          city: "Anywhere",
