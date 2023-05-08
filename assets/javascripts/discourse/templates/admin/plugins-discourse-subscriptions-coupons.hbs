@@ -30,7 +30,7 @@
             </td>
             <td>
               <DButton
-                @action={{this.deleteCoupon}}
+                @action={{action "deleteCoupon"}}
                 @actionParam={{coupon}}
                 @icon="trash-alt"
                 class="btn-danger btn btn-icon btn-no-text"
@@ -44,7 +44,7 @@
 
   {{#unless creating}}
     <DButton
-      @action={{this.openCreateForm}}
+      @action={{action "openCreateForm"}}
       @label="discourse_subscriptions.admin.coupons.create"
       @title="discourse_subscriptions.admin.coupons.create"
       @icon="plus"
