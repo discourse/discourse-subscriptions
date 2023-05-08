@@ -135,7 +135,7 @@
 {{/unless}}
 
 <div class="pull-right">
-  <DButton @label="cancel" @action={{this.cancelProduct}} @icon="times" />
+  <DButton @label="cancel" @action={{action "cancelProduct"}} @icon="times" />
 
   {{#if model.product.isNew}}
     <DButton
