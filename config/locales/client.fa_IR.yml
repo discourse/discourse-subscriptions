@@ -54,11 +54,23 @@ fa_IR:
           cancel: لغو
       subscribe:
         title: اشتراک
+        invalid_cardholder_name: نام دارنده کارت الزامی است.
+        invalid_cardholder_country: کشور الزامی است.
+        invalid_cardholder_state: ایالت الزامی است.
+        invalid_cardholder_province: استان الزامی است.
         card:
           title: پرداخت‌
         promo_code: تخفیف
         buttons:
           subscribe: اشتراک
+        cardholder_name: نام دارنده کارت
+        cardholder_address:
+          line1: آدرس خیابان
+          city: شهر
+          state: ایالت
+          province: استان
+          country: کشور
+          postal_code: کد پستی
       billing:
         name: نام کامل
         email: ایمیل
