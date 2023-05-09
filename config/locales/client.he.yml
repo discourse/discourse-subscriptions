@@ -110,6 +110,10 @@ he:
         no_products: אין מוצרים זמינים.
         unauthenticated: עליך להיכנס או ליצור חשבון כדי להירשם.
         invalid_coupon: קוד הקופון שהזנת שגוי. נא לנסות שוב.
+        invalid_cardholder_name: שם בעל הכרטיס נדרש.
+        invalid_cardholder_country: ארץ נדרשת.
+        invalid_cardholder_state: מדינה נדרשת.
+        invalid_cardholder_province: מחוז נדרש.
         card:
           title: תשלום
         customer:
@@ -120,6 +124,14 @@ he:
         purchased: נרכשה
         go_to_billing: מעבר לחיוב
         already_purchased: תודה רבה לך על רכישת המוצר הזה בעבר!
+        cardholder_name: שם בעל הכרטיס
+        cardholder_address:
+          line1: כתובת
+          city: עיר
+          state: מדינה
+          province: מחוז
+          country: ארץ
+          postal_code: מיקוד
       billing:
         name: שם מלא
         email: כתובת דוא״ל
