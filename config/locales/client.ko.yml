@@ -28,6 +28,9 @@ ko:
             single: "업데이트"
           created_at: 생성일자
           cancel: 취소
+      subscribe:
+        countries:
+          MS: "Montserrat"
       billing:
         email: 이메일
       admin:
