@@ -120,6 +120,8 @@ nl:
         purchased: Gekocht
         go_to_billing: Naar facturatie
         already_purchased: Hartelijk dank voor je eerdere aankoop van dit product!
+        countries:
+          MS: "Montserrat"
       billing:
         name: Volledige naam
         email: E-mailadres

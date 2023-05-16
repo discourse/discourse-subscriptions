@@ -120,6 +120,8 @@ zh_CN:
         purchased: 已购买
         go_to_billing: 前往结算
         already_purchased: 非常感谢您之前购买此产品！
+        countries:
+          MS: "Montserrat"
       billing:
         name: 全名
         email: 电子邮件

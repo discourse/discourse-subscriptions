@@ -26,6 +26,9 @@ el:
           status: Κατάσταση
           created_at: Δημιουργήθηκε
           cancel: ακύρωση
+      subscribe:
+        countries:
+          MS: "Montserrat"
       billing:
         email: Διεύθυνση Email
       admin:

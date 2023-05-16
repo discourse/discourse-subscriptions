@@ -120,6 +120,8 @@ de:
         purchased: Gekauft
         go_to_billing: Zur Abrechnung gehen
         already_purchased: Vielen Dank, dass du dieses Produkt bereits gekauft hast!
+        countries:
+          MS: "Montserrat"
       billing:
         name: Vollständiger Name
         email: E-Mail

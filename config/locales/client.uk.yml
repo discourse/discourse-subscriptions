@@ -28,6 +28,9 @@ uk:
             single: "Оновити"
           created_at: Створено
           cancel: скасувати
+      subscribe:
+        countries:
+          MS: "Montserrat"
       billing:
         email: Електронна пошта
       admin:

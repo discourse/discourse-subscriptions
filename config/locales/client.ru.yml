@@ -120,6 +120,8 @@ ru:
         purchased: Оплачено
         go_to_billing: Перейти к оплате
         already_purchased: Большое спасибо за предыдущую покупку этого продукта!
+        countries:
+          MS: "Montserrat"
       billing:
         name: ФИО
         email: Email

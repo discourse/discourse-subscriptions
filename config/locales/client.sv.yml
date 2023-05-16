@@ -110,6 +110,8 @@ sv:
         purchased: Köpt
         go_to_billing: Gå till fakturering
         already_purchased: Tack så mycket för ditt tidigare köp av den här produkten!
+        countries:
+          MS: "Montserrat"
       billing:
         name: Fullständigt namn
         email: E-post
