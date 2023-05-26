@@ -2,6 +2,6 @@
   <p>{{i18n "discourse_subscriptions.subscribe.no_products"}}</p>
 {{else}}
   {{#each products as |product|}}
-    {{product-item product=product isLoggedIn=isLoggedIn}}
+    <ProductItem @product={{product}} @isLoggedIn={{isLoggedIn}} />
   {{/each}}
 {{/if}}

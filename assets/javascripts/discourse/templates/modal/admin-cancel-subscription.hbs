@@ -10,7 +10,7 @@
 
   <div class="modal-footer">
     {{#if model.loading}}
-      {{loading-spinner}}
+      <LoadingSpinner />
     {{else}}
       <DButton
         @label="yes_value"

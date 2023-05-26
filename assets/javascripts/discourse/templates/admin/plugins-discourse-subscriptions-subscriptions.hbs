@@ -70,7 +70,7 @@
             <td class="td-right">{{format-unix-date subscription.created}}</td>
             <td class="td-right">
               {{#if subscription.loading}}
-                {{loading-spinner size="small"}}
+                <LoadingSpinner @size="small" />
               {{else}}
                 <DButton
                   @disabled={{subscription.canceled}}
