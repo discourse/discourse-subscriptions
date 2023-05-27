@@ -26,7 +26,7 @@
       <SubscribeCard @cardElement={{cardElement}} />
 
       {{#if loading}}
-        <LoadingSpinner />
+        {{loading-spinner}}
       {{else if isAnonymous}}
         <LoginRequired />
       {{else}}
