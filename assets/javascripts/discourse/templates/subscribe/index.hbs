@@ -1,5 +1,5 @@
 {{#unless isLoggedIn}}
-  {{login-required}}
+  <LoginRequired />
 {{/unless}}
 
-{{product-list products=model isLoggedIn=isLoggedIn}}
+<ProductList @products={{model}} @isLoggedIn={{isLoggedIn}} />
