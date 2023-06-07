@@ -3,7 +3,7 @@
 # name: discourse-subscriptions
 # about: Integrates Stripe into Discourse to allow visitors to subscribe
 # version: 2.8.1
-# url: https://github.com/discourse/discourse-subscriptions
+# url: https://github.com/6doworld/discourse-subscriptions
 # authors: Rimian Perkins, Justin DiRose
 # transpile_js: true
 
