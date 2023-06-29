@@ -1,2 +1,6 @@
+# Dependencies
 node_modules
 /gems
+
+# IDE
+.idea
