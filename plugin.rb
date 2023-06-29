@@ -52,6 +52,11 @@ Discourse::Application.routes.append do
       :constraints => {
         username: USERNAME_ROUTE_FORMAT,
       }
+
+  # we want to serve this files from exact url for apple pay
+  match "/.well-known/apple-developer-merchantid-domain-association",
+        to: proc {|env| [200, {}, [File.open(Rails.root.join('public', 'plugins', 'discourse-subscriptions', 'apple-developer-merchantid-domain-association')).read]] },
+        via: :get
 end
 
 load File.expand_path("lib/discourse_subscriptions/engine.rb", __dir__)
