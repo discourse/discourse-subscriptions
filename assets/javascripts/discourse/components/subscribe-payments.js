@@ -3,17 +3,30 @@ import Subscription from "discourse/plugins/discourse-subscriptions/discourse/mo
 import Component from "@ember/component";
 import { observes } from "discourse-common/utils/decorators";
 import { inject as service } from "@ember/service";
+import { action } from '@ember/object';
 
 export default Component.extend({
   dialog: service(),
+  router: service(),
+
+  @action
+  redirectOnSuccess(result, plan) {
+    result.complete('success')
+    this.alert("plans.success");
+
+    const location = plan.type === "recurring"
+      ? "user.billing.subscriptions"
+      : "user.billing.payments"
+    const username = this.currentUser.username.toLowerCase();
+
+    this.router.transitionTo(location, username);
+  },
 
   @observes("selectedPlan", "plans")
   setupButtonElement() {
     const plan = this.plans
       .filterBy("id", this.selectedPlan)
       .get("firstObject");
-      console.log("plan")
-      console.log(plan)
 
     if (!plan) {
       this.alert("plans.validate.payment_options.required");
@@ -42,7 +55,6 @@ export default Component.extend({
 
     this.paymentRequest.canMakePayment().then((result) => {
       if (result) {
-        // mount the element
         this.buttonElement.mount("#payment-request-button");
       } else {
         //hide the button
@@ -52,32 +64,45 @@ export default Component.extend({
     });
 
     this.paymentRequest.on('token', (result) => {
-      console.log("this.paymentRequest.on('token', (result)", result);
       const subscription = Subscription.create({
           source: result.token.id,
           plan: plan.get("id"),
           promo: this.promoCode,
       });
-  
-      console.log("subscription", subscription);
-      console.log("tokenid",result.token.id);
-      console.log("planid",plan.get("id"));
-      console.log("promocode",this.promoCode);
-  
-  
+
       subscription.save().then(save => {
-          console.log("on subscription.save() Result: ", save);
-          if (save.error) {
-              this.dialog.alert(save.error.message || save.error);
-              console.log("ERROR");
-          } else {
-              // save.complete('success');
-              console.log("COMPLETED");
-          }
+        console.log(save)
+
+        if (save.error) {
+          this.dialog.alert(save.error.message || save.error);
+        }
+        else if (
+          save.status === "incomplete" ||
+          save.status === "open"
+        ) {
+          const transactionId = save.id;
+          const planId = this.selectedPlan;
+          this.handleAuthentication(plan, save).then(
+            (authenticationResult) => {
+              if (authenticationResult && !authenticationResult.error) {
+                return Transaction.finalize(transactionId, planId).then(
+                  () => {
+                    this.send('redirectOnSuccess', result, plan);
+                  }
+                );
+              }
+            }
+          );
+        } else {
+          this.send('redirectOnSuccess', result, plan);
+        }
+      })
+        .catch((error) => {
+        result.complete('fail');
+        this.dialog.alert(
+          error.jqXHR.responseJSON.errors[0] || error.errorThrown
+        );
       });
-  
-      result.complete('success');
-      this._advanceSuccessfulTransaction(plan);
     });
   },
 
