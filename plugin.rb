@@ -22,6 +22,10 @@ register_html_builder("server:before-head-close") do |controller|
   "<script src='https://js.stripe.com/v3/' nonce='#{controller.helpers.csp_nonce_placeholder}'></script>"
 end
 
+register_html_builder("server:before-head-close") do |controller|
+  "<script async src='https://js.stripe.com/v3/pricing-table.js' nonce='#{controller.helpers.csp_nonce_placeholder}'></script>"
+end
+
 extend_content_security_policy(script_src: %w[https://js.stripe.com/v3/ https://hooks.stripe.com])
 
 add_admin_route "discourse_subscriptions.admin_navigation", "discourse-subscriptions.products"
@@ -63,6 +67,7 @@ require_relative "app/controllers/concerns/stripe"
 require_relative "app/controllers/concerns/group"
 
 after_initialize do
+
   ::Stripe.api_version = "2024-04-10"
 
   ::Stripe.set_app_info(
