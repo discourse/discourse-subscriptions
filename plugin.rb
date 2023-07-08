@@ -21,6 +21,9 @@ register_svg_icon "far-credit-card" if respond_to?(:register_svg_icon)
 register_html_builder("server:before-head-close") do |controller|
   "<script src='https://js.stripe.com/v3/' nonce='#{controller.helpers.csp_nonce_placeholder}'></script>"
 end
+register_html_builder("server:before-head-close") do
+  '<script async src="https://js.stripe.com/v3/pricing-table.js"></script>'
+end
 
 extend_content_security_policy(script_src: %w[https://js.stripe.com/v3/ https://hooks.stripe.com])
 
@@ -64,6 +67,19 @@ require_relative "app/controllers/concerns/group"
 
 after_initialize do
   ::Stripe.api_version = "2024-04-10"
+
+  module ::StripeDiscourseSubscriptions
+    class Engine < ::Rails::Engine
+      engine_name 'stripe-discourse-subscriptions'
+      isolate_namespace StripeDiscourseSubscriptions
+    end
+  end
+  StripeDiscourseSubscriptions::Engine.routes.draw do
+    get "/" => "pricingtable#index"
+  end
+  require_relative "app/controllers/discourse_subscriptions/pricingtable_controller.rb"
+
+  Discourse::Application.routes.append { mount ::StripeDiscourseSubscriptions::Engine, at: "subscriptions" }
 
   ::Stripe.set_app_info(
     "Discourse Subscriptions",

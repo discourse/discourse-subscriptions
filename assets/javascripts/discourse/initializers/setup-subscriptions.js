@@ -12,7 +12,7 @@ export default {
         api.addNavigationBarItem({
           name: "subscribe",
           displayName: I18n.t("discourse_subscriptions.navigation.subscribe"),
-          href: "/s",
+          href: "/subscriptions",
         });
       }
 
@@ -23,6 +23,30 @@ export default {
           href: `/u/${user.username}/billing/subscriptions`,
           content: "Billing",
         });
+        
+        if(user.admin){
+          api.modifyClassStatic('model:site-setting', {
+               pluginId: 'discourse-subscriptions',
+               update(key, value, opts = {}) {
+                if(key ==="discourse_subscriptions_pricing_table"){
+                  const inputString = value;
+                  // Extract pricing-table-id
+                  const pricingTableIdRegex = /pricing-table-id="([^"]+)"/;
+                  const pricingTableIdMatch = inputString.match(pricingTableIdRegex);
+                  const pricingTableId = pricingTableIdMatch ? pricingTableIdMatch[1] : null;
+      
+                  // Extract publishable-key
+                  const publishableKeyRegex = /publishable-key="([^"]+)"/;
+                  const publishableKeyMatch = inputString.match(publishableKeyRegex);
+                  const publishableKey = publishableKeyMatch ? publishableKeyMatch[1] : null;
+                  if(pricingTableId && publishableKey){
+                    value = JSON.stringify({pricingTableId,publishableKey})
+                  }
+                }
+                this._super(key, value, opts);
+              }
+             });
+        }
       }
     });
   },
