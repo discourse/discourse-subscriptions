@@ -11,20 +11,7 @@ module DiscourseSubscriptions
     requires_login except: %i[index contributors show]
 
     def index
-      begin
-        product_ids = Product.all.pluck(:external_id)
-        products = []
-
-        if product_ids.present? && is_stripe_configured?
-          response = ::Stripe::Product.list({ ids: product_ids, active: true })
-
-          products = response[:data].map { |p| serialize_product(p) }
-        end
-
-        render_json_dump products
-      rescue ::Stripe::InvalidRequestError => e
-        render_json_error e.message
-      end
+      head 200
     end
 
     def contributors

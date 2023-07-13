@@ -58,12 +58,14 @@ export default Component.extend({
     }
 
     if (this.currentUser && this.showContributors) {
-      return ajax("/s/contributors", { method: "get" }).then((result) => {
-        this.setProperties({
-          contributors: result,
-          loading: false,
-        });
-      });
+      return ajax("/subscriptions/contributors", { method: "get" }).then(
+        (result) => {
+          this.setProperties({
+            contributors: result,
+            loading: false,
+          });
+        }
+      );
     }
   },
 
