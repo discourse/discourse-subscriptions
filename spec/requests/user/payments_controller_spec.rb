@@ -12,7 +12,7 @@ RSpec.describe DiscourseSubscriptions::User::PaymentsController do
   context "when not authenticated" do
     it "does not get the payment intents" do
       ::Stripe::PaymentIntent.expects(:list).never
-      get "/s/user/payments.json"
+      get "/subscriptions/user/payments.json"
       expect(response.status).to eq(403)
     end
   end
@@ -52,7 +52,7 @@ RSpec.describe DiscourseSubscriptions::User::PaymentsController do
           ],
         )
 
-      get "/s/user/payments.json"
+      get "/subscriptions/user/payments.json"
 
       parsed_body = response.parsed_body
       invoice = parsed_body[0]["invoice"]

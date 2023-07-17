@@ -12,7 +12,7 @@ RSpec.describe DiscourseSubscriptions::Admin::CouponsController do
   context "when unauthenticated" do
     it "does nothing" do
       ::Stripe::PromotionCode.expects(:list).never
-      get "/s/admin/coupons.json"
+      get "/subscriptions/admin/coupons.json"
       expect(response.status).to eq(404)
     end
   end
@@ -29,7 +29,7 @@ RSpec.describe DiscourseSubscriptions::Admin::CouponsController do
           .with({ limit: 100 })
           .returns({ data: [{ id: "promo_123", coupon: { valid: true } }] })
 
-        get "/s/admin/coupons.json"
+        get "/subscriptions/admin/coupons.json"
         expect(response.status).to eq(200)
         expect(response.parsed_body[0]["id"]).to eq("promo_123")
       end
@@ -40,7 +40,7 @@ RSpec.describe DiscourseSubscriptions::Admin::CouponsController do
           .with({ limit: 100 })
           .returns({ data: [{ id: "promo_123", coupon: { valid: false } }] })
 
-        get "/s/admin/coupons.json"
+        get "/subscriptions/admin/coupons.json"
         expect(response.status).to eq(200)
         expect(response.parsed_body).to be_blank
       end
@@ -53,7 +53,7 @@ RSpec.describe DiscourseSubscriptions::Admin::CouponsController do
           { code: "p123", coupon: { amount_off: 2000 } },
         )
 
-        post "/s/admin/coupons.json",
+        post "/subscriptions/admin/coupons.json",
              params: {
                promo: "p123",
                discount_type: "amount",
@@ -71,7 +71,7 @@ RSpec.describe DiscourseSubscriptions::Admin::CouponsController do
           { code: "p123", coupon: { percent_off: 20 } },
         )
 
-        post "/s/admin/coupons.json",
+        post "/subscriptions/admin/coupons.json",
              params: {
                promo: "p123",
                discount_type: "percent",

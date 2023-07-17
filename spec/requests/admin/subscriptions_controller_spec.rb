@@ -24,13 +24,13 @@ RSpec.describe DiscourseSubscriptions::Admin::SubscriptionsController do
   context "when unauthenticated" do
     it "does nothing" do
       ::Stripe::Subscription.expects(:list).never
-      get "/s/admin/subscriptions.json"
+      get "/subscriptions/admin/subscriptions.json"
       expect(response.status).to eq(404)
     end
 
     it "does not destroy a subscription" do
       ::Stripe::Subscription.expects(:delete).never
-      patch "/s/admin/subscriptions/sub_12345.json"
+      patch "/subscriptions/admin/subscriptions/sub_12345.json"
     end
   end
 
@@ -50,7 +50,7 @@ RSpec.describe DiscourseSubscriptions::Admin::SubscriptionsController do
           .expects(:list)
           .with(expand: ["data.plan.product"], limit: 10, starting_after: nil)
           .returns(has_more: false, data: [{ id: "sub_12345" }, { id: "sub_nope" }])
-        get "/s/admin/subscriptions.json"
+        get "/subscriptions/admin/subscriptions.json"
         subscriptions = response.parsed_body["data"][0]["id"]
 
         expect(response.status).to eq(200)
@@ -62,7 +62,7 @@ RSpec.describe DiscourseSubscriptions::Admin::SubscriptionsController do
           .expects(:list)
           .with(expand: ["data.plan.product"], limit: 10, starting_after: "sub_nope")
           .returns(has_more: false, data: [{ id: "sub_77777" }, { id: "sub_yepnoep" }])
-        get "/s/admin/subscriptions.json", params: { last_record: "sub_nope" }
+        get "/subscriptions/admin/subscriptions.json", params: { last_record: "sub_nope" }
         subscriptions = response.parsed_body["data"][0]["id"]
 
         expect(response.status).to eq(200)
@@ -81,7 +81,7 @@ RSpec.describe DiscourseSubscriptions::Admin::SubscriptionsController do
           .with("sub_12345")
           .returns(plan: { product: "pr_34578" }, customer: "c_123")
 
-        expect { delete "/s/admin/subscriptions/sub_12345.json" }.to change {
+        expect { delete "/subscriptions/admin/subscriptions/sub_12345.json" }.to change {
           DiscourseSubscriptions::Customer.count
         }.by(-1)
       end
@@ -100,7 +100,7 @@ RSpec.describe DiscourseSubscriptions::Admin::SubscriptionsController do
             customer: "c_123",
           )
 
-        expect { delete "/s/admin/subscriptions/sub_12345.json" }.to change {
+        expect { delete "/subscriptions/admin/subscriptions/sub_12345.json" }.to change {
           user.groups.count
         }.by(-1)
       end
@@ -119,7 +119,7 @@ RSpec.describe DiscourseSubscriptions::Admin::SubscriptionsController do
             customer: "c_123",
           )
 
-        expect { delete "/s/admin/subscriptions/sub_12345.json" }.not_to change {
+        expect { delete "/subscriptions/admin/subscriptions/sub_12345.json" }.not_to change {
           user.groups.count
         }
       end
@@ -136,7 +136,7 @@ RSpec.describe DiscourseSubscriptions::Admin::SubscriptionsController do
         ::Stripe::Invoice.expects(:retrieve).with("in_123").returns(payment_intent: "pi_123")
         ::Stripe::Refund.expects(:create).with({ payment_intent: "pi_123" })
 
-        delete "/s/admin/subscriptions/sub_12345.json", params: { refund: true }
+        delete "/subscriptions/admin/subscriptions/sub_12345.json", params: { refund: true }
       end
     end
   end
