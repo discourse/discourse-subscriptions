@@ -1,7 +1,7 @@
 export default function (helpers) {
   const { response } = helpers;
 
-  this.get("/s", () => {
+  this.get("/subscriptions", () => {
     const products = [
       {
         id: "prod_23o8I7tU4g56",
@@ -20,7 +20,7 @@ export default function (helpers) {
     return response(products);
   });
 
-  this.get("/s/:id", () => {
+  this.get("/subscriptions/:id", () => {
     const product = {
       id: "prod_23o8I7tU4g56",
       name: "Awesome Product",
