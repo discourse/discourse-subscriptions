@@ -314,15 +314,15 @@ html:not(.mobile-view) .subscriptions-campaign-topic-footer .campaign-banner {
 
 $particles: 50;
 $width: 500;
-$halfwidth: $width / 2;
+$halfwidth: calc($width / 2);
 $height: 250;
-$heightpartial: $height / 1.2;
+$heightpartial: calc($height / 1.2);
 
 $sidebar-particles: 25;
 $sidebar-width: 300;
-$sidebar-half-width: $sidebar-width / 2;
+$sidebar-half-width: calc($sidebar-width / 2);
 $sidebar-height: 100;
-$sidebar-height-partial: $sidebar-height / 1.2;
+$sidebar-height-partial: calc($sidebar-height / 1.2);
 
 // Create the explosion...
 $box-shadow: ();
@@ -339,7 +339,7 @@ $sidebar-box-shadow2: ();
       random($height) -
       $heightpartial +
       px
-      hsl(random(360), 100, 50);
+      hsl(random(360), 100%, 50%);
   $box-shadow2: $box-shadow2, 0 0 #fff;
 }
 
@@ -351,7 +351,7 @@ $sidebar-box-shadow2: ();
       random($sidebar-height) -
       $sidebar-height-partial +
       px
-      hsl(random(360), 100, 50);
+      hsl(random(360), 100%, 50%);
   $sidebar-box-shadow2: $sidebar-box-shadow2, 0 0 #fff;
 }
 
