@@ -314,22 +314,12 @@ html:not(.mobile-view) .subscriptions-campaign-topic-footer .campaign-banner {
 
 $particles: 50;
 $width: 500;
-$halfwidth: $width / 2;
+$halfwidth: calc($width / 2);
 $height: 250;
-$heightpartial: $height / 1.2;
-
-$sidebar-particles: 25;
-$sidebar-width: 300;
-$sidebar-half-width: $sidebar-width / 2;
-$sidebar-height: 100;
-$sidebar-height-partial: $sidebar-height / 1.2;
+$heightpartial: calc($height / 1.2);
 
 // Create the explosion...
 $box-shadow: ();
-$box-shadow2: ();
-
-$sidebar-box-shadow: ();
-$sidebar-box-shadow2: ();
 
 @for $i from 0 through $particles {
   $box-shadow: $box-shadow,
@@ -339,20 +329,7 @@ $sidebar-box-shadow2: ();
       random($height) -
       $heightpartial +
       px
-      hsl(random(360), 100, 50);
-  $box-shadow2: $box-shadow2, 0 0 #fff;
-}
-
-@for $i from 0 through $sidebar-particles {
-  $sidebar-box-shadow: $sidebar-box-shadow,
-    random($sidebar-width) -
-      $sidebar-half-width +
-      px
-      random($sidebar-height) -
-      $sidebar-height-partial +
-      px
-      hsl(random(360), 100, 50);
-  $sidebar-box-shadow2: $sidebar-box-shadow2, 0 0 #fff;
+      hsl(random(360), 100%, 50%);
 }
 
 @mixin keyframes($animationName) {
@@ -416,34 +393,11 @@ body:not(.archetype-regular):not(.success-animation-off) {
     width: 5px;
     height: 5px;
     border-radius: 50%;
-    box-shadow: $box-shadow2;
     @include animation(
       (
-        1s bang ease-out 1s 5 backwards,
-        1s gravity ease-in 1s 5 backwards,
+        1s bang ease-out 1s 2 backwards,
+        1s gravity ease-in 1s 2 backwards,
         5s position ease-in-out 1s 1 backwards
-      )
-    );
-  }
-}
-
-body.subscription-campaign-sidebar:not(.archetype-regular):not(
-    .success-animation-off
-  ) {
-  .fireworks > .before,
-  .fireworks > .after {
-    position: absolute;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    box-shadow: $sidebar-box-shadow2;
-    animation: name duration timing-function delay iteration-count direction
-      fill-mode;
-    @include animation(
-      (
-        1s sidebarbang ease-out 1s 5 backwards,
-        1s gravity ease-in 1s 5 backwards,
-        5s sidebarposition ease-in-out 1s 1 backwards
       )
     );
   }
@@ -457,12 +411,6 @@ body.subscription-campaign-sidebar:not(.archetype-regular):not(
 @include keyframes(bang) {
   to {
     box-shadow: $box-shadow;
-  }
-}
-
-@include keyframes(sidebarbang) {
-  to {
-    box-shadow: $sidebar-box-shadow;
   }
 }
 
@@ -498,33 +446,5 @@ body.subscription-campaign-sidebar:not(.archetype-regular):not(
   99.9% {
     margin-top: 6%;
     margin-left: 56%;
-  }
-}
-
-@include keyframes(sidebarposition) {
-  0%,
-  19.9% {
-    margin-top: -25%;
-    margin-left: 0%;
-  }
-  20%,
-  39.9% {
-    margin-top: -25%;
-    margin-left: 25%;
-  }
-  40%,
-  59.9% {
-    margin-top: -25%;
-    margin-left: 50%;
-  }
-  60%,
-  79.9% {
-    margin-top: -25%;
-    margin-left: 75%;
-  }
-  80%,
-  99.9% {
-    margin-top: -25%;
-    margin-left: 100%;
   }
 }
