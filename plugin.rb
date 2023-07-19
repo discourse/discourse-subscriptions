@@ -27,7 +27,7 @@ end
 
 extend_content_security_policy(script_src: %w[https://js.stripe.com/v3/ https://hooks.stripe.com])
 
-add_admin_route "discourse_subscriptions.admin_navigation", "discourse-subscriptions.products"
+add_admin_route "discourse_subscriptions.admin_navigation", "discourse-subscriptions.plans"
 
 Discourse::Application.routes.append do
   get "/admin/plugins/discourse-subscriptions" => "admin/plugins#index",
