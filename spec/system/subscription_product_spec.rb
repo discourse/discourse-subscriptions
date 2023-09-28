@@ -7,7 +7,6 @@ describe "Subscription products", type: :system do
   before { SiteSetting.discourse_subscriptions_enabled = true }
 
   it "shows the login modal" do
-    p = DiscourseSubscriptions::Product.first
     visit("/s")
 
     find("button.login-required.subscriptions").click
