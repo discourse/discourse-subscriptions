@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 # name: discourse-subscriptions
-# about: Integrates Stripe into Discourse to allow visitors to subscribe
+# about: Allows admins to sell subscriptions to site content. 
+# meta_topic_id: 140818
 # version: 2.8.1
 # url: https://github.com/discourse/discourse-subscriptions
 # authors: Rimian Perkins, Justin DiRose
