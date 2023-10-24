@@ -421,7 +421,7 @@ en:
             active_help: Toggle this off until your product is ready for consumers.
             created_at: Created
             updated_at: Updated
-          product_help: Before cutomers can subscribe to your site, you need to create at least one product and an associated plan.
+          product_help: Before customers can subscribe to your site, you need to create at least one product and an associated plan.
         plans:
           title: Pricing Plans
           operations:
