@@ -156,7 +156,6 @@ sv:
             active_help: Avaktivera denna tills din produkt är redo för kunder.
             created_at: Skapad
             updated_at: Uppdaterad
-          product_help: Innan kunder kan prenumerera på din webbplats måste du skapa minst en produkt och en plan som är kopplad till den.
         plans:
           title: Prisplaner
           operations:

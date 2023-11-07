@@ -129,7 +129,6 @@ pl_PL:
             active_help: Wyłącz tę opcję, aż produkt będzie gotowy dla konsumentów.
             created_at: Utworzono
             updated_at: Zaktualizowane
-          product_help: Zanim klienci będą mogli zasubskrybować Twoją witrynę, musisz utworzyć co najmniej jeden produkt i powiązany plan.
         plans:
           title: Plany cenowe
           operations:

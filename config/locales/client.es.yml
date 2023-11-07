@@ -426,7 +426,6 @@ es:
             active_help: Desactiva esto hasta que el producto esté listo para el consumidor final.
             created_at: Creada
             updated_at: Actualizada
-          product_help: Antes de que los clientes puedan suscribirse al sitio, debes crear al menos un producto y un plan asociado.
         plans:
           title: Planes de precios
           operations:

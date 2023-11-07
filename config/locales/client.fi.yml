@@ -426,7 +426,6 @@ fi:
             active_help: Poista tämä käytöstä, kunnes tuotteesi on valmis kuluttajille.
             created_at: Luotu
             updated_at: Päivitetty
-          product_help: Ennen kuin asiakkaat voivat tilata sivustosi, sinun täytyy luoda vähintään yksi tuote ja siihen liittyvä sopimus.
         plans:
           title: Hinnoittelusopimukset
           operations:

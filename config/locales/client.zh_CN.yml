@@ -426,7 +426,6 @@ zh_CN:
             active_help: 在您的产品准备好向客户开放前请关闭此项。
             created_at: 创建时间
             updated_at: 更新时间
-          product_help: 您需要至少创建一个产品及关联方案，然后客户才可以订阅您的网站。
         plans:
           title: 定价方案
           operations:
