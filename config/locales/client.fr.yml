@@ -426,7 +426,6 @@ fr:
             active_help: Désactivez cette option jusqu'à ce que votre produit soit prêt pour être rendu public.
             created_at: Création
             updated_at: Modification
-          product_help: Avant que les clients puissent s'abonner à votre site, vous devez créer au moins un produit et un plan associé.
         plans:
           title: Plans tarifaires
           operations:

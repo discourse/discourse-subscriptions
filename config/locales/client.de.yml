@@ -426,7 +426,6 @@ de:
             active_help: Schalte dies aus, bis dein Produkt für Verbraucher bereit ist.
             created_at: Erstellt
             updated_at: Aktualisiert
-          product_help: Bevor Kunden deine Website abonnieren können, musst du mindestens ein Produkt und einen dazugehörigen Plan erstellen.
         plans:
           title: Preispläne
           operations:

@@ -125,7 +125,6 @@ pt:
             active_help: Desative isto até que o seu produto esteja pronto para os consumidores.
             created_at: Criado
             updated_at: Atualizado
-          product_help: Antes dos clientes poderem subscrever o seu site, precisa de criar pelo menos um produto e um plano associado.
         plans:
           title: Planos de Preço
           operations:

@@ -426,7 +426,6 @@ it:
             active_help: Disattiva questa opzione finché il tuo prodotto non è pronto per i consumatori.
             created_at: Creazione
             updated_at: Aggiornamento
-          product_help: Prima che i clienti possano abbonarsi al tuo sito, devi creare almeno un prodotto e un piano tariffario ad esso associato.
         plans:
           title: Piani tariffari
           operations:
