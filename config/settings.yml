@@ -1,4 +1,4 @@
-plugins:
+discourse_subscriptions:
   discourse_subscriptions_enabled:
     default: false
   discourse_subscriptions_extra_nav_subscribe:
