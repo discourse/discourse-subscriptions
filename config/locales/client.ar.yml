@@ -5,6 +5,11 @@
 # https://translate.discourse.org/
 
 ar:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_subscriptions: "اشتراكات Discourse"
   site_settings:
     discourse_subscriptions_enabled: تفعيل المكوِّن الإضافي لاشتراكات Discourse.
     discourse_subscriptions_extra_nav_subscribe: عرض زر الاشتراك في التنقل الأساسي
