@@ -5,6 +5,11 @@
 # https://translate.discourse.org/
 
 fi:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_subscriptions: "Discoursen tilaukset"
   site_settings:
     discourse_subscriptions_enabled: Ota Discoursen Subscriptions-lisäosa käyttöön.
     discourse_subscriptions_extra_nav_subscribe: Näytä tilauspainike päänavigoinnissa

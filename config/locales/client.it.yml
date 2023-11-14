@@ -5,6 +5,11 @@
 # https://translate.discourse.org/
 
 it:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_subscriptions: "Abbonamenti a Discourse"
   site_settings:
     discourse_subscriptions_enabled: Abilita il plug-in di abbonamenti a Discourse
     discourse_subscriptions_extra_nav_subscribe: Mostra il pulsante di abbonamento nel menu principale
