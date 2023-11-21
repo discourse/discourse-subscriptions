@@ -9,7 +9,7 @@ he:
     admin:
       site_settings:
         categories:
-          discourse_subscriptions: "מינויי Discourse"
+          discourse_subscriptions: "Discourse מינויים"
   site_settings:
     discourse_subscriptions_enabled: הפעלת תוסף המינויים של Discourse.
     discourse_subscriptions_extra_nav_subscribe: להציג את כפתור הרישום בניווט הראשי
