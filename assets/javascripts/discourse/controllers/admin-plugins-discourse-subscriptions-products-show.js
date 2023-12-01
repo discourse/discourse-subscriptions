@@ -1,17 +1,20 @@
 import { popupAjaxError } from "discourse/lib/ajax-error";
 import Controller from "@ember/controller";
+import { inject as service } from "@ember/service";
 
 export default Controller.extend({
+  router: service(),
+
   actions: {
     cancelProduct() {
-      this.transitionToRoute("adminPlugins.discourse-subscriptions.products");
+      this.router.transitionTo("adminPlugins.discourse-subscriptions.products");
     },
 
     createProduct() {
       this.get("model.product")
         .save()
         .then((product) => {
-          this.transitionToRoute(
+          this.router.transitionTo(
             "adminPlugins.discourse-subscriptions.products.show",
             product.id
           );
@@ -23,7 +26,7 @@ export default Controller.extend({
       this.get("model.product")
         .update()
         .then(() => {
-          this.transitionToRoute(
+          this.router.transitionTo(
             "adminPlugins.discourse-subscriptions.products"
           );
         })

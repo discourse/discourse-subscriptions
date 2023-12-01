@@ -1,7 +1,10 @@
 import Controller from "@ember/controller";
 import { popupAjaxError } from "discourse/lib/ajax-error";
+import { inject as service } from "@ember/service";
 
 export default Controller.extend({
+  router: service(),
+
   actions: {
     createPlan() {
       if (this.get("model.plan.product_id") === undefined) {
@@ -12,7 +15,9 @@ export default Controller.extend({
       this.get("model.plan")
         .save()
         .then(() => {
-          this.transitionToRoute("adminPlugins.discourse-subscriptions.plans");
+          this.router.transitionTo(
+            "adminPlugins.discourse-subscriptions.plans"
+          );
         })
         .catch(popupAjaxError);
     },
