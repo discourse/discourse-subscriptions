@@ -8,6 +8,7 @@ import { inject as service } from "@ember/service";
 
 export default Controller.extend({
   dialog: service(),
+  router: service(),
   selectedPlan: null,
   promoCode: null,
   cardholderName: null,
@@ -98,7 +99,7 @@ export default Controller.extend({
     this.alert("plans.success");
     this.set("loading", false);
 
-    this.transitionToRoute(
+    this.router.transitionTo(
       plan.type === "recurring"
         ? "user.billing.subscriptions"
         : "user.billing.payments",

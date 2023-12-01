@@ -6,13 +6,14 @@ import { inject as service } from "@ember/service";
 
 export default Route.extend({
   dialog: service(),
+  router: service(),
   model() {
     return UserSubscription.findAll();
   },
 
   @action
   updateCard(subscriptionId) {
-    this.transitionTo("user.billing.subscriptions.card", subscriptionId);
+    this.router.transitionTo("user.billing.subscriptions.card", subscriptionId);
   },
   @action
   cancelSubscription(subscription) {
