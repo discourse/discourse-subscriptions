@@ -1,14 +1,18 @@
-import AdminSubscription from "discourse/plugins/discourse-subscriptions/discourse/models/admin-subscription";
+import AdminCancelSubscription from "../components/modal/admin-cancel-subscription";
+import AdminSubscription from "../models/admin-subscription";
 import Controller from "@ember/controller";
-import showModal from "discourse/lib/show-modal";
+import { inject as service } from "@ember/service";
 
 export default Controller.extend({
+  modal: service(),
   loading: false,
 
   actions: {
     showCancelModal(subscription) {
-      showModal("admin-cancel-subscription", {
-        model: subscription,
+      this.modal.show(AdminCancelSubscription, {
+        model: {
+          subscription,
+        },
       });
     },
 
