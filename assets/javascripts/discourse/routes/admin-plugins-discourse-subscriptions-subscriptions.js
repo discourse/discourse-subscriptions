@@ -19,7 +19,7 @@ export default Route.extend({
       .destroy(refund)
       .then((result) => {
         subscription.set("status", result.status);
-        this.send("closeModal");
+        this.args.closeModal();
         this.dialog.alert(I18n.t("discourse_subscriptions.admin.canceled"));
       })
       .catch((data) =>

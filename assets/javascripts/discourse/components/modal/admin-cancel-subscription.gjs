@@ -1,11 +1,13 @@
+import DButton from "discourse/components/d-button";
 import DModal from "discourse/components/d-modal";
+import ConditionalLoadingSpinner from "discourse/components/conditional-loading-spinner";
+import { hash } from "@ember/helper";
 import i18n from "discourse-common/helpers/i18n";
-import icon from "discourse-common/helpers/d-icon";
-import { htmlSafe } from "@ember/template";
+import { Input } from "@ember/component";
 
 const AdminCancelSubscriptions = <template>
   <DModal
-    @titl={{i18n
+    @title={{i18n
       "discourse_subscriptions.user.subscriptions.operations.destroy.confirm"
     }}
     @closeModal={{@closeModal}}
@@ -15,25 +17,22 @@ const AdminCancelSubscriptions = <template>
       {{i18n "discourse_subscriptions.admin.ask_refund"}}
     </:body>
     <:footer>
-      {{#if @model.subscription.loading}}
-        <LoadingSpinner />
-      {{else}}
+      <ConditionalLoadingSpinner @condition={{@model.subscription.loading}}>
         <DButton
           @label="yes_value"
           @action={{route-action
             "cancelSubscription"
-            (hash subscription=@model.subscription refund=refund)
+            (hash
+              subscription=@model.subscription refund=@model.subscription.refund
+            )
           }}
           @icon="times"
           class="btn-danger"
         />
-        <DButton @label="no_value" @action={{route-action "closeModal"}} />
-      {{/if}}
+        <DButton @label="no_value" @action={{@closeModal}} />
+      </ConditionalLoadingSpinner>
     </:footer>
   </DModal>
-
-  <div class="modal-footer">
-  </div>
 </template>;
 
 export default AdminCancelSubscriptions;
