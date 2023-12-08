@@ -3,6 +3,7 @@ import AdminSubscription from "../models/admin-subscription";
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
+import I18n from "discourse-i18n";
 
 export default Controller.extend({
   modal: service(),
