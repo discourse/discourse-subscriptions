@@ -27,6 +27,10 @@ extend_content_security_policy(script_src: %w[https://js.stripe.com/v3/ https://
 
 add_admin_route "discourse_subscriptions.admin_navigation", "discourse-subscriptions.products"
 
+module ::DiscourseSubscriptions
+  PLUGIN_NAME = "discourse-subscriptions"
+end
+
 Discourse::Application.routes.append do
   get "/admin/plugins/discourse-subscriptions" => "admin/plugins#index",
       :constraints => AdminConstraint.new

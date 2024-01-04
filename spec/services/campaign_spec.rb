@@ -150,6 +150,31 @@ describe DiscourseSubscriptions::Campaign do
           expect(SiteSetting.discourse_subscriptions_campaign_amount_raised).to eq 8.33
         end
       end
+
+      context "with ::Stripe::AuthenticationError" do
+        it "adds a problem to the admin dashboard" do
+          ::Stripe::Subscription.expects(:list).raises(::Stripe::AuthenticationError)
+
+          DiscourseSubscriptions::Campaign.new.refresh_data
+
+          expect(AdminDashboardData.load_found_scheduled_check_problems.count).to eq(1)
+        end
+
+        it "clears the problem when no errors" do
+          ::Stripe::Subscription.expects(:list).returns(data: [subscription], has_more: false)
+          ::Stripe::Invoice.expects(:list).returns(data: [invoice, invoice2], has_more: false)
+          AdminDashboardData.add_found_scheduled_check_problem(
+            AdminDashboardData::Problem.new(
+              "x",
+              identifier: DiscourseSubscriptions::Stripe::AUTH_PROBLEM_IDENTIFIER,
+            ),
+          )
+
+          DiscourseSubscriptions::Campaign.new.refresh_data
+
+          expect(AdminDashboardData.load_found_scheduled_check_problems.count).to eq(0)
+        end
+      end
     end
   end
 
