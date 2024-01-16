@@ -1,8 +1,8 @@
-import discourseComputed from "discourse-common/utils/decorators";
-import DiscourseURL from "discourse/lib/url";
 import Controller from "@ember/controller";
 import { alias } from "@ember/object/computed";
 import { popupAjaxError } from "discourse/lib/ajax-error";
+import DiscourseURL from "discourse/lib/url";
+import discourseComputed from "discourse-common/utils/decorators";
 
 const RECURRING = "recurring";
 const ONE_TIME = "one_time";

@@ -1,14 +1,17 @@
+/* global Stripe */
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
+import { inject as service } from "@ember/service";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 import I18n from "I18n";
-import { inject as service } from "@ember/service";
 
 export default Controller.extend({
   dialog: service(),
+
   loading: false,
   saved: false,
+
   init() {
     this._super(...arguments);
     this.set(

@@ -11,6 +11,7 @@ describe SiteSerializer do
     SiteSetting.discourse_subscriptions_enabled = true
     SiteSetting.discourse_subscriptions_campaign_enabled = true
   end
+
   it "is false if the goal_met date is < 7 days old" do
     Discourse.redis.set("subscriptions_goal_met_date", 10.days.ago)
     data = described_class.new(Site.new(guardian), scope: guardian, root: false).as_json

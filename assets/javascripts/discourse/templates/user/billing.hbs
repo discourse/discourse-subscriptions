@@ -1,12 +1,10 @@
-<DSection
-  @pageClass="user-billing"
-  @class="user-secondary-navigation"
-  @scrollTop="false"
->
+{{body-class "user-billing-page"}}
+
+<section class="user-secondary-navigation">
   <MobileNav
-    @class="activity-nav"
     @desktopClass="action-list nav-stacked"
     @currentPath={{router._router.currentPath}}
+    class="activity-nav"
   >
     <li>
       <LinkTo @route="user.billing.subscriptions">
@@ -20,7 +18,7 @@
       </LinkTo>
     </li>
   </MobileNav>
-</DSection>
+</section>
 
 <section class="user-content">
   {{outlet}}

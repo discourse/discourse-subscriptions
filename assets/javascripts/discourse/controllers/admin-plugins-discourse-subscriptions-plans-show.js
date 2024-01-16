@@ -1,6 +1,6 @@
 import Controller from "@ember/controller";
-import { popupAjaxError } from "discourse/lib/ajax-error";
 import { inject as service } from "@ember/service";
+import { popupAjaxError } from "discourse/lib/ajax-error";
 
 export default Controller.extend({
   router: service(),

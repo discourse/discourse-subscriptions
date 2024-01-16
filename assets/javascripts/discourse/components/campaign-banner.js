@@ -1,11 +1,11 @@
-import { action } from "@ember/object";
-import { ajax } from "discourse/lib/ajax";
-import { equal } from "@ember/object/computed";
-import { setting } from "discourse/lib/computed";
 import Component from "@ember/component";
-import discourseComputed, { observes } from "discourse-common/utils/decorators";
+import { action } from "@ember/object";
+import { equal } from "@ember/object/computed";
 import { later } from "@ember/runloop";
 import { inject as service } from "@ember/service";
+import { ajax } from "discourse/lib/ajax";
+import { setting } from "discourse/lib/computed";
+import discourseComputed, { observes } from "discourse-common/utils/decorators";
 
 const SIDEBAR_BODY_CLASS = "subscription-campaign-sidebar";
 
@@ -96,6 +96,7 @@ export default Component.extend({
   },
 
   willDestroyElement() {
+    this._super(...arguments);
     document.body.classList.remove(SIDEBAR_BODY_CLASS);
   },
 

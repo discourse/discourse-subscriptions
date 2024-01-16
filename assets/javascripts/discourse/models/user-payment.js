@@ -1,6 +1,6 @@
 import EmberObject from "@ember/object";
-import discourseComputed from "discourse-common/utils/decorators";
 import { ajax } from "discourse/lib/ajax";
+import discourseComputed from "discourse-common/utils/decorators";
 
 const UserPayment = EmberObject.extend({
   @discourseComputed("amount")

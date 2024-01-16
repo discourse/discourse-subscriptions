@@ -6,7 +6,6 @@
 # version: 2.8.1
 # url: https://github.com/discourse/discourse-subscriptions
 # authors: Rimian Perkins, Justin DiRose
-# transpile_js: true
 
 enabled_site_setting :discourse_subscriptions_enabled
 

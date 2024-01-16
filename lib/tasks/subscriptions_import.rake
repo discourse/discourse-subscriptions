@@ -90,14 +90,14 @@ def import_subscriptions(procourse_import)
   product_ids = DiscourseSubscriptions::Product.all.pluck(:external_id)
 
   all_customers = get_stripe_customers
-  puts "Total available Stripe Customers: #{all_customers.length.to_s}, the first of which is customer id: #{all_customers[0][:description]}"
+  puts "Total available Stripe Customers: #{all_customers.length}, the first of which is customer id: #{all_customers[0][:description]}"
 
   subscriptions = get_stripe_subscriptions
-  puts "Total Active Subscriptions available: #{subscriptions.length.to_s}"
+  puts "Total Active Subscriptions available: #{subscriptions.length}"
 
   subscriptions_for_products =
     subscriptions.select { |sub| product_ids.include?(sub[:items][:data][0][:price][:product]) }
-  puts "Total Subscriptions matching Products to Import: #{subscriptions_for_products.length.to_s}"
+  puts "Total Subscriptions matching Products to Import: #{subscriptions_for_products.length}"
 
   subscriptions_for_products.each do |subscription|
     product_id = subscription[:items][:data][0][:plan][:product]
