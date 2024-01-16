@@ -4,12 +4,8 @@ require "rails_helper"
 
 describe DiscourseSubscriptions::Campaign do
   describe "campaign data is refreshed" do
-    let (:user) {
-      Fabricate(:user)
-    }
-    let (:user2) {
-      Fabricate(:user)
-    }
+    let(:user) { Fabricate(:user) }
+    let(:user2) { Fabricate(:user) }
     let(:subscription) do
       {
         id: "sub_1234",

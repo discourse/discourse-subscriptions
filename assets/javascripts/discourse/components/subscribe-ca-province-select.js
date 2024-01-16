@@ -1,6 +1,6 @@
-import ComboBoxComponent from "select-kit/components/combo-box";
 import { computed } from "@ember/object";
 import I18n from "I18n";
+import ComboBoxComponent from "select-kit/components/combo-box";
 
 export default ComboBoxComponent.extend({
   pluginApiIdentifiers: ["subscribe-ca-province-select"],

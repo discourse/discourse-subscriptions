@@ -1,7 +1,7 @@
-import discourseComputed from "discourse-common/utils/decorators";
-import { ajax } from "discourse/lib/ajax";
 import EmberObject from "@ember/object";
+import { ajax } from "discourse/lib/ajax";
 import getURL from "discourse-common/lib/get-url";
+import discourseComputed from "discourse-common/utils/decorators";
 
 const AdminSubscription = EmberObject.extend({
   @discourseComputed("status")

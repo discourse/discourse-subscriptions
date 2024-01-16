@@ -24,5 +24,8 @@ export default Component.extend({
       },
     });
   },
-  didDestroyElement() {},
+
+  didDestroyElement() {
+    this._super(...arguments);
+  },
 });

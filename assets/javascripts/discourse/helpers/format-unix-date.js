@@ -1,5 +1,5 @@
-import { autoUpdatingRelativeAge } from "discourse/lib/formatter";
 import { htmlSafe } from "@ember/template";
+import { autoUpdatingRelativeAge } from "discourse/lib/formatter";
 
 export default function formatUnixDate(timestamp) {
   if (timestamp) {

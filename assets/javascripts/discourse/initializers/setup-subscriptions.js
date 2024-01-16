@@ -5,7 +5,7 @@ export default {
   name: "setup-subscriptions",
   initialize(container) {
     withPluginApi("0.8.11", (api) => {
-      const siteSettings = container.lookup("site-settings:main");
+      const siteSettings = container.lookup("service:site-settings");
       const isNavLinkEnabled =
         siteSettings.discourse_subscriptions_extra_nav_subscribe;
       if (isNavLinkEnabled) {

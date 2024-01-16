@@ -1,8 +1,8 @@
-import { count, discourseModule } from "discourse/tests/helpers/qunit-helpers";
+import hbs from "htmlbars-inline-precompile";
 import componentTest, {
   setupRenderingTest,
 } from "discourse/tests/helpers/component-test";
-import hbs from "htmlbars-inline-precompile";
+import { count, discourseModule } from "discourse/tests/helpers/qunit-helpers";
 
 discourseModule("payment-options", function (hooks) {
   setupRenderingTest(hooks);

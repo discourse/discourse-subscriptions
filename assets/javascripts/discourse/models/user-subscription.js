@@ -1,8 +1,8 @@
 import EmberObject from "@ember/object";
-import discourseComputed from "discourse-common/utils/decorators";
 import { ajax } from "discourse/lib/ajax";
-import Plan from "discourse/plugins/discourse-subscriptions/discourse/models/plan";
+import discourseComputed from "discourse-common/utils/decorators";
 import I18n from "I18n";
+import Plan from "discourse/plugins/discourse-subscriptions/discourse/models/plan";
 
 const UserSubscription = EmberObject.extend({
   @discourseComputed("status")

@@ -1,6 +1,6 @@
 import Route from "@ember/routing/route";
-import Product from "discourse/plugins/discourse-subscriptions/discourse/models/product";
 import { inject as service } from "@ember/service";
+import Product from "discourse/plugins/discourse-subscriptions/discourse/models/product";
 
 export default Route.extend({
   router: service(),

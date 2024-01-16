@@ -1,10 +1,11 @@
+/* global Stripe */
 import Controller from "@ember/controller";
+import { not } from "@ember/object/computed";
+import { inject as service } from "@ember/service";
+import discourseComputed from "discourse-common/utils/decorators";
+import I18n from "I18n";
 import Subscription from "discourse/plugins/discourse-subscriptions/discourse/models/subscription";
 import Transaction from "discourse/plugins/discourse-subscriptions/discourse/models/transaction";
-import I18n from "I18n";
-import { not } from "@ember/object/computed";
-import discourseComputed from "discourse-common/utils/decorators";
-import { inject as service } from "@ember/service";
 
 export default Controller.extend({
   dialog: service(),
