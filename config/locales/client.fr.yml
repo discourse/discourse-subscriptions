@@ -9,7 +9,7 @@ fr:
     admin:
       site_settings:
         categories:
-          discourse_subscriptions: "Discourse Subscriptions"
+          discourse_subscriptions: "Abonnements Discourse"
   site_settings:
     discourse_subscriptions_enabled: Activer l'extension Discourse Subscription
     discourse_subscriptions_extra_nav_subscribe: Afficher le bouton « S'abonner » dans le menu de navigation.
@@ -431,6 +431,7 @@ fr:
             active_help: Désactivez cette option jusqu'à ce que votre produit soit prêt pour être rendu public.
             created_at: Création
             updated_at: Modification
+          product_help: Avant que les clients puissent s'abonner à votre site, vous devez créer au moins un produit et un abonnement associé.
         plans:
           title: Plans tarifaires
           operations:
