@@ -431,6 +431,7 @@ ja:
             active_help: 商品を消費者に提供する準備が整うまで、これをオフにします。
             created_at: 作成
             updated_at: 更新
+          product_help: お客様がサイトを購読するまでに、少なくとも 1 つの商品と関連するプランを作成する必要があります。
         plans:
           title: 料金プラン
           operations:

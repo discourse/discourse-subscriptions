@@ -431,6 +431,7 @@ tr_TR:
             active_help: Ürününüz tüketiciler için hazır olana kadar bunu kapatın.
             created_at: Oluşturuldu
             updated_at: Güncellenmiş
+          product_help: Müşterilerin sitenize abone olabilmesi için en az bir ürün ve ilgili bir plan oluşturmanız gerekir.
         plans:
           title: Fiyatlandırma Planları
           operations:

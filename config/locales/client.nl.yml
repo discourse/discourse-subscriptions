@@ -431,6 +431,7 @@ nl:
             active_help: Schakel dit uit totdat je product gereed is voor consumenten.
             created_at: Gemaakt
             updated_at: Bijgewerkt
+          product_help: Voordat klanten zich op je website kunnen abonneren, moet je minimaal één product en een bijbehorend abonnement maken.
         plans:
           title: Prijsplannen
           operations:

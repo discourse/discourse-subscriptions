@@ -9,7 +9,7 @@ es:
     admin:
       site_settings:
         categories:
-          discourse_subscriptions: "Discourse Subscriptions"
+          discourse_subscriptions: "Suscripciones de Discourse"
   site_settings:
     discourse_subscriptions_enabled: Habilita el complemento Discourse Subscriptions.
     discourse_subscriptions_extra_nav_subscribe: Mostrar el botón de suscripción en la navegación principal
@@ -431,6 +431,7 @@ es:
             active_help: Desactiva esto hasta que el producto esté listo para el consumidor final.
             created_at: Creada
             updated_at: Actualizada
+          product_help: Antes de que los clientes puedan suscribirse al sitio, debes crear al menos un producto y un plan asociado.
         plans:
           title: Planes de precios
           operations:
