@@ -431,6 +431,7 @@ pt_BR:
             active_help: Desative isso até que seu produto esteja pronto para os(as) consumidores(as).
             created_at: Criado
             updated_at: Atualizado
+          product_help: Antes que os(as) clientes possam fazer assinatura no seu site, é preciso criar pelo menos um produto e um plano associado.
         plans:
           title: Preços dos planos
           operations:
