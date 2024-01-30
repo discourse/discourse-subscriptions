@@ -9,7 +9,7 @@ ru:
     admin:
       site_settings:
         categories:
-          discourse_subscriptions: "Подписки"
+          discourse_subscriptions: "Плагин «Подписки» для Discourse"
   site_settings:
     discourse_subscriptions_enabled: Включить плагин Discourse Subscription.
     discourse_subscriptions_extra_nav_subscribe: Показать кнопку подписки в основной навигации
