@@ -3,7 +3,10 @@
 require "rails_helper"
 
 RSpec.describe DiscourseSubscriptions::HooksController do
-  before { SiteSetting.discourse_subscriptions_webhook_secret = "zascharoo" }
+  before do
+    SiteSetting.discourse_subscriptions_webhook_secret = "zascharoo"
+    SiteSetting.discourse_subscriptions_enabled = true
+  end
 
   it "constructs a webhook event" do
     payload = "we-want-a-shrubbery"

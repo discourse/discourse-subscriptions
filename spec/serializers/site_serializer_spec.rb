@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe SiteSerializer do
-  fab!(:user) { Fabricate(:user) }
+  fab!(:user)
   let(:guardian) { Guardian.new(user) }
 
   before do

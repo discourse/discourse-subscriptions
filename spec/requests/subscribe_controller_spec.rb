@@ -6,6 +6,8 @@ RSpec.describe DiscourseSubscriptions::SubscribeController do
   let(:user) { Fabricate(:user) }
   let(:campaign_user) { Fabricate(:user) }
 
+  before { SiteSetting.discourse_subscriptions_enabled = true }
+
   context "when showing products" do
     let(:product) do
       {

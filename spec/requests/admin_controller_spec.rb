@@ -5,7 +5,10 @@ require "rails_helper"
 RSpec.describe DiscourseSubscriptions::AdminController do
   let(:admin) { Fabricate(:admin) }
 
-  before { sign_in(admin) }
+  before do
+    sign_in(admin)
+    SiteSetting.discourse_subscriptions_enabled = true
+  end
 
   it "is a subclass of AdminController" do
     expect(DiscourseSubscriptions::AdminController < ::Admin::AdminController).to eq(true)

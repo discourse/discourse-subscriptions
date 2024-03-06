@@ -5,6 +5,9 @@ module DiscourseSubscriptions
     class SubscriptionsController < ::ApplicationController
       include DiscourseSubscriptions::Stripe
       include DiscourseSubscriptions::Group
+
+      requires_plugin DiscourseSubscriptions::PLUGIN_NAME
+
       before_action :set_api_key
       requires_login
 

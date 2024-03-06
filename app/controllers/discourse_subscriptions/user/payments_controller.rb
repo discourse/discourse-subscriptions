@@ -4,6 +4,9 @@ module DiscourseSubscriptions
   module User
     class PaymentsController < ::ApplicationController
       include DiscourseSubscriptions::Stripe
+
+      requires_plugin DiscourseSubscriptions::PLUGIN_NAME
+
       before_action :set_api_key
       requires_login
 

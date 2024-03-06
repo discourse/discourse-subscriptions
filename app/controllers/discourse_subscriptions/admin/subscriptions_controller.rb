@@ -3,6 +3,8 @@
 module DiscourseSubscriptions
   module Admin
     class SubscriptionsController < ::Admin::AdminController
+      requires_plugin DiscourseSubscriptions::PLUGIN_NAME
+
       include DiscourseSubscriptions::Stripe
       include DiscourseSubscriptions::Group
       before_action :set_api_key

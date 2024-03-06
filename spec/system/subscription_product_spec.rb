@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe "Subscription products", type: :system do
-  fab!(:admin) { Fabricate(:admin) }
+  fab!(:admin)
   fab!(:product) { Fabricate(:product, external_id: "prod_OiKyO6ZMFCIhQa") }
 
   before { SiteSetting.discourse_subscriptions_enabled = true }
