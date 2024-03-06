@@ -18,8 +18,8 @@ register_asset "stylesheets/common/campaign.scss"
 register_asset "stylesheets/mobile/main.scss"
 register_svg_icon "far-credit-card" if respond_to?(:register_svg_icon)
 
-register_html_builder("server:before-head-close") do
-  "<script src='https://js.stripe.com/v3/'></script>"
+register_html_builder("server:before-head-close") do |controller|
+  "<script src='https://js.stripe.com/v3/' nonce='#{controller.helpers.csp_nonce_placeholder}'></script>"
 end
 
 extend_content_security_policy(script_src: %w[https://js.stripe.com/v3/ https://hooks.stripe.com])
