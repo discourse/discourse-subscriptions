@@ -4,6 +4,9 @@ module DiscourseSubscriptions
   class SubscribeController < ::ApplicationController
     include DiscourseSubscriptions::Stripe
     include DiscourseSubscriptions::Group
+
+    requires_plugin DiscourseSubscriptions::PLUGIN_NAME
+
     before_action :set_api_key
     requires_login except: %i[index contributors show]
 

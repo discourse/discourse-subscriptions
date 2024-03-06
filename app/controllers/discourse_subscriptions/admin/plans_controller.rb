@@ -5,6 +5,8 @@ module DiscourseSubscriptions
     class PlansController < ::Admin::AdminController
       include DiscourseSubscriptions::Stripe
 
+      requires_plugin DiscourseSubscriptions::PLUGIN_NAME
+
       before_action :set_api_key
 
       def index

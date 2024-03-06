@@ -5,6 +5,8 @@ module DiscourseSubscriptions
     include DiscourseSubscriptions::Group
     include DiscourseSubscriptions::Stripe
 
+    requires_plugin DiscourseSubscriptions::PLUGIN_NAME
+
     layout false
 
     skip_before_action :check_xhr

@@ -3,6 +3,8 @@
 require "rails_helper"
 
 RSpec.describe DiscourseSubscriptions::User::SubscriptionsController do
+  before { SiteSetting.discourse_subscriptions_enabled = true }
+
   it "is a subclass of ApplicationController" do
     expect(DiscourseSubscriptions::User::SubscriptionsController < ::ApplicationController).to eq(
       true,

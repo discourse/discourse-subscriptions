@@ -3,6 +3,8 @@
 require "rails_helper"
 
 RSpec.describe DiscourseSubscriptions::Admin::PlansController do
+  before { SiteSetting.discourse_subscriptions_enabled = true }
+
   it "is a subclass of AdminController" do
     expect(DiscourseSubscriptions::Admin::PlansController < ::Admin::AdminController).to eq(true)
   end

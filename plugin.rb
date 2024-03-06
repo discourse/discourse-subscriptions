@@ -54,9 +54,13 @@ Discourse::Application.routes.append do
       }
 end
 
-load File.expand_path("lib/discourse_subscriptions/engine.rb", __dir__)
-load File.expand_path("app/controllers/concerns/stripe.rb", __dir__)
-load File.expand_path("app/controllers/concerns/group.rb", __dir__)
+module ::DiscourseSubscriptions
+  PLUGIN_NAME = "discourse-subscriptions"
+end
+
+require_relative "lib/discourse_subscriptions/engine"
+require_relative "app/controllers/concerns/stripe"
+require_relative "app/controllers/concerns/group"
 
 after_initialize do
   ::Stripe.api_version = "2020-08-27"
