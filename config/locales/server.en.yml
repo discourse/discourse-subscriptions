@@ -4,3 +4,5 @@ en:
     card:
       declined: Card Declined
       invalid: Card Invalid
+    auth:
+      invalid: Invalid Credentials for Stripe. Please check your <a href="%{settingsUrl}" target="_blank">discourse-subscriptions settings</a>.
