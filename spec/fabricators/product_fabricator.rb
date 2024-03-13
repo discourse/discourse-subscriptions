@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-Fabricator(:customer, from: "DiscourseSubscriptions::Customer")
+Fabricator(:product, from: "DiscourseSubscriptions::Product")
