@@ -21,15 +21,15 @@ describe "Subscription products", type: :system do
     expect(page).to have_css(".modal-container .login-modal")
   end
 
-  it "shows products on the products  and allows deletion" do
+  it "shows products on the products and allows deletion" do
     # this needs to be stubbed or it will try to make a request to stripe
-    ::Stripe::Product.stubs(:list).returns({ data: [{ id: "prod_OiK", active: true, name: "Tomtom" }] })
-    ::Stripe::Product.stubs(:delete).returns({"id":"prod_OiK"})
+    ::Stripe::Product.stubs(:list).returns(
+      { data: [{ id: "prod_OiK", active: true, name: "Tomtom" }] },
+    )
+    ::Stripe::Product.stubs(:delete).returns({ id: "prod_OiK" })
     sign_in(admin)
 
-    product_subscriptions_page
-      .visit_products
-      .has_product?("Tomtom")
+    product_subscriptions_page.visit_products.has_product?("Tomtom")
 
     product_subscriptions_page.click_trash_nth_row(1)
     dialog.click_yes
