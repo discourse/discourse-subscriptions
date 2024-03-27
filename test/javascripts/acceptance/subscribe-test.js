@@ -2,8 +2,8 @@ import { click, visit } from "@ember/test-helpers";
 import { test } from "qunit";
 import pretender, { response } from "discourse/tests/helpers/create-pretender";
 import { acceptance, count } from "discourse/tests/helpers/qunit-helpers";
-import { stubStripe } from "discourse/plugins/discourse-subscriptions/helpers/stripe";
 import { I18n } from "I18n";
+import { stubStripe } from "discourse/plugins/discourse-subscriptions/helpers/stripe";
 
 function singleProductPretender() {
   pretender.get("/s", () => {
