@@ -3,7 +3,7 @@ import { test } from "qunit";
 import pretender, { response } from "discourse/tests/helpers/create-pretender";
 import { acceptance, count } from "discourse/tests/helpers/qunit-helpers";
 import { stubStripe } from "discourse/plugins/discourse-subscriptions/helpers/stripe";
-import { i18n } from "I18n";
+import { I18n } from "I18n";
 
 function singleProductPretender() {
   pretender.get("/s", () => {
@@ -52,6 +52,9 @@ acceptance("Discourse Subscriptions", function (needs) {
   });
 
   test("Norway is translated correctly", async function (assert) {
-    assert.equal(I18n.t("en.discourse_subscriptions.subscribe.countries.NO"), "Norway");
+    assert.equal(
+      I18n.t("en.discourse_subscriptions.subscribe.countries.NO"),
+      "Norway"
+    );
   });
 });
