@@ -2,6 +2,7 @@ import { click, visit } from "@ember/test-helpers";
 import { test } from "qunit";
 import pretender, { response } from "discourse/tests/helpers/create-pretender";
 import { acceptance, count } from "discourse/tests/helpers/qunit-helpers";
+import I18n from "discourse-i18n";
 import { stubStripe } from "discourse/plugins/discourse-subscriptions/helpers/stripe";
 
 function singleProductPretender() {
