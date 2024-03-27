@@ -2,6 +2,7 @@ import { click, visit } from "@ember/test-helpers";
 import { test } from "qunit";
 import pretender, { response } from "discourse/tests/helpers/create-pretender";
 import { acceptance, count } from "discourse/tests/helpers/qunit-helpers";
+import I18n from "discourse-i18n";
 import { stubStripe } from "discourse/plugins/discourse-subscriptions/helpers/stripe";
 
 function singleProductPretender() {
@@ -48,5 +49,18 @@ acceptance("Discourse Subscriptions", function (needs) {
     assert.dom(".subscribe-buttons button").exists({ count: 1 });
     assert.dom("input.subscribe-promo-code").exists();
     assert.dom("button.btn-payment").exists();
+  });
+
+  // In YAML `NO:` is a boolean, so we need quotes around `"NO":`.
+  test("Norway is translated correctly", async function (assert) {
+    assert.equal(
+      I18n.t("discourse_subscriptions.subscribe.countries.NO"),
+      "Norway"
+    );
+
+    assert.equal(
+      I18n.t("discourse_subscriptions.subscribe.countries.NG"),
+      "Nigeria"
+    );
   });
 });
