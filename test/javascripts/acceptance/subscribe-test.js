@@ -3,6 +3,7 @@ import { test } from "qunit";
 import pretender, { response } from "discourse/tests/helpers/create-pretender";
 import { acceptance, count } from "discourse/tests/helpers/qunit-helpers";
 import { stubStripe } from "discourse/plugins/discourse-subscriptions/helpers/stripe";
+import { i18n } from "I18n";
 
 function singleProductPretender() {
   pretender.get("/s", () => {
@@ -48,5 +49,9 @@ acceptance("Discourse Subscriptions", function (needs) {
     assert.dom(".subscribe-buttons button").exists({ count: 1 });
     assert.dom("input.subscribe-promo-code").exists();
     assert.dom("button.btn-payment").exists();
+  });
+
+  test("Norway is translated correctly", async function (assert) {
+    assert.equal(I18n.t("en.discourse_subscriptions.subscribe.countries.NO"), "Norway");
   });
 });
