@@ -303,7 +303,7 @@ de:
           NU: "Niue"
           NF: "Norfolkinsel"
           MP: "Nördliche Marianen"
-          NO: "Norwegen"
+          "NO": "Norwegen"
           OM: "Oman"
           PK: "Pakistan"
           PW: "Palau"
