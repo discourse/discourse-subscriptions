@@ -303,7 +303,7 @@ fi:
           NU: "Niue"
           NF: "Norfolkinsaari"
           MP: "Pohjois-Mariaanit"
-          NO: "Norja"
+          "NO": "Norja"
           OM: "Oman"
           PK: "Pakistan"
           PW: "Palau"

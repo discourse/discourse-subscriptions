@@ -303,7 +303,7 @@ nl:
           NU: "Niue"
           NF: "Norfolkeiland"
           MP: "Noordelijke Marianen"
-          NO: "Noorwegen"
+          "NO": "Noorwegen"
           OM: "Oman"
           PK: "Pakistan"
           PW: "Palau"

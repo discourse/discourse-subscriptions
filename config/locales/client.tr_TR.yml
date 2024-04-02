@@ -303,7 +303,7 @@ tr_TR:
           NU: "Niue"
           NF: "Norfolk Adası"
           MP: "Kuzey Mariana Adaları"
-          NO: "Norveç"
+          "NO": "Norveç"
           OM: "Umman"
           PK: "Pakistan"
           PW: "Palau"
