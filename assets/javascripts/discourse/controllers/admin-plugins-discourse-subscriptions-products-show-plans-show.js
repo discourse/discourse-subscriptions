@@ -41,6 +41,7 @@ export default Controller.extend({
       { id: "DKK", name: "DKK" },
       { id: "SGD", name: "SGD" },
       { id: "JPY", name: "JPY" },
+      { id: "ZAR", name: "ZAR" },
     ];
   },
 
