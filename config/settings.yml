@@ -28,6 +28,7 @@ discourse_subscriptions:
       - USD
       - DKK
       - SGD
+      - ZAR
   discourse_subscriptions_campaign_enabled:
     client: true
     default: false

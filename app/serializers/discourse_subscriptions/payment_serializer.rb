@@ -51,6 +51,8 @@ module DiscourseSubscriptions
         "KR"
       when "sgd"
         "S$"
+      when "zar"
+        "R"
       else
         "$"
       end

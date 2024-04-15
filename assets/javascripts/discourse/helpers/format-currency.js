@@ -28,6 +28,10 @@ export default Helper.helper(function (params) {
     case "sgd":
       currencySign = "S$";
       break;
+    case "ZAR":
+    case "zar":
+      currencySign = "R";
+      break;
     default:
       currencySign = "$";
   }
