@@ -9,7 +9,7 @@
 
 enabled_site_setting :discourse_subscriptions_enabled
 
-gem "stripe", "5.29.0"
+gem "stripe", "11.1.0"
 
 register_asset "stylesheets/common/main.scss"
 register_asset "stylesheets/common/layout.scss"
@@ -63,11 +63,11 @@ require_relative "app/controllers/concerns/stripe"
 require_relative "app/controllers/concerns/group"
 
 after_initialize do
-  ::Stripe.api_version = "2020-08-27"
+  ::Stripe.api_version = "2024-04-10"
 
   ::Stripe.set_app_info(
     "Discourse Subscriptions",
-    version: "2.8.1",
+    version: "2.8.2",
     url: "https://github.com/discourse/discourse-subscriptions",
   )
 
