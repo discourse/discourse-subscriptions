@@ -29,7 +29,7 @@ describe "Subscription products", type: :system do
   end
 
   it "shows the login modal" do
-    visit("/s")
+    visit("/subscriptions")
 
     find("button.login-required.subscriptions").click
 
