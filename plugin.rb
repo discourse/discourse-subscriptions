@@ -25,7 +25,7 @@ register_html_builder("server:before-head-close") do
   '<script async src="https://js.stripe.com/v3/pricing-table.js"></script>'
 end
 
-extend_content_security_policy(script_src: %w[https://js.stripe.com/v3/ https://hooks.stripe.com])
+extend_content_security_policy(script_src: %w[https://js.stripe.com/v3/ https://hooks.stripe.com https://js.stripe.com/v3/pricing-table.js])
 
 add_admin_route "discourse_subscriptions.admin_navigation", "discourse-subscriptions.plans"
 
