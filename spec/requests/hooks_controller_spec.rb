@@ -95,7 +95,9 @@ RSpec.describe DiscourseSubscriptions::HooksController do
       end
 
       it "deletes the customer" do
-        expect { post "/subscriptions/hooks.json" }.to change { DiscourseSubscriptions::Customer.count }.by(-1)
+        expect { post "/subscriptions/hooks.json" }.to change {
+          DiscourseSubscriptions::Customer.count
+        }.by(-1)
 
         expect(response.status).to eq 200
       end

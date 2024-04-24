@@ -25,11 +25,21 @@ RSpec.describe DiscourseSubscriptions::Admin::PlansController do
     describe "create" do
       it "does not create a plan" do
         ::Stripe::Price.expects(:create).never
-        post "/subscriptions/admin/plans.json", params: { name: "Rick Astley", amount: 1, interval: "week" }
+        post "/subscriptions/admin/plans.json",
+             params: {
+               name: "Rick Astley",
+               amount: 1,
+               interval: "week",
+             }
       end
 
       it "is not ok" do
-        post "/subscriptions/admin/plans.json", params: { name: "Rick Astley", amount: 1, interval: "week" }
+        post "/subscriptions/admin/plans.json",
+             params: {
+               name: "Rick Astley",
+               amount: 1,
+               interval: "week",
+             }
         expect(response.status).to eq 404
       end
     end
@@ -94,12 +104,24 @@ RSpec.describe DiscourseSubscriptions::Admin::PlansController do
     describe "create" do
       it "creates a plan with a nickname" do
         ::Stripe::Price.expects(:create).with(has_entry(:nickname, "Veg"))
-        post "/subscriptions/admin/plans.json", params: { nickname: "Veg", metadata: { group_name: "" } }
+        post "/subscriptions/admin/plans.json",
+             params: {
+               nickname: "Veg",
+               metadata: {
+                 group_name: "",
+               },
+             }
       end
 
       it "creates a plan with a currency" do
         ::Stripe::Price.expects(:create).with(has_entry(:currency, "AUD"))
-        post "/subscriptions/admin/plans.json", params: { currency: "AUD", metadata: { group_name: "" } }
+        post "/subscriptions/admin/plans.json",
+             params: {
+               currency: "AUD",
+               metadata: {
+                 group_name: "",
+               },
+             }
       end
 
       it "creates a plan with an interval" do
@@ -121,7 +143,13 @@ RSpec.describe DiscourseSubscriptions::Admin::PlansController do
 
       it "creates a plan with an amount" do
         ::Stripe::Price.expects(:create).with(has_entry(:unit_amount, "102"))
-        post "/subscriptions/admin/plans.json", params: { amount: "102", metadata: { group_name: "" } }
+        post "/subscriptions/admin/plans.json",
+             params: {
+               amount: "102",
+               metadata: {
+                 group_name: "",
+               },
+             }
       end
 
       it "creates a plan with a product" do
@@ -137,7 +165,13 @@ RSpec.describe DiscourseSubscriptions::Admin::PlansController do
 
       it "creates a plan with an active status" do
         ::Stripe::Price.expects(:create).with(has_entry(:active, "false"))
-        post "/subscriptions/admin/plans.json", params: { active: "false", metadata: { group_name: "" } }
+        post "/subscriptions/admin/plans.json",
+             params: {
+               active: "false",
+               metadata: {
+                 group_name: "",
+               },
+             }
       end
 
       # TODO: Need to fix the metadata tests

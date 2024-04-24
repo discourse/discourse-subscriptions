@@ -1,5 +1,5 @@
 import Controller from "@ember/controller";
-import Ember from "ember";
+import { computed } from "@ember/object";
 import { htmlSafe } from "@ember/template";
 import I18n from "I18n";
 
@@ -14,7 +14,7 @@ export default Controller.extend({
         .then(() => this.set("email", this.currentUser.email));
     }
   },
-  pricingTable: Ember.computed("email", function () {
+  pricingTable: computed("email", function () {
     try {
       const pricing_table_info = JSON.parse(
         this.siteSettings.discourse_subscriptions_pricing_table

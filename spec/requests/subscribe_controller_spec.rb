@@ -412,7 +412,11 @@ RSpec.describe DiscourseSubscriptions::SubscribeController do
             )
 
             expect {
-              post "/subscriptions/finalize.json", params: { plan: "plan_1234", transaction: "sub_1234" }
+              post "/subscriptions/finalize.json",
+                   params: {
+                     plan: "plan_1234",
+                     transaction: "sub_1234",
+                   }
             }.to change { DiscourseSubscriptions::Customer.count }
           end
         end
@@ -432,7 +436,11 @@ RSpec.describe DiscourseSubscriptions::SubscribeController do
             )
 
             expect {
-              post "/subscriptions/finalize.json", params: { plan: "plan_1234", transaction: "in_1234" }
+              post "/subscriptions/finalize.json",
+                   params: {
+                     plan: "plan_1234",
+                     transaction: "in_1234",
+                   }
             }.to change { DiscourseSubscriptions::Customer.count }
           end
         end

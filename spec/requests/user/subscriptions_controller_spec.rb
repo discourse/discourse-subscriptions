@@ -25,7 +25,10 @@ RSpec.describe DiscourseSubscriptions::User::SubscriptionsController do
     it "doesn't update payment method for subscription" do
       ::Stripe::Subscription.expects(:update).never
       ::Stripe::PaymentMethod.expects(:attach).never
-      put "/subscriptions/user/subscriptions/sub_12345.json", params: { payment_method: "pm_abc123abc" }
+      put "/subscriptions/user/subscriptions/sub_12345.json",
+          params: {
+            payment_method: "pm_abc123abc",
+          }
     end
   end
 
@@ -100,7 +103,10 @@ RSpec.describe DiscourseSubscriptions::User::SubscriptionsController do
       it "updates the payment method for subscription" do
         ::Stripe::Subscription.expects(:update).once
         ::Stripe::PaymentMethod.expects(:attach).once
-        put "/subscriptions/user/subscriptions/sub_1234.json", params: { payment_method: "pm_abc123abc" }
+        put "/subscriptions/user/subscriptions/sub_1234.json",
+            params: {
+              payment_method: "pm_abc123abc",
+            }
       end
     end
   end
