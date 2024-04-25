@@ -1,4 +1,3 @@
-
 import Controller from "@ember/controller";
 import { computed } from "@ember/object";
 import { htmlSafe } from "@ember/template";
@@ -6,9 +5,7 @@ import I18n from "I18n";
 
 export default Controller.extend({
   init() {
-    // Perform any initialization logic here
     this._super(...arguments);
-    // Additional custom initialization code
     if (this.currentUser) {
       this.currentUser
         .checkEmail()
