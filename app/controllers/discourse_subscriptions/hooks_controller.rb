@@ -58,12 +58,10 @@ module DiscourseSubscriptions
           discourse_customer.save!
         end
 
-        ::Stripe::Subscription.update(checkout_session[:subscription], {
-          metadata: {
-            user_id: user.id,
-            username: user.username
-          }
-        })
+        ::Stripe::Subscription.update(
+          checkout_session[:subscription],
+          { metadata: { user_id: user.id, username: user.username } },
+        )
       when "customer.subscription.created"
       when "customer.subscription.updated"
         customer =
