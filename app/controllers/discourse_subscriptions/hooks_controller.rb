@@ -38,17 +38,16 @@ module DiscourseSubscriptions
 
         discourse_customer = Customer.find_by(user_id: user.id)
         if discourse_customer.nil?
-          discourse_customer =
-            Customer.create(user_id: user.id, customer_id: customer_id)
+          discourse_customer = Customer.create(user_id: user.id, customer_id: customer_id)
         else
           discourse_customer =
-            Customer.update(
-              user_id: user.id,
-              customer_id: checkout_session[:customer],
-            )
+            Customer.update(user_id: user.id, customer_id: checkout_session[:customer])
         end
 
-        Subscription.create(customer_id: discourse_customer.id, external_id: checkout_session[:subscription])
+        Subscription.create(
+          customer_id: discourse_customer.id,
+          external_id: checkout_session[:subscription],
+        )
 
         line_items =
           ::Stripe::Checkout::Session.list_line_items(checkout_session[:id], { limit: 100 })
