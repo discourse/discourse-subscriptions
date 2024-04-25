@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module StripeDiscourseSubscriptions
+module DiscourseSubscriptions
   class PricingtableController < ::ApplicationController
     requires_plugin DiscourseSubscriptions::PLUGIN_NAME
 
