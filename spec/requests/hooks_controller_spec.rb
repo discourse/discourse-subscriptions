@@ -51,56 +51,63 @@ RSpec.describe DiscourseSubscriptions::HooksController do
           customer: customer.customer_id,
           customer_email: user.email,
           invoice: "in_1P9b7iEYXaQnncSh81AQtuHD",
-          metadata: {},
+          metadata: {
+          },
           mode: "subscription",
           payment_status: "paid",
           status: "complete",
           submit_type: nil,
           subscription: "sub_1P9b7iEYXaQnncSh3H3G9d2Y",
           success_url: "http://localhost:4200/my/billing/subscriptions",
-          url: nil
-        }
+          url: nil,
+        },
       }
     end
 
     let(:list_line_items_data) do
       {
         data: [
-            {
-              id: "li_1P9YlFEYXaQnncShFBl7r0na",
-              object: "item",
-              description: "Exclusive Access",
-              price: {
-                id: "price_1OrmlvEYXaQnncShNahrpKvA",
-                metadata: {
-                  group_name: group.name,
-                  trial_period_days: "0"
-                },
-                nickname: "EA1",
-                product: "prod_PhB6IpGhEX14Hi",
-              }
+          {
+            id: "li_1P9YlFEYXaQnncShFBl7r0na",
+            object: "item",
+            description: "Exclusive Access",
+            price: {
+              id: "price_1OrmlvEYXaQnncShNahrpKvA",
+              metadata: {
+                group_name: group.name,
+                trial_period_days: "0",
+              },
+              nickname: "EA1",
+              product: "prod_PhB6IpGhEX14Hi",
             },
-          ]
+          },
+        ],
       }
     end
 
     describe "checkout.session.completed" do
       before do
         event = { type: "checkout.session.completed", data: checkout_session_completed_data }
-        ::Stripe::Checkout::Session.stubs(:list_line_items).with(checkout_session_completed_data[:object][:id], { limit: 1 }).returns(list_line_items_data)
+        ::Stripe::Checkout::Session
+          .stubs(:list_line_items)
+          .with(checkout_session_completed_data[:object][:id], { limit: 1 })
+          .returns(list_line_items_data)
 
-        ::Stripe::Subscription.stubs(:update).with(
+        ::Stripe::Subscription
+          .stubs(:update)
+          .with(
             checkout_session_completed_data[:object][:subscription],
-            { metadata: { user_id: user.id, username: user.username } }
-          ).returns(
+            { metadata: { user_id: user.id, username: user.username } },
+          )
+          .returns(
             {
               id: checkout_session_completed_data[:object][:subscription],
-              object: 'subscription',
+              object: "subscription",
               metadata: {
                 user_id: user.id.to_s,
-                username: user.username
-              }
-            }
+                username: user.username,
+              },
+            },
           )
 
         ::Stripe::Webhook.stubs(:construct_event).returns(event)

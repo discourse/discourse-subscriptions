@@ -10,7 +10,7 @@ export default {
         siteSettings.discourse_subscriptions_extra_nav_subscribe;
       const isPricingTableEnabled =
         siteSettings.discourse_subscriptions_pricing_table_enabled;
-      const subscribeHref = (isPricingTableEnabled ? '/s/subscriptions' : '/s');
+      const subscribeHref = isPricingTableEnabled ? "/s/subscriptions" : "/s";
       if (isNavLinkEnabled) {
         api.addNavigationBarItem({
           name: "subscribe",

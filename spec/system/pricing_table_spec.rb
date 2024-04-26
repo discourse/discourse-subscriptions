@@ -16,7 +16,6 @@ RSpec.describe "Pricing Table", type: :system, js: true do
 
     SiteSetting.discourse_subscriptions_pricing_table_enabled = true
 
-
     # this needs to be stubbed or it will try to make a request to stripe
     one_product = {
       id: "prod_OiK",
@@ -38,7 +37,7 @@ RSpec.describe "Pricing Table", type: :system, js: true do
 
     link = find("li.nav-item_subscribe a")
     uri = URI.parse(link[:href])
-    expect(uri.path).to eq('/s/subscriptions')
+    expect(uri.path).to eq("/s/subscriptions")
   end
 
   it "Links to the old page when disabled" do
@@ -47,7 +46,7 @@ RSpec.describe "Pricing Table", type: :system, js: true do
 
     link = find("li.nav-item_subscribe a")
     uri = URI.parse(link[:href])
-    expect(uri.path).to eq('/s')
+    expect(uri.path).to eq("/s")
   end
 
   it "Old subscribe page still works when disabled" do
@@ -55,7 +54,7 @@ RSpec.describe "Pricing Table", type: :system, js: true do
     visit("/")
 
     find("li.nav-item_subscribe a").click
-    expect(page).to have_selector('div.title-wrapper h1', text: 'Subscribe')
+    expect(page).to have_selector("div.title-wrapper h1", text: "Subscribe")
   end
 
   it "Shows a message when not setup yet" do
@@ -63,7 +62,10 @@ RSpec.describe "Pricing Table", type: :system, js: true do
 
     find("li.nav-item_subscribe a").click
 
-    expect(page).to have_selector('div.container', text: 'There are currently no products available.')
+    expect(page).to have_selector(
+      "div.container",
+      text: "There are currently no products available.",
+    )
   end
 
   # Commenting out for now, not sure how to stub network reqeusts made in the browser to stripe
