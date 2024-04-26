@@ -7,7 +7,9 @@ discourse_subscriptions:
   discourse_subscriptions_pricing_table:
     default: ''
     client: true
-    refresh: true
+  discourse_subscriptions_pricing_table_enabled:
+    default: false
+    client: true
   discourse_subscriptions_public_key:
     default: ''
     client: true

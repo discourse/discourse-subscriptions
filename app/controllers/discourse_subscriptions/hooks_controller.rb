@@ -30,18 +30,17 @@ module DiscourseSubscriptions
       case event[:type]
       when "checkout.session.completed"
         checkout_session = event[:data][:object]
-        email = checkout_session[:customer_details][:email]
-        customer_id = checkout_session[:id]
+        email = checkout_session[:customer_email]
         customer_id = checkout_session[:customer] unless checkout_session[:customer].nil?
+
+        return head 200 if checkout_session[:status] != "complete"
 
         user = ::User.find_by_username_or_email(email)
 
         discourse_customer = Customer.find_by(user_id: user.id)
+
         if discourse_customer.nil?
           discourse_customer = Customer.create(user_id: user.id, customer_id: customer_id)
-        else
-          discourse_customer =
-            Customer.update(user_id: user.id, customer_id: checkout_session[:customer])
         end
 
         Subscription.create(
@@ -50,13 +49,12 @@ module DiscourseSubscriptions
         )
 
         line_items =
-          ::Stripe::Checkout::Session.list_line_items(checkout_session[:id], { limit: 100 })
-        line_items.each do |item|
-          group = plan_group(item[:price])
-          group.add(user) unless group.nil?
-          discourse_customer.product_id = item[:price][:product]
-          discourse_customer.save!
-        end
+          ::Stripe::Checkout::Session.list_line_items(checkout_session[:id], { limit: 1 })
+        item = line_items[:data].first
+        group = plan_group(item[:price])
+        group.add(user) unless group.nil?
+        discourse_customer.product_id = item[:price][:product]
+        discourse_customer.save!
 
         ::Stripe::Subscription.update(
           checkout_session[:subscription],
