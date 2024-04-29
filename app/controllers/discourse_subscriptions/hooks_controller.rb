@@ -31,9 +31,11 @@ module DiscourseSubscriptions
       when "checkout.session.completed"
         checkout_session = event[:data][:object]
         email = checkout_session[:customer_email]
-        customer_id = checkout_session[:customer] unless checkout_session[:customer].nil?
 
         return head 200 if checkout_session[:status] != "complete"
+        return render_json_error "customer not found" if checkout_session[:customer].nil?
+
+        customer_id = checkout_session[:customer]
 
         user = ::User.find_by_username_or_email(email)
 
