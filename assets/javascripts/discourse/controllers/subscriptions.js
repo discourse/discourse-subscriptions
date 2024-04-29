@@ -14,8 +14,10 @@ export default Controller.extend({
   },
   pricingTable: computed("email", function () {
     try {
-      const pricingTableId = this.siteSettings.discourse_subscriptions_pricing_table_id;
-      const publishableKey = this.siteSettings.discourse_subscriptions_public_key;
+      const pricingTableId =
+        this.siteSettings.discourse_subscriptions_pricing_table_id;
+      const publishableKey =
+        this.siteSettings.discourse_subscriptions_public_key;
       if (this.currentUser) {
         return htmlSafe(`<stripe-pricing-table
                 pricing-table-id="${pricingTableId}"
