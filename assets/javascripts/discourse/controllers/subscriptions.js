@@ -14,18 +14,17 @@ export default Controller.extend({
   },
   pricingTable: computed("email", function () {
     try {
-      const pricing_table_info = JSON.parse(
-        this.siteSettings.discourse_subscriptions_pricing_table
-      );
+      const pricingTableId = this.siteSettings.discourse_subscriptions_pricing_table_id;
+      const publishableKey = this.siteSettings.discourse_subscriptions_public_key;
       if (this.currentUser) {
         return htmlSafe(`<stripe-pricing-table
-                pricing-table-id="${pricing_table_info.pricingTableId}"
-                publishable-key="${pricing_table_info.publishableKey}"
+                pricing-table-id="${pricingTableId}"
+                publishable-key="${publishableKey}"
                 customer-email="${this.email}"></stripe-pricing-table>`);
       } else {
         return htmlSafe(`<stripe-pricing-table
-                pricing-table-id="${pricing_table_info.pricingTableId}"
-                publishable-key="${pricing_table_info.publishableKey}"
+                pricing-table-id="${pricingTableId}"
+                publishable-key="${publishableKey}"
                 ></stripe-pricing-table>`);
       }
     } catch (error) {
