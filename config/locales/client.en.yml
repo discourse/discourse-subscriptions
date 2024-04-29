@@ -7,6 +7,8 @@ en:
   site_settings:
     discourse_subscriptions_enabled: Enable the Discourse Subscriptions plugin.
     discourse_subscriptions_extra_nav_subscribe: Show the subscribe button in the primary navigation
+    discourse_subscriptions_pricing_table_id: Add the pricing-table-id from the Pricing Table embed code here.
+    discourse_subscriptions_pricing_table_enabled: Subscribe button will show the embedded pricing table and Stripe Checkout will be used.
     discourse_subscriptions_public_key: Stripe Publishable Key
     discourse_subscriptions_secret_key: Stripe Secret Key
     discourse_subscriptions_webhook_secret: Stripe Webhook Secret

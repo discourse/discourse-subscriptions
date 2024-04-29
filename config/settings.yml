@@ -4,6 +4,12 @@ discourse_subscriptions:
   discourse_subscriptions_extra_nav_subscribe:
     default: false
     client: true
+  discourse_subscriptions_pricing_table_id:
+    default: ''
+    client: true
+  discourse_subscriptions_pricing_table_enabled:
+    default: false
+    client: true
   discourse_subscriptions_public_key:
     default: ''
     client: true

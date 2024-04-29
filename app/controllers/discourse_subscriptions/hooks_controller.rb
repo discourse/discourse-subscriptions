@@ -9,6 +9,7 @@ module DiscourseSubscriptions
 
     layout false
 
+    before_action :set_api_key
     skip_before_action :check_xhr
     skip_before_action :redirect_to_login_if_required
     skip_before_action :verify_authenticity_token, only: [:create]
@@ -27,6 +28,40 @@ module DiscourseSubscriptions
       end
 
       case event[:type]
+      when "checkout.session.completed"
+        checkout_session = event[:data][:object]
+        email = checkout_session[:customer_email]
+
+        return head 200 if checkout_session[:status] != "complete"
+        return render_json_error "customer not found" if checkout_session[:customer].nil?
+
+        customer_id = checkout_session[:customer]
+
+        user = ::User.find_by_username_or_email(email)
+
+        discourse_customer = Customer.find_by(user_id: user.id)
+
+        if discourse_customer.nil?
+          discourse_customer = Customer.create(user_id: user.id, customer_id: customer_id)
+        end
+
+        Subscription.create(
+          customer_id: discourse_customer.id,
+          external_id: checkout_session[:subscription],
+        )
+
+        line_items =
+          ::Stripe::Checkout::Session.list_line_items(checkout_session[:id], { limit: 1 })
+        item = line_items[:data].first
+        group = plan_group(item[:price])
+        group.add(user) unless group.nil?
+        discourse_customer.product_id = item[:price][:product]
+        discourse_customer.save!
+
+        ::Stripe::Subscription.update(
+          checkout_session[:subscription],
+          { metadata: { user_id: user.id, username: user.username } },
+        )
       when "customer.subscription.created"
       when "customer.subscription.updated"
         customer =

@@ -43,6 +43,128 @@ RSpec.describe DiscourseSubscriptions::HooksController do
       }
     end
 
+    let(:checkout_session_completed_data) do
+      {
+        object: {
+          id: "cs_test_a1ENei5A9TGOaEketyV5qweiQR5CyJWHT5j8T3HheQY3uah3RxzKttVUKZ",
+          object: "checkout.session",
+          customer: customer.customer_id,
+          customer_email: user.email,
+          invoice: "in_1P9b7iEYXaQnncSh81AQtuHD",
+          metadata: {
+          },
+          mode: "subscription",
+          payment_status: "paid",
+          status: "complete",
+          submit_type: nil,
+          subscription: "sub_1P9b7iEYXaQnncSh3H3G9d2Y",
+          success_url: "http://localhost:4200/my/billing/subscriptions",
+          url: nil,
+        },
+      }
+    end
+
+    let(:checkout_session_completed_bad_data) do
+      {
+        object: {
+          id: "cs_test_a1ENei5A9TGOaEketyV5qweiQR5CyJWHT5j8T3HheQY3uah3RxzKttVUKZ",
+          object: "checkout.session",
+          customer: nil,
+          customer_email: user.email,
+          invoice: "in_1P9b7iEYXaQnncSh81AQtuHD",
+          metadata: {
+          },
+          mode: "subscription",
+          payment_status: "paid",
+          status: "complete",
+          submit_type: nil,
+          subscription: "sub_1P9b7iEYXaQnncSh3H3G9d2Y",
+          success_url: "http://localhost:4200/my/billing/subscriptions",
+          url: nil,
+        },
+      }
+    end
+
+    let(:list_line_items_data) do
+      {
+        data: [
+          {
+            id: "li_1P9YlFEYXaQnncShFBl7r0na",
+            object: "item",
+            description: "Exclusive Access",
+            price: {
+              id: "price_1OrmlvEYXaQnncShNahrpKvA",
+              metadata: {
+                group_name: group.name,
+                trial_period_days: "0",
+              },
+              nickname: "EA1",
+              product: "prod_PhB6IpGhEX14Hi",
+            },
+          },
+        ],
+      }
+    end
+
+    describe "checkout.session.completed" do
+      before do
+        event = { type: "checkout.session.completed", data: checkout_session_completed_data }
+        ::Stripe::Checkout::Session
+          .stubs(:list_line_items)
+          .with(checkout_session_completed_data[:object][:id], { limit: 1 })
+          .returns(list_line_items_data)
+
+        ::Stripe::Subscription
+          .stubs(:update)
+          .with(
+            checkout_session_completed_data[:object][:subscription],
+            { metadata: { user_id: user.id, username: user.username } },
+          )
+          .returns(
+            {
+              id: checkout_session_completed_data[:object][:subscription],
+              object: "subscription",
+              metadata: {
+                user_id: user.id.to_s,
+                username: user.username,
+              },
+            },
+          )
+
+        ::Stripe::Webhook.stubs(:construct_event).returns(event)
+      end
+
+      it "is successfull" do
+        post "/s/hooks.json"
+        expect(response.status).to eq 200
+      end
+
+      describe "completing the subscription" do
+        it "adds the user to the group when completing the transaction" do
+          expect { post "/s/hooks.json" }.to change { user.groups.count }.by(1)
+
+          expect(response.status).to eq 200
+        end
+      end
+    end
+
+    describe "checkout.session.completed with bad data" do
+      before do
+        event = { type: "checkout.session.completed", data: checkout_session_completed_bad_data }
+        ::Stripe::Checkout::Session
+          .stubs(:list_line_items)
+          .with(checkout_session_completed_data[:object][:id], { limit: 1 })
+          .returns(list_line_items_data)
+
+        ::Stripe::Webhook.stubs(:construct_event).returns(event)
+      end
+
+      it "is returns 422" do
+        post "/s/hooks.json"
+        expect(response.status).to eq 422
+      end
+    end
+
     describe "customer.subscription.updated" do
       before do
         event = { type: "customer.subscription.updated", data: event_data }
