@@ -65,9 +65,7 @@ module DiscourseSubscriptions
       when "customer.subscription.created"
       when "customer.subscription.updated"
         status = event[:data][:object][:status]
-        if !["complete", "active"].include?(status)
-          return head 200
-        end
+        return head 200 if !%w[complete active].include?(status)
 
         customer =
           Customer.find_by(
