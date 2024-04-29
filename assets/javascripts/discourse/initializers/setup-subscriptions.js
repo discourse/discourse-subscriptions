@@ -26,6 +26,7 @@ export default {
           href: `/u/${user.username}/billing/subscriptions`,
           content: "Billing",
         });
+      }
     });
   },
 };
