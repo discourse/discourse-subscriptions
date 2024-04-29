@@ -13,7 +13,6 @@ export default Controller.extend({
     }
   },
   pricingTable: computed("email", function () {
-
     try {
       const pricingTableId =
         this.siteSettings.discourse_subscriptions_pricing_table_id;
