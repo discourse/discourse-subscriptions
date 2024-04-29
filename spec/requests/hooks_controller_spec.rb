@@ -204,6 +204,14 @@ RSpec.describe DiscourseSubscriptions::HooksController do
 
           expect(response.status).to eq 200
         end
+
+        it "adds the user to the group when status is active" do
+          event_data[:object][:status] = "active"
+
+          expect { post "/s/hooks.json" }.to change { user.groups.count }.by(1)
+
+          expect(response.status).to eq 200
+        end
       end
     end
 

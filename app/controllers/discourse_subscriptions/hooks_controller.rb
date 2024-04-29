@@ -64,6 +64,9 @@ module DiscourseSubscriptions
         )
       when "customer.subscription.created"
       when "customer.subscription.updated"
+        status = event[:data][:object][:status]
+        return head 200 if !%w[complete active].include?(status)
+
         customer =
           Customer.find_by(
             customer_id: event[:data][:object][:customer],
@@ -71,7 +74,6 @@ module DiscourseSubscriptions
           )
 
         return render_json_error "customer not found" if !customer
-        return head 200 if event[:data][:object][:status] != "complete"
 
         user = ::User.find_by(id: customer.user_id)
         return render_json_error "user not found" if !user
