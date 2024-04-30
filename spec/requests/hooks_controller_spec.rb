@@ -27,6 +27,9 @@ RSpec.describe DiscourseSubscriptions::HooksController do
     let(:customer) do
       Fabricate(:customer, customer_id: "c_575768", product_id: "p_8654", user_id: user.id)
     end
+    let(:subscription) do
+      Fabricate(:subscription, external_id: "sub_12345", customer_id: customer.id)
+    end
     let(:group) { Fabricate(:group, name: "subscribers-group") }
 
     let(:event_data) do
@@ -39,6 +42,22 @@ RSpec.describe DiscourseSubscriptions::HooksController do
               group_name: group.name,
             },
           },
+        },
+      }
+    end
+
+    let(:customer_subscription_deleted_data) do
+      {
+        object: {
+          id: subscription.external_id,
+          customer: customer.customer_id,
+          plan: {
+            product: customer.product_id,
+            metadata: {
+              group_name: group.name,
+            },
+          },
+          status: 'canceled',
         },
       }
     end
@@ -217,7 +236,7 @@ RSpec.describe DiscourseSubscriptions::HooksController do
 
     describe "customer.subscription.deleted" do
       before do
-        event = { type: "customer.subscription.deleted", data: event_data }
+        event = { type: "customer.subscription.deleted", data: customer_subscription_deleted_data }
 
         ::Stripe::Webhook.stubs(:construct_event).returns(event)
 
@@ -225,7 +244,7 @@ RSpec.describe DiscourseSubscriptions::HooksController do
       end
 
       it "deletes the customer" do
-        expect { post "/s/hooks.json" }.to change { DiscourseSubscriptions::Customer.count }.by(-1)
+        expect { post "/s/hooks.json" }.to change { DiscourseSubscriptions::Subscription.where(status: 'canceled').count }.by(+1)
 
         expect(response.status).to eq 200
       end
