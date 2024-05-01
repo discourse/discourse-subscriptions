@@ -83,7 +83,7 @@ module DiscourseSubscriptions
           expand: ["data.plan.product"],
           limit: PAGE_LIMIT,
           starting_after: start,
-          status: 'all',
+          status: "all",
         )
       end
 

@@ -57,7 +57,7 @@ RSpec.describe DiscourseSubscriptions::HooksController do
               group_name: group.name,
             },
           },
-          status: 'canceled',
+          status: "canceled",
         },
       }
     end
@@ -244,7 +244,9 @@ RSpec.describe DiscourseSubscriptions::HooksController do
       end
 
       it "deletes the customer" do
-        expect { post "/s/hooks.json" }.to change { DiscourseSubscriptions::Subscription.where(status: 'canceled').count }.by(+1)
+        expect { post "/s/hooks.json" }.to change {
+          DiscourseSubscriptions::Subscription.where(status: "canceled").count
+        }.by(+1)
 
         expect(response.status).to eq 200
       end

@@ -29,7 +29,8 @@ module DiscourseSubscriptions
             all_subscriptions = []
 
             stripe_customer_ids.each do |stripe_customer_id|
-              customer_subscriptions = ::Stripe::Subscription.list(customer: stripe_customer_id, status: 'all')
+              customer_subscriptions =
+                ::Stripe::Subscription.list(customer: stripe_customer_id, status: "all")
               all_subscriptions.concat(customer_subscriptions.data)
             end
 
