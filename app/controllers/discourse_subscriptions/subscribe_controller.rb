@@ -150,7 +150,11 @@ module DiscourseSubscriptions
         )
 
       if transaction[:object] == "subscription"
-        Subscription.create(customer_id: customer.id, external_id: transaction[:id])
+        Subscription.create(
+          customer_id: customer.id,
+          external_id: transaction[:id],
+          status: transaction[:status],
+        )
       end
     end
 
@@ -169,7 +173,17 @@ module DiscourseSubscriptions
     def current_user_products
       return [] if current_user.nil?
 
-      Customer.select(:product_id).where(user_id: current_user.id).map { |c| c.product_id }.compact
+      Customer
+        .joins(:subscriptions)
+        .where(user_id: current_user.id)
+        .where(
+          Subscription.arel_table[:status].eq(nil).or(
+            Subscription.arel_table[:status].not_eq("canceled"),
+          ),
+        )
+        .select(:product_id)
+        .distinct
+        .pluck(:product_id)
     end
 
     def serialize_plans(plans)
