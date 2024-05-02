@@ -39,11 +39,7 @@ module DiscourseSubscriptions
 
         user = ::User.find_by_username_or_email(email)
 
-        discourse_customer = Customer.find_by(user_id: user.id)
-
-        if discourse_customer.nil?
-          discourse_customer = Customer.create(user_id: user.id, customer_id: customer_id)
-        end
+        discourse_customer = Customer.create(user_id: user.id, customer_id: customer_id)
 
         Subscription.create(
           customer_id: discourse_customer.id,
@@ -64,48 +60,60 @@ module DiscourseSubscriptions
         )
       when "customer.subscription.created"
       when "customer.subscription.updated"
-        status = event[:data][:object][:status]
+        subscription = event[:data][:object]
+        status = subscription[:status]
         return head 200 if !%w[complete active].include?(status)
 
-        customer =
-          Customer.find_by(
-            customer_id: event[:data][:object][:customer],
-            product_id: event[:data][:object][:plan][:product],
-          )
+        customer = find_active_customer(subscription[:customer], subscription[:plan][:product])
 
         return render_json_error "customer not found" if !customer
+
+        update_status(customer.id, subscription[:id], status)
 
         user = ::User.find_by(id: customer.user_id)
         return render_json_error "user not found" if !user
 
-        if group = plan_group(event[:data][:object][:plan])
+        if group = plan_group(subscription[:plan])
           group.add(user)
         end
       when "customer.subscription.deleted"
-        customer =
-          Customer.find_by(
-            customer_id: event[:data][:object][:customer],
-            product_id: event[:data][:object][:plan][:product],
-          )
+        subscription = event[:data][:object]
+
+        customer = find_active_customer(subscription[:customer], subscription[:plan][:product])
 
         return render_json_error "customer not found" if !customer
 
-        Subscription.find_by(
-          customer_id: customer.id,
-          external_id: event[:data][:object][:id],
-        )&.destroy!
+        update_status(customer.id, subscription[:id], subscription[:status])
 
         user = ::User.find(customer.user_id)
         return render_json_error "user not found" if !user
 
-        if group = plan_group(event[:data][:object][:plan])
+        if group = plan_group(subscription[:plan])
           group.remove(user)
         end
-
-        customer.destroy!
       end
 
       head 200
+    end
+
+    private
+
+    def update_status(customer_id, subscription_id, status)
+      discourse_subscription =
+        Subscription.find_by(customer_id: customer_id, external_id: subscription_id)
+      discourse_subscription.update(status: status) if discourse_subscription
+    end
+
+    def find_active_customer(customer_id, product_id)
+      Customer
+        .joins(:subscriptions)
+        .where(customer_id: customer_id, product_id: product_id)
+        .where(
+          Subscription.arel_table[:status].eq(nil).or(
+            Subscription.arel_table[:status].not_eq("canceled"),
+          ),
+        )
+        .first
     end
   end
 end

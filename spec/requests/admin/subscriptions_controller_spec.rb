@@ -48,7 +48,7 @@ RSpec.describe DiscourseSubscriptions::Admin::SubscriptionsController do
       it "gets the subscriptions and products" do
         ::Stripe::Subscription
           .expects(:list)
-          .with(expand: ["data.plan.product"], limit: 10, starting_after: nil)
+          .with(expand: ["data.plan.product"], limit: 10, starting_after: nil, status: "all")
           .returns(has_more: false, data: [{ id: "sub_12345" }, { id: "sub_nope" }])
         get "/s/admin/subscriptions.json"
         subscriptions = response.parsed_body["data"][0]["id"]
@@ -60,7 +60,7 @@ RSpec.describe DiscourseSubscriptions::Admin::SubscriptionsController do
       it "handles starting at a different point in the set" do
         ::Stripe::Subscription
           .expects(:list)
-          .with(expand: ["data.plan.product"], limit: 10, starting_after: "sub_nope")
+          .with(expand: ["data.plan.product"], limit: 10, starting_after: "sub_nope", status: "all")
           .returns(has_more: false, data: [{ id: "sub_77777" }, { id: "sub_yepnoep" }])
         get "/s/admin/subscriptions.json", params: { last_record: "sub_nope" }
         subscriptions = response.parsed_body["data"][0]["id"]

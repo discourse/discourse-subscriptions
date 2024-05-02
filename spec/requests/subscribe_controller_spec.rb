@@ -69,6 +69,10 @@ RSpec.describe DiscourseSubscriptions::SubscribeController do
     end
 
     describe "#index" do
+      let(:customer) do
+        Fabricate(:customer, product_id: product[:id], user_id: user.id, customer_id: "x")
+      end
+
       it "gets products" do
         ::Stripe::Product
           .expects(:list)
@@ -94,7 +98,8 @@ RSpec.describe DiscourseSubscriptions::SubscribeController do
       end
 
       it "is subscribed" do
-        Fabricate(:customer, product_id: product[:id], user_id: user.id, customer_id: "x")
+        Fabricate(:subscription, external_id: "sub_12345", customer_id: customer.id, status: nil)
+
         ::Stripe::Product
           .expects(:list)
           .with({ ids: product_ids, active: true })

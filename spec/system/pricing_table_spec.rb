@@ -67,14 +67,4 @@ RSpec.describe "Pricing Table", type: :system, js: true do
       text: "There are currently no products available.",
     )
   end
-
-  # Commenting out for now, not sure how to stub network reqeusts made in the browser to stripe
-  # it "Shows a pricing table when setup" do
-  #   SiteSetting.discourse_subscriptions_pricing_table = '{"insert-pricing-table-embed-code"}'
-
-  #   visit("/")
-  #   find("li.nav-item_subscribe a").click
-
-  #   expect(page).to have_selector('stripe-pricing-table')
-  # end
 end
