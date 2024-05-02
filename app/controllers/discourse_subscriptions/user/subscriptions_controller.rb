@@ -25,17 +25,14 @@ module DiscourseSubscriptions
 
           if subscription_ids
             plans = ::Stripe::Price.list(expand: ["data.product"], limit: 100)
-
             all_subscriptions = []
 
             stripe_customer_ids.each do |stripe_customer_id|
               customer_subscriptions =
                 ::Stripe::Subscription.list(customer: stripe_customer_id, status: "all")
-              all_subscriptions.concat(customer_subscriptions.data)
+              all_subscriptions.concat(customer_subscriptions[:data])
             end
-
             subscriptions = all_subscriptions.select { |sub| subscription_ids.include?(sub[:id]) }
-
             subscriptions.map! do |subscription|
               plan = plans[:data].find { |p| p[:id] == subscription[:items][:data][0][:price][:id] }
               subscription.to_h.except!(:plan)
