@@ -37,62 +37,48 @@ RSpec.describe DiscourseSubscriptions::User::SubscriptionsController do
 
     before do
       sign_in(user)
-      Fabricate(:subscription, customer_id: customer.id, external_id: "sub_1234")
+      Fabricate(:subscription, customer_id: customer.id, external_id: "sub_10z")
     end
 
     describe "index" do
-      let(:plans) do
-        {
-          data: [
-            { id: "plan_1", product: { name: "ACME Subscriptions" } },
-            { id: "plan_2", product: { name: "ACME Other Subscriptions" } },
-          ],
-        }
-      end
-
-      let(:customers) do
-        {
-          data: [
-            {
-              id: "cus_23456",
-              subscriptions: {
-                data: [
-                  { id: "sub_1234", items: { data: [price: { id: "plan_1" }] } },
-                  { id: "sub_4567", items: { data: [price: { id: "plan_2" }] } },
-                ],
-              },
-            },
-          ],
-        }
-      end
+      plans_json =
+        File.read(
+          Rails.root.join(
+            "plugins",
+            "discourse-subscriptions",
+            "spec",
+            "fixtures",
+            "json",
+            "stripe-price-list.json",
+          ),
+        )
 
       it "gets subscriptions" do
-        ::Stripe::Price.expects(:list).with(expand: ["data.product"], limit: 100).returns(plans)
+        ::Stripe::Price.stubs(:list).returns(JSON.parse(plans_json, symbolize_names: true))
 
-        ::Stripe::Customer
-          .expects(:list)
-          .with(email: user.email, expand: ["data.subscriptions"])
-          .returns(customers)
+        subscriptions_json =
+          File.read(
+            Rails.root.join(
+              "plugins",
+              "discourse-subscriptions",
+              "spec",
+              "fixtures",
+              "json",
+              "stripe-subscription-list.json",
+            ),
+          )
+
+        ::Stripe::Subscription.stubs(:list).returns(
+          JSON.parse(subscriptions_json, symbolize_names: true),
+        )
 
         get "/s/user/subscriptions.json"
 
-        subscription = response.parsed_body.first
+        subscription = JSON.parse(response.body, symbolize_names: true).first
 
-        expect(subscription).to eq(
-          "id" => "sub_1234",
-          "items" => {
-            "data" => [{ "price" => { "id" => "plan_1" } }],
-          },
-          "plan" => {
-            "id" => "plan_1",
-            "product" => {
-              "name" => "ACME Subscriptions",
-            },
-          },
-          "product" => {
-            "name" => "ACME Subscriptions",
-          },
-        )
+        expect(subscription[:id]).to eq("sub_10z")
+        expect(subscription[:items][:data][0][:plan][:id]).to eq("price_1OrmlvEYXaQnncShNahrpKvA")
+        expect(subscription[:product][:name]).to eq("Exclusive Access")
       end
     end
 
@@ -100,7 +86,7 @@ RSpec.describe DiscourseSubscriptions::User::SubscriptionsController do
       it "updates the payment method for subscription" do
         ::Stripe::Subscription.expects(:update).once
         ::Stripe::PaymentMethod.expects(:attach).once
-        put "/s/user/subscriptions/sub_1234.json", params: { payment_method: "pm_abc123abc" }
+        put "/s/user/subscriptions/sub_10z.json", params: { payment_method: "pm_abc123abc" }
       end
     end
   end
