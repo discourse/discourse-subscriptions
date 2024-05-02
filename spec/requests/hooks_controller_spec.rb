@@ -27,8 +27,8 @@ RSpec.describe DiscourseSubscriptions::HooksController do
     let(:customer) do
       Fabricate(:customer, customer_id: "c_575768", product_id: "p_8654", user_id: user.id)
     end
-    let(:subscription) do
-      Fabricate(:subscription, external_id: "sub_12345", customer_id: customer.id)
+    let!(:subscription) do
+      Fabricate(:subscription, external_id: "sub_12345", customer_id: customer.id, status: nil)
     end
     let(:group) { Fabricate(:group, name: "subscribers-group") }
 
