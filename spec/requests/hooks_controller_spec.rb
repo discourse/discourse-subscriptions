@@ -184,6 +184,44 @@ RSpec.describe DiscourseSubscriptions::HooksController do
       end
     end
 
+    describe "checkout.session.completed with anonymous user" do
+      before do
+        checkout_session_completed_bad_data[:object][:customer_email] = "anonymous@example.com"
+        data = checkout_session_completed_bad_data
+        event = { type: "checkout.session.completed", data: data }
+        ::Stripe::Checkout::Session
+          .stubs(:list_line_items)
+          .with(checkout_session_completed_data[:object][:id], { limit: 1 })
+          .returns(list_line_items_data)
+
+        ::Stripe::Webhook.stubs(:construct_event).returns(event)
+      end
+
+      it "is returns 422" do
+        post "/s/hooks.json"
+        expect(response.status).to eq 422
+      end
+    end
+
+    describe "checkout.session.completed with no customer email" do
+      before do
+        checkout_session_completed_bad_data[:object][:customer_email] = nil
+        data = checkout_session_completed_bad_data
+        event = { type: "checkout.session.completed", data: data }
+        ::Stripe::Checkout::Session
+          .stubs(:list_line_items)
+          .with(checkout_session_completed_data[:object][:id], { limit: 1 })
+          .returns(list_line_items_data)
+
+        ::Stripe::Webhook.stubs(:construct_event).returns(event)
+      end
+
+      it "is returns 422" do
+        post "/s/hooks.json"
+        expect(response.status).to eq 422
+      end
+    end
+
     describe "customer.subscription.updated" do
       before do
         event = { type: "customer.subscription.updated", data: event_data }
