@@ -1,6 +1,6 @@
 <div class="container">
-  {{#if currentUser}}
-    {{pricingTable}}
+  {{#if this.currentUser}}
+    {{this.pricingTable}}
   {{else}}
     <LoginRequired />
   {{/if}}
