@@ -7,7 +7,6 @@ RSpec.describe "Pricing Table", type: :system, js: true do
   let(:product_subscriptions_page) { PageObjects::Pages::AdminSubscriptionProduct.new }
 
   before do
-    sign_in(admin)
     SiteSetting.discourse_subscriptions_enabled = true
     SiteSetting.discourse_subscriptions_extra_nav_subscribe = true
 
@@ -33,6 +32,7 @@ RSpec.describe "Pricing Table", type: :system, js: true do
   end
 
   it "Links to the pricing table page" do
+    sign_in(admin)
     visit("/")
 
     link = find("li.nav-item_subscribe a")
@@ -41,6 +41,7 @@ RSpec.describe "Pricing Table", type: :system, js: true do
   end
 
   it "Links to the old page when disabled" do
+    sign_in(admin)
     SiteSetting.discourse_subscriptions_pricing_table_enabled = false
     visit("/")
 
@@ -50,6 +51,7 @@ RSpec.describe "Pricing Table", type: :system, js: true do
   end
 
   it "Old subscribe page still works when disabled" do
+    sign_in(admin)
     SiteSetting.discourse_subscriptions_pricing_table_enabled = false
     visit("/")
 
@@ -58,6 +60,7 @@ RSpec.describe "Pricing Table", type: :system, js: true do
   end
 
   it "Shows a message when not setup yet" do
+    sign_in(admin)
     visit("/")
 
     find("li.nav-item_subscribe a").click
@@ -65,6 +68,17 @@ RSpec.describe "Pricing Table", type: :system, js: true do
     expect(page).to have_selector(
       "div.container",
       text: "There are currently no products available.",
+    )
+  end
+
+  it "Shows a log in message if not signed in" do
+    visit("/")
+
+    find("li.nav-item_subscribe a").click
+
+    expect(page).to have_selector(
+      "div.container",
+      text: "Log in or create an account to subscribe.",
     )
   end
 end
