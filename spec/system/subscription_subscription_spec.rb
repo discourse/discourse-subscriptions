@@ -7,11 +7,14 @@ describe "Subscription products", type: :system do
   fab!(:customer) do
     Fabricate(:customer, customer_id: "cus_Q1n", product_id: product.external_id, user_id: user.id)
   end
+  fab!(:customer2) do
+    Fabricate(:customer, customer_id: "cus_Q1n", product_id: product.external_id, user_id: user.id)
+  end
   fab!(:subscription) do
     Fabricate(:subscription, customer_id: customer.id, external_id: "sub_10z", status: "active")
   end
-  fab!(:subscription) do
-    Fabricate(:subscription, customer_id: customer.id, external_id: "sub_32b", status: "canceled")
+  fab!(:subscription2) do
+    Fabricate(:subscription, customer_id: customer2.id, external_id: "sub_32b", status: "canceled")
   end
   let(:dialog) { PageObjects::Components::Dialog.new }
   let(:product_subscriptions_page) { PageObjects::Pages::AdminSubscriptionProduct.new }
@@ -82,11 +85,12 @@ describe "Subscription products", type: :system do
   it "shows active and canceled subscriptions for users" do
     sign_in(user)
 
-    active_subscription_row =
-      user_billing_subscriptions_page.visit_subscriptions.subscription_row("sub_10z")
+    user_billing_subscriptions_page.visit_subscriptions
+    user_billing_subscriptions_page.has_number_of_subscriptions?(2)
+
+    active_subscription_row = user_billing_subscriptions_page.subscription_row("sub_10z")
     expect(active_subscription_row).to have_text("active")
-    canceled_subscription_row =
-      user_billing_subscriptions_page.visit_subscriptions.subscription_row("sub_32b")
+    canceled_subscription_row = user_billing_subscriptions_page.subscription_row("sub_32b")
     expect(canceled_subscription_row).to have_text("canceled")
   end
 end

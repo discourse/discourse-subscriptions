@@ -15,7 +15,7 @@ module DiscourseSubscriptions
         begin
           customer = Customer.where(user_id: current_user.id)
           customer_ids = customer.map { |c| c.id } if customer
-          stripe_customer_ids = customer.map { |c| c.customer_id } if customer
+          stripe_customer_ids = customer.map { |c| c.customer_id }.uniq if customer
           subscription_ids =
             Subscription.where("customer_id in (?)", customer_ids).pluck(
               :external_id,
@@ -32,6 +32,7 @@ module DiscourseSubscriptions
                 ::Stripe::Subscription.list(customer: stripe_customer_id, status: "all")
               all_subscriptions.concat(customer_subscriptions[:data])
             end
+
             subscriptions = all_subscriptions.select { |sub| subscription_ids.include?(sub[:id]) }
             subscriptions.map! do |subscription|
               plan = plans[:data].find { |p| p[:id] == subscription[:items][:data][0][:price][:id] }
