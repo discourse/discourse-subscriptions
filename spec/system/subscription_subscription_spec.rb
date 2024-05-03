@@ -88,11 +88,9 @@ describe "Subscription products", type: :system do
     user_billing_subscriptions_page.visit_subscriptions
     user_billing_subscriptions_page.has_number_of_subscriptions?(2)
 
-    active_subscription_row =
-      user_billing_subscriptions_page.subscription_row("sub_10z")
+    active_subscription_row = user_billing_subscriptions_page.subscription_row("sub_10z")
     expect(active_subscription_row).to have_text("active")
-    canceled_subscription_row =
-      user_billing_subscriptions_page.subscription_row("sub_32b")
+    canceled_subscription_row = user_billing_subscriptions_page.subscription_row("sub_32b")
     expect(canceled_subscription_row).to have_text("canceled")
   end
 end
