@@ -100,16 +100,18 @@ module DiscourseSubscriptions
         else
           coupon_id = promo_code[:coupon][:id] if promo_code && promo_code[:coupon] &&
             promo_code[:coupon][:id]
+          invoice = ::Stripe::Invoice.create(customer: customer[:id])
           invoice_item =
             ::Stripe::InvoiceItem.create(
               customer: customer[:id],
               price: params[:plan],
               discounts: [{ coupon: coupon_id }],
+              invoice: invoice[:id],
             )
-          invoice = ::Stripe::Invoice.create(customer: customer[:id])
           transaction = ::Stripe::Invoice.finalize_invoice(invoice[:id])
           payment_intent = retrieve_payment_intent(transaction[:id]) if transaction[:status] ==
             "open"
+          return render_json_error "error completing transaction" if payment_intent.nil?
           transaction = ::Stripe::Invoice.pay(invoice[:id]) if payment_intent[:status] ==
             "successful"
         end
