@@ -45,8 +45,10 @@ module DiscourseSubscriptions
         invoices_with_products =
           all_invoices[:data].select do |invoice|
             invoice_lines = invoice[:lines][:data][0] if invoice[:lines] && invoice[:lines][:data]
-            invoice_product_id = parse_invoice_lines(invoice_lines)
-            product_ids.include?(invoice_product_id)
+            if invoice_lines
+              invoice_product_id = parse_invoice_lines(invoice_lines)
+              product_ids.include?(invoice_product_id)
+            end
           end
       end
 

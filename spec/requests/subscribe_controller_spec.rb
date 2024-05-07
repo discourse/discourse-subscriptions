@@ -266,6 +266,35 @@ RSpec.describe DiscourseSubscriptions::SubscribeController do
           }.to change { DiscourseSubscriptions::Customer.count }
         end
 
+        it "returns 422 on a one time payment subscription error" do
+          # It's possible that the invoice item doesn't get attached
+          # to the invoice. This means the invoice is paid, but for $0.00 with
+          # a pending invoice item.
+          ::Stripe::Price.expects(:retrieve).returns(
+            type: "one_time",
+            product: "product_12345",
+            metadata: {
+              group_name: "awesome",
+            },
+          )
+
+          ::Stripe::InvoiceItem.expects(:create)
+
+          ::Stripe::Invoice.expects(:create).returns(status: "open", id: "in_123")
+
+          ::Stripe::Invoice.expects(:finalize_invoice).returns(
+            id: "in_123",
+            status: "paid",
+            payment_intent: "pi_123",
+          )
+
+          expect {
+            post "/s/create.json", params: { plan: "plan_1234", source: "tok_1234" }
+          }.not_to change { DiscourseSubscriptions::Customer.count }
+
+          expect(response.status).to eq 422
+        end
+
         it "creates a one time payment subscription" do
           ::Stripe::Price.expects(:retrieve).returns(
             type: "one_time",
@@ -414,13 +443,14 @@ RSpec.describe DiscourseSubscriptions::SubscribeController do
                 },
               )
 
+              ::Stripe::Invoice.expects(:create).returns(status: "open", id: "in_123")
+
               ::Stripe::InvoiceItem.expects(:create).with(
                 customer: "cus_1234",
                 price: "plan_1234",
                 discounts: [{ coupon: "c123" }],
+                invoice: "in_123",
               )
-
-              ::Stripe::Invoice.expects(:create).returns(status: "open", id: "in_123")
 
               ::Stripe::Invoice.expects(:finalize_invoice).returns(
                 id: "in_123",
