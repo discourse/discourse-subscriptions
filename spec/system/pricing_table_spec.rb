@@ -40,12 +40,33 @@ RSpec.describe "Pricing Table", type: :system, js: true do
     expect(uri.path).to eq("/s/subscriptions")
   end
 
+  it "Links to the pricing table page from the campaign banner" do
+    sign_in(admin)
+    SiteSetting.discourse_subscriptions_campaign_enabled = true
+    visit("/")
+
+    link = find(".campaign-banner-info-button")
+    uri = URI.parse(link[:href])
+    expect(uri.path).to eq("/s/subscriptions")
+  end
+
   it "Links to the old page when disabled" do
     sign_in(admin)
     SiteSetting.discourse_subscriptions_pricing_table_enabled = false
     visit("/")
 
     link = find("li.nav-item_subscribe a")
+    uri = URI.parse(link[:href])
+    expect(uri.path).to eq("/s")
+  end
+
+  it "Links to the old page from the campaign banner when disabled" do
+    sign_in(admin)
+    SiteSetting.discourse_subscriptions_pricing_table_enabled = false
+    SiteSetting.discourse_subscriptions_campaign_enabled = true
+    visit("/")
+
+    link = find(".campaign-banner-info-button")
     uri = URI.parse(link[:href])
     expect(uri.path).to eq("/s")
   end

@@ -32,6 +32,7 @@ export default Component.extend({
   amountRaised: setting("discourse_subscriptions_campaign_amount_raised"),
   goalTarget: setting("discourse_subscriptions_campaign_goal"),
   product: setting("discourse_subscriptions_campaign_product"),
+  pricingTableEnabled: setting("discourse_subscriptions_pricing_table_enabled"),
   showContributors: setting(
     "discourse_subscriptions_campaign_show_contributors"
   ),
@@ -126,7 +127,8 @@ export default Component.extend({
     const showOnRoute =
       currentRoute !== "discovery.s" &&
       !currentRoute.split(".")[0].includes("admin") &&
-      currentRoute.split(".")[0] !== "subscribe";
+      currentRoute.split(".")[0] !== "subscribe" &&
+      currentRoute.split(".")[0] !== "subscriptions";
 
     if (!this.site.show_campaign_banner) {
       return false;
@@ -164,6 +166,14 @@ export default Component.extend({
       (!dismissedBannerKey || now - bannerDismissedTime > threeMonths) &&
       !dismissed
     );
+  },
+
+  @discourseComputed
+  subscribeRoute() {
+    if (this.pricingTableEnabled) {
+      return "subscriptions";
+    }
+    return "subscribe"
   },
 
   @discourseComputed
