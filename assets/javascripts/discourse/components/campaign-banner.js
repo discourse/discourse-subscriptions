@@ -173,7 +173,7 @@ export default Component.extend({
     if (this.pricingTableEnabled) {
       return "subscriptions";
     }
-    return "subscribe"
+    return "subscribe";
   },
 
   @discourseComputed
