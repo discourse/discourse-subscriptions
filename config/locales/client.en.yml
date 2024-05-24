@@ -116,6 +116,7 @@ en:
         invalid_cardholder_country: Country is required.
         invalid_cardholder_state: State is required.
         invalid_cardholder_province: Province is required.
+        transaction_error: There was an error processing the payment. Please try again.
         card:
           title: Payment
         customer:
