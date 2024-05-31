@@ -24,6 +24,8 @@ el:
           product: Όνομα
         subscriptions:
           status: Κατάσταση
+          update_card:
+            single: "Ενημέρωση"
           created_at: Δημιουργήθηκε
           cancel: ακύρωση
       subscribe:

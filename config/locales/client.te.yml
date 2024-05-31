@@ -7,12 +7,23 @@
 te:
   js:
     discourse_subscriptions:
+      optional: ఐచ్ఛికం
+      plans:
+        interval:
+          adverb:
+            day: రోజువారీ
+            week: వారానికోసారి
+            month: నెలవారీ
+            year: వార్షిక
       user:
         payments:
           created_at: సృష్టించిన
         plans:
           product: పేరు
         subscriptions:
+          status: స్థితి
+          update_card:
+            single: "నవీకరించండి"
           created_at: సృష్టించిన
           cancel: రద్దు
       billing:
@@ -28,6 +39,7 @@ te:
             description: వివరణ
             active: క్రియాశీల
             created_at: సృష్టించిన
+            updated_at: నవీకరించబడింది
         plans:
           plan:
             active: క్రియాశీల
@@ -38,4 +50,5 @@ te:
         subscriptions:
           subscription:
             user: సభ్యుడు
+            status: స్థితి
             created_at: సృష్టించిన

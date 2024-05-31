@@ -8,6 +8,8 @@ sk:
   js:
     discourse_subscriptions:
       optional: Voliteľné
+      campaign:
+        success_title: Úspech!
       plans:
         interval:
           adverb:
@@ -21,6 +23,9 @@ sk:
         plans:
           product: Meno
         subscriptions:
+          status: Stav
+          update_card:
+            single: "Aktualizovať"
           created_at: Vytvorené
           cancel: zrušiť
       billing:
@@ -36,6 +41,7 @@ sk:
             description: Popis
             active: Aktívny
             created_at: Vytvorené
+            updated_at: Aktualizované
         plans:
           plan:
             active: Aktívny
@@ -46,4 +52,5 @@ sk:
         subscriptions:
           subscription:
             user: Používateľ
+            status: Stav
             created_at: Vytvorené
