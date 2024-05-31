@@ -24,6 +24,8 @@ cs:
           product: Jméno
         subscriptions:
           status: Stav
+          update_card:
+            single: "Aktualizovat"
           created_at: Vytvořený
           cancel: zrušit
       billing:
@@ -39,6 +41,7 @@ cs:
             description: Popis
             active: Aktivní
             created_at: Vytvořený
+            updated_at: Aktualizováno
         plans:
           plan:
             active: Aktivní

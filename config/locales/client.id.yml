@@ -26,6 +26,7 @@ id:
               user: Pengguna
         products:
           product:
+            description: Deskripsi
             active: Aktif
             created_at: Dibuat
         plans:

@@ -121,6 +121,7 @@ he:
         invalid_cardholder_country: ארץ נדרשת.
         invalid_cardholder_state: מדינה נדרשת.
         invalid_cardholder_province: מחוז נדרש.
+        transaction_error: אירעה שגיאה בעיבוד התשלום. נא לנסות שוב.
         card:
           title: תשלום
         customer:

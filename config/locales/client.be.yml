@@ -22,6 +22,7 @@ be:
         plans:
           product: Імя
         subscriptions:
+          status: Статус
           created_at: створаны
           cancel: адмена
       billing:
@@ -47,4 +48,5 @@ be:
         subscriptions:
           subscription:
             user: Карыстальнік
+            status: Статус
             created_at: створаны

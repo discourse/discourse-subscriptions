@@ -121,6 +121,7 @@ de:
         invalid_cardholder_country: Land ist erforderlich.
         invalid_cardholder_state: Staat ist erforderlich.
         invalid_cardholder_province: Provinz ist erforderlich.
+        transaction_error: Bei der Verarbeitung der Zahlung ist ein Fehler aufgetreten. Bitte versuche es noch einmal.
         card:
           title: Zahlung
         customer:
