@@ -235,9 +235,7 @@ RSpec.describe DiscourseSubscriptions::SubscribeController do
       before { sign_in(user) }
 
       describe "#create" do
-        before do
-          ::Stripe::Customer.expects(:create).returns(id: "cus_1234")
-        end
+        before { ::Stripe::Customer.expects(:create).returns(id: "cus_1234") }
 
         it "creates a subscription without automatic_tax param" do
           SiteSetting.discourse_subscriptions_enable_automatic_tax = false
@@ -263,9 +261,9 @@ RSpec.describe DiscourseSubscriptions::SubscribeController do
 
           ::Stripe::Subscription
             .expects(:create)
-            .with { |params|
+            .with do |params|
               params == expected_subscription_params && !params.key?(:automatic_tax)
-            }
+            end
             .returns(status: "active", customer: "cus_1234")
 
           expect {
@@ -293,7 +291,9 @@ RSpec.describe DiscourseSubscriptions::SubscribeController do
             },
             trial_period_days: 0,
             promotion_code: nil,
-            automatic_tax: { enabled: true },
+            automatic_tax: {
+              enabled: true,
+            },
           }
 
           ::Stripe::Subscription
@@ -347,15 +347,11 @@ RSpec.describe DiscourseSubscriptions::SubscribeController do
 
           ::Stripe::InvoiceItem.expects(:create)
 
-          expected_one_time_params = {
-            customer: "cus_1234"
-          }
+          expected_one_time_params = { customer: "cus_1234" }
 
           ::Stripe::Invoice
             .expects(:create)
-            .with { |params|
-              params == expected_one_time_params && !params.key?(:automatic_tax)
-            }
+            .with { |params| params == expected_one_time_params && !params.key?(:automatic_tax) }
             .returns(status: "open", id: "in_123")
 
           ::Stripe::Invoice.expects(:finalize_invoice).returns(
@@ -391,10 +387,7 @@ RSpec.describe DiscourseSubscriptions::SubscribeController do
 
           ::Stripe::InvoiceItem.expects(:create)
 
-          expected_one_time_params = {
-            customer: "cus_1234",
-            automatic_tax: { enabled: true }
-          }
+          expected_one_time_params = { customer: "cus_1234", automatic_tax: { enabled: true } }
 
           ::Stripe::Invoice
             .expects(:create)

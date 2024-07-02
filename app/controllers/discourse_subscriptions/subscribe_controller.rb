@@ -106,9 +106,7 @@ module DiscourseSubscriptions
           coupon_id = promo_code[:coupon][:id] if promo_code && promo_code[:coupon] &&
             promo_code[:coupon][:id]
 
-          invoice_params = {
-            customer: customer[:id]
-          }
+          invoice_params = { customer: customer[:id] }
           if SiteSetting.discourse_subscriptions_enable_automatic_tax
             invoice_params[:automatic_tax] = { enabled: true }
           end
