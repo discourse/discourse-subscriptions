@@ -85,14 +85,19 @@ module DiscourseSubscriptions
 
           promo_code_id = promo_code[:id] if promo_code
 
-          transaction =
-            ::Stripe::Subscription.create(
-              customer: customer[:id],
-              items: [{ price: params[:plan] }],
-              metadata: metadata_user,
-              trial_period_days: trial_days,
-              promotion_code: promo_code_id,
-            )
+          subscription_params = {
+            customer: customer[:id],
+            items: [{ price: params[:plan] }],
+            metadata: metadata_user,
+            trial_period_days: trial_days,
+            promotion_code: promo_code_id,
+          }
+
+          if SiteSetting.discourse_subscriptions_enable_automatic_tax
+            subscription_params[:automatic_tax] = { enabled: true }
+          end
+
+          transaction = ::Stripe::Subscription.create(subscription_params)
 
           payment_intent = retrieve_payment_intent(transaction[:latest_invoice]) if transaction[
             :status
@@ -100,7 +105,15 @@ module DiscourseSubscriptions
         else
           coupon_id = promo_code[:coupon][:id] if promo_code && promo_code[:coupon] &&
             promo_code[:coupon][:id]
-          invoice = ::Stripe::Invoice.create(customer: customer[:id])
+
+          invoice_params = {
+            customer: customer[:id]
+          }
+          if SiteSetting.discourse_subscriptions_enable_automatic_tax
+            invoice_params[:automatic_tax] = { enabled: true }
+          end
+          invoice = ::Stripe::Invoice.create(invoice_params)
+
           invoice_item =
             ::Stripe::InvoiceItem.create(
               customer: customer[:id],

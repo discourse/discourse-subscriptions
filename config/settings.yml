@@ -80,3 +80,5 @@ discourse_subscriptions:
   discourse_subscriptions_campaign_group:
     default: ""
     hidden: true
+  discourse_subscriptions_enable_automatic_tax:
+    default: false

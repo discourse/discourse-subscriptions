@@ -235,9 +235,12 @@ RSpec.describe DiscourseSubscriptions::SubscribeController do
       before { sign_in(user) }
 
       describe "#create" do
-        before { ::Stripe::Customer.expects(:create).returns(id: "cus_1234") }
+        before do
+          ::Stripe::Customer.expects(:create).returns(id: "cus_1234")
+        end
 
-        it "creates a subscription" do
+        it "creates a subscription without automatic_tax param" do
+          SiteSetting.discourse_subscriptions_enable_automatic_tax = false
           ::Stripe::Price.expects(:retrieve).returns(
             type: "recurring",
             product: "product_12345",
@@ -247,18 +250,55 @@ RSpec.describe DiscourseSubscriptions::SubscribeController do
             },
           )
 
+          expected_subscription_params = {
+            customer: "cus_1234",
+            items: [{ price: "plan_1234" }],
+            metadata: {
+              user_id: user.id,
+              username: user.username_lower,
+            },
+            trial_period_days: 0,
+            promotion_code: nil,
+          }
+
           ::Stripe::Subscription
             .expects(:create)
-            .with(
-              customer: "cus_1234",
-              items: [price: "plan_1234"],
-              metadata: {
-                user_id: user.id,
-                username: user.username_lower,
-              },
+            .with { |params|
+              params == expected_subscription_params && !params.key?(:automatic_tax)
+            }
+            .returns(status: "active", customer: "cus_1234")
+
+          expect {
+            post "/s/create.json", params: { plan: "plan_1234", source: "tok_1234" }
+          }.to change { DiscourseSubscriptions::Customer.count }
+        end
+
+        it "creates a subscription with automatic tax" do
+          SiteSetting.discourse_subscriptions_enable_automatic_tax = true
+          ::Stripe::Price.expects(:retrieve).returns(
+            type: "recurring",
+            product: "product_12345",
+            metadata: {
+              group_name: "awesome",
               trial_period_days: 0,
-              promotion_code: nil,
-            )
+            },
+          )
+
+          expected_subscription_params = {
+            customer: "cus_1234",
+            items: [{ price: "plan_1234" }],
+            metadata: {
+              user_id: user.id,
+              username: user.username_lower,
+            },
+            trial_period_days: 0,
+            promotion_code: nil,
+            automatic_tax: { enabled: true },
+          }
+
+          ::Stripe::Subscription
+            .expects(:create)
+            .with(expected_subscription_params)
             .returns(status: "active", customer: "cus_1234")
 
           expect {
@@ -295,7 +335,8 @@ RSpec.describe DiscourseSubscriptions::SubscribeController do
           expect(response.status).to eq 422
         end
 
-        it "creates a one time payment subscription" do
+        it "creates a one time payment subscription without automatic tax" do
+          SiteSetting.discourse_subscriptions_enable_automatic_tax = false
           ::Stripe::Price.expects(:retrieve).returns(
             type: "one_time",
             product: "product_12345",
@@ -306,7 +347,59 @@ RSpec.describe DiscourseSubscriptions::SubscribeController do
 
           ::Stripe::InvoiceItem.expects(:create)
 
-          ::Stripe::Invoice.expects(:create).returns(status: "open", id: "in_123")
+          expected_one_time_params = {
+            customer: "cus_1234"
+          }
+
+          ::Stripe::Invoice
+            .expects(:create)
+            .with { |params|
+              params == expected_one_time_params && !params.key?(:automatic_tax)
+            }
+            .returns(status: "open", id: "in_123")
+
+          ::Stripe::Invoice.expects(:finalize_invoice).returns(
+            id: "in_123",
+            status: "open",
+            payment_intent: "pi_123",
+          )
+
+          ::Stripe::Invoice.expects(:retrieve).returns(
+            id: "in_123",
+            status: "open",
+            payment_intent: "pi_123",
+          )
+
+          ::Stripe::PaymentIntent.expects(:retrieve).returns(status: "successful")
+
+          ::Stripe::Invoice.expects(:pay).returns(status: "paid", customer: "cus_1234")
+
+          expect {
+            post "/s/create.json", params: { plan: "plan_1234", source: "tok_1234" }
+          }.to change { DiscourseSubscriptions::Customer.count }
+        end
+
+        it "creates a one time payment subscription" do
+          SiteSetting.discourse_subscriptions_enable_automatic_tax = true
+          ::Stripe::Price.expects(:retrieve).returns(
+            type: "one_time",
+            product: "product_12345",
+            metadata: {
+              group_name: "awesome",
+            },
+          )
+
+          ::Stripe::InvoiceItem.expects(:create)
+
+          expected_one_time_params = {
+            customer: "cus_1234",
+            automatic_tax: { enabled: true }
+          }
+
+          ::Stripe::Invoice
+            .expects(:create)
+            .with(expected_one_time_params)
+            .returns(status: "open", id: "in_123")
 
           ::Stripe::Invoice.expects(:finalize_invoice).returns(
             id: "in_123",
@@ -410,18 +503,20 @@ RSpec.describe DiscourseSubscriptions::SubscribeController do
                 },
               )
 
+              expected_subscription_params = {
+                customer: "cus_1234",
+                items: [price: "plan_1234"],
+                metadata: {
+                  user_id: user.id,
+                  username: user.username_lower,
+                },
+                trial_period_days: 0,
+                promotion_code: "promo123",
+              }
+
               ::Stripe::Subscription
                 .expects(:create)
-                .with(
-                  customer: "cus_1234",
-                  items: [price: "plan_1234"],
-                  metadata: {
-                    user_id: user.id,
-                    username: user.username_lower,
-                  },
-                  trial_period_days: 0,
-                  promotion_code: "promo123",
-                )
+                .with(expected_subscription_params)
                 .returns(status: "active", customer: "cus_1234")
 
               expect {
