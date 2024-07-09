@@ -27,6 +27,7 @@ he:
     discourse_subscriptions_campaign_banner_bg_image: ניתן להעלות תמונה משלך כרקע לכרזת מסע הפרסום.
     discourse_subscriptions_campaign_show_contributors: מציג תמונות ייצוגיות של הרכישות האחרונות של מוצרים שדורשים מינוי.
     discourse_subscriptions_campaign_product: מזהה המוצר ב־Stripe לשליחה לתומכים כשהם לוחצים על הכפתור במסע הפרסום. אם ההגדרה הזאת ריקה, התומכים יופנו לעמוד המוצרים הראשי.
+    discourse_subscriptions_enable_automatic_tax: מאפשר חישוב מס אוטומטי שיחשב את כל שיעורי המס בכל החשבוניות שמופקות על ידי המינוי.
     errors:
       discourse_patrons_amount_must_be_currency: "סכומי המטבעות אמורים להיות מטבעות בלי סימן דולר (למשל: 1.50)"
   js:
