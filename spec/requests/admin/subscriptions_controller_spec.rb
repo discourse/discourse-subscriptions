@@ -82,9 +82,9 @@ RSpec.describe DiscourseSubscriptions::Admin::SubscriptionsController do
           .returns(plan: { product: "pr_34578" }, customer: "c_123")
 
         # We don't want to delete the customer record. The webhook hook will update the status instead.
-        expect { delete "/s/admin/subscriptions/sub_12345.json" }.to change {
+        expect { delete "/s/admin/subscriptions/sub_12345.json" }.not_to change {
           DiscourseSubscriptions::Customer.count
-        }.by(0)
+        }
       end
 
       it "removes the user from the group" do

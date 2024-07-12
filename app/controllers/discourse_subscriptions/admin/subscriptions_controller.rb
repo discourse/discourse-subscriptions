@@ -98,7 +98,6 @@ module DiscourseSubscriptions
         payment_intent = invoice[:payment_intent] if invoice[:payment_intent]
         refund = ::Stripe::Refund.create({ payment_intent: payment_intent })
       end
-
     end
   end
 end
