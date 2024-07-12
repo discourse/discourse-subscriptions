@@ -25,8 +25,12 @@ export default class AdminCancelSubscription extends Component {
           @label="yes_value"
           @action={{fn
             @model.cancelSubscription
-            (hash subscription=@model.subscription refund=this.refund closeModal=@closeModal)
-            }}
+            (hash
+              subscription=@model.subscription
+              refund=this.refund
+              closeModal=@closeModal
+            )
+          }}
           @icon="times"
           @isLoading={{@model.subscription.loading}}
           class="btn-danger"
