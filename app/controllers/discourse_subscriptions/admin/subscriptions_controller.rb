@@ -53,7 +53,7 @@ module DiscourseSubscriptions
         params.require(:id)
         begin
           refund_subscription(params[:id]) if params[:refund]
-          subscription = ::Stripe::Subscription.delete(params[:id])
+          subscription = ::Stripe::Subscription.cancel(params[:id])
 
           customer =
             Customer.find_by(
@@ -61,11 +61,8 @@ module DiscourseSubscriptions
               customer_id: subscription[:customer],
             )
 
-          Subscription.delete_by(external_id: params[:id])
-
           if customer
             user = ::User.find(customer.user_id)
-            customer.delete
             group = plan_group(subscription[:plan])
             group.remove(user) if group
           end
