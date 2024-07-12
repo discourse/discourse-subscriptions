@@ -40,6 +40,8 @@ export default Controller.extend({
   cancelSubscription(model) {
     const subscription = model.subscription;
     const refund = model.refund;
+    const closeModal = model.closeModal;
+
     subscription.set("loading", true);
     subscription
       .destroy(refund)
@@ -52,6 +54,7 @@ export default Controller.extend({
       )
       .finally(() => {
         subscription.set("loading", false);
+        closeModal();
       });
   },
 });

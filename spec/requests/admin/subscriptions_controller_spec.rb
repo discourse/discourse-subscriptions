@@ -77,18 +77,19 @@ RSpec.describe DiscourseSubscriptions::Admin::SubscriptionsController do
 
       it "deletes a customer" do
         ::Stripe::Subscription
-          .expects(:delete)
+          .expects(:cancel)
           .with("sub_12345")
           .returns(plan: { product: "pr_34578" }, customer: "c_123")
 
+        # We don't want to delete the customer record. The webhook hook will update the status instead.
         expect { delete "/s/admin/subscriptions/sub_12345.json" }.to change {
           DiscourseSubscriptions::Customer.count
-        }.by(-1)
+        }.by(0)
       end
 
       it "removes the user from the group" do
         ::Stripe::Subscription
-          .expects(:delete)
+          .expects(:cancel)
           .with("sub_12345")
           .returns(
             plan: {
@@ -107,7 +108,7 @@ RSpec.describe DiscourseSubscriptions::Admin::SubscriptionsController do
 
       it "does not remove the user from the group" do
         ::Stripe::Subscription
-          .expects(:delete)
+          .expects(:cancel)
           .with("sub_12345")
           .returns(
             plan: {
@@ -126,7 +127,7 @@ RSpec.describe DiscourseSubscriptions::Admin::SubscriptionsController do
 
       it "refunds if params[:refund] present" do
         ::Stripe::Subscription
-          .expects(:delete)
+          .expects(:cancel)
           .with("sub_12345")
           .returns(plan: { product: "pr_34578" }, customer: "c_123")
         ::Stripe::Subscription
