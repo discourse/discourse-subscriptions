@@ -62,6 +62,10 @@ describe DiscourseSubscriptions::Campaign do
         },
       }
     end
+    let(:invoice_with_nil_lines) { { id: "in_1236", paid: true, lines: nil } }
+    let(:invoice_with_nil_price) do
+      { id: "in_1237", paid: true, lines: { data: [{ plan: nil, price: nil }] } }
+    end
 
     before do
       Fabricate(:product, external_id: "prodct_23456")
@@ -103,6 +107,20 @@ describe DiscourseSubscriptions::Campaign do
 
           DiscourseSubscriptions::Campaign.new.refresh_data
           expect(Discourse.redis.get("subscriptions_goal_met_date")).to be_blank
+        end
+
+        it "handles invoices with nil lines gracefully" do
+          ::Stripe::Subscription.expects(:list).returns(data: [subscription], has_more: false)
+          ::Stripe::Invoice.expects(:list).returns(data: [invoice_with_nil_lines], has_more: false)
+
+          expect { DiscourseSubscriptions::Campaign.new.refresh_data }.not_to raise_error
+        end
+
+        it "handles invoices with nil price gracefully" do
+          ::Stripe::Subscription.expects(:list).returns(data: [subscription], has_more: false)
+          ::Stripe::Invoice.expects(:list).returns(data: [invoice_with_nil_price], has_more: false)
+
+          expect { DiscourseSubscriptions::Campaign.new.refresh_data }.not_to raise_error
         end
       end
 

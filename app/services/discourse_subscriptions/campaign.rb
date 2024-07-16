@@ -154,26 +154,30 @@ module DiscourseSubscriptions
           all_invoices =
             ::Stripe::Invoice.list(limit: 100, starting_after: current_set[:last_record])
 
-          current_set[:last_record] = all_invoices[:data].last[:id] if all_invoices[:data].present?
-          current_set[:has_more] = all_invoices[:has_more]
+          if all_invoices[:data].present?
+            current_set[:last_record] = all_invoices[:data].last[:id]
+            current_set[:has_more] = all_invoices[:has_more]
 
-          all_invoices[:data].each do |invoice|
-            customer_id = invoice[:customer]
-            next if invoice[:paid] != true
-            line_item = invoice[:lines][:data][0] if invoice[:lines] && invoice[:lines][:data] # Discourse only makes single-line item charges
-            # check if non-subscription and that the plan is active
-            if line_item[:plan] == nil && line_item[:price] &&
-                 line_item[:price][:recurring] == nil && line_item[:price][:active] == true
-              product_id = line_item[:price][:product]
-              if product_ids.include? product_id
-                line_data = {
-                  customer_id: customer_id,
-                  product_id: product_id,
-                  price: line_item[:price][:unit_amount],
-                }
-                one_time_payments << line_data
+            all_invoices[:data].each do |invoice|
+              customer_id = invoice[:customer]
+              next if invoice[:paid] != true
+              line_item = invoice[:lines][:data][0] if invoice[:lines] && invoice[:lines][:data] # Discourse only makes single-line item charges
+              # check if non-subscription and that the plan is active
+              if line_item && line_item[:plan] == nil && line_item[:price] &&
+                   line_item[:price][:recurring] == nil && line_item[:price][:active] == true
+                product_id = line_item[:price][:product]
+                if product_ids.include? product_id
+                  line_data = {
+                    customer_id: customer_id,
+                    product_id: product_id,
+                    price: line_item[:price][:unit_amount],
+                  }
+                  one_time_payments << line_data
+                end
               end
             end
+          else
+            current_set[:has_more] = false
           end
         end
       end
