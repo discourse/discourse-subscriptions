@@ -27,6 +27,7 @@ de:
     discourse_subscriptions_campaign_banner_bg_image: Lade ein benutzerdefiniertes Bild hoch, das als Hintergrund für das Kampagnenbanner verwendet werden soll.
     discourse_subscriptions_campaign_show_contributors: Zeige Avatare für die zuletzt gekauften Abonnementprodukte.
     discourse_subscriptions_campaign_product: Die Stripe-Produkt-ID, die an die Unterstützer gesendet werden soll, wenn sie auf die Schaltfläche der Kampagne klicken. Wenn diese Einstellung leer ist, werden die Unterstützer auf die Hauptseite der Produkte weitergeleitet.
+    discourse_subscriptions_enable_automatic_tax: Aktiviert die automatische Steuerberechnung, die automatisch die Steuersätze auf allen durch das Abonnement generierten Rechnungen berechnet.
     errors:
       discourse_patrons_amount_must_be_currency: "Währungsbeträge müssen Währungen ohne Dollarzeichen sein (z. B. 1,50)"
   js:
