@@ -62,26 +62,9 @@ describe DiscourseSubscriptions::Campaign do
         },
       }
     end
-    let(:invoice_with_nil_lines) do
-      {
-        id: "in_1236",
-        paid: true,
-        lines: nil,
-      }
-    end
+    let(:invoice_with_nil_lines) { { id: "in_1236", paid: true, lines: nil } }
     let(:invoice_with_nil_price) do
-      {
-        id: "in_1237",
-        paid: true,
-        lines: {
-          data: [
-            {
-              plan: nil,
-              price: nil,
-            },
-          ],
-        },
-      }
+      { id: "in_1237", paid: true, lines: { data: [{ plan: nil, price: nil }] } }
     end
 
     before do

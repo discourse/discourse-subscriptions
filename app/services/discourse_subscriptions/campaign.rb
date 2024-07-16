@@ -164,7 +164,7 @@ module DiscourseSubscriptions
               line_item = invoice[:lines][:data][0] if invoice[:lines] && invoice[:lines][:data] # Discourse only makes single-line item charges
               # check if non-subscription and that the plan is active
               if line_item && line_item[:plan] == nil && line_item[:price] &&
-                  line_item[:price][:recurring] == nil && line_item[:price][:active] == true
+                   line_item[:price][:recurring] == nil && line_item[:price][:active] == true
                 product_id = line_item[:price][:product]
                 if product_ids.include? product_id
                   line_data = {
