@@ -1,40 +1,36 @@
-import Helper from "@ember/component/helper";
+import { helper } from '@ember/component/helper';
 
-export default Helper.helper(function (params) {
+export function formatCurrency([currency, amount]) {
   let currencySign;
 
-  switch (params[0]) {
+  switch (currency.toUpperCase()) {
     case "EUR":
-    case "eur":
       currencySign = "€";
       break;
     case "GBP":
-    case "gbp":
       currencySign = "£";
       break;
     case "INR":
-    case "inr":
       currencySign = "₹";
       break;
     case "BRL":
-    case "brl":
       currencySign = "R$";
       break;
     case "DKK":
-    case "dkk":
       currencySign = "DKK";
       break;
     case "SGD":
-    case "sgd":
       currencySign = "S$";
       break;
     case "ZAR":
-    case "zar":
       currencySign = "R";
       break;
     default:
       currencySign = "$";
   }
 
-  return currencySign + params[1];
-});
+  let formattedAmount = parseFloat(amount).toFixed(2);
+  return currencySign + formattedAmount;
+}
+
+export default helper(formatCurrency);
