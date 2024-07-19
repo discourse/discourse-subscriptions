@@ -9,4 +9,9 @@ module("Unit | Helper | format-currency", function (hooks) {
     let result = formatCurrency(["USD", 338.2]);
     assert.equal(result, "$338.20", "Formats USD correctly");
   });
+
+  test("it rounds correctly", function (assert) {
+    let result = formatCurrency(["USD", 338.289]);
+    assert.equal(result, "$338.29", "Rounds correctly");
+  });
 });
