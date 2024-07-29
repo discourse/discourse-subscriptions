@@ -17,26 +17,39 @@ module DiscourseSubscriptions
         product_ids = product_ids.include?(campaign_product) ? [campaign_product] : []
       end
 
-      amount = 0.00
-      subscriptions = get_subscription_data
-      subscriptions = filter_to_subscriptions_products(subscriptions, product_ids)
+      begin
+        amount = 0.00
+        subscriptions = get_subscription_data
+        subscriptions = filter_to_subscriptions_products(subscriptions, product_ids)
 
-      # Fetch product purchases
-      one_time_payments = get_one_time_payments(product_ids)
-      one_time_payments.each { |c| amount += c[:price].to_f / 100.00 }
+        # Fetch product purchases
+        one_time_payments = get_one_time_payments(product_ids)
+        one_time_payments.each { |c| amount += c[:price].to_f / 100.00 }
 
-      # get number of subscribers
-      SiteSetting.discourse_subscriptions_campaign_subscribers = subscriptions&.length.to_i
+        # get number of subscribers
+        SiteSetting.discourse_subscriptions_campaign_subscribers = subscriptions&.length.to_i
 
-      # calculate amount raised
-      subscriptions&.each do |sub|
-        sub_amount = calculate_monthly_amount(sub)
-        amount += sub_amount / 100.00
+        # calculate amount raised
+        subscriptions&.each do |sub|
+          sub_amount = calculate_monthly_amount(sub)
+          amount += sub_amount / 100.00
+        end
+
+        SiteSetting.discourse_subscriptions_campaign_amount_raised = amount.round(2)
+
+        check_goal_status
+      rescue ::Stripe::AuthenticationError
+        message =
+          I18n.t(
+            "discourse_subscriptions.auth.invalid",
+            settingsUrl: "admin/site_settings/category/discourse_subscriptions",
+          )
+        AdminDashboardData.add_found_scheduled_check_problem(
+          AdminDashboardData::Problem.new(message, identifier: AUTH_PROBLEM_IDENTIFIER),
+        )
+      else
+        AdminDashboardData.clear_found_problem(AUTH_PROBLEM_IDENTIFIER)
       end
-
-      SiteSetting.discourse_subscriptions_campaign_amount_raised = amount.round(2)
-
-      check_goal_status
     end
 
     def create_campaign
