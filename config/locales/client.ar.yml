@@ -11,8 +11,10 @@ ar:
         categories:
           discourse_subscriptions: "اشتراكات Discourse"
   site_settings:
-    discourse_subscriptions_enabled: تفعيل المكوِّن الإضافي لاشتراكات Discourse.
+    discourse_subscriptions_enabled: تفعيل المكوِّن الإضافي "اشتراكات Discourse".
     discourse_subscriptions_extra_nav_subscribe: عرض زر الاشتراك في التنقل الأساسي
+    discourse_subscriptions_pricing_table_id: أضِف pricing-table-id من الرمز البرمجي لتضمين جدول التسعير هنا.
+    discourse_subscriptions_pricing_table_enabled: سيُظهر زر الاشتراك جدول التسعير المضمَّن وسيتم استخدام "الدفع بواسطة Stripe".
     discourse_subscriptions_public_key: مفتاح قابل للنشر من Stripe
     discourse_subscriptions_secret_key: مفتاح سري من Stripe
     discourse_subscriptions_webhook_secret: سر خطاف ويب من Stripe
@@ -25,6 +27,7 @@ ar:
     discourse_subscriptions_campaign_banner_bg_image: تحميل صورة مخصَّصة لاستخدامها كخلفية في بانر الحملة
     discourse_subscriptions_campaign_show_contributors: عرض الصور الرمزية لأحدث المشتريات من منتجات الاشتراكات
     discourse_subscriptions_campaign_product: مُعرِّف منتج Stripe الذي سيتم إرساله إلى الداعمين عندما ينقرون على الزر في الحملة. إذا كان هذا الإعداد فارغًا، فسيتم توجيه الداعمين إلى الصفحة الرئيسية للمنتجات.
+    discourse_subscriptions_enable_automatic_tax: تفعيل الحساب التلقائي للضريبة، والذي سيحسب تلقائيًا معدلات الضريبة على جميع الفواتير الناتجة عن الاشتراك.
     errors:
       discourse_patrons_amount_must_be_currency: "يجب أن تكون مبالغ العملات عبارة عن عملات دون رمز الدولار (مثل 1.50)"
   js:
@@ -119,6 +122,7 @@ ar:
         invalid_cardholder_country: البلد مطلوب.
         invalid_cardholder_state: الحالة مطلوبة.
         invalid_cardholder_province: المقاطعة مطلوبة.
+        transaction_error: حدث خطأ في أثناء معالجة الدفع. يُرجى إعادة المحاولة.
         card:
           title: الدفع
         customer:

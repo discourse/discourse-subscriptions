@@ -13,6 +13,8 @@ tr_TR:
   site_settings:
     discourse_subscriptions_enabled: Discourse Abonelikleri eklentisini etkinleştirin.
     discourse_subscriptions_extra_nav_subscribe: Birincil gezinmede abone ol düğmesini gösterin
+    discourse_subscriptions_pricing_table_id: Fiyatlandırma Tablosu gömme kodundaki pricing-table-id'yi buraya ekleyin.
+    discourse_subscriptions_pricing_table_enabled: Abone ol düğmesi gömülü fiyatlandırma tablosunu gösterir ve Stripe Checkout kullanılır.
     discourse_subscriptions_public_key: Stripe Yayınlanabilir Anahtarı
     discourse_subscriptions_secret_key: Stripe Gizli Anahtarı
     discourse_subscriptions_webhook_secret: Stripe Webhook Sırrı
@@ -25,6 +27,7 @@ tr_TR:
     discourse_subscriptions_campaign_banner_bg_image: Kampanya banner'ında arka plan olarak kullanmak için özel bir görsel yükleyin.
     discourse_subscriptions_campaign_show_contributors: En son satın alınan abonelik ürünlerinin avatarlarını gösterin.
     discourse_subscriptions_campaign_product: Destekçiler kampanyadaki düğmeye tıkladıklarında gönderilecek Stripe ürün kimliği. Bu ayar boş bırakılırsa destekçiler ana ürünler sayfasına yönlendirilir.
+    discourse_subscriptions_enable_automatic_tax: Abonelik tarafından oluşturulan tüm faturalarda vergi oranlarını otomatik olarak hesaplayacak olan otomatik vergi hesaplamasını etkinleştirir.
     errors:
       discourse_patrons_amount_must_be_currency: "Para birimi tutarları dolar sembolü olmayan para birimleri olmalıdır (ör. 1,50)"
   js:
@@ -119,6 +122,7 @@ tr_TR:
         invalid_cardholder_country: Ülke gerekli.
         invalid_cardholder_state: Eyalet gerekli.
         invalid_cardholder_province: İl gerekli.
+        transaction_error: Ödeme işlenirken bir hata oluştu. Lütfen tekrar deneyin.
         card:
           title: Ödeme
         customer:

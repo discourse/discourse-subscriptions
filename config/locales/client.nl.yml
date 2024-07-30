@@ -13,6 +13,8 @@ nl:
   site_settings:
     discourse_subscriptions_enabled: Schakel de Discourse Subscriptions-plug-in in.
     discourse_subscriptions_extra_nav_subscribe: Geef de abonneerknop knop weer in de primaire navigatie
+    discourse_subscriptions_pricing_table_id: Voeg hier de prijstabel-ID uit de insluitcode voor de prijstabel toe.
+    discourse_subscriptions_pricing_table_enabled: De knop Abonneren toont de ingesloten prijstabel en Stripe Checkout wordt gebruikt.
     discourse_subscriptions_public_key: Publiceerbare Stripe-sleutel
     discourse_subscriptions_secret_key: Geheime Stripe-sleutel
     discourse_subscriptions_webhook_secret: Stripe-webhookgeheim
@@ -25,6 +27,7 @@ nl:
     discourse_subscriptions_campaign_banner_bg_image: Upload een aangepaste afbeelding als achtergrond voor de campagnebanner.
     discourse_subscriptions_campaign_show_contributors: Toon avatars van de meest recente aankopen van abonnementsproducten.
     discourse_subscriptions_campaign_product: De Stripe-product-ID om naar supporters te sturen wanneer ze op de knop van de campagne klikken. Als deze instelling leeg is, worden supporters doorverwezen naar de hoofdpagina met producten.
+    discourse_subscriptions_enable_automatic_tax: Maakt automatische berekening van belastingen mogelijk, waardoor automatisch de belastingtarieven worden berekend op alle facturen die door het abonnement worden gegenereerd.
     errors:
       discourse_patrons_amount_must_be_currency: "Valutabedragen moeten valuta zonder valutateken zijn (bijvoorbeeld 1,50)"
   js:
@@ -119,6 +122,7 @@ nl:
         invalid_cardholder_country: Land is vereist.
         invalid_cardholder_state: Staat is vereist.
         invalid_cardholder_province: Provincie is vereist.
+        transaction_error: Er was een fout bij het verwerken van de betaling. Probeer het opnieuw.
         card:
           title: Betaling
         customer:
