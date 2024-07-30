@@ -13,6 +13,8 @@ zh_CN:
   site_settings:
     discourse_subscriptions_enabled: 启用 Discourse Subscriptions 插件。
     discourse_subscriptions_extra_nav_subscribe: 在主导航中显示订阅按钮
+    discourse_subscriptions_pricing_table_id: 在此处从定价表嵌入代码中添加 pricing-table-id。
+    discourse_subscriptions_pricing_table_enabled: '“订阅”按钮将显示嵌入的定价表，并且将使用 Stripe Checkout。'
     discourse_subscriptions_public_key: Stripe 可发布密钥
     discourse_subscriptions_secret_key: Stripe 密钥
     discourse_subscriptions_webhook_secret: Stripe 网络钩子密钥
@@ -25,6 +27,7 @@ zh_CN:
     discourse_subscriptions_campaign_banner_bg_image: 上传自定义图片以用作活动横幅的背景。
     discourse_subscriptions_campaign_show_contributors: 显示最近购买的订阅产品的头像。
     discourse_subscriptions_campaign_product: 当支持者点击活动上的按钮时向支持者发送的 Stripe 产品 ID。如果此设置为空，则支持者将被定向到主要产品页面。
+    discourse_subscriptions_enable_automatic_tax: 启用自动税务计算，它将自动计算订阅生成的所有发票的税率。
     errors:
       discourse_patrons_amount_must_be_currency: "货币金额必须为无美元符号的金额（例如 1.50）"
   js:
@@ -119,6 +122,7 @@ zh_CN:
         invalid_cardholder_country: 国家/地区为必填项。
         invalid_cardholder_state: 州为必填项。
         invalid_cardholder_province: 省为必填项。
+        transaction_error: 处理付款时出错。请重试。
         card:
           title: 付款
         customer:

@@ -13,6 +13,8 @@ fi:
   site_settings:
     discourse_subscriptions_enabled: Ota Discoursen Subscriptions-lisäosa käyttöön.
     discourse_subscriptions_extra_nav_subscribe: Näytä tilauspainike päänavigoinnissa
+    discourse_subscriptions_pricing_table_id: Lisää pricing-table-id hintataulukon upotuskoodista tähän.
+    discourse_subscriptions_pricing_table_enabled: Tilauspainike näyttää upotetun hintataulukon ja Stripe Checkoutia käytetään.
     discourse_subscriptions_public_key: Stripen Publishable Key
     discourse_subscriptions_secret_key: Stripen Secret Key
     discourse_subscriptions_webhook_secret: Stripen Webhook Secret
@@ -25,6 +27,7 @@ fi:
     discourse_subscriptions_campaign_banner_bg_image: Lataa mukautettu kuva käytettäväksi kampanjabannerin taustana.
     discourse_subscriptions_campaign_show_contributors: Näytä tilaustuotteiden viimeisimpien ostosten avatarit.
     discourse_subscriptions_campaign_product: Stripen tuotetunnus, johon tukijat ohjataan, kun he napsauttavat kampanjan painiketta. Jos tämä asetus on tyhjä, tukijat ohjataan päätuotesivulle.
+    discourse_subscriptions_enable_automatic_tax: Ottaa käyttöön automaattisen verolaskelman, joka laskee automaattisesti veroprosentin kaikille tilauksen luomille laskuille.
     errors:
       discourse_patrons_amount_must_be_currency: "Valuuttasummien täytyy olla valuuttoja ilman dollarimerkkiä (esim. 1,50)"
   js:
@@ -119,6 +122,7 @@ fi:
         invalid_cardholder_country: Maa on pakollinen.
         invalid_cardholder_state: Osavaltio on pakollinen.
         invalid_cardholder_province: Provinssi on pakollinen.
+        transaction_error: Maksun käsittelyssä tapahtui virhe. Yritä uudelleen.
         card:
           title: Maksu
         customer:

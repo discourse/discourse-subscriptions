@@ -13,6 +13,8 @@ it:
   site_settings:
     discourse_subscriptions_enabled: Abilita il plug-in di abbonamenti a Discourse
     discourse_subscriptions_extra_nav_subscribe: Mostra il pulsante di abbonamento nel menu principale
+    discourse_subscriptions_pricing_table_id: Aggiungi qui il valore di pricing-table-id dal codice di incorporamento della tabella dei prezzi.
+    discourse_subscriptions_pricing_table_enabled: Il pulsante Abbonati mostrerà la tabella dei prezzi incorporata e verrà utilizzato il checkout di Stripe.
     discourse_subscriptions_public_key: Chiave Stripe pubblicabile
     discourse_subscriptions_secret_key: Chiave Stripe segreta
     discourse_subscriptions_webhook_secret: Segreto Webhook Stripe
@@ -25,6 +27,7 @@ it:
     discourse_subscriptions_campaign_banner_bg_image: Carica un'immagine personalizzata da utilizzare come sfondo sul banner pubblicitario.
     discourse_subscriptions_campaign_show_contributors: Mostra gli avatar degli acquisti più recenti di prodotti in abbonamento.
     discourse_subscriptions_campaign_product: L'ID del prodotto Stripe da inviare ai sostenitori quando fanno clic sul pulsante della campagna. Se questa impostazione è lasciata vuota, i sostenitori verranno reindirizzati alla pagina principale dei prodotti.
+    discourse_subscriptions_enable_automatic_tax: Abilita il calcolo automatico delle imposte che calcolerà automaticamente le aliquote fiscali su tutte le fatture generate dall'abbonamento.
     errors:
       discourse_patrons_amount_must_be_currency: "Gli importi valutari devono essere valori senza il simbolo del dollaro (ad es. 1,50)"
   js:
@@ -119,6 +122,7 @@ it:
         invalid_cardholder_country: Il paese è obbligatorio.
         invalid_cardholder_state: Lo Stato è obbligatorio.
         invalid_cardholder_province: La provincia è obbligatoria.
+        transaction_error: Si è verificato un errore durante l'elaborazione del pagamento. Riprova.
         card:
           title: Pagamento
         customer:

@@ -13,6 +13,8 @@ fr:
   site_settings:
     discourse_subscriptions_enabled: Activer l'extension Discourse Subscription
     discourse_subscriptions_extra_nav_subscribe: Afficher le bouton « S'abonner » dans le menu de navigation.
+    discourse_subscriptions_pricing_table_id: Ajoutez ici l'identifiant du tableau de tarification à partir du code intégré de la table de tarification.
+    discourse_subscriptions_pricing_table_enabled: Le bouton d'inscription affichera le tableau des prix intégré et Stripe Checkout sera utilisé.
     discourse_subscriptions_public_key: Clé publique Stripe
     discourse_subscriptions_secret_key: Clé secrète Stripe
     discourse_subscriptions_webhook_secret: Secret du Webhook de Stripe
@@ -25,6 +27,7 @@ fr:
     discourse_subscriptions_campaign_banner_bg_image: Téléverse une image personnalisée à utiliser comme arrière-plan de la bannière de la campagne.
     discourse_subscriptions_campaign_show_contributors: Afficher les avatars des achats les plus récents de produits d'abonnement.
     discourse_subscriptions_campaign_product: L'identifiant du produit Stripe à envoyer aux supporters lorsqu'ils cliquent sur le bouton de la campagne. Si ce paramètre est vide, les supporters seront dirigés vers la page principale des produits.
+    discourse_subscriptions_enable_automatic_tax: Active le calcul automatique des taxes qui calculera automatiquement les taux d'imposition sur toutes les factures générées par l'abonnement.
     errors:
       discourse_patrons_amount_must_be_currency: "Les montants doivent être indiqués sans le symbole du dollar (p. ex., 1,50)"
   js:
@@ -119,6 +122,7 @@ fr:
         invalid_cardholder_country: Le pays est requis.
         invalid_cardholder_state: L'État est requis.
         invalid_cardholder_province: La province est requise.
+        transaction_error: Une erreur s'est produite lors du traitement du paiement. Veuillez réessayer.
         card:
           title: Paiement
         customer:
