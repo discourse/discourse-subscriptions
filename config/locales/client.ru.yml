@@ -13,6 +13,7 @@ ru:
   site_settings:
     discourse_subscriptions_enabled: Включить плагин Discourse Subscription.
     discourse_subscriptions_extra_nav_subscribe: Показать кнопку подписки в основной навигации
+    discourse_subscriptions_pricing_table_enabled: Кнопка «Подписаться» отобразит встроенную таблицу цен, и будет использована система Stripe Checkout.
     discourse_subscriptions_public_key: Публичный ключ сервиса Stripe
     discourse_subscriptions_secret_key: Секретный ключ сервиса Stripe
     discourse_subscriptions_webhook_secret: Секретный вебхук сервиса Stripe
@@ -25,6 +26,7 @@ ru:
     discourse_subscriptions_campaign_banner_bg_image: Загрузить изображение для использования его в качестве фона на баннере кампании.
     discourse_subscriptions_campaign_show_contributors: Показывать аватары последних купленных товаров по подписке.
     discourse_subscriptions_campaign_product: Идентификатор продукта Stripe для отправки участникам, когда они нажимают кнопку кампании. Если этот параметр не задан, участники будут перенаправлены на главную страницу товаров.
+    discourse_subscriptions_enable_automatic_tax: Включает автоматический расчет налогов, который автоматически рассчитывает налоговые ставки для всех счетов, созданных подпиской.
     errors:
       discourse_patrons_amount_must_be_currency: "Сумма должна быть без символа доллара (например, 1,50)"
   js:
@@ -119,6 +121,7 @@ ru:
         invalid_cardholder_country: Укажите страну.
         invalid_cardholder_state: Укажите штат.
         invalid_cardholder_province: Укажите провинцию.
+        transaction_error: При обработке платежа произошла ошибка. Попробуйте еще раз.
         card:
           title: Оплата
         customer:
