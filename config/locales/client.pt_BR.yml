@@ -13,6 +13,8 @@ pt_BR:
   site_settings:
     discourse_subscriptions_enabled: Ativar o Plugin de Assinaturas no Discourse.
     discourse_subscriptions_extra_nav_subscribe: Mostrar o botão de assinatura na navegação principal
+    discourse_subscriptions_pricing_table_id: Adicione o pricing-table-id do código incorporado da Tabela de Preços aqui.
+    discourse_subscriptions_pricing_table_enabled: No botão de assinatura, serão exibidos a Finalização da Stripe e a tabela de preços incorporada.
     discourse_subscriptions_public_key: Chave Publicável da Stripe
     discourse_subscriptions_secret_key: Chave Secreta da Stripe
     discourse_subscriptions_webhook_secret: Segredo do Webhook da Stripe
@@ -25,6 +27,7 @@ pt_BR:
     discourse_subscriptions_campaign_banner_bg_image: Envie uma imagem personalizada para usar como plano de fundo no banner da campanha.
     discourse_subscriptions_campaign_show_contributors: Mostre avatares das compras mais recentes dos produtos de assinatura.
     discourse_subscriptions_campaign_product: A ID do produto da Stripe para enviar aos(às) apoiadores(as) quando clicam no botão da campanha. Se esta configuração estiver em branco, eles(as) serão direcionados(as) para a página de produtos principais.
+    discourse_subscriptions_enable_automatic_tax: Ative o cálculo automático dos impostos, determinando as taxas dos tributos automaticamente em todas as faturas geradas pela assinatura.
     errors:
       discourse_patrons_amount_must_be_currency: "As quantias devem ser escritas sem o símbolo de dólar (ex 1,50)"
   js:
@@ -119,6 +122,7 @@ pt_BR:
         invalid_cardholder_country: Requer o país.
         invalid_cardholder_state: Requer o estado.
         invalid_cardholder_province: Requer a província.
+        transaction_error: Houve um erro ao processar o pagamento. Tente novamente.
         card:
           title: Pagamento
         customer:

@@ -13,6 +13,8 @@ ja:
   site_settings:
     discourse_subscriptions_enabled: Discourse サブスクリプションプラグインを有効にします。
     discourse_subscriptions_extra_nav_subscribe: プライマリーナビゲーションに購読ボタンを表示する
+    discourse_subscriptions_pricing_table_id: 価格表の埋め込みコードの pricing-table-id をここに追加します。
+    discourse_subscriptions_pricing_table_enabled: 購読ボタンを使うと、埋め込み価格表が表示され、Stripe による決済が使用されます。
     discourse_subscriptions_public_key: Stripe の公開可能キー
     discourse_subscriptions_secret_key: Stripe のシークレットキー
     discourse_subscriptions_webhook_secret: Stripe の Webhook シークレット
@@ -25,6 +27,7 @@ ja:
     discourse_subscriptions_campaign_banner_bg_image: キャンペーンバナーの背景として使用するカスタム画像をアップロードします。
     discourse_subscriptions_campaign_show_contributors: 直近のサブスクリプション商品のアバターを表示します。
     discourse_subscriptions_campaign_product: サポーターがキャンペーンのボタンをクリックしたときにサポーターを送信するための Stripe 商品 ID。この設定が空白である場合、サポーターはメインの商品ページにリダイレクトされます。
+    discourse_subscriptions_enable_automatic_tax: サブスクリプションによって生成されるすべての請求書の税率を自動的に計算する自動税計算を有効にします。
     errors:
       discourse_patrons_amount_must_be_currency: "通貨の金額は、ドル記号なしの通貨である必要があります（例: 1.50）"
   js:
@@ -119,6 +122,7 @@ ja:
         invalid_cardholder_country: 国は必須です。
         invalid_cardholder_state: 都道府県は必須です。
         invalid_cardholder_province: 都道府県は必須です。
+        transaction_error: 支払いの処理中にエラーが発生しました。もう一度お試しください。
         card:
           title: 支払い
         customer:
