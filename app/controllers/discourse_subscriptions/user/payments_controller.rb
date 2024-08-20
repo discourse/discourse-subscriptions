@@ -29,7 +29,8 @@ module DiscourseSubscriptions
                 payments[:data].select { |payment| invoice_ids.include?(payment[:invoice]) }
 
               # Pricing table one-off purchases do not have invoices
-              payments_without_invoices = payments[:data].select { |payment| payment[:invoice].nil? }
+              payments_without_invoices =
+                payments[:data].select { |payment| payment[:invoice].nil? }
 
               data = data | payments_from_invoices | payments_without_invoices
             end

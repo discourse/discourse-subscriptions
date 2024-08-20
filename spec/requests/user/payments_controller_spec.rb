@@ -62,21 +62,12 @@ RSpec.describe DiscourseSubscriptions::User::PaymentsController do
     end
 
     it "gets pricing table one-off purchases" do
-      ::Stripe::Invoice
-        .expects(:list)
-        .with(customer: "c_345678")
-        .returns(
-          data: [],
-        )
+      ::Stripe::Invoice.expects(:list).with(customer: "c_345678").returns(data: [])
 
       ::Stripe::PaymentIntent
         .expects(:list)
         .with(customer: "c_345678")
-        .returns(
-          data: [
-            { id: "pi_900010", invoice: nil, created: Time.now },
-          ],
-        )
+        .returns(data: [{ id: "pi_900010", invoice: nil, created: Time.now }])
 
       get "/s/user/payments.json"
 

@@ -47,10 +47,7 @@ module DiscourseSubscriptions
         subscription = checkout_session[:subscription]
 
         if !subscription.nil?
-          Subscription.create(
-            customer_id: discourse_customer.id,
-            external_id: subscription,
-          )
+          Subscription.create(customer_id: discourse_customer.id, external_id: subscription)
         end
 
         line_items =

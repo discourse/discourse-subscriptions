@@ -207,7 +207,10 @@ RSpec.describe DiscourseSubscriptions::HooksController do
 
     describe "checkout.session.completed for one-off purchase" do
       before do
-        event = { type: "checkout.session.completed", data: checkout_session_completed_data_one_off }
+        event = {
+          type: "checkout.session.completed",
+          data: checkout_session_completed_data_one_off,
+        }
         ::Stripe::Checkout::Session
           .stubs(:list_line_items)
           .with(checkout_session_completed_data[:object][:id], { limit: 1 })
