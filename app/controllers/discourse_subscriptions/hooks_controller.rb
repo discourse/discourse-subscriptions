@@ -44,23 +44,30 @@ module DiscourseSubscriptions
 
         discourse_customer = Customer.create(user_id: user.id, customer_id: customer_id)
 
-        Subscription.create(
-          customer_id: discourse_customer.id,
-          external_id: checkout_session[:subscription],
-        )
+        subscription = checkout_session[:subscription]
+
+        if !subscription.nil?
+          Subscription.create(
+            customer_id: discourse_customer.id,
+            external_id: subscription,
+          )
+        end
 
         line_items =
           ::Stripe::Checkout::Session.list_line_items(checkout_session[:id], { limit: 1 })
         item = line_items[:data].first
+
         group = plan_group(item[:price])
         group.add(user) unless group.nil?
         discourse_customer.product_id = item[:price][:product]
         discourse_customer.save!
 
-        ::Stripe::Subscription.update(
-          checkout_session[:subscription],
-          { metadata: { user_id: user.id, username: user.username } },
-        )
+        if !subscription.nil?
+          ::Stripe::Subscription.update(
+            subscription,
+            { metadata: { user_id: user.id, username: user.username } },
+          )
+        end
       when "customer.subscription.created"
       when "customer.subscription.updated"
         subscription = event[:data][:object]

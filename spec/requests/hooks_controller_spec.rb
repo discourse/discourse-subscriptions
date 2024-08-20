@@ -83,6 +83,27 @@ RSpec.describe DiscourseSubscriptions::HooksController do
       }
     end
 
+    let(:checkout_session_completed_data_one_off) do
+      {
+        object: {
+          id: "cs_test_a1ENei5A9TGOaEketyV5qweiQR5CyJWHT5j8T3HheQY3uah3RxzKttVUKZ",
+          object: "checkout.session",
+          customer: customer.customer_id,
+          customer_email: user.email,
+          invoice: nil,
+          metadata: {
+          },
+          mode: "subscription",
+          payment_status: "paid",
+          status: "complete",
+          submit_type: nil,
+          subscription: nil,
+          success_url: "http://localhost:4200/my/billing/subscriptions",
+          url: nil,
+        },
+      }
+    end
+
     let(:checkout_session_completed_bad_data) do
       {
         object: {
@@ -181,6 +202,23 @@ RSpec.describe DiscourseSubscriptions::HooksController do
       it "is returns 422" do
         post "/s/hooks.json"
         expect(response.status).to eq 422
+      end
+    end
+
+    describe "checkout.session.completed for one-off purchase" do
+      before do
+        event = { type: "checkout.session.completed", data: checkout_session_completed_data_one_off }
+        ::Stripe::Checkout::Session
+          .stubs(:list_line_items)
+          .with(checkout_session_completed_data[:object][:id], { limit: 1 })
+          .returns(list_line_items_data)
+
+        ::Stripe::Webhook.stubs(:construct_event).returns(event)
+      end
+
+      it "is returns 200" do
+        expect { post "/s/hooks.json" }.to change { user.groups.count }.by(1)
+        expect(response.status).to eq 200
       end
     end
 
