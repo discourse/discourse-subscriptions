@@ -27,7 +27,12 @@ module DiscourseSubscriptions
               payments = ::Stripe::PaymentIntent.list(customer: customer_id)
               payments_from_invoices =
                 payments[:data].select { |payment| invoice_ids.include?(payment[:invoice]) }
-              data = data | payments_from_invoices
+
+              # Pricing table one-off purchases do not have invoices
+              payments_without_invoices =
+                payments[:data].select { |payment| payment[:invoice].nil? }
+
+              data = data | payments_from_invoices | payments_without_invoices
             end
           end
 
@@ -42,14 +47,13 @@ module DiscourseSubscriptions
       private
 
       def parse_invoices(all_invoices, product_ids)
-        invoices_with_products =
-          all_invoices[:data].select do |invoice|
-            invoice_lines = invoice[:lines][:data][0] if invoice[:lines] && invoice[:lines][:data]
-            if invoice_lines
-              invoice_product_id = parse_invoice_lines(invoice_lines)
-              product_ids.include?(invoice_product_id)
-            end
+        all_invoices[:data].select do |invoice|
+          invoice_lines = invoice[:lines][:data][0] if invoice[:lines] && invoice[:lines][:data]
+          if invoice_lines
+            invoice_product_id = parse_invoice_lines(invoice_lines)
+            product_ids.include?(invoice_product_id)
           end
+        end
       end
 
       def parse_invoice_lines(invoice_lines)
