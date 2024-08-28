@@ -44,6 +44,14 @@ module DiscourseSubscriptions
             end
           end
 
+          if SiteSetting.discourse_subscriptions_pricing_table_enabled && current_user.email
+            related_guest_payments = fetch_guest_payments(current_user.email)
+            if SiteSetting.discourse_subscriptions_enable_verbose_logging
+              Rails.logger.warn("Related guest payments: #{related_guest_payments}")
+            end
+            data = data | related_guest_payments
+          end
+
           data = data.sort_by { |pmt| pmt[:created] }.reverse
 
           render_json_dump data
@@ -70,6 +78,40 @@ module DiscourseSubscriptions
         invoice_product_id = invoice_lines[:plan][:product] if invoice_lines[:plan] &&
           invoice_lines[:plan][:product]
         invoice_product_id
+      end
+
+      def fetch_guest_payments(email)
+        guest_payments = []
+        starting_after = nil
+
+        begin
+          loop do
+            # Fetch charges in batches of 100, using pagination with starting_after
+            charges = ::Stripe::Charge.list(
+              limit: 100,
+              starting_after: starting_after,
+              expand: ['data.payment_intent']
+            )
+
+            charges[:data].each do |charge|
+              # Check if the charge is associated with the given email and has no customer ID
+              if charge[:billing_details][:email] == email && charge[:customer].nil?
+                guest_payments << charge
+              end
+            end
+
+            # Check if there are more charges to fetch
+            break if charges[:data].empty?
+            break if charges[:data].count < 100
+
+            # Set starting_after to the last charge's ID for the next batch
+            starting_after = charges[:data].last[:id]
+          end
+        rescue ::Stripe::StripeError => e
+          Rails.logger.error("Stripe API error: #{e.message}")
+        end
+
+        guest_payments
       end
     end
   end

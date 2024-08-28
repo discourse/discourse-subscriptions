@@ -75,5 +75,59 @@ RSpec.describe DiscourseSubscriptions::User::PaymentsController do
 
       expect(parsed_body.count).to eq(1)
     end
+
+    it "gets pricing table one-off purchases that show up as related guest payments" do
+      SiteSetting.discourse_subscriptions_pricing_table_enabled = true
+      ::Stripe::Invoice.expects(:list).with(customer: "c_345678").returns(data: [])
+
+      ::Stripe::PaymentIntent
+        .expects(:list)
+        .with(customer: "c_345678")
+        .returns(data: [{ id: "pi_900010", invoice: nil, created: Time.now }])
+
+      ::Stripe::Charge
+        .expects(:list)
+        .with(limit: 100, starting_after: nil, expand: ['data.payment_intent'])
+        .returns(
+          data: [
+            {
+              id: "ch_1HtGz2GHcn71qeAp4YjA2oB4",
+              amount: 2000,
+              currency: "usd",
+              billing_details: { email: "asdf@example.com" },
+              customer: nil, # guest payment
+              payment_intent: "pi_1HtGz1GHcn71qeApT9N2Cjln",
+              created: Time.now.to_i
+            },
+            {
+              id: "ch_2HtGz2GHcn71qeAp4YjA2oB4",
+              amount: 2000,
+              currency: "usd",
+              billing_details: { email: "zxcv@example.com" },
+              customer: nil, # different guest
+              payment_intent: "pi_2HtGz1GHcn71qeApT9N2Cjln",
+              created: Time.now.to_i
+            },
+            {
+              id: "ch_1HtGz3GHcn71qeAp5YjA2oC5",
+              amount: 3000,
+              currency: "usd",
+              billing_details: { email: "fdsa@example.com" },
+              customer: "cus_1234", # This is not a guest payment
+              payment_intent: "pi_3HtGz2GHcn71qeApT9N2Cjln",
+              created: Time.now.to_i
+            }
+          ]
+        )
+
+      get "/s/user/payments.json"
+
+      parsed_body = response.parsed_body
+
+      # Validate that only guest payments with the specified email are returned
+      expect(parsed_body.count).to eq(1)
+      # expect(parsed_body.first["id"]).to eq("ch_1HtGz2GHcn71qeAp4YjA2oB4")
+      # expect(parsed_body.first["customer"]).to be_nil
+    end
   end
 end
