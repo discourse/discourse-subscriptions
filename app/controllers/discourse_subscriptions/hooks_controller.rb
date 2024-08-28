@@ -30,6 +30,10 @@ module DiscourseSubscriptions
       case event[:type]
       when "checkout.session.completed"
         checkout_session = event[:data][:object]
+
+        if SiteSetting.discourse_subscriptions_enable_verbose_logging
+          Rails.logger.info("checkout.session.completed data: #{checkout_session}")
+        end
         email = checkout_session[:customer_email]
 
         return head 200 if checkout_session[:status] != "complete"
@@ -37,6 +41,10 @@ module DiscourseSubscriptions
         return render_json_error "email not found" if !email
 
         customer_id = checkout_session[:customer]
+
+        if SiteSetting.discourse_subscriptions_enable_verbose_logging
+          Rails.logger.info("Looking up user with email: #{email}")
+        end
 
         user = ::User.find_by_username_or_email(email)
 
