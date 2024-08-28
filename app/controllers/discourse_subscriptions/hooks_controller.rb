@@ -37,10 +37,16 @@ module DiscourseSubscriptions
         email = checkout_session[:customer_email]
 
         return head 200 if checkout_session[:status] != "complete"
-        return render_json_error "customer not found" if checkout_session[:customer].nil?
         return render_json_error "email not found" if !email
 
-        customer_id = checkout_session[:customer]
+        if checkout_session[:customer].nil?
+          customer = ::Stripe::Customer.create({
+            email: email,
+          })
+          customer_id = customer[:id]
+        else
+          customer_id = checkout_session[:customer]
+        end
 
         if SiteSetting.discourse_subscriptions_enable_verbose_logging
           Rails.logger.warn("Looking up user with email: #{email}")
@@ -48,7 +54,7 @@ module DiscourseSubscriptions
 
         user = ::User.find_by_username_or_email(email)
 
-        return render_json_error "customer not found" if !user
+        return render_json_error "user not found" if !user
 
         discourse_customer = Customer.create(user_id: user.id, customer_id: customer_id)
 
