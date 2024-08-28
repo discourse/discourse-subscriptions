@@ -40,9 +40,7 @@ module DiscourseSubscriptions
         return render_json_error "email not found" if !email
 
         if checkout_session[:customer].nil?
-          customer = ::Stripe::Customer.create({
-            email: email,
-          })
+          customer = ::Stripe::Customer.create({ email: email })
           customer_id = customer[:id]
         else
           customer_id = checkout_session[:customer]
