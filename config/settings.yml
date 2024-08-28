@@ -82,3 +82,5 @@ discourse_subscriptions:
     hidden: true
   discourse_subscriptions_enable_automatic_tax:
     default: false
+  discourse_subscriptions_enable_verbose_logging:
+    default: false
