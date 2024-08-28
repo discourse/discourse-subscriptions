@@ -221,7 +221,8 @@ RSpec.describe DiscourseSubscriptions::HooksController do
         ::Stripe::Webhook.stubs(:construct_event).returns(event)
         ::Stripe::Customer.stubs(:create).returns(id: "cus_1234")
 
-        ::Stripe::PaymentIntent.expects(:update)
+        ::Stripe::PaymentIntent
+          .expects(:update)
           .with("pi_3PsohkGHcn71qeAp06trzhx7", { customer: "cus_1234" })
           .returns({ id: "pi_3PsohkGHcn" })
       end
