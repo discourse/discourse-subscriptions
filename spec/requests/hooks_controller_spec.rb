@@ -88,7 +88,7 @@ RSpec.describe DiscourseSubscriptions::HooksController do
         object: {
           id: "cs_test_a1ENei5A9TGOaEketyV5qweiQR5CyJWHT5j8T3HheQY3uah3RxzKttVUKZ",
           object: "checkout.session",
-          customer: customer.customer_id,
+          customer: nil,
           customer_email: user.email,
           invoice: nil,
           metadata: {
@@ -110,7 +110,7 @@ RSpec.describe DiscourseSubscriptions::HooksController do
           id: "cs_test_a1ENei5A9TGOaEketyV5qweiQR5CyJWHT5j8T3HheQY3uah3RxzKttVUKZ",
           object: "checkout.session",
           customer: nil,
-          customer_email: user.email,
+          customer_email: nil,
           invoice: "in_1P9b7iEYXaQnncSh81AQtuHD",
           metadata: {
           },
@@ -118,7 +118,7 @@ RSpec.describe DiscourseSubscriptions::HooksController do
           payment_status: "paid",
           status: "complete",
           submit_type: nil,
-          subscription: "sub_1P9b7iEYXaQnncSh3H3G9d2Y",
+          subscription: nil,
           success_url: "http://localhost:4200/my/billing/subscriptions",
           url: nil,
         },
@@ -197,6 +197,7 @@ RSpec.describe DiscourseSubscriptions::HooksController do
           .returns(list_line_items_data)
 
         ::Stripe::Webhook.stubs(:construct_event).returns(event)
+        ::Stripe::Customer.stubs(:create).returns(id: "cus_1234")
       end
 
       it "is returns 422" do
@@ -217,6 +218,7 @@ RSpec.describe DiscourseSubscriptions::HooksController do
           .returns(list_line_items_data)
 
         ::Stripe::Webhook.stubs(:construct_event).returns(event)
+        ::Stripe::Customer.stubs(:create).returns(id: "cus_1234")
       end
 
       it "is returns 200" do
@@ -236,6 +238,7 @@ RSpec.describe DiscourseSubscriptions::HooksController do
           .returns(list_line_items_data)
 
         ::Stripe::Webhook.stubs(:construct_event).returns(event)
+        ::Stripe::Customer.stubs(:create).returns(id: "cus_1234")
       end
 
       it "is returns 422" do
