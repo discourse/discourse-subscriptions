@@ -32,7 +32,7 @@ module DiscourseSubscriptions
         checkout_session = event[:data][:object]
 
         if SiteSetting.discourse_subscriptions_enable_verbose_logging
-          Rails.logger.info("checkout.session.completed data: #{checkout_session}")
+          Rails.logger.warn("checkout.session.completed data: #{checkout_session}")
         end
         email = checkout_session[:customer_email]
 
@@ -43,7 +43,7 @@ module DiscourseSubscriptions
         customer_id = checkout_session[:customer]
 
         if SiteSetting.discourse_subscriptions_enable_verbose_logging
-          Rails.logger.info("Looking up user with email: #{email}")
+          Rails.logger.warn("Looking up user with email: #{email}")
         end
 
         user = ::User.find_by_username_or_email(email)
