@@ -28,9 +28,17 @@ module DiscourseSubscriptions
               payments_from_invoices =
                 payments[:data].select { |payment| invoice_ids.include?(payment[:invoice]) }
 
+              if SiteSetting.discourse_subscriptions_enable_verbose_logging
+                Rails.logger.warn("Payments from invoices: #{payments_from_invoices}")
+              end
+
               # Pricing table one-off purchases do not have invoices
               payments_without_invoices =
                 payments[:data].select { |payment| payment[:invoice].nil? }
+
+              if SiteSetting.discourse_subscriptions_enable_verbose_logging
+                Rails.logger.warn("Payments without invoices: #{payments_without_invoices}")
+              end
 
               data = data | payments_from_invoices | payments_without_invoices
             end

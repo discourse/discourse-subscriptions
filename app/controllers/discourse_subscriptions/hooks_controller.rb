@@ -57,9 +57,13 @@ module DiscourseSubscriptions
         discourse_customer = Customer.create(user_id: user.id, customer_id: customer_id)
 
         subscription = checkout_session[:subscription]
+        payment_intent_id = checkout_session[:payment_intent]
 
-        if !subscription.nil?
+        if subscription.present?
           Subscription.create(customer_id: discourse_customer.id, external_id: subscription)
+        elsif payment_intent_id
+          # Attach the payment intent to the customer for one-off purchases
+          ::Stripe::PaymentIntent.update(payment_intent_id, { customer: customer_id })
         end
 
         line_items =
