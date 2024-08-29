@@ -95,7 +95,7 @@ RSpec.describe DiscourseSubscriptions::User::PaymentsController do
               amount: 2000,
               currency: "usd",
               billing_details: {
-                email: "asdf@example.com",
+                email: user.email,
               },
               customer: nil, # guest payment
               payment_intent: "pi_1HtGz1GHcn71qeApT9N2Cjln",
@@ -131,9 +131,9 @@ RSpec.describe DiscourseSubscriptions::User::PaymentsController do
       parsed_body = response.parsed_body
 
       # Validate that only guest payments with the specified email are returned
-      expect(parsed_body.count).to eq(1)
-      # expect(parsed_body.first["id"]).to eq("ch_1HtGz2GHcn71qeAp4YjA2oB4")
-      # expect(parsed_body.first["customer"]).to be_nil
+      expect(parsed_body.count).to eq(2)
+      expect(parsed_body.first["id"]).to eq("ch_1HtGz2GHcn71qeAp4YjA2oB4")
+      expect(parsed_body.first["customer"]).to be_nil
     end
   end
 end
