@@ -80,10 +80,7 @@ RSpec.describe DiscourseSubscriptions::User::PaymentsController do
       SiteSetting.discourse_subscriptions_pricing_table_enabled = true
       ::Stripe::Invoice.expects(:list).with(customer: "c_345678").returns(data: [])
 
-      ::Stripe::PaymentIntent
-        .expects(:list)
-        .with(customer: "c_345678")
-        .returns(data: [])
+      ::Stripe::PaymentIntent.expects(:list).with(customer: "c_345678").returns(data: [])
 
       ::Stripe::Charge
         .expects(:list)
