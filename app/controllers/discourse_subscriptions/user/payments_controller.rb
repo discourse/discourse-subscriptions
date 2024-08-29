@@ -102,14 +102,13 @@ module DiscourseSubscriptions
             end
 
             # Check if there are more charges to fetch
-            break if charges[:data].empty?
             break if charges[:data].count < 100
 
             # Set starting_after to the last charge's ID for the next batch
             starting_after = charges[:data].last[:id]
           end
         rescue ::Stripe::StripeError => e
-          Rails.logger.error("Stripe API error: #{e.message}")
+          render_json_error e.message
         end
 
         guest_payments
