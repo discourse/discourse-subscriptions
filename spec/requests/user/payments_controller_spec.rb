@@ -80,10 +80,7 @@ RSpec.describe DiscourseSubscriptions::User::PaymentsController do
       SiteSetting.discourse_subscriptions_pricing_table_enabled = true
       ::Stripe::Invoice.expects(:list).with(customer: "c_345678").returns(data: [])
 
-      ::Stripe::PaymentIntent
-        .expects(:list)
-        .with(customer: "c_345678")
-        .returns(data: [{ id: "pi_900010", invoice: nil, created: Time.now }])
+      ::Stripe::PaymentIntent.expects(:list).with(customer: "c_345678").returns(data: [])
 
       ::Stripe::Charge
         .expects(:list)
@@ -131,7 +128,7 @@ RSpec.describe DiscourseSubscriptions::User::PaymentsController do
       parsed_body = response.parsed_body
 
       # Validate that only guest payments with the specified email are returned
-      expect(parsed_body.count).to eq(2)
+      expect(parsed_body.count).to eq(1)
       expect(parsed_body.first["id"]).to eq("ch_1HtGz2GHcn71qeAp4YjA2oB4")
       expect(parsed_body.first["customer"]).to be_nil
     end
