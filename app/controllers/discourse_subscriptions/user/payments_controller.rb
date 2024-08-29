@@ -87,11 +87,12 @@ module DiscourseSubscriptions
         begin
           loop do
             # Fetch charges in batches of 100, using pagination with starting_after
-            charges = ::Stripe::Charge.list(
-              limit: 100,
-              starting_after: starting_after,
-              expand: ['data.payment_intent']
-            )
+            charges =
+              ::Stripe::Charge.list(
+                limit: 100,
+                starting_after: starting_after,
+                expand: ["data.payment_intent"],
+              )
 
             charges[:data].each do |charge|
               # Check if the charge is associated with the given email and has no customer ID

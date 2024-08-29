@@ -87,37 +87,43 @@ RSpec.describe DiscourseSubscriptions::User::PaymentsController do
 
       ::Stripe::Charge
         .expects(:list)
-        .with(limit: 100, starting_after: nil, expand: ['data.payment_intent'])
+        .with(limit: 100, starting_after: nil, expand: ["data.payment_intent"])
         .returns(
           data: [
             {
               id: "ch_1HtGz2GHcn71qeAp4YjA2oB4",
               amount: 2000,
               currency: "usd",
-              billing_details: { email: "asdf@example.com" },
+              billing_details: {
+                email: "asdf@example.com",
+              },
               customer: nil, # guest payment
               payment_intent: "pi_1HtGz1GHcn71qeApT9N2Cjln",
-              created: Time.now.to_i
+              created: Time.now.to_i,
             },
             {
               id: "ch_2HtGz2GHcn71qeAp4YjA2oB4",
               amount: 2000,
               currency: "usd",
-              billing_details: { email: "zxcv@example.com" },
+              billing_details: {
+                email: "zxcv@example.com",
+              },
               customer: nil, # different guest
               payment_intent: "pi_2HtGz1GHcn71qeApT9N2Cjln",
-              created: Time.now.to_i
+              created: Time.now.to_i,
             },
             {
               id: "ch_1HtGz3GHcn71qeAp5YjA2oC5",
               amount: 3000,
               currency: "usd",
-              billing_details: { email: "fdsa@example.com" },
+              billing_details: {
+                email: "fdsa@example.com",
+              },
               customer: "cus_1234", # This is not a guest payment
               payment_intent: "pi_3HtGz2GHcn71qeApT9N2Cjln",
-              created: Time.now.to_i
-            }
-          ]
+              created: Time.now.to_i,
+            },
+          ],
         )
 
       get "/s/user/payments.json"
