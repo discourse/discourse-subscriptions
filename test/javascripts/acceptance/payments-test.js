@@ -3,7 +3,7 @@ import { test } from "qunit";
 import { acceptance, count } from "discourse/tests/helpers/qunit-helpers";
 import { stubStripe } from "discourse/plugins/discourse-subscriptions/helpers/stripe";
 
-acceptance("Discourse Subscriptions", function (needs) {
+acceptance("Subscriptions", function (needs) {
   needs.user();
   needs.hooks.beforeEach(function () {
     stubStripe();

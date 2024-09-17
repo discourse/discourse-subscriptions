@@ -20,7 +20,7 @@ function singleProductPretender() {
   });
 }
 
-acceptance("Discourse Subscriptions", function (needs) {
+acceptance("Subscriptions", function (needs) {
   needs.user();
   needs.hooks.beforeEach(function () {
     stubStripe();

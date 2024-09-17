@@ -4,10 +4,10 @@ import componentTest, {
 } from "discourse/tests/helpers/component-test";
 import { count, discourseModule } from "discourse/tests/helpers/qunit-helpers";
 
-discourseModule("payment-options", function (hooks) {
+discourseModule("Subscriptions | payment-options", function (hooks) {
   setupRenderingTest(hooks);
 
-  componentTest("Discourse Subscriptions payment options have no plans", {
+  componentTest("payment options have no plans", {
     template: hbs`{{payment-options plans=plans}}`,
 
     async test(assert) {
@@ -21,7 +21,7 @@ discourseModule("payment-options", function (hooks) {
     },
   });
 
-  componentTest("Discourse Subscriptions payment options has content", {
+  componentTest("payment options has content", {
     template: hbs`{{payment-options
       plans=plans
       selectedPlan=selectedPlan

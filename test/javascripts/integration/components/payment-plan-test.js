@@ -8,7 +8,7 @@ import {
   query,
 } from "discourse/tests/helpers/qunit-helpers";
 
-discourseModule("payment-plan", function (hooks) {
+discourseModule("Subscriptions | payment-plan", function (hooks) {
   setupRenderingTest(hooks);
 
   componentTest("Payment plan subscription button rendered", {

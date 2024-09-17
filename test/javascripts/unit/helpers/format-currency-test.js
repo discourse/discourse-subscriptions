@@ -2,7 +2,7 @@ import { setupTest } from "ember-qunit";
 import { module, test } from "qunit";
 import { formatCurrency } from "discourse/plugins/discourse-subscriptions/discourse/helpers/format-currency";
 
-module("Unit | Helper | format-currency", function (hooks) {
+module("Subscriptions | Unit | Helper | format-currency", function (hooks) {
   setupTest(hooks);
 
   test("it formats USD correctly", function (assert) {
