@@ -1,7 +1,7 @@
 import { module, test } from "qunit";
 import Plan from "discourse/plugins/discourse-subscriptions/discourse/models/plan";
 
-module("discourse-patrons:model:plan", function () {
+module("Subscriptions | Unit | Model | plan", function () {
   test("subscriptionRate", function (assert) {
     const plan = Plan.create({
       unit_amount: "2399",
