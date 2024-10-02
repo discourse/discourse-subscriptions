@@ -102,4 +102,23 @@ RSpec.describe "Pricing Table", type: :system, js: true do
       text: "Log in or create an account to subscribe.",
     )
   end
+
+  it "Redirects to the pricing table page if enabled" do
+    sign_in(admin)
+    visit("/s")
+
+    try_until_success do
+      expect(current_url).to match("/s/subscriptions")
+    end
+  end
+
+  it "Redirects to /s if pricing table is not enabled" do
+    sign_in(admin)
+    SiteSetting.discourse_subscriptions_campaign_enabled = false
+    visit("/s/subscriptions")
+
+    try_until_success do
+      expect(current_url).to match("/s")
+    end
+  end
 end
