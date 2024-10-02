@@ -3,6 +3,7 @@ import { service } from "@ember/service";
 
 export default class SubscribeRoute extends Route {
   @service router;
+  @service siteSettings;
 
   beforeModel() {
     const pricingTableEnabled =
