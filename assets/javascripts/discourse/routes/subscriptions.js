@@ -1,7 +1,7 @@
 import Route from "@ember/routing/route";
 import { service } from "@ember/service";
 
-export default class SubscribeRoute extends Route {
+export default class SubscriptionsRoute extends Route {
   @service router;
   @service siteSettings;
 
@@ -9,8 +9,8 @@ export default class SubscribeRoute extends Route {
     const pricingTableEnabled =
       this.siteSettings.discourse_subscriptions_pricing_table_enabled;
 
-    if (pricingTableEnabled) {
-      this.router.transitionTo("subscriptions");
+    if (!pricingTableEnabled) {
+      this.router.transitionTo("subscribe");
     }
   }
 }
