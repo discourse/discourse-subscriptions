@@ -107,9 +107,7 @@ RSpec.describe "Pricing Table", type: :system, js: true do
     sign_in(admin)
     visit("/s")
 
-    try_until_success do
-      expect(current_url).to match("/s/subscriptions")
-    end
+    try_until_success { expect(current_url).to match("/s/subscriptions") }
   end
 
   it "Redirects to /s if pricing table is not enabled" do
@@ -117,8 +115,6 @@ RSpec.describe "Pricing Table", type: :system, js: true do
     SiteSetting.discourse_subscriptions_campaign_enabled = false
     visit("/s/subscriptions")
 
-    try_until_success do
-      expect(current_url).to match("/s")
-    end
+    try_until_success { expect(current_url).to match("/s") }
   end
 end
