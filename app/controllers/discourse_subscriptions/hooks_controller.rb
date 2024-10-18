@@ -68,6 +68,16 @@ module DiscourseSubscriptions
 
         group = plan_group(item[:price])
         group.add(user) unless group.nil?
+
+        if SiteSetting.discourse_subscriptions_enable_verbose_logging
+          Rails.logger.warn("Line item with group name meta data: #{item[:price]}")
+          if group.nil?
+            Rails.logger.warn("Group not found or not listed in metadata!")
+          else
+            Rails.logger.warn("Group: #{group.name}")
+          end
+        end
+
         discourse_customer.product_id = item[:price][:product]
         discourse_customer.save!
 
