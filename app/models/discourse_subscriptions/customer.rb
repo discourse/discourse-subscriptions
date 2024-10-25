@@ -13,3 +13,20 @@ module DiscourseSubscriptions
     end
   end
 end
+
+# == Schema Information
+#
+# Table name: discourse_subscriptions_customers
+#
+#  id          :bigint           not null, primary key
+#  customer_id :string           not null
+#  product_id  :string
+#  user_id     :bigint
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+# Indexes
+#
+#  index_discourse_subscriptions_customers_on_customer_id  (customer_id)
+#  index_discourse_subscriptions_customers_on_user_id      (user_id)
+#
