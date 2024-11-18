@@ -1,7 +1,7 @@
 /* global Stripe */
 import Controller from "@ember/controller";
 import { not } from "@ember/object/computed";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import discourseComputed from "discourse-common/utils/decorators";
 import I18n from "I18n";
 import Subscription from "discourse/plugins/discourse-subscriptions/discourse/models/subscription";

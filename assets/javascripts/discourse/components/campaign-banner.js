@@ -2,7 +2,7 @@ import Component from "@ember/component";
 import { action } from "@ember/object";
 import { equal } from "@ember/object/computed";
 import { later } from "@ember/runloop";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { ajax } from "discourse/lib/ajax";
 import { setting } from "discourse/lib/computed";
 import discourseComputed, { observes } from "discourse-common/utils/decorators";
