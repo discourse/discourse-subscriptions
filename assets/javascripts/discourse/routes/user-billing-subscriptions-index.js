@@ -1,6 +1,6 @@
 import { action } from "@ember/object";
 import Route from "@ember/routing/route";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import I18n from "I18n";
 import UserSubscription from "discourse/plugins/discourse-subscriptions/discourse/models/user-subscription";
 

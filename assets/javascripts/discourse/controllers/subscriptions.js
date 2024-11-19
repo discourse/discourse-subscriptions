@@ -36,7 +36,7 @@ export default Controller.extend({
                 publishable-key="${publishableKey}"
                 ></stripe-pricing-table>`);
       }
-    } catch (error) {
+    } catch {
       return I18n.t("discourse_subscriptions.subscribe.no_products");
     }
   }),
