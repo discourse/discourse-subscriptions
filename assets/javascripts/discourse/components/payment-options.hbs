@@ -3,10 +3,10 @@
 </p>
 
 <div class="subscribe-buttons">
-  {{#each orderedPlans as |plan|}}
+  {{#each this.orderedPlans as |plan|}}
     <PaymentPlan
       @plan={{plan}}
-      @selectedPlan={{selectedPlan}}
+      @selectedPlan={{this.selectedPlan}}
       @clickPlan={{action "clickPlan"}}
     />
   {{/each}}

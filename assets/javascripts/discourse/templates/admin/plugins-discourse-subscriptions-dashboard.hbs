@@ -1,7 +1,7 @@
 <h3>{{i18n "discourse_subscriptions.admin.dashboard.title"}}</h3>
 
 <LoadMore @selector=".discourse-patrons-table tr" @action={{action "loadMore"}}>
-  {{#if model}}
+  {{#if this.model}}
     <table class="table discourse-patrons-table">
       <thead>
         <tr>
@@ -35,7 +35,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each model as |payment|}}
+        {{#each this.model as |payment|}}
           <tr>
             <td>
               <LinkTo

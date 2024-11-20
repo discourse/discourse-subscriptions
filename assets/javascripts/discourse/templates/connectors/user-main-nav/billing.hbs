@@ -1,4 +1,4 @@
-{{#if (user-viewing-self model)}}
+{{#if (user-viewing-self this.model)}}
   <LinkTo @route="user.billing">
     {{d-icon "far-credit-card"}}
     {{i18n "discourse_subscriptions.navigation.billing"}}

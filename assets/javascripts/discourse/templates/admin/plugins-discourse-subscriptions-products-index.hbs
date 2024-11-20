@@ -1,4 +1,4 @@
-{{#if model.unconfigured}}
+{{#if this.model.unconfigured}}
   <p>{{i18n "discourse_subscriptions.admin.unconfigured"}}</p>
   <p>
     <a href="https://meta.discourse.org/t/discourse-subscriptions/140818/">
@@ -19,7 +19,7 @@
     </LinkTo>
   </p>
 
-  {{#if model}}
+  {{#if this.model}}
     <table class="table discourse-patrons-table">
       <thead>
         <th>
@@ -38,7 +38,7 @@
       </thead>
 
       <tbody>
-        {{#each model as |product|}}
+        {{#each this.model as |product|}}
           <tr>
             <td>{{product.name}}</td>
             <td>{{format-unix-date product.created}}</td>

@@ -1,31 +1,31 @@
-<h2>{{product.name}}</h2>
+<h2>{{this.product.name}}</h2>
 
 <p class="product-description">
-  {{html-safe product.description}}
+  {{html-safe this.product.description}}
 </p>
 
-{{#if isLoggedIn}}
+{{#if this.isLoggedIn}}
   <div class="product-purchase">
-    {{#if product.repurchaseable}}
+    {{#if this.product.repurchaseable}}
       <LinkTo
         @route="subscribe.show"
-        @model={{product.id}}
+        @model={{this.product.id}}
         class="btn btn-primary"
       >
         {{i18n "discourse_subscriptions.subscribe.title"}}
       </LinkTo>
 
-      {{#if product.subscribed}}
+      {{#if this.product.subscribed}}
         <LinkTo
           @route="user.billing.subscriptions"
-          @model={{currentUser.username}}
+          @model={{this.currentUser.username}}
           class="billing-link"
         >
           {{i18n "discourse_subscriptions.subscribe.view_past"}}
         </LinkTo>
       {{/if}}
     {{else}}
-      {{#if product.subscribed}}
+      {{#if this.product.subscribed}}
         <span class="purchased">
           &#x2713;
           {{i18n "discourse_subscriptions.subscribe.purchased"}}
@@ -33,7 +33,7 @@
 
         <LinkTo
           @route="user.billing.subscriptions"
-          @model={{currentUser.username}}
+          @model={{this.currentUser.username}}
           class="billing-link"
         >
           {{i18n "discourse_subscriptions.subscribe.go_to_billing"}}
@@ -41,8 +41,8 @@
       {{else}}
         <LinkTo
           @route="subscribe.show"
-          @model={{product.id}}
-          @disabled={{product.subscribed}}
+          @model={{this.product.id}}
+          @disabled={{this.product.subscribed}}
           class="btn btn-primary"
         >
           {{i18n "discourse_subscriptions.subscribe.title"}}

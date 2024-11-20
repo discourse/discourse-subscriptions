@@ -1,6 +1,9 @@
 <DButton
   @action={{action "planClick"}}
-  class={{concat-class "btn-discourse-subscriptions-subscribe" selectedClass}}
+  class={{concat-class
+    "btn-discourse-subscriptions-subscribe"
+    this.selectedClass
+  }}
 >
   <span class="interval">
     {{#if this.recurringPlan}}
