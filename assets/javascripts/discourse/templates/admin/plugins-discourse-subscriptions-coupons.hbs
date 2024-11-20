@@ -1,4 +1,4 @@
-{{#if model.unconfigured}}
+{{#if this.model.unconfigured}}
   <p>{{i18n "discourse_subscriptions.admin.unconfigured"}}</p>
   <p>
     <a href="https://meta.discourse.org/t/discourse-subscriptions/140818/">
@@ -6,7 +6,7 @@
     </a>
   </p>
 {{else}}
-  {{#if model}}
+  {{#if this.model}}
     <table class="table discourse-patrons-table">
       <thead>
         <th>{{i18n "discourse_subscriptions.admin.coupons.code"}}</th>
@@ -16,7 +16,7 @@
         <th>{{i18n "discourse_subscriptions.admin.coupons.actions"}}</th>
       </thead>
       <tbody>
-        {{#each model as |coupon|}}
+        {{#each this.model as |coupon|}}
           <tr>
             <td>{{coupon.code}}</td>
             <td>{{coupon.discount}}</td>
@@ -42,7 +42,7 @@
     </table>
   {{/if}}
 
-  {{#unless creating}}
+  {{#unless this.creating}}
     <DButton
       @action={{action "openCreateForm"}}
       @label="discourse_subscriptions.admin.coupons.create"
@@ -52,7 +52,7 @@
     />
   {{/unless}}
 
-  {{#if creating}}
+  {{#if this.creating}}
     <CreateCouponForm
       @cancel={{action "closeCreateForm"}}
       @create={{action "createNewCoupon"}}

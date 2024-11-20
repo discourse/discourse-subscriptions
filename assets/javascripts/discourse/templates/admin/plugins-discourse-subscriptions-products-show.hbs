@@ -5,7 +5,7 @@
     <label for="name">
       {{i18n "discourse_subscriptions.admin.products.product.name"}}
     </label>
-    <Input @type="text" name="name" @value={{model.product.name}} />
+    <Input @type="text" name="name" @value={{this.model.product.name}} />
   </p>
 
   <p>
@@ -15,7 +15,7 @@
 
     <Textarea
       name="description"
-      @value={{model.product.metadata.description}}
+      @value={{this.model.product.metadata.description}}
       class="discourse-subscriptions-admin-textarea"
     />
 
@@ -34,7 +34,7 @@
     <Input
       @type="text"
       name="statement_descriptor"
-      @value={{model.product.statement_descriptor}}
+      @value={{this.model.product.statement_descriptor}}
     />
 
     <div class="control-instructions">
@@ -52,7 +52,7 @@
     <Input
       @type="checkbox"
       name="repurchaseable"
-      @checked={{model.product.metadata.repurchaseable}}
+      @checked={{this.model.product.metadata.repurchaseable}}
     />
 
     <div class="control-instructions">
@@ -65,7 +65,11 @@
       {{i18n "discourse_subscriptions.admin.products.product.active"}}
     </label>
 
-    <Input @type="checkbox" name="active" @checked={{model.product.active}} />
+    <Input
+      @type="checkbox"
+      name="active"
+      @checked={{this.model.product.active}}
+    />
 
     <div class="control-instructions">
       {{i18n "discourse_subscriptions.admin.products.product.active_help"}}
@@ -73,7 +77,7 @@
   </p>
 </form>
 
-{{#unless model.product.isNew}}
+{{#unless this.model.product.isNew}}
   <h4>{{i18n "discourse_subscriptions.admin.plans.title"}}</h4>
 
   <p>
@@ -90,7 +94,7 @@
         <th class="td-right">
           <LinkTo
             @route="adminPlugins.discourse-subscriptions.products.show.plans.show"
-            @models={{array model.product.id "new"}}
+            @models={{array this.model.product.id "new"}}
             class="btn"
           >
             {{i18n "discourse_subscriptions.admin.plans.operations.add"}}
@@ -99,7 +103,7 @@
       </thead>
 
       <tbody>
-        {{#each model.plans as |plan|}}
+        {{#each this.model.plans as |plan|}}
           <tr>
             <td>{{plan.nickname}}</td>
             <td>{{plan.recurring.interval}}</td>
@@ -112,7 +116,7 @@
             <td class="td-right">
               <LinkTo
                 @route="adminPlugins.discourse-subscriptions.products.show.plans.show"
-                @models={{array model.product.id plan.id}}
+                @models={{array this.model.product.id plan.id}}
                 class="btn no-text btn-icon"
               >
                 {{d-icon "far-edit"}}
@@ -137,7 +141,7 @@
 <div class="pull-right">
   <DButton @label="cancel" @action={{action "cancelProduct"}} @icon="times" />
 
-  {{#if model.product.isNew}}
+  {{#if this.model.product.isNew}}
     <DButton
       @label="discourse_subscriptions.admin.products.operations.create"
       @action={{action "createProduct"}}

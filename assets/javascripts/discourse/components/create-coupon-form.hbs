@@ -4,7 +4,7 @@
       <label for="promo_code">
         {{i18n "discourse_subscriptions.admin.coupons.promo_code"}}
       </label>
-      <Input @type="text" name="promo_code" @value={{promoCode}} />
+      <Input @type="text" name="promo_code" @value={{this.promoCode}} />
     </p>
 
     <p>
@@ -12,15 +12,15 @@
         {{i18n "discourse_subscriptions.admin.coupons.discount"}}
       </label>
       <ComboBox
-        @content={{discountTypes}}
-        @value={{discountType}}
-        @onChange={{action (mut discountType)}}
+        @content={{this.discountTypes}}
+        @value={{this.discountType}}
+        @onChange={{action (mut this.discountType)}}
       />
       <Input
         class="discount-amount"
         @type="text"
         name="amount"
-        @value={{discount}}
+        @value={{this.discount}}
       />
     </p>
 
@@ -28,7 +28,7 @@
       <label for="active">
         {{i18n "discourse_subscriptions.admin.coupons.active"}}
       </label>
-      <Input @type="checkbox" name="active" @checked={{active}} />
+      <Input @type="checkbox" name="active" @checked={{this.active}} />
     </p>
   </form>
 

@@ -1,33 +1,36 @@
 <div class="discourse-subscriptions-section-columns">
   <div class="section-column discourse-subscriptions-confirmation-billing">
     <h2>
-      {{model.product.name}}
+      {{this.model.product.name}}
     </h2>
 
     <hr />
 
     <p>
-      {{html-safe model.product.description}}
+      {{html-safe this.model.product.description}}
     </p>
   </div>
 
   <div class="section-column">
-    {{#if canPurchase}}
+    {{#if this.canPurchase}}
       <h2>
         {{i18n "discourse_subscriptions.subscribe.card.title"}}
       </h2>
 
       <hr />
 
-      <PaymentOptions @plans={{model.plans}} @selectedPlan={{selectedPlan}} />
+      <PaymentOptions
+        @plans={{this.model.plans}}
+        @selectedPlan={{this.selectedPlan}}
+      />
 
       <hr />
 
-      <SubscribeCard @cardElement={{cardElement}} />
+      <SubscribeCard @cardElement={{this.cardElement}} />
 
-      {{#if loading}}
+      {{#if this.loading}}
         {{loading-spinner}}
-      {{else if isAnonymous}}
+      {{else if this.isAnonymous}}
         <LoginRequired />
       {{else}}
         <Input
@@ -36,12 +39,12 @@
           placeholder={{i18n
             "discourse_subscriptions.subscribe.cardholder_name"
           }}
-          @value={{cardholderName}}
+          @value={{this.cardholderName}}
           class="subscribe-name"
         />
         <div class="address-fields">
           <SubscribeCountrySelect
-            @value={{cardholderAddress.country}}
+            @value={{this.cardholderAddress.country}}
             @onChange={{action "changeCountry"}}
           />
           <Input
@@ -50,7 +53,7 @@
             placeholder={{i18n
               "discourse_subscriptions.subscribe.cardholder_address.postal_code"
             }}
-            @value={{cardholderAddress.postalCode}}
+            @value={{this.cardholderAddress.postalCode}}
             class="subscribe-address-postal-code"
           />
         </div>
@@ -60,7 +63,7 @@
           placeholder={{i18n
             "discourse_subscriptions.subscribe.cardholder_address.line1"
           }}
-          @value={{cardholderAddress.line1}}
+          @value={{this.cardholderAddress.line1}}
           class="subscribe-address-line1"
         />
         <div class="address-fields">
@@ -70,17 +73,17 @@
             placeholder={{i18n
               "discourse_subscriptions.subscribe.cardholder_address.city"
             }}
-            @value={{cardholderAddress.city}}
+            @value={{this.cardholderAddress.city}}
             class="subscribe-address-city"
           />
-          {{#if isCountryUS}}
+          {{#if this.isCountryUS}}
             <SubscribeUsStateSelect
-              @value={{cardholderAddress.state}}
+              @value={{this.cardholderAddress.state}}
               @onChange={{action "changeState"}}
             />
-          {{else if isCountryCA}}
+          {{else if this.isCountryCA}}
             <SubscribeCaProvinceSelect
-              @value={{cardholderAddress.state}}
+              @value={{this.cardholderAddress.state}}
               @onChange={{action "changeState"}}
             />
           {{else}}
@@ -90,7 +93,7 @@
               placeholder={{i18n
                 "discourse_subscriptions.subscribe.cardholder_address.state"
               }}
-              @value={{cardholderAddress.state}}
+              @value={{this.cardholderAddress.state}}
               class="subscribe-address-state"
             />
           {{/if}}
@@ -100,12 +103,12 @@
           @type="text"
           name="promo_code"
           placeholder={{i18n "discourse_subscriptions.subscribe.promo_code"}}
-          @value={{promoCode}}
+          @value={{this.promoCode}}
           class="subscribe-promo-code"
         />
 
         <DButton
-          @disabled={{loading}}
+          @disabled={{this.loading}}
           @action={{action "stripePaymentHandler"}}
           class="btn btn-primary btn-payment"
           @label="discourse_subscriptions.plans.payment_button"
@@ -116,7 +119,7 @@
 
       <LinkTo
         @route="user.billing.subscriptions"
-        @model={{currentUser.username}}
+        @model={{this.currentUser.username}}
         class="btn btn-primary"
       >
         {{i18n "discourse_subscriptions.subscribe.go_to_billing"}}

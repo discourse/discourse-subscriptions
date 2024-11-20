@@ -1,20 +1,23 @@
-<h2>{{i18n "discourse_subscriptions.title" site_name=siteSettings.title}}</h2>
+<h2>{{i18n
+    "discourse_subscriptions.title"
+    site_name=this.siteSettings.title
+  }}</h2>
 
-{{#if stripeConfigured}}
+{{#if this.stripeConfigured}}
   <div class="discourse-subscriptions-buttons">
-    {{#if campaignEnabled}}
+    {{#if this.campaignEnabled}}
       <DButton
         @label="discourse_subscriptions.campaign.refresh_campaign"
         @icon="sync-alt"
         @action={{action "triggerManualRefresh"}}
       />
     {{else}}
-      {{#unless campaignProductSet}}
+      {{#unless this.campaignProductSet}}
         <DButton
           @label="discourse_subscriptions.campaign.one_click_campaign"
           @icon="plus-square"
           @action={{action "createOneClickCampaign"}}
-          @isLoading={{loading}}
+          @isLoading={{this.loading}}
         />
       {{/unless}}
     {{/if}}

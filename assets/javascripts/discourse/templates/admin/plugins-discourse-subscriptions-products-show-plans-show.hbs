@@ -9,7 +9,7 @@
     <Input
       @type="text"
       name="product_name"
-      @value={{model.product.name}}
+      @value={{this.model.product.name}}
       disabled={{true}}
     />
   </p>
@@ -19,7 +19,7 @@
       {{i18n "discourse_subscriptions.admin.plans.plan.nickname"}}
     </label>
 
-    <Input @type="text" name="name" @value={{model.plan.nickname}} />
+    <Input @type="text" name="name" @value={{this.model.plan.nickname}} />
 
     <div class="control-instructions">
       {{i18n "discourse_subscriptions.admin.plans.plan.nickname_help"}}
@@ -33,9 +33,9 @@
 
     <ComboBox
       @valueProperty="name"
-      @content={{availableGroups}}
-      @value={{selectedGroup}}
-      @onChange={{action (mut model.plan.metadata.group_name)}}
+      @content={{this.availableGroups}}
+      @value={{this.selectedGroup}}
+      @onChange={{action (mut this.model.plan.metadata.group_name)}}
     />
 
     <div class="control-instructions">
@@ -48,18 +48,18 @@
       {{i18n "discourse_subscriptions.admin.plans.plan.amount"}}
     </label>
 
-    {{#if planFieldDisabled}}
+    {{#if this.planFieldDisabled}}
       <Input
         class="plan-amount plan-currency"
         disabled={{true}}
-        @value={{model.plan.currency}}
+        @value={{this.model.plan.currency}}
       />
     {{else}}
       <ComboBox
-        @disabled={{planFieldDisabled}}
-        @content={{currencies}}
-        @value={{model.plan.currency}}
-        @onChange={{action (mut model.plan.currency)}}
+        @disabled={{this.planFieldDisabled}}
+        @content={{this.currencies}}
+        @value={{this.model.plan.currency}}
+        @onChange={{action (mut this.model.plan.currency)}}
       />
     {{/if}}
 
@@ -67,8 +67,8 @@
       class="plan-amount"
       @type="text"
       name="name"
-      @value={{model.plan.amountDollars}}
-      disabled={{planFieldDisabled}}
+      @value={{this.model.plan.amountDollars}}
+      disabled={{this.planFieldDisabled}}
     />
   </p>
 
@@ -77,37 +77,37 @@
       {{i18n "discourse_subscriptions.admin.plans.plan.recurring"}}
     </label>
 
-    {{#if planFieldDisabled}}
+    {{#if this.planFieldDisabled}}
       <Input
         @type="checkbox"
         name="recurring"
-        @checked={{model.plan.isRecurring}}
+        @checked={{this.model.plan.isRecurring}}
         disabled={{true}}
       />
     {{else}}
       <Input
         @type="checkbox"
         name="recurring"
-        @checked={{model.plan.isRecurring}}
+        @checked={{this.model.plan.isRecurring}}
         {{on "change" (action "changeRecurring")}}
       />
     {{/if}}
   </p>
 
-  {{#if model.plan.isRecurring}}
+  {{#if this.model.plan.isRecurring}}
     <p>
       <label for="interval">
         {{i18n "discourse_subscriptions.admin.plans.plan.interval"}}
       </label>
 
-      {{#if planFieldDisabled}}
-        <Input disabled={{true}} @value={{selectedInterval}} />
+      {{#if this.planFieldDisabled}}
+        <Input disabled={{true}} @value={{this.selectedInterval}} />
       {{else}}
         <ComboBox
           @valueProperty="name"
-          @content={{availableIntervals}}
-          @value={{selectedInterval}}
-          @onChange={{action (mut selectedInterval)}}
+          @content={{this.availableIntervals}}
+          @value={{this.selectedInterval}}
+          @onChange={{action (mut this.selectedInterval)}}
         />
       {{/if}}
     </p>
@@ -121,7 +121,7 @@
       <Input
         @type="text"
         name="trial"
-        @value={{model.plan.trial_period_days}}
+        @value={{this.model.plan.trial_period_days}}
       />
 
       <div class="control-instructions">
@@ -134,7 +134,7 @@
     <label for="active">
       {{i18n "discourse_subscriptions.admin.plans.plan.active"}}
     </label>
-    <Input @type="checkbox" name="active" @checked={{model.plan.active}} />
+    <Input @type="checkbox" name="active" @checked={{this.model.plan.active}} />
   </p>
 </form>
 
@@ -146,7 +146,7 @@
   </p>
 
   <div class="pull-right">
-    {{#if model.plan.isNew}}
+    {{#if this.model.plan.isNew}}
       <DButton
         @label="discourse_subscriptions.admin.plans.operations.create"
         @action={{action "createPlan"}}

@@ -1,4 +1,4 @@
-{{#if model}}
+{{#if this.model}}
   <table class="table discourse-subscriptions-user-table">
     <thead>
       <th>{{i18n "discourse_subscriptions.user.subscriptions.id"}}</th>
@@ -11,7 +11,7 @@
       <th></th>
     </thead>
     <tbody>
-      {{#each model as |subscription|}}
+      {{#each this.model as |subscription|}}
         <tr>
           <td>{{subscription.id}}</td>
           <td>{{subscription.product.name}}</td>
