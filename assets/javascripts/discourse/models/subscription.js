@@ -2,11 +2,15 @@ import EmberObject from "@ember/object";
 import { ajax } from "discourse/lib/ajax";
 import discourseComputed from "discourse-common/utils/decorators";
 
-const Subscription = EmberObject.extend({
+export default class Subscription extends EmberObject {
+  static show(id) {
+    return ajax(`/s/${id}`, { method: "get" });
+  }
+
   @discourseComputed("status")
   canceled(status) {
     return status === "canceled";
-  },
+  }
 
   save() {
     const data = {
@@ -18,13 +22,5 @@ const Subscription = EmberObject.extend({
     };
 
     return ajax("/s/create", { method: "post", data });
-  },
-});
-
-Subscription.reopenClass({
-  show(id) {
-    return ajax(`/s/${id}`, { method: "get" });
-  },
-});
-
-export default Subscription;
+  }
+}

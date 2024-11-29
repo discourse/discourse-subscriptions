@@ -3,7 +3,7 @@ import { hash } from "rsvp";
 import Group from "discourse/models/group";
 import AdminPlan from "discourse/plugins/discourse-subscriptions/discourse/models/admin-plan";
 
-export default Route.extend({
+export default class AdminPluginsDiscourseSubscriptionsProductsShowPlansShowRoute extends Route {
   model(params) {
     const id = params["plan-id"];
     const product = this.modelFor(
@@ -35,7 +35,7 @@ export default Route.extend({
     const groups = Group.findAll({ ignore_automatic: true });
 
     return hash({ plan, product, groups });
-  },
+  }
 
   renderTemplate() {
     this.render(
@@ -47,5 +47,5 @@ export default Route.extend({
           "adminPlugins.discourse-subscriptions.products.show.plans.show",
       }
     );
-  },
-});
+  }
+}

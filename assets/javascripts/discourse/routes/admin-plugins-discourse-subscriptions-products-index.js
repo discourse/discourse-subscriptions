@@ -4,12 +4,12 @@ import { service } from "@ember/service";
 import I18n from "I18n";
 import AdminProduct from "discourse/plugins/discourse-subscriptions/discourse/models/admin-product";
 
-export default Route.extend({
-  dialog: service(),
+export default class AdminPluginsDiscourseSubscriptionsProductsIndexRoute extends Route {
+  @service dialog;
 
   model() {
     return AdminProduct.findAll();
-  },
+  }
 
   @action
   destroyProduct(product) {
@@ -32,5 +32,5 @@ export default Route.extend({
           );
       },
     });
-  },
-});
+  }
+}

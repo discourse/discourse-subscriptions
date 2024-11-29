@@ -7,24 +7,24 @@ import { popupAjaxError } from "discourse/lib/ajax-error";
 import discourseComputed from "discourse-common/utils/decorators";
 import I18n from "I18n";
 
-export default Controller.extend({
-  loading: false,
-  dialog: service(),
+export default class AdminPluginsDiscourseSubscriptionsController extends Controller {
+  @service dialog;
+  loading = false;
 
   @discourseComputed
   stripeConfigured() {
     return !!this.siteSettings.discourse_subscriptions_public_key;
-  },
+  }
 
   @discourseComputed
   campaignEnabled() {
     return this.siteSettings.discourse_subscriptions_campaign_enabled;
-  },
+  }
 
   @discourseComputed
   campaignProductSet() {
     return !!this.siteSettings.discourse_subscriptions_campaign_product;
-  },
+  }
 
   @action
   triggerManualRefresh() {
@@ -35,7 +35,7 @@ export default Controller.extend({
         I18n.t("discourse_subscriptions.campaign.refresh_page")
       );
     });
-  },
+  }
 
   @action
   createOneClickCampaign() {
@@ -62,5 +62,5 @@ export default Controller.extend({
           .catch(popupAjaxError);
       },
     });
-  },
-});
+  }
+}

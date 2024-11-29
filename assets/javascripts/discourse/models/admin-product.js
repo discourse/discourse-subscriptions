@@ -1,13 +1,28 @@
 import EmberObject from "@ember/object";
 import { ajax } from "discourse/lib/ajax";
 
-const AdminProduct = EmberObject.extend({
-  isNew: false,
-  metadata: {},
+export default class AdminProduct extends EmberObject {
+  static findAll() {
+    return ajax("/s/admin/products", { method: "get" }).then((result) => {
+      if (result === null) {
+        return { unconfigured: true };
+      }
+      return result.map((product) => AdminProduct.create(product));
+    });
+  }
+
+  static find(id) {
+    return ajax(`/s/admin/products/${id}`, {
+      method: "get",
+    }).then((product) => AdminProduct.create(product));
+  }
+
+  isNew = false;
+  metadata = {};
 
   destroy() {
     return ajax(`/s/admin/products/${this.id}`, { method: "delete" });
-  },
+  }
 
   save() {
     const data = {
@@ -21,7 +36,7 @@ const AdminProduct = EmberObject.extend({
       method: "post",
       data,
     }).then((product) => AdminProduct.create(product));
-  },
+  }
 
   update() {
     const data = {
@@ -35,24 +50,5 @@ const AdminProduct = EmberObject.extend({
       method: "patch",
       data,
     });
-  },
-});
-
-AdminProduct.reopenClass({
-  findAll() {
-    return ajax("/s/admin/products", { method: "get" }).then((result) => {
-      if (result === null) {
-        return { unconfigured: true };
-      }
-      return result.map((product) => AdminProduct.create(product));
-    });
-  },
-
-  find(id) {
-    return ajax(`/s/admin/products/${id}`, {
-      method: "get",
-    }).then((product) => AdminProduct.create(product));
-  },
-});
-
-export default AdminProduct;
+  }
+}

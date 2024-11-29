@@ -3,16 +3,18 @@ import { computed } from "@ember/object";
 import { htmlSafe } from "@ember/template";
 import I18n from "I18n";
 
-export default Controller.extend({
+export default class SubscriptionsController extends Controller {
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
     if (this.currentUser) {
       this.currentUser
         .checkEmail()
         .then(() => this.set("email", this.currentUser.email));
     }
-  },
-  pricingTable: computed("email", function () {
+  }
+
+  @computed("email")
+  get pricingTable() {
     try {
       const pricingTableId =
         this.siteSettings.discourse_subscriptions_pricing_table_id;
@@ -39,5 +41,5 @@ export default Controller.extend({
     } catch {
       return I18n.t("discourse_subscriptions.subscribe.no_products");
     }
-  }),
-});
+  }
+}

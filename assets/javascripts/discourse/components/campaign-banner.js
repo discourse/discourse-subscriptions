@@ -3,43 +3,53 @@ import { action } from "@ember/object";
 import { equal } from "@ember/object/computed";
 import { later } from "@ember/runloop";
 import { service } from "@ember/service";
+import { classNameBindings } from "@ember-decorators/component";
+import { observes } from "@ember-decorators/object";
 import { ajax } from "discourse/lib/ajax";
 import { setting } from "discourse/lib/computed";
-import discourseComputed, { observes } from "discourse-common/utils/decorators";
+import discourseComputed from "discourse-common/utils/decorators";
 
 const SIDEBAR_BODY_CLASS = "subscription-campaign-sidebar";
 
-export default Component.extend({
-  router: service(),
-  dismissed: false,
-  loading: false,
-  dropShadowColor: setting(
-    "discourse_subscriptions_campaign_banner_shadow_color"
-  ),
-  backgroundImageUrl: setting(
-    "discourse_subscriptions_campaign_banner_bg_image"
-  ),
-  isSidebar: equal(
+@classNameBindings("isGoalMet:goal-met")
+export default class CampaignBanner extends Component {
+  @service router;
+
+  dismissed = false;
+  loading = false;
+
+  @setting("discourse_subscriptions_campaign_banner_shadow_color")
+  dropShadowColor;
+
+  @setting("discourse_subscriptions_campaign_banner_bg_image")
+  backgroundImageUrl;
+
+  @equal(
     "siteSettings.discourse_subscriptions_campaign_banner_location",
     "Sidebar"
-  ),
-  subscribers: setting("discourse_subscriptions_campaign_subscribers"),
-  subscriberGoal: equal(
-    "siteSettings.discourse_subscriptions_campaign_type",
-    "Subscribers"
-  ),
-  currency: setting("discourse_subscriptions_currency"),
-  amountRaised: setting("discourse_subscriptions_campaign_amount_raised"),
-  goalTarget: setting("discourse_subscriptions_campaign_goal"),
-  product: setting("discourse_subscriptions_campaign_product"),
-  pricingTableEnabled: setting("discourse_subscriptions_pricing_table_enabled"),
-  showContributors: setting(
-    "discourse_subscriptions_campaign_show_contributors"
-  ),
-  classNameBindings: ["isGoalMet:goal-met"],
+  )
+  isSidebar;
+
+  @setting("discourse_subscriptions_campaign_subscribers") subscribers;
+
+  @equal("siteSettings.discourse_subscriptions_campaign_type", "Subscribers")
+  subscriberGoal;
+
+  @setting("discourse_subscriptions_currency") currency;
+
+  @setting("discourse_subscriptions_campaign_amount_raised") amountRaised;
+
+  @setting("discourse_subscriptions_campaign_goal") goalTarget;
+
+  @setting("discourse_subscriptions_campaign_product") product;
+
+  @setting("discourse_subscriptions_pricing_table_enabled") pricingTableEnabled;
+
+  @setting("discourse_subscriptions_campaign_show_contributors")
+  showContributors;
 
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
 
     this.set("contributors", []);
 
@@ -66,10 +76,10 @@ export default Component.extend({
         });
       });
     }
-  },
+  }
 
   didInsertElement() {
-    this._super(...arguments);
+    super.didInsertElement(...arguments);
     if (this.isSidebar && this.shouldShow && !this.site.mobileView) {
       document.body.classList.add(SIDEBAR_BODY_CLASS);
     } else {
@@ -94,12 +104,12 @@ export default Component.extend({
         document.body.classList.add("success-animation-off");
       }
     }
-  },
+  }
 
   willDestroyElement() {
-    this._super(...arguments);
+    super.willDestroyElement(...arguments);
     document.body.classList.remove(SIDEBAR_BODY_CLASS);
-  },
+  }
 
   @discourseComputed("backgroundImageUrl")
   bannerInfoStyle(backgroundImageUrl) {
@@ -114,7 +124,7 @@ export default Component.extend({
         var(--campaign-background-image);
       background-size: cover;
       background-repeat: no-repeat;`;
-  },
+  }
 
   @discourseComputed(
     "router.currentRouteName",
@@ -143,14 +153,14 @@ export default Component.extend({
     }
 
     return showOnRoute && currentUser && enabled && visible;
-  },
+  }
 
   @observes("dismissed")
   _updateBodyClasses() {
     if (this.dismissed) {
       document.body.classList.remove(SIDEBAR_BODY_CLASS);
     }
-  },
+  }
 
   @discourseComputed("dismissed")
   visible(dismissed) {
@@ -166,7 +176,7 @@ export default Component.extend({
       (!dismissedBannerKey || now - bannerDismissedTime > threeMonths) &&
       !dismissed
     );
-  },
+  }
 
   @discourseComputed
   subscribeRoute() {
@@ -174,7 +184,7 @@ export default Component.extend({
       return "subscriptions";
     }
     return "subscribe";
-  },
+  }
 
   @discourseComputed
   isGoalMet() {
@@ -182,7 +192,7 @@ export default Component.extend({
       ? this.subscribers
       : this.amountRaised;
     return currentVolume >= this.goalTarget;
-  },
+  }
 
   @action
   dismissBanner() {
@@ -191,5 +201,5 @@ export default Component.extend({
       key: "dismissed_campaign_banner",
       value: Date.now(),
     });
-  },
-});
+  }
+}

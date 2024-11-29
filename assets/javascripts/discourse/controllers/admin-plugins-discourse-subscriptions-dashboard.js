@@ -1,19 +1,20 @@
 import Controller from "@ember/controller";
+import { action } from "@ember/object";
 
-export default Controller.extend({
-  queryParams: ["order", "descending"],
-  order: null,
-  descending: true,
+export default class AdminPluginsDiscourseSubscriptionsDashboardController extends Controller {
+  queryParams = ["order", "descending"];
+  order = null;
+  descending = true;
 
-  actions: {
-    loadMore() {},
+  @action
+  loadMore() {}
 
-    orderPayments(order) {
-      if (order === this.get("order")) {
-        this.toggleProperty("descending");
-      }
+  @action
+  orderPayments(order) {
+    if (order === this.get("order")) {
+      this.toggleProperty("descending");
+    }
 
-      this.set("order", order);
-    },
-  },
-});
+    this.set("order", order);
+  }
+}

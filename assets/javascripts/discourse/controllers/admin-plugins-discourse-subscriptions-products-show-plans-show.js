@@ -1,4 +1,5 @@
 import Controller from "@ember/controller";
+import { action } from "@ember/object";
 import { alias } from "@ember/object/computed";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 import DiscourseURL from "discourse/lib/url";
@@ -7,15 +8,15 @@ import discourseComputed from "discourse-common/utils/decorators";
 const RECURRING = "recurring";
 const ONE_TIME = "one_time";
 
-export default Controller.extend({
+export default class AdminPluginsDiscourseSubscriptionsProductsShowPlansShowController extends Controller {
   // Also defined in settings.
-  selectedCurrency: alias("model.plan.currency"),
-  selectedInterval: alias("model.plan.interval"),
+  @alias("model.plan.currency") selectedCurrency;
+  @alias("model.plan.interval") selectedInterval;
 
   @discourseComputed("model.plan.metadata.group_name")
   selectedGroup(groupName) {
     return groupName || "no-group";
-  },
+  }
 
   @discourseComputed("model.groups")
   availableGroups(groups) {
@@ -26,7 +27,7 @@ export default Controller.extend({
       },
       ...groups,
     ];
-  },
+  }
 
   @discourseComputed
   currencies() {
@@ -43,7 +44,7 @@ export default Controller.extend({
       { id: "JPY", name: "JPY" },
       { id: "ZAR", name: "ZAR" },
     ];
-  },
+  }
 
   @discourseComputed
   availableIntervals() {
@@ -53,49 +54,50 @@ export default Controller.extend({
       { id: "month", name: "month" },
       { id: "year", name: "year" },
     ];
-  },
+  }
 
   @discourseComputed("model.plan.isNew")
   planFieldDisabled(isNew) {
     return !isNew;
-  },
+  }
 
   @discourseComputed("model.product.id")
   productId(id) {
     return id;
-  },
+  }
 
   redirect(product_id) {
     DiscourseURL.redirectTo(
       `/admin/plugins/discourse-subscriptions/products/${product_id}`
     );
-  },
+  }
 
-  actions: {
-    changeRecurring() {
-      const recurring = this.get("model.plan.isRecurring");
-      this.set("model.plan.type", recurring ? ONE_TIME : RECURRING);
-      this.set("model.plan.isRecurring", !recurring);
-    },
+  @action
+  changeRecurring() {
+    const recurring = this.get("model.plan.isRecurring");
+    this.set("model.plan.type", recurring ? ONE_TIME : RECURRING);
+    this.set("model.plan.isRecurring", !recurring);
+  }
 
-    createPlan() {
-      if (this.model.plan.metadata.group_name === "no-group") {
-        this.set("model.plan.metadata.group_name", null);
-      }
-      this.get("model.plan")
-        .save()
-        .then(() => this.redirect(this.productId))
-        .catch(popupAjaxError);
-    },
+  @action
+  createPlan() {
+    if (this.model.plan.metadata.group_name === "no-group") {
+      this.set("model.plan.metadata.group_name", null);
+    }
+    this.get("model.plan")
+      .save()
+      .then(() => this.redirect(this.productId))
+      .catch(popupAjaxError);
+  }
 
-    updatePlan() {
-      if (this.model.plan.metadata.group_name === "no-group") {
-        this.set("model.plan.metadata.group_name", null);
-      }
-      this.get("model.plan")
-        .update()
-        .then(() => this.redirect(this.productId))
-        .catch(popupAjaxError);
-    },
-  },
-});
+  @action
+  updatePlan() {
+    if (this.model.plan.metadata.group_name === "no-group") {
+      this.set("model.plan.metadata.group_name", null);
+    }
+    this.get("model.plan")
+      .update()
+      .then(() => this.redirect(this.productId))
+      .catch(popupAjaxError);
+  }
+}

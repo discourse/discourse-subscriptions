@@ -4,17 +4,19 @@ import { service } from "@ember/service";
 import I18n from "I18n";
 import UserSubscription from "discourse/plugins/discourse-subscriptions/discourse/models/user-subscription";
 
-export default Route.extend({
-  dialog: service(),
-  router: service(),
+export default class UserBillingSubscriptionsIndexRoute extends Route {
+  @service dialog;
+  @service router;
+
   model() {
     return UserSubscription.findAll();
-  },
+  }
 
   @action
   updateCard(subscriptionId) {
     this.router.transitionTo("user.billing.subscriptions.card", subscriptionId);
-  },
+  }
+
   @action
   cancelSubscription(subscription) {
     this.dialog.yesNoConfirm({
@@ -36,5 +38,5 @@ export default Route.extend({
           });
       },
     });
-  },
-});
+  }
+}
