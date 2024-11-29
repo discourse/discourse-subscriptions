@@ -2,13 +2,25 @@ import { ajax } from "discourse/lib/ajax";
 import discourseComputed from "discourse-common/utils/decorators";
 import Plan from "discourse/plugins/discourse-subscriptions/discourse/models/plan";
 
-const AdminPlan = Plan.extend({
-  isNew: false,
-  name: "",
-  interval: "month",
-  unit_amount: 0,
-  intervals: ["day", "week", "month", "year"],
-  metadata: {},
+export default class AdminPlan extends Plan {
+  static findAll(data) {
+    return ajax("/s/admin/plans", { method: "get", data }).then((result) =>
+      result.map((plan) => AdminPlan.create(plan))
+    );
+  }
+
+  static find(id) {
+    return ajax(`/s/admin/plans/${id}`, { method: "get" }).then((plan) =>
+      AdminPlan.create(plan)
+    );
+  }
+
+  isNew = false;
+  name = "";
+  interval = "month";
+  unit_amount = 0;
+  intervals = ["day", "week", "month", "year"];
+  metadata = {};
 
   @discourseComputed("trial_period_days")
   parseTrialPeriodDays(trialDays) {
@@ -17,7 +29,7 @@ const AdminPlan = Plan.extend({
     } else {
       return 0;
     }
-  },
+  }
 
   save() {
     const data = {
@@ -33,7 +45,7 @@ const AdminPlan = Plan.extend({
     };
 
     return ajax("/s/admin/plans", { method: "post", data });
-  },
+  }
 
   update() {
     const data = {
@@ -44,21 +56,5 @@ const AdminPlan = Plan.extend({
     };
 
     return ajax(`/s/admin/plans/${this.id}`, { method: "patch", data });
-  },
-});
-
-AdminPlan.reopenClass({
-  findAll(data) {
-    return ajax("/s/admin/plans", { method: "get", data }).then((result) =>
-      result.map((plan) => AdminPlan.create(plan))
-    );
-  },
-
-  find(id) {
-    return ajax(`/s/admin/plans/${id}`, { method: "get" }).then((plan) =>
-      AdminPlan.create(plan)
-    );
-  },
-});
-
-export default AdminPlan;
+  }
+}

@@ -5,10 +5,11 @@ import I18n from "discourse-i18n";
 import AdminCancelSubscription from "../components/modal/admin-cancel-subscription";
 import AdminSubscription from "../models/admin-subscription";
 
-export default Controller.extend({
-  modal: service(),
-  dialog: service(),
-  loading: false,
+export default class AdminPluginsDiscourseSubscriptionsSubscriptionsController extends Controller {
+  @service modal;
+  @service dialog;
+
+  loading = false;
 
   @action
   showCancelModal(subscription) {
@@ -18,7 +19,7 @@ export default Controller.extend({
         cancelSubscription: this.cancelSubscription,
       },
     });
-  },
+  }
 
   @action
   loadMore() {
@@ -34,7 +35,7 @@ export default Controller.extend({
         }
       );
     }
-  },
+  }
 
   @action
   cancelSubscription(model) {
@@ -56,5 +57,5 @@ export default Controller.extend({
         subscription.set("loading", false);
         closeModal();
       });
-  },
-});
+  }
+}

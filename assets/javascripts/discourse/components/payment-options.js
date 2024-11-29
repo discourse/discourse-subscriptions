@@ -1,23 +1,24 @@
 import Component from "@ember/component";
+import { action } from "@ember/object";
 import discourseComputed from "discourse-common/utils/decorators";
 
-export default Component.extend({
+export default class PaymentOptions extends Component {
   @discourseComputed("plans")
   orderedPlans(plans) {
     if (plans) {
       return plans.sort((a, b) => (a.unit_amount > b.unit_amount ? 1 : -1));
     }
-  },
+  }
 
   didInsertElement() {
-    this._super(...arguments);
+    super.didInsertElement(...arguments);
     if (this.plans && this.plans.length === 1) {
       this.set("selectedPlan", this.plans[0].id);
     }
-  },
-  actions: {
-    clickPlan(plan) {
-      this.set("selectedPlan", plan.id);
-    },
-  },
-});
+  }
+
+  @action
+  clickPlan(plan) {
+    this.set("selectedPlan", plan.id);
+  }
+}

@@ -1,12 +1,12 @@
 import Component from "@ember/component";
 import { isEmpty } from "@ember/utils";
+import { classNames } from "@ember-decorators/component";
 import discourseComputed from "discourse-common/utils/decorators";
 
-export default Component.extend({
-  classNames: ["product-list"],
-
+@classNames("product-list")
+export default class ProductList extends Component {
   @discourseComputed("products")
   emptyProducts(products) {
     return isEmpty(products);
-  },
-});
+  }
+}

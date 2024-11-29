@@ -1,10 +1,10 @@
 import Route from "@ember/routing/route";
 import { service } from "@ember/service";
 
-export default Route.extend({
-  router: service(),
+export default class UserBillingRoute extends Route {
+  @service router;
 
-  templateName: "user/billing",
+  templateName = "user/billing";
 
   setupController(controller, model) {
     if (this.currentUser.id !== this.modelFor("user").id) {
@@ -12,5 +12,5 @@ export default Route.extend({
     } else {
       controller.setProperties({ model });
     }
-  },
-});
+  }
+}

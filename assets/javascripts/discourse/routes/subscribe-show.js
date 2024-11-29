@@ -3,7 +3,7 @@ import Plan from "discourse/plugins/discourse-subscriptions/discourse/models/pla
 import Product from "discourse/plugins/discourse-subscriptions/discourse/models/product";
 import Subscription from "discourse/plugins/discourse-subscriptions/discourse/models/subscription";
 
-export default Route.extend({
+export default class SubscribeShowRoute extends Route {
   model(params) {
     const product_id = params["subscription-id"];
 
@@ -15,5 +15,5 @@ export default Route.extend({
 
       return result;
     });
-  },
-});
+  }
+}

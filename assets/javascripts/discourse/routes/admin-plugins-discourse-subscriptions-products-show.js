@@ -6,8 +6,9 @@ import I18n from "I18n";
 import AdminPlan from "discourse/plugins/discourse-subscriptions/discourse/models/admin-plan";
 import AdminProduct from "discourse/plugins/discourse-subscriptions/discourse/models/admin-product";
 
-export default Route.extend({
-  dialog: service(),
+export default class AdminPluginsDiscourseSubscriptionsProductsShowRoute extends Route {
+  @service dialog;
+
   model(params) {
     const product_id = params["product-id"];
     let product;
@@ -21,7 +22,7 @@ export default Route.extend({
     }
 
     return hash({ plans, product });
-  },
+  }
 
   @action
   destroyPlan(plan) {
@@ -42,5 +43,5 @@ export default Route.extend({
           );
       },
     });
-  },
-});
+  }
+}

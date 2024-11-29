@@ -2,12 +2,12 @@ import Route from "@ember/routing/route";
 import { service } from "@ember/service";
 import Product from "discourse/plugins/discourse-subscriptions/discourse/models/product";
 
-export default Route.extend({
-  router: service(),
+export default class SubscribeIndexRoute extends Route {
+  @service router;
 
   model() {
     return Product.findAll();
-  },
+  }
 
   afterModel(products) {
     if (products.length === 1) {
@@ -22,5 +22,5 @@ export default Route.extend({
         this.router.transitionTo("subscribe.show", product.id);
       }
     }
-  },
-});
+  }
+}

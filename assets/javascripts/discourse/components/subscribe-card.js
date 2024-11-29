@@ -1,11 +1,11 @@
 import Component from "@ember/component";
 
-export default Component.extend({
+export default class SubscribeCard extends Component {
   didInsertElement() {
-    this._super(...arguments);
+    super.didInsertElement(...arguments);
     this.cardElement.mount("#card-element");
     this.setCardElementStyles();
-  },
+  }
 
   setCardElementStyles() {
     const root = document.querySelector(":root");
@@ -23,9 +23,9 @@ export default Component.extend({
         },
       },
     });
-  },
+  }
 
   didDestroyElement() {
-    this._super(...arguments);
-  },
-});
+    super.didDestroyElement(...arguments);
+  }
+}

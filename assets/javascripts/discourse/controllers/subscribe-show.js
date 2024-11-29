@@ -1,5 +1,6 @@
 /* global Stripe */
 import Controller from "@ember/controller";
+import { action } from "@ember/object";
 import { not } from "@ember/object/computed";
 import { service } from "@ember/service";
 import discourseComputed from "discourse-common/utils/decorators";
@@ -7,25 +8,28 @@ import I18n from "I18n";
 import Subscription from "discourse/plugins/discourse-subscriptions/discourse/models/subscription";
 import Transaction from "discourse/plugins/discourse-subscriptions/discourse/models/transaction";
 
-export default Controller.extend({
-  dialog: service(),
-  router: service(),
-  selectedPlan: null,
-  promoCode: null,
-  cardholderName: null,
-  cardholderAddress: {
+export default class SubscribeShowController extends Controller {
+  @service dialog;
+  @service router;
+
+  selectedPlan = null;
+  promoCode = null;
+  cardholderName = null;
+  cardholderAddress = {
     line1: null,
     city: null,
     state: null,
     country: null,
     postalCode: null,
-  },
-  isAnonymous: not("currentUser"),
-  isCountryUS: false,
-  isCountryCA: false,
+  };
+
+  @not("currentUser") isAnonymous;
+
+  isCountryUS = false;
+  isCountryCA = false;
 
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
     this.set(
       "stripe",
       Stripe(this.siteSettings.discourse_subscriptions_public_key)
@@ -36,11 +40,11 @@ export default Controller.extend({
 
     this.set("isCountryUS", this.cardholderAddress.country === "US");
     this.set("isCountryCA", this.cardholderAddress.country === "CA");
-  },
+  }
 
   alert(path) {
     this.dialog.alert(I18n.t(`discourse_subscriptions.${path}`));
-  },
+  }
 
   @discourseComputed("model.product.repurchaseable", "model.product.subscribed")
   canPurchase(repurchaseable, subscribed) {
@@ -49,7 +53,7 @@ export default Controller.extend({
     }
 
     return true;
-  },
+  }
 
   createSubscription(plan) {
     return this.stripe
@@ -77,7 +81,7 @@ export default Controller.extend({
           return subscription.save();
         }
       });
-  },
+  }
 
   handleAuthentication(plan, transaction) {
     return this.stripe
@@ -94,7 +98,7 @@ export default Controller.extend({
           return result;
         }
       });
-  },
+  }
 
   _advanceSuccessfulTransaction(plan) {
     this.alert("plans.success");
@@ -106,90 +110,86 @@ export default Controller.extend({
         : "user.billing.payments",
       this.currentUser.username.toLowerCase()
     );
-  },
+  }
 
-  actions: {
-    changeCountry(country) {
-      this.set("cardholderAddress.country", country);
-      this.set("isCountryUS", country === "US");
-      this.set("isCountryCA", country === "CA");
-    },
+  @action
+  changeCountry(country) {
+    this.set("cardholderAddress.country", country);
+    this.set("isCountryUS", country === "US");
+    this.set("isCountryCA", country === "CA");
+  }
 
-    changeState(stateOrProvince) {
-      this.set("cardholderAddress.state", stateOrProvince);
-    },
+  @action
+  changeState(stateOrProvince) {
+    this.set("cardholderAddress.state", stateOrProvince);
+  }
 
-    stripePaymentHandler() {
-      this.set("loading", true);
-      const plan = this.get("model.plans")
-        .filterBy("id", this.selectedPlan)
-        .get("firstObject");
-      const cardholderAddress = this.cardholderAddress;
-      const cardholderName = this.cardholderName;
+  @action
+  stripePaymentHandler() {
+    this.set("loading", true);
+    const plan = this.get("model.plans")
+      .filterBy("id", this.selectedPlan)
+      .get("firstObject");
+    const cardholderAddress = this.cardholderAddress;
+    const cardholderName = this.cardholderName;
 
-      if (!plan) {
-        this.alert("plans.validate.payment_options.required");
-        this.set("loading", false);
-        return;
-      }
+    if (!plan) {
+      this.alert("plans.validate.payment_options.required");
+      this.set("loading", false);
+      return;
+    }
 
-      if (!cardholderName) {
-        this.alert("subscribe.invalid_cardholder_name");
-        this.set("loading", false);
-        return;
-      }
+    if (!cardholderName) {
+      this.alert("subscribe.invalid_cardholder_name");
+      this.set("loading", false);
+      return;
+    }
 
-      if (!cardholderAddress.country) {
-        this.alert("subscribe.invalid_cardholder_country");
-        this.set("loading", false);
-        return;
-      }
+    if (!cardholderAddress.country) {
+      this.alert("subscribe.invalid_cardholder_country");
+      this.set("loading", false);
+      return;
+    }
 
-      if (cardholderAddress.country === "US" && !cardholderAddress.state) {
-        this.alert("subscribe.invalid_cardholder_state");
-        this.set("loading", false);
-        return;
-      }
+    if (cardholderAddress.country === "US" && !cardholderAddress.state) {
+      this.alert("subscribe.invalid_cardholder_state");
+      this.set("loading", false);
+      return;
+    }
 
-      if (cardholderAddress.country === "CA" && !cardholderAddress.state) {
-        this.alert("subscribe.invalid_cardholder_province");
-        this.set("loading", false);
-        return;
-      }
+    if (cardholderAddress.country === "CA" && !cardholderAddress.state) {
+      this.alert("subscribe.invalid_cardholder_province");
+      this.set("loading", false);
+      return;
+    }
 
-      let transaction = this.createSubscription(plan);
+    let transaction = this.createSubscription(plan);
 
-      transaction
-        .then((result) => {
-          if (result.error) {
-            this.dialog.alert(result.error.message || result.error);
-          } else if (
-            result.status === "incomplete" ||
-            result.status === "open"
-          ) {
-            const transactionId = result.id;
-            const planId = this.selectedPlan;
-            this.handleAuthentication(plan, result).then(
-              (authenticationResult) => {
-                if (authenticationResult && !authenticationResult.error) {
-                  return Transaction.finalize(transactionId, planId).then(
-                    () => {
-                      this._advanceSuccessfulTransaction(plan);
-                    }
-                  );
-                }
+    transaction
+      .then((result) => {
+        if (result.error) {
+          this.dialog.alert(result.error.message || result.error);
+        } else if (result.status === "incomplete" || result.status === "open") {
+          const transactionId = result.id;
+          const planId = this.selectedPlan;
+          this.handleAuthentication(plan, result).then(
+            (authenticationResult) => {
+              if (authenticationResult && !authenticationResult.error) {
+                return Transaction.finalize(transactionId, planId).then(() => {
+                  this._advanceSuccessfulTransaction(plan);
+                });
               }
-            );
-          } else {
-            this._advanceSuccessfulTransaction(plan);
-          }
-        })
-        .catch((result) => {
-          this.dialog.alert(
-            result.jqXHR.responseJSON.errors[0] || result.errorThrown
+            }
           );
-          this.set("loading", false);
-        });
-    },
-  },
-});
+        } else {
+          this._advanceSuccessfulTransaction(plan);
+        }
+      })
+      .catch((result) => {
+        this.dialog.alert(
+          result.jqXHR.responseJSON.errors[0] || result.errorThrown
+        );
+        this.set("loading", false);
+      });
+  }
+}

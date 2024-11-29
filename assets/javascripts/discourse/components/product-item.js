@@ -1,5 +1,5 @@
 import Component from "@ember/component";
+import { classNames } from "@ember-decorators/component";
 
-export default Component.extend({
-  classNames: ["product"],
-});
+@classNames("product")
+export default class ProductItem extends Component {}

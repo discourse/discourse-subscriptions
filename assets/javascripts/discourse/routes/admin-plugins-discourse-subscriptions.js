@@ -2,8 +2,8 @@ import { action } from "@ember/object";
 import Route from "@ember/routing/route";
 import { service } from "@ember/service";
 
-export default Route.extend({
-  router: service(),
+export default class AdminPluginsDiscourseSubscriptionsRoute extends Route {
+  @service router;
 
   @action
   showSettings() {
@@ -15,5 +15,5 @@ export default Route.extend({
         controller.set("_skipBounce", true);
         controller.filterContentNow("plugins");
       });
-  },
-});
+  }
+}
