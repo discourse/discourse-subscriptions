@@ -35,6 +35,7 @@ discourse_subscriptions:
       - DKK
       - SGD
       - ZAR
+      - CHF
   discourse_subscriptions_campaign_enabled:
     client: true
     default: false

@@ -53,6 +53,8 @@ module DiscourseSubscriptions
         "S$"
       when "zar"
         "R"
+      when "chf"
+        "CHF"
       else
         "$"
       end

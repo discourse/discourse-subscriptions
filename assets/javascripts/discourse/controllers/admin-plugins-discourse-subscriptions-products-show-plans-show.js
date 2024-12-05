@@ -43,6 +43,7 @@ export default class AdminPluginsDiscourseSubscriptionsProductsShowPlansShowCont
       { id: "SGD", name: "SGD" },
       { id: "JPY", name: "JPY" },
       { id: "ZAR", name: "ZAR" },
+      { id: "CHF", name: "CHF" },
     ];
   }
 
