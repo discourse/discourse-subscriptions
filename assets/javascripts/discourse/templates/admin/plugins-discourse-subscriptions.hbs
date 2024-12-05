@@ -8,14 +8,14 @@
     {{#if this.campaignEnabled}}
       <DButton
         @label="discourse_subscriptions.campaign.refresh_campaign"
-        @icon="sync-alt"
+        @icon="rotate"
         @action={{action "triggerManualRefresh"}}
       />
     {{else}}
       {{#unless this.campaignProductSet}}
         <DButton
           @label="discourse_subscriptions.campaign.one_click_campaign"
-          @icon="plus-square"
+          @icon="square-plus"
           @action={{action "createOneClickCampaign"}}
           @isLoading={{this.loading}}
         />

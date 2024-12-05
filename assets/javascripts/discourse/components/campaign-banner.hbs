@@ -3,7 +3,7 @@
     class="campaign-banner"
     style={{html-safe (concat "box-shadow: 5px 5px #" this.dropShadowColor)}}
   >
-    <DButton @icon="times" @action={{this.dismissBanner}} class="close" />
+    <DButton @icon="xmark" @action={{this.dismissBanner}} class="close" />
 
     <div class="campaign-banner-info" style={{html-safe this.bannerInfoStyle}}>
       {{#if this.isGoalMet}}

@@ -31,7 +31,7 @@ export default class AdminCancelSubscription extends Component {
               closeModal=@closeModal
             )
           }}
-          @icon="times"
+          @icon="xmark"
           @isLoading={{@model.subscription.loading}}
           class="btn-danger"
         />
