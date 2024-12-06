@@ -13,6 +13,7 @@ ru:
   site_settings:
     discourse_subscriptions_enabled: Включить плагин Discourse Subscription.
     discourse_subscriptions_extra_nav_subscribe: Показать кнопку подписки в основной навигации
+    discourse_subscriptions_pricing_table_id: Добавьте идентификатор pricing-table-id из кода встраивания таблицы цен здесь.
     discourse_subscriptions_pricing_table_enabled: Кнопка «Подписаться» отобразит встроенную таблицу цен, и будет использована система Stripe Checkout.
     discourse_subscriptions_public_key: Публичный ключ сервиса Stripe
     discourse_subscriptions_secret_key: Секретный ключ сервиса Stripe
