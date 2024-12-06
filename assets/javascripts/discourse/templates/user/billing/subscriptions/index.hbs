@@ -32,12 +32,12 @@
               {{else}}
                 <DButton
                   @action={{route-action "updateCard" subscription.id}}
-                  @icon="far-edit"
+                  @icon="far-pen-to-square"
                   class="btn no-text btn-icon"
                 />
                 <DButton
                   class="btn-danger btn no-text btn-icon"
-                  @icon="trash-alt"
+                  @icon="trash-can"
                   @disabled={{subscription.canceled_at}}
                   @action={{route-action "cancelSubscription" subscription}}
                 />

@@ -16,13 +16,13 @@
         <td class="td-right">
           <DButton
             @action={{action "editPlan" plan.id}}
-            @icon="far-edit"
+            @icon="far-pen-to-square"
             class="btn no-text btn-icon"
           />
           <DButton
             @action={{route-action "destroyPlan"}}
             @actionParam={{plan}}
-            @icon="trash-alt"
+            @icon="trash-can"
             class="btn-danger btn no-text btn-icon"
           />
         </td>
