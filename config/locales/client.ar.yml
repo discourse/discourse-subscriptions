@@ -28,6 +28,7 @@ ar:
     discourse_subscriptions_campaign_show_contributors: عرض الصور الرمزية لأحدث المشتريات من منتجات الاشتراكات
     discourse_subscriptions_campaign_product: مُعرِّف منتج Stripe الذي سيتم إرساله إلى الداعمين عندما ينقرون على الزر في الحملة. إذا كان هذا الإعداد فارغًا، فسيتم توجيه الداعمين إلى الصفحة الرئيسية للمنتجات.
     discourse_subscriptions_enable_automatic_tax: تفعيل الحساب التلقائي للضريبة، والذي سيحسب تلقائيًا معدلات الضريبة على جميع الفواتير الناتجة عن الاشتراك.
+    discourse_subscriptions_enable_verbose_logging: يتيح تسجيلًا أكثر تفصيلًا للمساعدة في تصحيح الأخطاء. يُرجى عدم تركه مفعَّلًا بشكلٍ دائم في الإنتاج.
     errors:
       discourse_patrons_amount_must_be_currency: "يجب أن تكون مبالغ العملات عبارة عن عملات دون رمز الدولار (مثل 1.50)"
   js:
