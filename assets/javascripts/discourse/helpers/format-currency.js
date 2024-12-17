@@ -28,6 +28,9 @@ export function formatCurrency([currency, amount]) {
     case "CHF":
       currencySign = "CHF";
       break;
+    case "PLN":
+      currencySign = "zł";
+      break;
     default:
       currencySign = "$";
   }
