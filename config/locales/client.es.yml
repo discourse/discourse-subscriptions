@@ -28,6 +28,7 @@ es:
     discourse_subscriptions_campaign_show_contributors: Muestra los avatares de las compras más recientes de productos de suscripción.
     discourse_subscriptions_campaign_product: El identificador de producto de Stripe que se enviará a los seguidores cuando hagan clic en el botón de la campaña. Si esta configuración está en blanco,  se dirigirá a los colaboradores a la página principal de productos.
     discourse_subscriptions_enable_automatic_tax: Activa el cálculo automático de impuestos, que calculará automáticamente los tipos impositivos de todas las facturas generadas por la suscripción.
+    discourse_subscriptions_enable_verbose_logging: Permite un registro más detallado para facilitar la depuración. No lo dejes activado permanentemente en producción.
     errors:
       discourse_patrons_amount_must_be_currency: "Los importes de moneda deben ser monedas sin el símbolo de dólar (por ejemplo, 1,50)"
   js:

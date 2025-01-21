@@ -28,6 +28,7 @@ nl:
     discourse_subscriptions_campaign_show_contributors: Toon avatars van de meest recente aankopen van abonnementsproducten.
     discourse_subscriptions_campaign_product: De Stripe-product-ID om naar supporters te sturen wanneer ze op de knop van de campagne klikken. Als deze instelling leeg is, worden supporters doorverwezen naar de hoofdpagina met producten.
     discourse_subscriptions_enable_automatic_tax: Maakt automatische berekening van belastingen mogelijk, waardoor automatisch de belastingtarieven worden berekend op alle facturen die door het abonnement worden gegenereerd.
+    discourse_subscriptions_enable_verbose_logging: Schakelt uitgebreidere logging in om te helpen bij het debuggen. Laat dit niet permanent ingeschakeld tijdens productie.
     errors:
       discourse_patrons_amount_must_be_currency: "Valutabedragen moeten valuta zonder valutateken zijn (bijvoorbeeld 1,50)"
   js:
