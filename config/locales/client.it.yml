@@ -28,6 +28,7 @@ it:
     discourse_subscriptions_campaign_show_contributors: Mostra gli avatar degli acquisti più recenti di prodotti in abbonamento.
     discourse_subscriptions_campaign_product: L'ID del prodotto Stripe da inviare ai sostenitori quando fanno clic sul pulsante della campagna. Se questa impostazione è lasciata vuota, i sostenitori verranno reindirizzati alla pagina principale dei prodotti.
     discourse_subscriptions_enable_automatic_tax: Abilita il calcolo automatico delle imposte che calcolerà automaticamente le aliquote fiscali su tutte le fatture generate dall'abbonamento.
+    discourse_subscriptions_enable_verbose_logging: Abilita una registrazione più dettagliata per facilitare il debug. Non lasciare abilitato in modo permanente in produzione.
     errors:
       discourse_patrons_amount_must_be_currency: "Gli importi valutari devono essere valori senza il simbolo del dollaro (ad es. 1,50)"
   js:

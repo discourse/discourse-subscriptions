@@ -28,6 +28,7 @@ tr_TR:
     discourse_subscriptions_campaign_show_contributors: En son satın alınan abonelik ürünlerinin avatarlarını gösterin.
     discourse_subscriptions_campaign_product: Destekçiler kampanyadaki düğmeye tıkladıklarında gönderilecek Stripe ürün kimliği. Bu ayar boş bırakılırsa destekçiler ana ürünler sayfasına yönlendirilir.
     discourse_subscriptions_enable_automatic_tax: Abonelik tarafından oluşturulan tüm faturalarda vergi oranlarını otomatik olarak hesaplayacak olan otomatik vergi hesaplamasını etkinleştirir.
+    discourse_subscriptions_enable_verbose_logging: Hata ayıklamaya yardımcı olmak için daha ayrıntılı günlüğe kaydetmeyi etkinleştirir. Lütfen üretimde kalıcı olarak etkin bırakmayın.
     errors:
       discourse_patrons_amount_must_be_currency: "Para birimi tutarları dolar sembolü olmayan para birimleri olmalıdır (ör. 1,50)"
   js:

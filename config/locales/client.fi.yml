@@ -28,6 +28,7 @@ fi:
     discourse_subscriptions_campaign_show_contributors: Näytä tilaustuotteiden viimeisimpien ostosten avatarit.
     discourse_subscriptions_campaign_product: Stripen tuotetunnus, johon tukijat ohjataan, kun he napsauttavat kampanjan painiketta. Jos tämä asetus on tyhjä, tukijat ohjataan päätuotesivulle.
     discourse_subscriptions_enable_automatic_tax: Ottaa käyttöön automaattisen verolaskelman, joka laskee automaattisesti veroprosentin kaikille tilauksen luomille laskuille.
+    discourse_subscriptions_enable_verbose_logging: Ottaa käyttöön monisanaisemman kirjauksen viankorjauksen helpottamiseksi. Älä jätä sitä pysyvästi käyttöön tuotannossa.
     errors:
       discourse_patrons_amount_must_be_currency: "Valuuttasummien täytyy olla valuuttoja ilman dollarimerkkiä (esim. 1,50)"
   js:

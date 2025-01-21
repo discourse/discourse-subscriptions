@@ -28,6 +28,7 @@ zh_CN:
     discourse_subscriptions_campaign_show_contributors: 显示最近购买的订阅产品的头像。
     discourse_subscriptions_campaign_product: 当支持者点击活动上的按钮时向支持者发送的 Stripe 产品 ID。如果此设置为空，则支持者将被定向到主要产品页面。
     discourse_subscriptions_enable_automatic_tax: 启用自动税务计算，它将自动计算订阅生成的所有发票的税率。
+    discourse_subscriptions_enable_verbose_logging: 启用更详细的日志记录以帮助调试。请勿在生产环境下永久启用。
     errors:
       discourse_patrons_amount_must_be_currency: "货币金额必须为无美元符号的金额（例如 1.50）"
   js:

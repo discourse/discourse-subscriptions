@@ -28,6 +28,7 @@ ja:
     discourse_subscriptions_campaign_show_contributors: 直近のサブスクリプション商品のアバターを表示します。
     discourse_subscriptions_campaign_product: サポーターがキャンペーンのボタンをクリックしたときにサポーターを送信するための Stripe 商品 ID。この設定が空白である場合、サポーターはメインの商品ページにリダイレクトされます。
     discourse_subscriptions_enable_automatic_tax: サブスクリプションによって生成されるすべての請求書の税率を自動的に計算する自動税計算を有効にします。
+    discourse_subscriptions_enable_verbose_logging: デバッグを支援するために、より詳細なログを有効にします。本番環境では永久的に有効にしないでください。
     errors:
       discourse_patrons_amount_must_be_currency: "通貨の金額は、ドル記号なしの通貨である必要があります（例: 1.50）"
   js:
