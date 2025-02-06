@@ -1,7 +1,7 @@
 import EmberObject from "@ember/object";
 import { ajax } from "discourse/lib/ajax";
-import discourseComputed from "discourse-common/utils/decorators";
-import I18n from "I18n";
+import discourseComputed from "discourse/lib/decorators";
+import { i18n } from "discourse-i18n";
 import Plan from "discourse/plugins/discourse-subscriptions/discourse/models/plan";
 
 export default class UserSubscription extends EmberObject {
@@ -24,7 +24,7 @@ export default class UserSubscription extends EmberObject {
     if (!canceled_at) {
       return moment.unix(current_period_end).format("LL");
     } else {
-      return I18n.t("discourse_subscriptions.user.subscriptions.cancelled");
+      return i18n("discourse_subscriptions.user.subscriptions.cancelled");
     }
   }
 
@@ -40,7 +40,7 @@ export default class UserSubscription extends EmberObject {
         return `${percent_off}%`;
       }
     } else {
-      return I18n.t("no_value");
+      return i18n("no_value");
     }
   }
 

@@ -1,5 +1,5 @@
 import { ajax } from "discourse/lib/ajax";
-import discourseComputed from "discourse-common/utils/decorators";
+import discourseComputed from "discourse/lib/decorators";
 import Plan from "discourse/plugins/discourse-subscriptions/discourse/models/plan";
 
 export default class AdminPlan extends Plan {

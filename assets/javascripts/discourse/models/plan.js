@@ -1,5 +1,5 @@
 import EmberObject, { computed } from "@ember/object";
-import discourseComputed from "discourse-common/utils/decorators";
+import discourseComputed from "discourse/lib/decorators";
 
 export default class Plan extends EmberObject {
   @computed("unit_amount")

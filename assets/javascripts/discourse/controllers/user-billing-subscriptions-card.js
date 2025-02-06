@@ -4,7 +4,7 @@ import { action } from "@ember/object";
 import { service } from "@ember/service";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
-import I18n from "I18n";
+import { i18n } from "discourse-i18n";
 
 export default class UserBillingSubscriptionsCardController extends Controller {
   @service dialog;
@@ -34,7 +34,7 @@ export default class UserBillingSubscriptionsCardController extends Controller {
 
     if (paymentMethodObject.error) {
       this.dialog.alert(
-        paymentMethodObject.error?.message || I18n.t("generic_error")
+        paymentMethodObject.error?.message || i18n("generic_error")
       );
       this.set("loading", false);
       return;

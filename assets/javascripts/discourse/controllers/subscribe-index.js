@@ -1,6 +1,6 @@
 import Controller from "@ember/controller";
+import discourseComputed from "discourse/lib/decorators";
 import User from "discourse/models/user";
-import discourseComputed from "discourse-common/utils/decorators";
 
 export default class SubscribeIndexController extends Controller {
   @discourseComputed()

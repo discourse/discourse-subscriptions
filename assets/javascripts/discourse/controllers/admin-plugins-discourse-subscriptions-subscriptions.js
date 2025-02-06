@@ -1,7 +1,7 @@
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
-import I18n from "discourse-i18n";
+import { i18n } from "discourse-i18n";
 import AdminCancelSubscription from "../components/modal/admin-cancel-subscription";
 import AdminSubscription from "../models/admin-subscription";
 
@@ -48,7 +48,7 @@ export default class AdminPluginsDiscourseSubscriptionsSubscriptionsController e
       .destroy(refund)
       .then((result) => {
         subscription.set("status", result.status);
-        this.dialog.alert(I18n.t("discourse_subscriptions.admin.canceled"));
+        this.dialog.alert(i18n("discourse_subscriptions.admin.canceled"));
       })
       .catch((data) =>
         this.dialog.alert(data.jqXHR.responseJSON.errors.join("\n"))
