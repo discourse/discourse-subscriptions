@@ -1,7 +1,7 @@
 import { action } from "@ember/object";
 import Route from "@ember/routing/route";
 import { service } from "@ember/service";
-import I18n from "I18n";
+import { i18n } from "discourse-i18n";
 import UserSubscription from "discourse/plugins/discourse-subscriptions/discourse/models/user-subscription";
 
 export default class UserBillingSubscriptionsIndexRoute extends Route {
@@ -20,7 +20,7 @@ export default class UserBillingSubscriptionsIndexRoute extends Route {
   @action
   cancelSubscription(subscription) {
     this.dialog.yesNoConfirm({
-      message: I18n.t(
+      message: i18n(
         "discourse_subscriptions.user.subscriptions.operations.destroy.confirm"
       ),
       didConfirm: () => {

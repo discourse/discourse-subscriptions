@@ -7,7 +7,7 @@ import { classNameBindings } from "@ember-decorators/component";
 import { observes } from "@ember-decorators/object";
 import { ajax } from "discourse/lib/ajax";
 import { setting } from "discourse/lib/computed";
-import discourseComputed from "discourse-common/utils/decorators";
+import discourseComputed from "discourse/lib/decorators";
 
 const SIDEBAR_BODY_CLASS = "subscription-campaign-sidebar";
 

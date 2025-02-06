@@ -1,5 +1,5 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
-import I18n from "I18n";
+import { i18n } from "discourse-i18n";
 
 export default {
   name: "setup-subscriptions",
@@ -14,7 +14,7 @@ export default {
       if (isNavLinkEnabled) {
         api.addNavigationBarItem({
           name: "subscribe",
-          displayName: I18n.t("discourse_subscriptions.navigation.subscribe"),
+          displayName: i18n("discourse_subscriptions.navigation.subscribe"),
           href: subscribeHref,
         });
       }

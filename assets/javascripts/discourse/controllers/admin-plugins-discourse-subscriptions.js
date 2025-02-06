@@ -4,8 +4,8 @@ import { service } from "@ember/service";
 import { htmlSafe } from "@ember/template";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
-import discourseComputed from "discourse-common/utils/decorators";
-import I18n from "I18n";
+import discourseComputed from "discourse/lib/decorators";
+import { i18n } from "discourse-i18n";
 
 export default class AdminPluginsDiscourseSubscriptionsController extends Controller {
   @service dialog;
@@ -31,18 +31,16 @@ export default class AdminPluginsDiscourseSubscriptionsController extends Contro
     ajax(`/s/admin/refresh`, {
       method: "post",
     }).then(() => {
-      this.dialog.alert(
-        I18n.t("discourse_subscriptions.campaign.refresh_page")
-      );
+      this.dialog.alert(i18n("discourse_subscriptions.campaign.refresh_page"));
     });
   }
 
   @action
   createOneClickCampaign() {
     this.dialog.yesNoConfirm({
-      title: I18n.t("discourse_subscriptions.campaign.confirm_creation_title"),
+      title: i18n("discourse_subscriptions.campaign.confirm_creation_title"),
       message: htmlSafe(
-        I18n.t("discourse_subscriptions.campaign.confirm_creation")
+        i18n("discourse_subscriptions.campaign.confirm_creation")
       ),
       didConfirm: () => {
         this.set("loading", true);
@@ -53,7 +51,7 @@ export default class AdminPluginsDiscourseSubscriptionsController extends Contro
           .then(() => {
             this.set("loading", false);
             this.dialog.confirm({
-              message: I18n.t("discourse_subscriptions.campaign.created"),
+              message: i18n("discourse_subscriptions.campaign.created"),
               shouldDisplayCancel: false,
               didConfirm: () => this.send("showSettings"),
               didCancel: () => this.send("showSettings"),

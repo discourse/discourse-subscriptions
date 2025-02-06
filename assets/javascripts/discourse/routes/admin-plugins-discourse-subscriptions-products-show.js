@@ -2,7 +2,7 @@ import { action } from "@ember/object";
 import Route from "@ember/routing/route";
 import { service } from "@ember/service";
 import { hash } from "rsvp";
-import I18n from "I18n";
+import { i18n } from "discourse-i18n";
 import AdminPlan from "discourse/plugins/discourse-subscriptions/discourse/models/admin-plan";
 import AdminProduct from "discourse/plugins/discourse-subscriptions/discourse/models/admin-product";
 
@@ -27,7 +27,7 @@ export default class AdminPluginsDiscourseSubscriptionsProductsShowRoute extends
   @action
   destroyPlan(plan) {
     this.dialog.yesNoConfirm({
-      message: I18n.t(
+      message: i18n(
         "discourse_subscriptions.admin.plans.operations.destroy.confirm"
       ),
       didConfirm: () => {

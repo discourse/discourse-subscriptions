@@ -1,7 +1,7 @@
 import Controller from "@ember/controller";
 import { computed } from "@ember/object";
 import { htmlSafe } from "@ember/template";
-import I18n from "I18n";
+import { i18n } from "discourse-i18n";
 
 export default class SubscriptionsController extends Controller {
   init() {
@@ -39,7 +39,7 @@ export default class SubscriptionsController extends Controller {
                 ></stripe-pricing-table>`);
       }
     } catch {
-      return I18n.t("discourse_subscriptions.subscribe.no_products");
+      return i18n("discourse_subscriptions.subscribe.no_products");
     }
   }
 }

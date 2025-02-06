@@ -1,6 +1,6 @@
 import { computed } from "@ember/object";
 import { classNames } from "@ember-decorators/component";
-import I18n from "I18n";
+import { i18n } from "discourse-i18n";
 import ComboBoxComponent from "select-kit/components/combo-box";
 import {
   pluginApiIdentifiers,
@@ -11,7 +11,7 @@ import {
 @selectKitOptions({
   filterable: true,
   allowAny: false,
-  translatedNone: I18n.t(
+  translatedNone: i18n(
     "discourse_subscriptions.subscribe.cardholder_address.state"
   ),
 })
