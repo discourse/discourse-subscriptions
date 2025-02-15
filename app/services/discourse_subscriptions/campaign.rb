@@ -91,7 +91,7 @@ module DiscourseSubscriptions
         params = {
           full_name: I18n.t("js.discourse_subscriptions.campaign.supporters"),
           title: I18n.t("js.discourse_subscriptions.campaign.supporter"),
-          flair_icon: "donate",
+          flair_icon: "circle-dollar-to-slot",
         }
 
         group.update(params)
