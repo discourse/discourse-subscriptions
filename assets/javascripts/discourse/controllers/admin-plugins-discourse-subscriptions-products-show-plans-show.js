@@ -45,6 +45,7 @@ export default class AdminPluginsDiscourseSubscriptionsProductsShowPlansShowCont
       { id: "ZAR", name: "ZAR" },
       { id: "CHF", name: "CHF" },
       { id: "PLN", name: "PLN" },
+      { id: "CZK", name: "CZK" },
     ];
   }
 

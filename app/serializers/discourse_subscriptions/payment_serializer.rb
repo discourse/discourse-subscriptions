@@ -57,6 +57,8 @@ module DiscourseSubscriptions
         "CHF"
       when "pln"
         "zł"
+      when "czk"
+        "Kč"
       else
         "$"
       end

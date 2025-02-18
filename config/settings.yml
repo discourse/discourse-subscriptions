@@ -37,6 +37,7 @@ discourse_subscriptions:
       - ZAR
       - CHF
       - PLN
+      - CZK
   discourse_subscriptions_campaign_enabled:
     client: true
     default: false
