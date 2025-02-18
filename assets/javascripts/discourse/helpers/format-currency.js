@@ -31,10 +31,10 @@ export function formatCurrency([currency, amount]) {
     case "PLN":
       currencySign = "zł";
       break;
-      case "CZK":
-        currencySign = "Kč";
-        break;
-      default:
+    case "CZK":
+      currencySign = "Kč";
+      break;
+    default:
       currencySign = "$";
   }
 
