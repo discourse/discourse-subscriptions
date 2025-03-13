@@ -28,12 +28,12 @@ describe "Subscription products", type: :system do
     ::Stripe::Price.stubs(:list).returns({ data: [] })
   end
 
-  it "shows the login modal" do
+  it "shows the login screen" do
     visit("/s")
 
     find("button.login-required.subscriptions").click
 
-    expect(page).to have_css(".modal-container .login-modal")
+    expect(page).to have_css("#login-form")
   end
 
   it "shows products on the products and allows deletion" do
