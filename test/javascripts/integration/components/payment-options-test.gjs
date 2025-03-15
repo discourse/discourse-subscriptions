@@ -35,12 +35,14 @@ module("Subscriptions | payment-options", function (hooks) {
 
     const testState = new State();
 
-    await render(<template>
-      <PaymentOptions
-        @plans={{plans}}
-        @selectedPlan={{testState.selectedPlan}}
-      />
-    </template>);
+    await render(
+      <template>
+        <PaymentOptions
+          @plans={{plans}}
+          @selectedPlan={{testState.selectedPlan}}
+        />
+      </template>
+    );
 
     assert.dom(".btn-discourse-subscriptions-subscribe").exists({ count: 2 });
 
