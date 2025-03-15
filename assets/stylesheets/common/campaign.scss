@@ -1,3 +1,4 @@
+/* stylelint-disable scss/no-global-function-names */
 .subscription-campaign-sidebar {
   #main-outlet
     .container.list-container
@@ -362,13 +363,13 @@ $box-shadow: ();
 @for $i from 0 through $particles {
   $box-shadow:
     $box-shadow,
-    math.random($width) -
+    random($width) -
       $halfwidth +
       px
-      math.random($height) -
+      random($height) -
       $heightpartial +
       px
-      hsl(math.random(360), 100%, 50%);
+      hsl(random(360), 100%, 50%);
 }
 
 @mixin keyframes($animationName) {
