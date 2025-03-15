@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .subscription-campaign-sidebar {
   #main-outlet
     .container.list-container
@@ -9,16 +11,11 @@
     grid-template-columns: 78% calc(22% - 2em);
     grid-template-areas: "content sidebar";
     grid-column-gap: 2em;
+
     span:first-of-type {
       grid-area: sidebar;
     }
   }
-}
-
-// All
-.campaign-banner {
-  box-shadow: 5px 5px
-    var(--discourse_subscriptions_campaign_banner_shadow_color);
 }
 
 // Sidebar Version
@@ -26,6 +23,7 @@
   width: 100%;
   flex-direction: column;
   position: relative;
+
   .btn.close {
     position: absolute;
     top: 1em;
@@ -33,6 +31,7 @@
     font-size: 10px;
     z-index: 1;
   }
+
   .campaign-banner-info {
     display: flex;
     flex-direction: column;
@@ -40,11 +39,13 @@
     width: calc(100% - 2em);
     padding: 1em 1em 2em 1em;
     position: relative;
+
     &-header {
       font-size: $font-up-5;
       margin: 0 !important;
       text-align: center;
     }
+
     &-description {
       width: 100%;
       font-size: $font-down-1;
@@ -52,10 +53,12 @@
       margin-bottom: 1em;
     }
   }
+
   .campaign-banner-progress {
     width: calc(100% - 2em);
     margin: 1em 0;
     padding: 1em;
+
     &-users {
       align-items: stretch;
       display: flex;
@@ -64,18 +67,22 @@
 
       &-title {
         font-size: $font-down-1;
+
         strong {
           font-weight: bold;
         }
       }
     }
   }
+
   .campaign-banner-info-button {
     height: 2em;
   }
+
   progress[value] {
     height: 1.5em;
   }
+
   .campaign-banner-progress-description {
     font-size: $font-down-1;
   }
@@ -97,10 +104,14 @@ body.archetype-regular {
   border: 1px solid var(--primary-low);
   position: relative;
   align-items: stretch;
+  box-shadow: 5px 5px
+    var(--discourse_subscriptions_campaign_banner_shadow_color);
+
   @media screen and (max-width: 400px) {
     width: 98%;
     flex-direction: column;
   }
+
   .btn.close {
     position: absolute;
     top: 1em;
@@ -108,16 +119,19 @@ body.archetype-regular {
     font-size: 10px;
     background-color: transparent;
     padding: 0;
+
     &:hover {
       .d-icon {
         color: var(--primary);
       }
     }
   }
+
   &-info {
     width: 30%;
     padding: 0.5em 2em 0.5em;
     background-color: var(--primary-very-low);
+
     @media screen and (min-width: 1000px) {
       width: 40%;
       display: grid;
@@ -125,6 +139,7 @@ body.archetype-regular {
       grid-template-areas: "left right" "left right";
       align-items: center;
     }
+
     @media screen and (max-width: 400px) {
       width: calc(100% - 4em);
       display: flex;
@@ -132,23 +147,29 @@ body.archetype-regular {
       align-items: center;
       padding-bottom: 1em;
     }
+
     &-header {
       font-size: $font-up-6;
       margin: 0;
+
       @media screen and (max-width: 750px) {
         font-size: $font-up-3;
       }
     }
+
     &-success {
       width: 100%;
       margin: 0;
     }
+
     &-description {
       width: 100%;
       margin: 0.25em 0 1em 0;
+
       @media screen and (max-width: 750px) {
         font-size: $font-down-1;
       }
+
       @media screen and (max-width: 400px) {
         text-align: center;
       }
@@ -159,14 +180,17 @@ body.archetype-regular {
       height: 2.5em;
       padding: 0.75em 1.5em 0.75em 2.75em;
       position: relative;
+
       .d-icon {
         position: absolute;
         left: 1em;
+
         &.hover-heart {
           opacity: 0;
           transition: opacity 0.2s ease-in-out;
         }
       }
+
       &:hover {
         .d-icon.hover-heart {
           opacity: 1;
@@ -174,12 +198,15 @@ body.archetype-regular {
       }
     }
   }
+
   &-progress {
     width: 60%;
     padding: 1.5em 2em 1.5em;
+
     @media screen and (max-width: 400px) {
       width: calc(100% - 4em);
     }
+
     &-success {
       height: 32px;
       background: linear-gradient(
@@ -194,13 +221,16 @@ body.archetype-regular {
       background-size: 400% 100%;
       animation: gradient 15s ease infinite;
     }
+
     &-description {
       margin: 0.5em 0 0;
       font-weight: 300;
+
       strong {
         font-weight: bold;
       }
     }
+
     &-users {
       align-items: center;
       display: inline-flex;
@@ -211,13 +241,13 @@ body.archetype-regular {
           font-weight: bold;
         }
       }
+
       &-avatars {
         margin: 0 0 0 0.5em;
       }
     }
 
     progress[value] {
-      -webkit-appearance: none;
       appearance: none;
       height: 2.5em;
       width: 100%;
@@ -264,28 +294,36 @@ html:not(.mobile-view) .subscriptions-campaign-topic-footer .campaign-banner {
   margin-top: 2em;
   height: min-content;
   width: calc(100% + 14em);
+
   .btn.close {
     top: 1em;
     right: 1em;
   }
+
   .campaign-banner-info {
     width: 65%;
+
     &-header {
       font-size: $font-up-6;
     }
+
     &-description {
       font-size: $font-down-1;
       margin: 0.25em 0.25em 1em 0 !important;
     }
   }
+
   .campaign-banner-progress {
     padding: 1.5em 2.5em 1em;
+
     progress[value] {
       height: 2em;
     }
+
     .campaign-banner-progress-users {
       margin-top: 1em;
     }
+
     .campaign-banner-progress-users-title {
       margin: 0;
     }
@@ -297,9 +335,11 @@ html:not(.mobile-view) .subscriptions-campaign-topic-footer .campaign-banner {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -322,30 +362,31 @@ $heightpartial: calc($height / 1.2);
 $box-shadow: ();
 
 @for $i from 0 through $particles {
-  $box-shadow: $box-shadow,
-    random($width) -
+  $box-shadow:
+    $box-shadow,
+    math.random($width) -
       $halfwidth +
       px
-      random($height) -
+      math.random($height) -
       $heightpartial +
       px
-      hsl(random(360), 100%, 50%);
+      hsl(math.random(360), 100%, 50%);
 }
 
 @mixin keyframes($animationName) {
-  @-webkit-keyframes #{$animationName} {
+  @keyframes #{$animationName} {
     @content;
   }
 
-  @-moz-keyframes #{$animationName} {
+  @keyframes #{$animationName} {
     @content;
   }
 
-  @-o-keyframes #{$animationName} {
+  @keyframes #{$animationName} {
     @content;
   }
 
-  @-ms-keyframes #{$animationName} {
+  @keyframes #{$animationName} {
     @content;
   }
 
@@ -355,44 +396,29 @@ $box-shadow: ();
 }
 
 @mixin animation-delay($settings) {
-  -moz-animation-delay: $settings;
-  -webkit-animation-delay: $settings;
-  -o-animation-delay: $settings;
-  -ms-animation-delay: $settings;
   animation-delay: $settings;
 }
 
 @mixin animation-duration($settings) {
-  -moz-animation-duration: $settings;
-  -webkit-animation-duration: $settings;
-  -o-animation-duration: $settings;
-  -ms-animation-duration: $settings;
   animation-duration: $settings;
 }
 
 @mixin animation($settings) {
-  -moz-animation: $settings;
-  -webkit-animation: $settings;
-  -o-animation: $settings;
-  -ms-animation: $settings;
   animation: $settings;
 }
 
 @mixin transform($settings) {
   transform: $settings;
-  -moz-transform: $settings;
-  -webkit-transform: $settings;
-  -o-transform: $settings;
-  -ms-transform: $settings;
 }
 
-body:not(.archetype-regular):not(.success-animation-off) {
+body:not(.archetype-regular, .success-animation-off) {
   .fireworks > .before,
   .fireworks > .after {
     position: absolute;
     width: 5px;
     height: 5px;
     border-radius: 50%;
+
     @include animation(
       (
         1s bang ease-out 1s 2 backwards,
@@ -427,21 +453,25 @@ body:not(.archetype-regular):not(.success-animation-off) {
     margin-top: -2%;
     margin-left: -43%;
   }
+
   20%,
   39.9% {
     margin-top: 2%;
     margin-left: -18%;
   }
+
   40%,
   59.9% {
     margin-top: 0%;
     margin-left: 0%;
   }
+
   60%,
   79.9% {
     margin-top: 4%;
     margin-left: 18%;
   }
+
   80%,
   99.9% {
     margin-top: 6%;

@@ -18,6 +18,7 @@ textarea[readonly] {
   .btn-right {
     text-align: right;
   }
+
   .align-buttons {
     display: flex;
     justify-content: flex-end;
@@ -36,6 +37,7 @@ textarea[readonly] {
   position: relative;
   top: 2px;
 }
+
 .plan-currency {
   width: 70px;
 }
@@ -46,12 +48,14 @@ textarea[readonly] {
 
 table.discourse-subscriptions-user-table {
   width: 100%;
+
   th,
   td {
     padding-top: 8px;
     padding-bottom: 8px;
     padding-left: 8px;
   }
+
   th:first-child,
   td:first-child {
     padding-left: 0;
