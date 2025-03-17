@@ -9,6 +9,7 @@ import { i18n } from "discourse-i18n";
 
 export default class AdminPluginsDiscourseSubscriptionsController extends Controller {
   @service dialog;
+
   loading = false;
 
   @discourseComputed

@@ -16,9 +16,11 @@ module("Subscriptions | payment-plan", function (hooks) {
     };
     let selectedPlan;
 
-    await render(<template>
-      <PaymentPlan @plan={{plan}} @selectedPlan={{selectedPlan}} />
-    </template>);
+    await render(
+      <template>
+        <PaymentPlan @plan={{plan}} @selectedPlan={{selectedPlan}} />
+      </template>
+    );
 
     assert
       .dom(".btn-discourse-subscriptions-subscribe")
@@ -46,9 +48,11 @@ module("Subscriptions | payment-plan", function (hooks) {
 
     const testState = new State();
 
-    await render(<template>
-      <PaymentPlan @plan={{plan}} @selectedPlan={{testState.selectedPlan}} />
-    </template>);
+    await render(
+      <template>
+        <PaymentPlan @plan={{plan}} @selectedPlan={{testState.selectedPlan}} />
+      </template>
+    );
 
     assert
       .dom(".btn-discourse-subscriptions-subscribe:first-child .interval")
