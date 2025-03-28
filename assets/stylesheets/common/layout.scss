@@ -66,11 +66,11 @@
 
       .billing-link {
         align-self: flex-end;
+        font-size: $font-down-1;
 
         @include breakpoint(large) {
           margin-top: 1em;
         }
-        font-size: $font-down-1;
       }
     }
   }

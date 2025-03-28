@@ -128,16 +128,8 @@ body.archetype-regular {
 
   &-info {
     width: 30%;
-    padding: 0.5em 2em 0.5em;
+    padding: 2em;
     background-color: var(--primary-very-low);
-
-    @media screen and (min-width: 1000px) {
-      width: 40%;
-      display: grid;
-      grid-template-columns: 65% calc(40% - 2em);
-      grid-template-areas: "left right" "left right";
-      align-items: center;
-    }
 
     @media screen and (max-width: 400px) {
       width: calc(100% - 4em);
@@ -148,7 +140,7 @@ body.archetype-regular {
     }
 
     &-header {
-      font-size: $font-up-6;
+      font-size: $font-up-4;
       margin: 0;
 
       @media screen and (max-width: 750px) {
@@ -201,6 +193,9 @@ body.archetype-regular {
   &-progress {
     width: 60%;
     padding: 1.5em 2em 1.5em;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
 
     @media screen and (max-width: 400px) {
       width: calc(100% - 4em);
