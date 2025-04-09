@@ -5,6 +5,14 @@ require "rails_helper"
 RSpec.describe DiscourseSubscriptions::User::SubscriptionsController do
   before { SiteSetting.discourse_subscriptions_enabled = true }
 
+  def create_price(id, product)
+    price = { id: id, product: product }
+    def price.id
+      self[:id]
+    end
+    price
+  end
+
   it "is a subclass of ApplicationController" do
     expect(DiscourseSubscriptions::User::SubscriptionsController < ::ApplicationController).to eq(
       true,
@@ -79,6 +87,42 @@ RSpec.describe DiscourseSubscriptions::User::SubscriptionsController do
         expect(subscription[:id]).to eq("sub_10z")
         expect(subscription[:items][:data][0][:plan][:id]).to eq("price_1OrmlvEYXaQnncShNahrpKvA")
         expect(subscription[:product][:name]).to eq("Exclusive Access")
+      end
+
+      it "aggregates prices from multiple pages using pagination logic" do
+        subscription_data = { id: "sub_10z", items: { data: [{ price: { id: "price_200" } }] } }
+        ::Stripe::Subscription
+          .stubs(:list)
+          .with(customer: "cus_23456", status: "all")
+          .returns({ data: [subscription_data] })
+
+        # Build the first page of 100 prices that do NOT include the desired price.
+        prices_page_1 =
+          (1..100).map do |i|
+            create_price("price_#{i}", { id: "prod_dummy", name: "Dummy Product #{i}" })
+          end
+
+        # Second page containing the desired price.
+        prices_page_2 = [create_price("price_200", { id: "prod_200", name: "Matching Product" })]
+
+        ::Stripe::Price
+          .expects(:list)
+          .with(has_entries(limit: 100, expand: ["data.product"]))
+          .returns({ data: prices_page_1, has_more: true })
+
+        ::Stripe::Price
+          .expects(:list)
+          .with(has_entries(limit: 100, expand: ["data.product"], starting_after: "price_100"))
+          .returns({ data: prices_page_2, has_more: false })
+
+        get "/s/user/subscriptions.json"
+        result = JSON.parse(response.body, symbolize_names: true)
+        subscription = result.first
+
+        expect(subscription[:id]).to eq("sub_10z")
+        expect(subscription[:plan][:id]).to eq("price_200")
+        expect(subscription[:product][:id]).to eq("prod_200")
+        expect(subscription[:product][:name]).to eq("Matching Product")
       end
     end
 

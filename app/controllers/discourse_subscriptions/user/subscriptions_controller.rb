@@ -24,7 +24,14 @@ module DiscourseSubscriptions
           subscriptions = []
 
           if subscription_ids
-            plans = ::Stripe::Price.list(expand: ["data.product"], limit: 100)
+            prices = []
+            price_params = { limit: 100, expand: ["data.product"] }
+            loop do
+              response = ::Stripe::Price.list(price_params)
+              prices.concat(response[:data])
+              break unless response[:has_more]
+              price_params[:starting_after] = response[:data].last.id
+            end
             all_subscriptions = []
 
             stripe_customer_ids.each do |stripe_customer_id|
@@ -35,7 +42,7 @@ module DiscourseSubscriptions
 
             subscriptions = all_subscriptions.select { |sub| subscription_ids.include?(sub[:id]) }
             subscriptions.map! do |subscription|
-              plan = plans[:data].find { |p| p[:id] == subscription[:items][:data][0][:price][:id] }
+              plan = prices.find { |p| p[:id] == subscription[:items][:data][0][:price][:id] }
               subscription.to_h.except!(:plan)
               subscription.to_h.merge(plan: plan, product: plan[:product].to_h.slice(:id, :name))
             end
