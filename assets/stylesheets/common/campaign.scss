@@ -106,7 +106,7 @@ body.archetype-regular {
   box-shadow: 5px 5px
     var(--discourse_subscriptions_campaign_banner_shadow_color);
 
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 700px) {
     width: 98%;
     flex-direction: column;
   }
@@ -131,7 +131,7 @@ body.archetype-regular {
     padding: 2em;
     background-color: var(--primary-very-low);
 
-    @media screen and (max-width: 400px) {
+    @media screen and (max-width: 700px) {
       width: calc(100% - 4em);
       display: flex;
       flex-direction: column;
@@ -161,7 +161,7 @@ body.archetype-regular {
         font-size: $font-down-1;
       }
 
-      @media screen and (max-width: 400px) {
+      @media screen and (max-width: 700px) {
         text-align: center;
       }
     }
@@ -197,7 +197,7 @@ body.archetype-regular {
     flex-flow: column;
     justify-content: center;
 
-    @media screen and (max-width: 400px) {
+    @media screen and (max-width: 700px) {
       width: calc(100% - 4em);
     }
 
@@ -283,44 +283,23 @@ html:not(.mobile-view) {
   }
 }
 
+// Stack buttons and container on mobile
+html.mobile-view #topic-footer-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
 // Topic Footer Version
 html:not(.mobile-view) .subscriptions-campaign-topic-footer .campaign-banner {
   margin-top: 2em;
-  height: min-content;
-  width: calc(100% + 14em);
+
+  @media screen and (min-width: 1000px) {
+    width: calc(var(--d-max-width) * .87);
+  }
 
   .btn.close {
     top: 1em;
     right: 1em;
-  }
-
-  .campaign-banner-info {
-    width: 65%;
-
-    &-header {
-      font-size: $font-up-6;
-    }
-
-    &-description {
-      font-size: $font-down-1;
-      margin: 0.25em 0.25em 1em 0 !important;
-    }
-  }
-
-  .campaign-banner-progress {
-    padding: 1.5em 2.5em 1em;
-
-    progress[value] {
-      height: 2em;
-    }
-
-    .campaign-banner-progress-users {
-      margin-top: 1em;
-    }
-
-    .campaign-banner-progress-users-title {
-      margin: 0;
-    }
   }
 }
 
