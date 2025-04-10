@@ -106,7 +106,7 @@ body.archetype-regular {
   box-shadow: 5px 5px
     var(--discourse_subscriptions_campaign_banner_shadow_color);
 
-  @media screen and (max-width: 700px) {
+  @include breakpoint(tablet) {
     width: 98%;
     flex-direction: column;
   }
@@ -131,7 +131,7 @@ body.archetype-regular {
     padding: 2em;
     background-color: var(--primary-very-low);
 
-    @media screen and (max-width: 700px) {
+    @include breakpoint(tablet) {
       width: calc(100% - 4em);
       display: flex;
       flex-direction: column;
@@ -143,7 +143,7 @@ body.archetype-regular {
       font-size: $font-up-4;
       margin: 0;
 
-      @media screen and (max-width: 750px) {
+      @include breakpoint(tablet) {
         font-size: $font-up-3;
       }
     }
@@ -157,11 +157,8 @@ body.archetype-regular {
       width: 100%;
       margin: 0.25em 0 1em 0;
 
-      @media screen and (max-width: 750px) {
+      @include breakpoint(tablet) {
         font-size: $font-down-1;
-      }
-
-      @media screen and (max-width: 700px) {
         text-align: center;
       }
     }
@@ -197,7 +194,7 @@ body.archetype-regular {
     flex-flow: column;
     justify-content: center;
 
-    @media screen and (max-width: 700px) {
+    @include breakpoint(tablet) {
       width: calc(100% - 4em);
     }
 
@@ -292,9 +289,10 @@ html.mobile-view #topic-footer-buttons {
 // Topic Footer Version
 html:not(.mobile-view) .subscriptions-campaign-topic-footer .campaign-banner {
   margin-top: 2em;
+  width: calc(var(--d-max-width) * 0.87);
 
-  @media screen and (min-width: 1000px) {
-    width: calc(var(--d-max-width) * 0.87);
+  @include breakpoint(large) {
+    width: auto;
   }
 
   .btn.close {
