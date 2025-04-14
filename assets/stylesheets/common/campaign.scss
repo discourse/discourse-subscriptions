@@ -302,11 +302,11 @@ html:not(.mobile-view) .subscriptions-campaign-topic-footer .campaign-banner {
 }
 
 // Topic Footer Version + Sidebar visible
-html:not(.mobile-view)
-  body.has-sidebar-page
-  .subscriptions-campaign-topic-footer
-  .campaign-banner {
-  @media screen and (max-width: 1285px) {
+@media screen and (max-width: 1285px) {
+  html:not(.mobile-view)
+    body.has-sidebar-page
+    .subscriptions-campaign-topic-footer
+    .campaign-banner {
     width: auto;
   }
 }
