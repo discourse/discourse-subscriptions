@@ -301,6 +301,13 @@ html:not(.mobile-view) .subscriptions-campaign-topic-footer .campaign-banner {
   }
 }
 
+// Topic Footer Version + Sidebar visible
+html:not(.mobile-view) body.has-sidebar-page .subscriptions-campaign-topic-footer .campaign-banner {
+  @media screen and (max-width: 1285px) {
+    width: auto;
+  }
+}
+
 // CSS Animations for campaign Success
 @keyframes gradient {
   0% {
