@@ -1,10 +1,12 @@
+@use "lib/viewport";
+
 .discourse-subscriptions-section-columns {
   display: flex;
   justify-content: space-between;
   margin: 20px;
   padding: 20px;
 
-  @include breakpoint(medium) {
+  @include viewport.until(lg) {
     flex-direction: column;
     margin: 0;
     padding: 0.5em;
@@ -22,7 +24,7 @@
       margin-right: 0.5em;
     }
 
-    @include breakpoint(medium) {
+    @include viewport.until(lg) {
       min-width: 100%;
 
       &:last-child {
@@ -68,7 +70,7 @@
         align-self: flex-end;
         font-size: $font-down-1;
 
-        @include breakpoint(large) {
+        @include viewport.until(lg) {
           margin-top: 1em;
         }
       }

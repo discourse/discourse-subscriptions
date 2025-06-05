@@ -61,7 +61,7 @@
   margin-bottom: 9px;
 }
 
-@media all and (min-width: 1350px) {
+@media all and (width >= 1350px) {
   .address-fields {
     display: flex;
     justify-content: space-between;

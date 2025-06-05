@@ -1,3 +1,4 @@
+@use "lib/viewport";
 /* stylelint-disable scss/no-global-function-names */
 .subscription-campaign-sidebar {
   #main-outlet
@@ -106,7 +107,7 @@ body.archetype-regular {
   box-shadow: 5px 5px
     var(--discourse_subscriptions_campaign_banner_shadow_color);
 
-  @include breakpoint(tablet) {
+  @include viewport.until(md) {
     width: 98%;
     flex-direction: column;
   }
@@ -131,7 +132,7 @@ body.archetype-regular {
     padding: 2em;
     background-color: var(--primary-very-low);
 
-    @include breakpoint(tablet) {
+    @include viewport.until(md) {
       width: calc(100% - 4em);
       display: flex;
       flex-direction: column;
@@ -143,7 +144,7 @@ body.archetype-regular {
       font-size: $font-up-4;
       margin: 0;
 
-      @include breakpoint(tablet) {
+      @include viewport.until(md) {
         font-size: $font-up-3;
       }
     }
@@ -157,7 +158,7 @@ body.archetype-regular {
       width: 100%;
       margin: 0.25em 0 1em 0;
 
-      @include breakpoint(tablet) {
+      @include viewport.until(md) {
         font-size: $font-down-1;
         text-align: center;
       }
@@ -194,7 +195,7 @@ body.archetype-regular {
     flex-flow: column;
     justify-content: center;
 
-    @include breakpoint(tablet) {
+    @include viewport.until(md) {
       width: calc(100% - 4em);
     }
 
@@ -291,7 +292,7 @@ html:not(.mobile-view) .subscriptions-campaign-topic-footer .campaign-banner {
   margin-top: 2em;
   width: calc(var(--d-max-width) * 0.87);
 
-  @include breakpoint(large) {
+  @include viewport.until(lg) {
     width: auto;
   }
 
@@ -302,7 +303,7 @@ html:not(.mobile-view) .subscriptions-campaign-topic-footer .campaign-banner {
 }
 
 // Topic Footer Version + Sidebar visible
-@media screen and (max-width: 1285px) {
+@media screen and (width <= 1285px) {
   html:not(.mobile-view)
     body.has-sidebar-page
     .subscriptions-campaign-topic-footer
