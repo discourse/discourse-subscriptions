@@ -1,6 +1,4 @@
-import { helper } from "@ember/component/helper";
-
-export function formatCurrency([currency, amount]) {
+export default function formatCurrency(currency, amount) {
   let currencySign;
 
   switch (currency.toUpperCase()) {
@@ -38,8 +36,6 @@ export function formatCurrency([currency, amount]) {
       currencySign = "$";
   }
 
-  let formattedAmount = parseFloat(amount).toFixed(2);
+  const formattedAmount = parseFloat(amount).toFixed(2);
   return currencySign + formattedAmount;
 }
-
-export default helper(formatCurrency);
