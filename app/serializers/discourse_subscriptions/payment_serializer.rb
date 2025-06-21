@@ -59,6 +59,8 @@ module DiscourseSubscriptions
         "zł"
       when "czk"
         "Kč"
+      when "sek"
+        "kr"
       else
         "$"
       end
