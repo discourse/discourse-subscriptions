@@ -6,12 +6,8 @@ import Plan from "discourse/plugins/discourse-subscriptions/discourse/models/pla
 
 export default class UserSubscription extends EmberObject {
   static findAll() {
-    return ajax("/s/user/subscriptions", { method: "get" }).then((result) =>
-      result.map((subscription) => {
-        subscription.plan = Plan.create(subscription.plan);
-        return UserSubscription.create(subscription);
-      })
-    );
+    // This is correct: just fetch the data and let the route handle it.
+    return ajax("/s/user/subscriptions", { method: "get" });
   }
 
   @discourseComputed("status")
@@ -21,16 +17,20 @@ export default class UserSubscription extends EmberObject {
 
   @discourseComputed("current_period_end", "canceled_at")
   endDate(current_period_end, canceled_at) {
-    if (!canceled_at) {
+    // This is the safer version that handles one-time payments
+    if (current_period_end) {
       return moment.unix(current_period_end).format("LL");
-    } else {
+    } else if (canceled_at) {
       return i18n("discourse_subscriptions.user.subscriptions.cancelled");
+    } else {
+      return "N/A"; // For our one-time Razorpay purchases
     }
   }
 
   @discourseComputed("discount")
   discounted(discount) {
-    if (discount) {
+    // This is the safer version that handles missing discounts
+    if (discount && discount.coupon) {
       const amount_off = discount.coupon.amount_off;
       const percent_off = discount.coupon.percent_off;
 
@@ -44,6 +44,7 @@ export default class UserSubscription extends EmberObject {
     }
   }
 
+  // --- THIS METHOD IS NOW CORRECTLY INCLUDED ---
   destroy() {
     return ajax(`/s/user/subscriptions/${this.id}`, {
       method: "delete",

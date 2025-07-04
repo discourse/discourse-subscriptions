@@ -12,6 +12,10 @@ en:
     discourse_subscriptions_public_key: Stripe Publishable Key
     discourse_subscriptions_secret_key: Stripe Secret Key
     discourse_subscriptions_webhook_secret: Stripe Webhook Secret
+    discourse_subscriptions_payment_provider: The payment provider to use for all transactions.
+    discourse_subscriptions_razorpay_key_id: Razorpay Key ID
+    discourse_subscriptions_razorpay_key_secret: Razorpay Key Secret
+    discourse_subscriptions_razorpay_webhook_secret: Razorpay Webhook Secret
     discourse_subscriptions_currency: Default Currency Code. This can be overridden when creating a subscription plan.
     discourse_subscriptions_campaign_enabled: Enables a campaign banner to promote supporting this community financially.
     discourse_subscriptions_campaign_goal: The numerical goal for your support campaign (subscribers or amount raised).

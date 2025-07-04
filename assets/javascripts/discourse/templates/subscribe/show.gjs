@@ -1,3 +1,8 @@
+// --- ADD THESE IMPORTS AT THE TOP ---
+import { on } from '@ember/modifier';
+import { eq } from 'truth-helpers';
+// --- END OF ADDITION ---
+
 import { Input } from "@ember/component";
 import { LinkTo } from "@ember/routing";
 import RouteTemplate from "ember-route-template";
@@ -42,101 +47,110 @@ export default RouteTemplate(
 
           <hr />
 
-          <SubscribeCard @cardElement={{@controller.cardElement}} />
-
           {{#if @controller.loading}}
             {{loadingSpinner}}
           {{else if @controller.isAnonymous}}
             <LoginRequired />
           {{else}}
-            <Input
-              @type="text"
-              name="cardholder_name"
-              placeholder={{i18n
-                "discourse_subscriptions.subscribe.cardholder_name"
-              }}
-              @value={{@controller.cardholderName}}
-              class="subscribe-name"
-            />
-            <div class="address-fields">
-              <SubscribeCountrySelect
-                @value={{@controller.cardholderAddress.country}}
-                @onChange={{@controller.changeCountry}}
-              />
-              <Input
-                @type="text"
-                name="cardholder_postal_code"
-                placeholder={{i18n
-                  "discourse_subscriptions.subscribe.cardholder_address.postal_code"
-                }}
-                @value={{@controller.cardholderAddress.postalCode}}
-                class="subscribe-address-postal-code"
-              />
-            </div>
-            <Input
-              @type="text"
-              name="cardholder_line1"
-              placeholder={{i18n
-                "discourse_subscriptions.subscribe.cardholder_address.line1"
-              }}
-              @value={{@controller.cardholderAddress.line1}}
-              class="subscribe-address-line1"
-            />
-            <div class="address-fields">
-              <Input
-                @type="text"
-                name="cardholder_city"
-                placeholder={{i18n
-                  "discourse_subscriptions.subscribe.cardholder_address.city"
-                }}
-                @value={{@controller.cardholderAddress.city}}
-                class="subscribe-address-city"
-              />
-              {{#if @controller.isCountryUS}}
-                <SubscribeUsStateSelect
-                  @value={{@controller.cardholderAddress.state}}
-                  @onChange={{@controller.changeState}}
-                />
-              {{else if @controller.isCountryCA}}
-                <SubscribeCaProvinceSelect
-                  @value={{@controller.cardholderAddress.state}}
-                  @onChange={{@controller.changeState}}
-                />
-              {{else}}
+
+            {{! --- THIS FORM WRAPPER IS NEW --- }}
+            <form {{on "submit" @controller.initiatePayment}}>
+
+              {{#if (eq @controller.siteSettings.discourse_subscriptions_payment_provider "Stripe")}}
+                {{! This entire section for Stripe remains untouched inside the conditional --}}
+                <SubscribeCard @cardElement={{@controller.cardElement}} />
+
                 <Input
                   @type="text"
-                  name="cardholder_state"
+                  name="cardholder_name"
                   placeholder={{i18n
-                    "discourse_subscriptions.subscribe.cardholder_address.state"
+                    "discourse_subscriptions.subscribe.cardholder_name"
                   }}
-                  @value={{@controller.cardholderAddress.state}}
-                  class="subscribe-address-state"
+                  @value={{@controller.cardholderName}}
+                  class="subscribe-name"
+                />
+                <div class="address-fields">
+                  <SubscribeCountrySelect
+                    @value={{@controller.cardholderAddress.country}}
+                    @onChange={{@controller.changeCountry}}
+                  />
+                  <Input
+                    @type="text"
+                    name="cardholder_postal_code"
+                    placeholder={{i18n
+                      "discourse_subscriptions.subscribe.cardholder_address.postal_code"
+                    }}
+                    @value={{@controller.cardholderAddress.postalCode}}
+                    class="subscribe-address-postal-code"
+                  />
+                </div>
+                <Input
+                  @type="text"
+                  name="cardholder_line1"
+                  placeholder={{i18n
+                    "discourse_subscriptions.subscribe.cardholder_address.line1"
+                  }}
+                  @value={{@controller.cardholderAddress.line1}}
+                  class="subscribe-address-line1"
+                />
+                <div class="address-fields">
+                  <Input
+                    @type="text"
+                    name="cardholder_city"
+                    placeholder={{i18n
+                      "discourse_subscriptions.subscribe.cardholder_address.city"
+                    }}
+                    @value={{@controller.cardholderAddress.city}}
+                    class="subscribe-address-city"
+                  />
+                  {{#if @controller.isCountryUS}}
+                    <SubscribeUsStateSelect
+                      @value={{@controller.cardholderAddress.state}}
+                      @onChange={{@controller.changeState}}
+                    />
+                  {{else if @controller.isCountryCA}}
+                    <SubscribeCaProvinceSelect
+                      @value={{@controller.cardholderAddress.state}}
+                      @onChange={{@controller.changeState}}
+                    />
+                  {{else}}
+                    <Input
+                      @type="text"
+                      name="cardholder_state"
+                      placeholder={{i18n
+                        "discourse_subscriptions.subscribe.cardholder_address.state"
+                      }}
+                      @value={{@controller.cardholderAddress.state}}
+                      class="subscribe-address-state"
+                    />
+                  {{/if}}
+                </div>
+
+                <Input
+                  @type="text"
+                  name="promo_code"
+                  placeholder={{i18n
+                    "discourse_subscriptions.subscribe.promo_code"
+                  }}
+                  @value={{@controller.promoCode}}
+                  class="subscribe-promo-code"
                 />
               {{/if}}
-            </div>
 
-            <Input
-              @type="text"
-              name="promo_code"
-              placeholder={{i18n
-                "discourse_subscriptions.subscribe.promo_code"
-              }}
-              @value={{@controller.promoCode}}
-              class="subscribe-promo-code"
-            />
+              {{! --- THIS BUTTON IS NOW A SUBMIT BUTTON, WITHOUT AN @action --- }}
+              <DButton
+                @type="submit"
+                @disabled={{@controller.loading}}
+                class="btn btn-primary btn-payment"
+                @label="discourse_subscriptions.plans.payment_button"
+              />
 
-            <DButton
-              @disabled={{@controller.loading}}
-              @action={{@controller.stripePaymentHandler}}
-              class="btn btn-primary btn-payment"
-              @label="discourse_subscriptions.plans.payment_button"
-            />
+            </form>
+            {{! --- END OF THE FORM WRAPPER --- }}
+
           {{/if}}
         {{else}}
-          <h2>{{i18n
-              "discourse_subscriptions.subscribe.already_purchased"
-            }}</h2>
-
+          <h2>{{i18n "discourse_subscriptions.subscribe.already_purchased"}}</h2>
           <LinkTo
             @route="user.billing.subscriptions"
             @model={{@controller.currentUser.username}}

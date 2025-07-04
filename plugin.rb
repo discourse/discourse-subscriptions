@@ -10,6 +10,8 @@
 enabled_site_setting :discourse_subscriptions_enabled
 
 gem "stripe", "11.1.0"
+gem "httparty", "0.21.0"
+gem "razorpay", "3.2.3"
 
 register_asset "stylesheets/common/main.scss"
 register_asset "stylesheets/common/layout.scss"
@@ -26,7 +28,15 @@ register_html_builder("server:before-head-close") do |controller|
   "<script async src='https://js.stripe.com/v3/pricing-table.js' nonce='#{controller.helpers.csp_nonce_placeholder}'></script>"
 end
 
-extend_content_security_policy(script_src: %w[https://js.stripe.com/v3/ https://hooks.stripe.com])
+register_html_builder("server:before-head-close") do |controller|
+  if SiteSetting.discourse_subscriptions_payment_provider == "Razorpay"
+    "<script src='https://checkout.razorpay.com/v1/checkout.js' nonce='#{controller.helpers.csp_nonce_placeholder}'></script>"
+  end
+end
+
+extend_content_security_policy(
+  script_src: %w[https://js.stripe.com/v3/ https://hooks.stripe.com https://checkout.razorpay.com]
+)
 
 add_admin_route "discourse_subscriptions.admin_navigation", "discourse-subscriptions.products"
 
@@ -67,6 +77,8 @@ require_relative "app/controllers/concerns/stripe"
 require_relative "app/controllers/concerns/group"
 
 after_initialize do
+  require_relative "lib/discourse_subscriptions/providers/razorpay_provider"
+
   ::Stripe.api_version = "2024-04-10"
 
   ::Stripe.set_app_info(

@@ -27,6 +27,7 @@ DiscourseSubscriptions::Engine.routes.draw do
   get "/:id" => "subscribe#show"
   post "/create" => "subscribe#create"
   post "/finalize" => "subscribe#finalize"
+  post "/finalize_razorpay_payment" => "subscribe#finalize_razorpay_payment"
 
   post "/hooks" => "hooks#create"
 end

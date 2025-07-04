@@ -87,3 +87,21 @@ discourse_subscriptions:
     default: false
   discourse_subscriptions_enable_verbose_logging:
     default: false
+  discourse_subscriptions_payment_provider:
+    default: "Stripe"
+    type: enum
+    choices:
+      - Stripe
+      - Razorpay
+    client: true
+  discourse_subscriptions_razorpay_key_id:
+    default: ""
+    client: true
+
+  discourse_subscriptions_razorpay_key_secret:
+    default: ""
+    client: false
+
+  discourse_subscriptions_razorpay_webhook_secret:
+    default: ""
+    client: false
