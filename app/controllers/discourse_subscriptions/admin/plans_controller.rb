@@ -30,6 +30,7 @@ module DiscourseSubscriptions
             metadata: {
               group_name: params[:metadata][:group_name],
               trial_period_days: params[:trial_period_days],
+              duration: params.dig(:metadata, :duration) # Add duration here
             },
           }
 
@@ -79,8 +80,9 @@ module DiscourseSubscriptions
               metadata: {
                 group_name: params[:metadata][:group_name],
                 trial_period_days: params[:trial_period_days],
+                duration: params.dig(:metadata, :duration) # Add duration here
               },
-            )
+              )
 
           render_json_dump plan
         rescue ::Stripe::InvalidRequestError => e

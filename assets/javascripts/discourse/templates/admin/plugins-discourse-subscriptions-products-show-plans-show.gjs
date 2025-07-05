@@ -142,6 +142,25 @@ export default RouteTemplate(
             {{i18n "discourse_subscriptions.admin.plans.plan.trial_help"}}
           </div>
         </p>
+      {{else}}
+        {{! --- START OF NEW CODE --- }}
+        <p>
+          <label for="duration">
+            {{i18n "discourse_subscriptions.admin.plans.plan.duration"}}
+          </label>
+
+          <Input
+            @type="number"
+            name="duration"
+            @value={{@controller.model.plan.metadata.duration}}
+            min="1"
+          />
+
+          <div class="control-instructions">
+            {{i18n "discourse_subscriptions.admin.plans.plan.duration_help"}}
+          </div>
+        </p>
+        {{! --- END OF NEW CODE --- }}
       {{/if}}
 
       <p>

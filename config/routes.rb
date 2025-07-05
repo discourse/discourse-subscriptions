@@ -10,7 +10,10 @@ DiscourseSubscriptions::Engine.routes.draw do
 
   namespace :admin, constraints: AdminConstraint.new do
     resources :plans
-    resources :subscriptions, only: %i[index destroy]
+    resources :subscriptions, only: %i[index destroy] do # Add a do/end block here
+      post :revoke, on: :member
+      post :grant, on: :collection
+    end
     resources :products
     resources :coupons, only: %i[index create]
     resource :coupons, only: %i[destroy update]

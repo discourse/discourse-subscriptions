@@ -4,6 +4,8 @@ module DiscourseSubscriptions
   class Customer < ActiveRecord::Base
     self.table_name = "discourse_subscriptions_customers"
 
+    belongs_to :user, class_name: "::User"
+
     scope :find_user, ->(user) { find_by_user_id(user.id) }
 
     has_many :subscriptions

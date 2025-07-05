@@ -456,6 +456,8 @@ en:
             amount: Amount
             trial: Trial Period Days
             trial_help: Subscriptions to this plan will automatically start with a free trial of this length
+            duration: Duration (in days)
+            duration_help: For one-time payments, the number of days the user will have access to the group. Leave blank for permanent access.
             group: User Group
             group_help: This is the discourse user group the customer gets added to when the subscription is created.
             active: Active
@@ -482,3 +484,8 @@ en:
             created_at: Created
         ask_refund: Refund the last payment made by the customer?
         canceled: "The subscription is canceled."
+        revoke_access: "Revoke Access"
+        grant_subscription: "Grant Subscription"
+        grant_subscription_modal:
+          title: "Grant a Subscription"
+          grant: "Grant Subscription"

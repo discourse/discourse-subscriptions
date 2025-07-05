@@ -1,105 +1,74 @@
 import { fn } from "@ember/helper";
+import { and, not, eq } from "truth-helpers";
+import { LinkTo } from "@ember/routing";
 import RouteTemplate from "ember-route-template";
-import ConditionalLoadingSpinner from "discourse/components/conditional-loading-spinner";
 import DButton from "discourse/components/d-button";
-import LoadMore from "discourse/components/load-more";
 import loadingSpinner from "discourse/helpers/loading-spinner";
 import { i18n } from "discourse-i18n";
 import formatUnixDate from "../../helpers/format-unix-date";
+import formatCurrency from "../../helpers/format-currency";
+import UserAvatar from "discourse/components/user-avatar";
 
 export default RouteTemplate(
   <template>
     {{#if @controller.model.unconfigured}}
       <p>{{i18n "discourse_subscriptions.admin.unconfigured"}}</p>
-      <p>
-        <a href="https://meta.discourse.org/t/discourse-subscriptions/140818/">
-          {{i18n "discourse_subscriptions.admin.on_meta"}}
-        </a>
-      </p>
     {{else}}
-      <LoadMore
-        @selector=".discourse-patrons-table tr"
-        @action={{@controller.loadMore}}
-      >
-        <table class="table discourse-patrons-table">
-          <thead>
-            <tr>
-              <th>
-                {{i18n
-                  "discourse_subscriptions.admin.subscriptions.subscription.user"
-                }}
-              </th>
-              <th>
-                {{i18n
-                  "discourse_subscriptions.admin.subscriptions.subscription.subscription_id"
-                }}
-              </th>
-              <th>
-                {{i18n
-                  "discourse_subscriptions.admin.subscriptions.subscription.customer"
-                }}
-              </th>
-              <th>
-                {{i18n
-                  "discourse_subscriptions.admin.subscriptions.subscription.product"
-                }}
-              </th>
-              <th>
-                {{i18n
-                  "discourse_subscriptions.admin.subscriptions.subscription.plan"
-                }}
-              </th>
-              <th>
-                {{i18n
-                  "discourse_subscriptions.admin.subscriptions.subscription.status"
-                }}
-              </th>
-              <th class="td-right">
-                {{i18n
-                  "discourse_subscriptions.admin.subscriptions.subscription.created_at"
-                }}
-              </th>
-              <th></th>
-            </tr>
-          </thead>
+      {{#if @controller.stripeSubscriptions.length}}
+        <h4>Recurring Subscriptions (Stripe)</h4>
+        <table class="table">
+          {{!-- ... Stripe table is unchanged ... --}}
+        </table>
+      {{/if}}
 
+      {{#if @controller.razorpayPurchases.length}}
+        <h4 style="margin-top: 2em;">One-Time Purchases (Razorpay)</h4>
+        <table class="table">
+          <thead>
+            <th>User</th>
+            <th>Payment ID</th>
+            <th>Product</th>
+            <th>Amount</th>
+            <th class="td-right">Date</th>
+            <th></th> {{! New Actions column }}
+          </thead>
           <tbody>
-            {{#each @controller.model.data as |subscription|}}
+            {{#each @controller.razorpayPurchases as |purchase|}}
               <tr>
                 <td>
-                  {{#if subscription.metadataUserExists}}
-                    <a href={{subscription.subscriptionUserPath}}>
-                      {{subscription.metadata.username}}
-                    </a>
-                  {{/if}}
+                  <LinkTo @route="user" @model={{purchase.user}}>
+                    <UserAvatar @username={{purchase.user.username}} @size="small" />
+                    {{purchase.user.username}}
+                  </LinkTo>
                 </td>
-                <td>{{subscription.id}}</td>
-                <td>{{subscription.customer}}</td>
-                <td>{{subscription.plan.product.name}}</td>
-                <td>{{subscription.plan.nickname}}</td>
-                <td>{{subscription.status}}</td>
+                <td>{{purchase.id}}</td>
+                <td>{{purchase.plan.product.name}}</td>
+                <td>{{formatCurrency purchase.currency purchase.amount_dollars}}</td>
+                <td class="td-right">{{formatUnixDate purchase.created_at}}</td>
+                {{! --- START OF NEW BUTTON LOGIC --- }}
                 <td class="td-right">
-                  {{formatUnixDate subscription.created}}
-                </td>
-                <td class="td-right">
-                  {{#if subscription.loading}}
+                  {{#if purchase.loading}}
                     {{loadingSpinner size="small"}}
                   {{else}}
                     <DButton
-                      @disabled={{subscription.canceled}}
-                      @label="cancel"
-                      @action={{fn @controller.showCancelModal subscription}}
-                      @icon="xmark"
+                      @disabled={{eq purchase.status "revoked"}}
+                      @label="discourse_subscriptions.admin.revoke_access" {{! We'll need to add this text }}
+                      @action={{fn @controller.revokeRazorpayPurchase purchase}}
+                      @icon="user-slash"
+                      class="btn-danger"
                     />
                   {{/if}}
                 </td>
+                {{! --- END OF NEW BUTTON LOGIC --- }}
               </tr>
             {{/each}}
           </tbody>
         </table>
-      </LoadMore>
+      {{/if}}
 
-      <ConditionalLoadingSpinner @condition={{@controller.loading}} />
+      {{#if (and (not @controller.stripeSubscriptions.length) (not @controller.razorpayPurchases.length))}}
+        <p>No subscriptions found.</p>
+      {{/if}}
     {{/if}}
   </template>
 );

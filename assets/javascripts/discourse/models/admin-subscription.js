@@ -5,29 +5,15 @@ import getURL from "discourse/lib/get-url";
 
 export default class AdminSubscription extends EmberObject {
   static find() {
+    // This now just fetches the data and lets the route handle the new structure.
     return ajax("/s/admin/subscriptions", {
       method: "get",
-    }).then((result) => {
-      if (result === null) {
-        return { unconfigured: true };
-      }
-      result.data = result.data.map((subscription) =>
-        AdminSubscription.create(subscription)
-      );
-      return result;
     });
   }
 
-  static loadMore(lastRecord) {
-    return ajax(`/s/admin/subscriptions?last_record=${lastRecord}`, {
-      method: "get",
-    }).then((result) => {
-      result.data = result.data.map((subscription) =>
-        AdminSubscription.create(subscription)
-      );
-      return result;
-    });
-  }
+  //TODO build load more for both lists
+  // This function is no longer used by our new template.
+  // static loadMore(lastRecord) { ... }
 
   @discourseComputed("status")
   canceled(status) {
@@ -36,11 +22,12 @@ export default class AdminSubscription extends EmberObject {
 
   @discourseComputed("metadata")
   metadataUserExists(metadata) {
-    return metadata.user_id && metadata.username;
+    return metadata && metadata.user_id && metadata.username;
   }
 
   @discourseComputed("metadata")
   subscriptionUserPath(metadata) {
+    if (!this.metadataUserExists) { return; }
     return getURL(`/admin/users/${metadata.user_id}/${metadata.username}`);
   }
 

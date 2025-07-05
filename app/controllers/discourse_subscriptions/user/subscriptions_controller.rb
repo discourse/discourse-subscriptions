@@ -11,26 +11,11 @@ module DiscourseSubscriptions
       before_action :set_api_key
       requires_login
 
-      # in app/controllers/discourse_subscriptions/user/subscriptions_controller.rb
-
-      # in app/controllers/discourse_subscriptions/user/subscriptions_controller.rb
-
       def index
         begin
-          Rails.logger.warn("--- RAZORPAY DEBUGGER: 1. Index action started for user: #{current_user&.username} ---")
-
           customer_ids = Customer.where(user_id: current_user.id).pluck(:id)
-          Rails.logger.warn("--- RAZORPAY DEBUGGER: 2. Found customer IDs: #{customer_ids.join(', ')} ---")
-
-          if customer_ids.empty?
-            return render_json_dump({ stripe: [], razorpay: [] })
-          end
-
           local_subscriptions = ::DiscourseSubscriptions::Subscription.where(customer_id: customer_ids)
-          # Corrected logging to avoid serialization error
-          Rails.logger.warn("--- RAZORPAY DEBUGGER: 3. Found #{local_subscriptions.count} total subscription records. IDs: #{local_subscriptions.map(&:id).join(', ')} ---")
 
-          # The rest of the production code from before, which we now know will work.
           stripe_ids = local_subscriptions.where(provider: 'Stripe').pluck(:external_id)
           razorpay_records = local_subscriptions.where(provider: 'Razorpay')
 
@@ -53,7 +38,8 @@ module DiscourseSubscriptions
 
               {
                 id: sub.external_id,
-                plan_name: plan.product.name,
+                status: sub.status, # Add the status field
+                plan: { product: { name: plan.product.name } },
                 amount_dollars: plan.unit_amount / 100.0,
                 currency: plan.currency,
                 created_at: sub.created_at.to_i
@@ -63,14 +49,10 @@ module DiscourseSubscriptions
             processed_data[:razorpay] = razorpay_purchases.sort_by { |p| p[:created_at] }.reverse
           end
 
-          Rails.logger.warn("--- RAZORPAY DEBUGGER: 4. Successfully processed all data. Rendering JSON. ---")
           render_json_dump(processed_data)
 
-        rescue => e
-          Rails.logger.error("--- RAZORPAY DEBUGGER: A CRASH OCCURRED in the index action ---")
-          Rails.logger.error("#{e.class.name}: #{e.message}")
-          Rails.logger.error(e.backtrace.join("\n"))
-          render_json_error("A crash occurred on the server. Please check the logs.")
+        rescue ::Stripe::InvalidRequestError => e
+          render_json_error e.message
         end
       end
 

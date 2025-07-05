@@ -5,7 +5,7 @@ import routeAction from "discourse/helpers/route-action";
 import { i18n } from "discourse-i18n";
 import formatUnixDate from "../../../../helpers/format-unix-date";
 import formatCurrency from "../../../../helpers/format-currency";
-import { and, not } from "truth-helpers";
+import { and, not, eq } from "truth-helpers";
 
 export default RouteTemplate(
   <template>
@@ -48,6 +48,7 @@ export default RouteTemplate(
       </table>
     {{/if}}
 
+
     {{#if @controller.razorpayPurchases.length}}
       <h4>One-Time Purchases (Razorpay)</h4>
       <table class="table discourse-subscriptions-user-table">
@@ -55,20 +56,24 @@ export default RouteTemplate(
           <th>Payment ID</th>
           <th>Name</th>
           <th>Amount</th>
+          <th>Status</th> {{! <-- ADD THIS HEADER }}
           <th>Date</th>
         </thead>
         <tbody>
           {{#each @controller.razorpayPurchases as |purchase|}}
-            <tr>
+            {{! Add a class to the row for styling if revoked }}
+            <tr class={{if (eq purchase.status "revoked") "is-revoked"}}>
               <td>{{purchase.id}}</td>
               <td>{{purchase.plan_name}}</td>
               <td>{{formatCurrency purchase.currency purchase.amount_dollars}}</td>
+              <td><span class="status">{{purchase.status}}</span></td> {{! <-- ADD THIS CELL }}
               <td>{{formatUnixDate purchase.created_at}}</td>
             </tr>
           {{/each}}
         </tbody>
       </table>
     {{/if}}
+
 
     {{#if (and (not @controller.stripeSubscriptions.length) (not @controller.razorpayPurchases.length))}}
       <div class="alert alert-info">

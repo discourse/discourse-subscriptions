@@ -28,6 +28,12 @@ export default RouteTemplate(
             />
           {{/unless}}
         {{/if}}
+        <DButton
+          @action={{@controller.showGrantSubscriptionModal}}
+          @label="discourse_subscriptions.admin.grant_subscription"
+          @icon="gift"
+          class="btn-primary"
+        />
       </div>
 
       <ul class="nav nav-pills">

@@ -164,8 +164,8 @@ module DiscourseSubscriptions
       finalize_discourse_subscription(transaction, plan)
     end
 
-    private
 
+    private
     def finalize_discourse_subscription(transaction, plan)
       provider_name = SiteSetting.discourse_subscriptions_payment_provider
 
@@ -174,6 +174,14 @@ module DiscourseSubscriptions
         group = ::Group.find_by(name: group_name)
         group&.add(current_user)
       end
+
+      # --- START OF NEW LOGIC ---
+      # Read the duration from the plan's metadata
+      duration = plan.metadata.duration.to_i if plan.metadata&.duration
+
+      # If a valid duration exists, calculate the expiry date
+      expires_at = duration.present? && duration > 0 ? duration.days.from_now : nil
+      # --- END OF NEW LOGIC ---
 
       customer = ::DiscourseSubscriptions::Customer.find_or_create_by!(user_id: current_user.id) do |c|
         c.customer_id = transaction[:customer]
@@ -189,7 +197,9 @@ module DiscourseSubscriptions
         external_id: transaction[:id],
         status: "active",
         provider: provider_name,
-        plan_id: plan.id # Save the Plan ID
+        plan_id: plan.id,
+        duration: duration,     # Save the duration
+        expires_at: expires_at  # Save the calculated expiry date
       )
     end
 

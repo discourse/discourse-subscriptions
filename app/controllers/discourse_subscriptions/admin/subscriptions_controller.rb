@@ -2,48 +2,45 @@
 
 module DiscourseSubscriptions
   module Admin
-    class SubscriptionsController < ::Admin::AdminController
+    class SubscriptionsController < ::ApplicationController
       requires_plugin DiscourseSubscriptions::PLUGIN_NAME
 
       include DiscourseSubscriptions::Stripe
       include DiscourseSubscriptions::Group
       before_action :set_api_key
 
-      PAGE_LIMIT = 10
-
       def index
         begin
-          subscription_ids = Subscription.all.pluck(:external_id)
-          subscriptions = {
-            has_more: false,
-            data: [],
-            length: 0,
-            last_record: params[:last_record],
+          local_subscriptions = ::DiscourseSubscriptions::Subscription.where.not(status: %w[revoked canceled]).includes(customer: :user).order(created_at: :desc)
+          stripe_ids = local_subscriptions.where(provider: 'Stripe').pluck(:external_id)
+          razorpay_records = local_subscriptions.where(provider: 'Razorpay')
+          processed_data = {
+            stripe: [],
+            razorpay: []
           }
-
-          if subscription_ids.present? && is_stripe_configured?
-            while subscriptions[:length] < PAGE_LIMIT
-              current_set = get_subscriptions(subscriptions[:last_record])
-
-              until valid_subscriptions =
-                      find_valid_subscriptions(current_set[:data], subscription_ids)
-                current_set = get_subscriptions(current_set[:data].last)
-                break if current_set[:has_more] == false
-              end
-
-              subscriptions[:data] = subscriptions[:data].concat(valid_subscriptions.to_a)
-              subscriptions[:last_record] = current_set[:data].last[:id] if current_set[
-                :data
-              ].present?
-              subscriptions[:length] = subscriptions[:data].length
-              subscriptions[:has_more] = current_set[:has_more]
-              break if subscriptions[:has_more] == false
-            end
-          elsif !is_stripe_configured?
-            subscriptions = nil
+          if stripe_ids.present?
+            stripe_data = ::Stripe::Subscription.list(limit: 100, status: 'all', expand: ['data.plan.product'])
+            processed_data[:stripe] = stripe_data.select { |sub| stripe_ids.include?(sub.id) }
           end
-
-          render_json_dump subscriptions
+          if razorpay_records.present?
+            all_plans = ::Stripe::Price.list(limit: 100, active: true, expand: ['data.product'])
+            razorpay_purchases = razorpay_records.map do |sub|
+              user_obj = sub.customer&.user
+              plan = all_plans.find { |p| p.id == sub.plan_id }
+              next unless plan&.product && user_obj
+              {
+                id: sub.external_id,
+                status: sub.status,
+                user: { id: user_obj.id, username: user_obj.username, avatar_template: user_obj.avatar_template },
+                plan: { product: { name: plan.product.name } },
+                amount_dollars: plan.unit_amount / 100.0,
+                currency: plan.currency,
+                created_at: sub.created_at.to_i
+              }
+            end.compact
+            processed_data[:razorpay] = razorpay_purchases
+          end
+          render_json_dump(processed_data)
         rescue ::Stripe::InvalidRequestError => e
           render_json_error e.message
         end
@@ -52,51 +49,80 @@ module DiscourseSubscriptions
       def destroy
         params.require(:id)
         begin
-          refund_subscription(params[:id]) if params[:refund]
-          subscription = ::Stripe::Subscription.cancel(params[:id])
-
-          customer =
-            Customer.find_by(
-              product_id: subscription[:plan][:product],
-              customer_id: subscription[:customer],
-            )
-
-          if customer
-            user = ::User.find(customer.user_id)
-            group = plan_group(subscription[:plan])
-            group.remove(user) if group
-          end
-
+          subscription = ::Stripe::Subscription.update(params[:id], { cancel_at_period_end: true })
+          local_sub = ::DiscourseSubscriptions::Subscription.find_by(external_id: params[:id])
+          local_sub&.update(status: subscription.status)
           render_json_dump subscription
         rescue ::Stripe::InvalidRequestError => e
           render_json_error e.message
         end
       end
 
+      def revoke
+        params.require(:id)
+        begin
+          subscription = ::DiscourseSubscriptions::Subscription.find_by(external_id: params[:id])
+          return render_json_error("Subscription not found") unless subscription
+          user = subscription.customer&.user
+          plan = ::Stripe::Price.retrieve(subscription.plan_id) if subscription.plan_id
+          group = plan_group(plan) if plan
+          if user && group
+            group.remove(user)
+            subscription.update(status: 'revoked')
+            render json: success_json
+          else
+            render_json_error("Could not find user or group for this subscription.")
+          end
+        rescue => e
+          render_json_error(e.message)
+        end
+      end
+
+      def grant
+        params.require(%i[username plan_id])
+        begin
+          user = User.find_by_username(params[:username])
+          return render_json_error("User not found.") unless user
+          plan = ::Stripe::Price.retrieve(params[:plan_id])
+          return render_json_error("Plan not found.") unless plan
+          transaction = {
+            id: "manual_#{SecureRandom.hex(8)}",
+            customer: "cus_manual_#{user.id}"
+          }
+          finalize_discourse_subscription(transaction, plan, user, params[:duration])
+          render json: success_json
+        rescue ::Stripe::InvalidRequestError => e
+          render_json_error(e.message)
+        end
+      end
+
       private
 
-      def get_subscriptions(start)
-        ::Stripe::Subscription.list(
-          expand: ["data.plan.product"],
-          limit: PAGE_LIMIT,
-          starting_after: start,
-          status: "all",
+      def finalize_discourse_subscription(transaction, plan, user, duration_in_days = nil)
+        provider_name = 'manual'
+        group_name = plan.metadata.group_name if plan.metadata
+        if group_name.present?
+          group = ::Group.find_by(name: group_name)
+          group&.add(user) if group
+        end
+        duration = duration_in_days.present? ? duration_in_days.to_i : nil
+        expires_at = duration.present? && duration > 0 ? duration.days.from_now : nil
+        customer = ::DiscourseSubscriptions::Customer.find_or_create_by!(user_id: user.id) do |c|
+          c.customer_id = transaction[:customer]
+        end
+        customer.update!(
+          customer_id: transaction[:customer],
+          product_id: plan.product
         )
-      end
-
-      def find_valid_subscriptions(data, ids)
-        valid = data.select { |sub| ids.include?(sub[:id]) }
-        valid.empty? ? nil : valid
-      end
-
-      # this will only refund the most recent subscription payment
-      def refund_subscription(subscription_id)
-        subscription = ::Stripe::Subscription.retrieve(subscription_id)
-        invoice = ::Stripe::Invoice.retrieve(subscription[:latest_invoice]) if subscription[
-          :latest_invoice
-        ]
-        payment_intent = invoice[:payment_intent] if invoice[:payment_intent]
-        refund = ::Stripe::Refund.create({ payment_intent: payment_intent })
+        ::DiscourseSubscriptions::Subscription.create!(
+          customer_id: customer.id,
+          external_id: transaction[:id],
+          status: "active",
+          provider: provider_name,
+          plan_id: plan.id,
+          duration: duration,
+          expires_at: expires_at
+        )
       end
     end
   end
