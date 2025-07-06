@@ -29,11 +29,22 @@ export default class GrantSubscriptionModal extends Component {
   }
 
   get selectedPlan() {
-    return this.allPlans.find(p => p.id === this.selectedPlanId);
+    return this.allPlans.find((p) => p.id === this.selectedPlanId);
   }
 
   get isOneTimePlan() {
-    return this.selectedPlan && this.selectedPlan.type !== 'recurring';
+    return this.selectedPlan && this.selectedPlan.type !== "recurring";
+  }
+
+  // FIX #1: This action now handles both single string and array inputs
+  // from the UserChooser for maximum compatibility.
+  @action
+  updateUsername(selection) {
+    if (Array.isArray(selection) && selection.length > 0) {
+      this.selectedUsername = selection[0]; // Take the first item if it's an array
+    } else {
+      this.selectedUsername = selection;
+    }
   }
 
   @action
@@ -43,19 +54,23 @@ export default class GrantSubscriptionModal extends Component {
       const products = await AdminProduct.findAll();
       const productsWithPlans = await Promise.all(
         products.map(async (p) => {
-          const plans = await ajax(`/s/admin/plans.json?product_id=${p.id}`);
-          p.set('plans', plans);
+          if (p.id) {
+            const plans = await ajax(`/s/admin/plans.json?product_id=${p.id}`);
+            p.set("plans", plans);
+          }
           return p;
         })
       );
 
       const flattenedPlans = [];
-      productsWithPlans.forEach(product => {
+      productsWithPlans.forEach((product) => {
         if (product.plans && product.plans.length > 0) {
-          product.plans.forEach(plan => {
+          product.plans.forEach((plan) => {
             flattenedPlans.push({
               id: plan.id,
-              name: `${product.name} - ${plan.nickname} (${(plan.unit_amount / 100.0).toFixed(2)} ${plan.currency.toUpperCase()})`,
+              name: `${product.name} - ${plan.nickname} (${(
+                plan.unit_amount / 100.0
+              ).toFixed(2)} ${plan.currency.toUpperCase()})`,
               type: plan.type,
             });
           });
@@ -76,27 +91,30 @@ export default class GrantSubscriptionModal extends Component {
       return;
     }
 
-    this.isLoading = true; // --- THIS IS THE FIX ---
-
     const grantData = {
       username: this.selectedUsername,
       plan_id: this.selectedPlanId,
       duration: this.duration,
     };
 
+    // You can remove the console.log now if you wish
+    // console.log("Data being sent to server:", grantData);
+
+    this.isLoading = true;
+
     ajax("/s/admin/subscriptions/grant", {
       method: "POST",
       data: grantData,
     })
-    .then(() => {
-      this.dialog.alert("Subscription granted successfully.");
-      this.args.closeModal();
-      this.router.refresh("adminPlugins.discourse-subscriptions.subscriptions");
-    })
-    .catch(popupAjaxError)
-    .finally(() => {
-      this.isLoading = false; // --- AND THIS IS THE FIX ---
-    });
+      .then(() => {
+        this.dialog.alert("Subscription granted successfully.");
+        this.args.closeModal();
+        this.router.refresh();
+      })
+      .catch(popupAjaxError)
+      .finally(() => {
+        this.isLoading = false;
+      });
   }
 
   <template>
@@ -109,7 +127,8 @@ export default class GrantSubscriptionModal extends Component {
             <div class="control-group">
               <label class="control-label">User</label>
               <div class="controls">
-                <UserChooser @value={{this.selectedUsername}} />
+                {{! FIX #2: Add maximum="1" to ensure it only allows a single selection }}
+                <UserChooser @value={{this.selectedUsername}} @onChange={{this.updateUsername}} @maximum={{1}} />
               </div>
             </div>
 

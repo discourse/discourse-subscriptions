@@ -10,15 +10,46 @@ module DiscourseSubscriptions
     before_action :set_api_key
     requires_login except: %i[index contributors show]
 
+    # In app/controllers/discourse_subscriptions/subscribe_controller.rb
+
     def index
       begin
-        product_ids = Product.all.pluck(:external_id)
         products = []
-        if product_ids.present? && is_stripe_configured?
-          response = ::Stripe::Product.list({ ids: product_ids, active: true })
-          products = response[:data].map { |p| serialize_product(p) }
+        if is_stripe_configured?
+          # Fetch all products from our local database
+          local_products = ::DiscourseSubscriptions::Product.all
+
+          local_products.each do |p|
+            begin
+              product_data = ::Stripe::Product.retrieve(p.external_id)
+              next unless product_data.active
+
+              # FIX: Fetch plans specifically for this product_data.id
+              # This is more reliable than fetching all plans at once.
+              product_plans_data = ::Stripe::Price.list(
+                product: product_data.id,
+                active: true,
+                limit: 100 # It's rare for a single product to have > 100 prices
+              )
+
+              products << {
+                id: product_data.id,
+                name: product_data.name,
+                description: PrettyText.cook(product_data.description || product_data.metadata[:description]),
+                subscribed: current_user_products.include?(product_data.id),
+                repurchaseable: product_data.metadata[:repurchaseable],
+                metadata: product_data.metadata.to_h, # Pass all metadata
+                plans: serialize_plans(product_plans_data) # Use the fetched plans
+              }
+            rescue ::Stripe::InvalidRequestError => e
+              Rails.logger.warn("[Subscriptions] Could not retrieve Stripe product with ID #{p.external_id}: #{e.message}")
+              next
+            end
+          end
         end
-        render_json_dump products
+
+        render_json_dump products.sort_by { |p| p[:name] }
+
       rescue ::Stripe::InvalidRequestError => e
         render_json_error e.message
       end
@@ -54,11 +85,18 @@ module DiscourseSubscriptions
       begin
         plan = ::Stripe::Price.retrieve(params[:plan])
         if SiteSetting.discourse_subscriptions_payment_provider == "Razorpay"
+          # Add this notes hash
+          notes = {
+            user_id: current_user.id,
+            username: current_user.username,
+            plan_id: plan.id
+          }
           order =
             DiscourseSubscriptions::Providers::RazorpayProvider.create_order(
               plan[:unit_amount],
               plan[:currency].upcase,
-              )
+              notes # Pass the notes here
+            )
           render_json_dump order
         else
           params.require(:source)
@@ -230,8 +268,19 @@ module DiscourseSubscriptions
 
     def serialize_plans(plans)
       plans[:data]
-        .map { |plan| plan.to_h.slice(:id, :unit_amount, :currency, :type, :recurring) }
-        .sort_by { |plan| plan[:amount] }
+        .map do |plan|
+        {
+          id: plan.id,
+          unit_amount: plan.unit_amount,
+          currency: plan.currency,
+          type: plan.type,
+          recurring: plan.recurring,
+          nickname: plan.nickname,
+          # FIX: This was the missing piece. We must include the plan's metadata.
+          metadata: plan.metadata.to_h
+        }
+      end
+        .sort_by { |plan| plan[:unit_amount] }
     end
 
     def find_or_create_customer(source, cardholder_name = nil, cardholder_address = nil)

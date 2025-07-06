@@ -1,74 +1,77 @@
 import { fn } from "@ember/helper";
-import { and, not, eq } from "truth-helpers";
+import { eq } from "truth-helpers";
 import { LinkTo } from "@ember/routing";
 import RouteTemplate from "ember-route-template";
 import DButton from "discourse/components/d-button";
 import loadingSpinner from "discourse/helpers/loading-spinner";
 import { i18n } from "discourse-i18n";
 import formatUnixDate from "../../helpers/format-unix-date";
-import formatCurrency from "../../helpers/format-currency";
+import formatAbsoluteDate from "../../helpers/format-absolute-date";
 import UserAvatar from "discourse/components/user-avatar";
+import LoadMore from "discourse/components/load-more"; // Import the component
 
 export default RouteTemplate(
   <template>
-    {{#if @controller.model.unconfigured}}
+    {{#if @controller.unconfigured}}
       <p>{{i18n "discourse_subscriptions.admin.unconfigured"}}</p>
-    {{else}}
-      {{#if @controller.stripeSubscriptions.length}}
-        <h4>Recurring Subscriptions (Stripe)</h4>
-        <table class="table">
-          {{!-- ... Stripe table is unchanged ... --}}
-        </table>
-      {{/if}}
-
-      {{#if @controller.razorpayPurchases.length}}
-        <h4 style="margin-top: 2em;">One-Time Purchases (Razorpay)</h4>
+    {{else if @controller.subscriptions.length}}
+      {{! Wrap the content in the LoadMore component }}
+      <LoadMore @action={{@controller.loadMore}} @selector=".subscription-item" @isLoading={{@controller.isLoadingMore}} @more={{@controller.meta.more}}>
         <table class="table">
           <thead>
             <th>User</th>
-            <th>Payment ID</th>
+            <th>Provider</th>
             <th>Product</th>
-            <th>Amount</th>
-            <th class="td-right">Date</th>
-            <th></th> {{! New Actions column }}
+            <th>Plan</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Expires/Renews</th>
+            <th></th>
           </thead>
           <tbody>
-            {{#each @controller.razorpayPurchases as |purchase|}}
-              <tr>
+            {{#each @controller.subscriptions as |subscription|}}
+              <tr class={{if (eq subscription.status "revoked") "revoked-subscription" "subscription-item"}}>
                 <td>
-                  <LinkTo @route="user" @model={{purchase.user}}>
-                    <UserAvatar @username={{purchase.user.username}} @size="small" />
-                    {{purchase.user.username}}
+                  <LinkTo @route="user" @model={{subscription.user}}>
+                    <UserAvatar @username={{subscription.user.username}} @size="small" />
+                    {{subscription.user.username}}
                   </LinkTo>
                 </td>
-                <td>{{purchase.id}}</td>
-                <td>{{purchase.plan.product.name}}</td>
-                <td>{{formatCurrency purchase.currency purchase.amount_dollars}}</td>
-                <td class="td-right">{{formatUnixDate purchase.created_at}}</td>
-                {{! --- START OF NEW BUTTON LOGIC --- }}
+                <td>{{subscription.provider}}</td>
+                <td>{{subscription.plan_name}}</td>
+                <td>{{subscription.plan_nickname}}</td>
+                <td>{{subscription.status}}</td>
+                <td>{{formatUnixDate subscription.created_at}}</td>
+                <td>{{formatAbsoluteDate subscription.expires_at}}</td>
                 <td class="td-right">
-                  {{#if purchase.loading}}
+                  {{#if subscription.loading}}
                     {{loadingSpinner size="small"}}
                   {{else}}
-                    <DButton
-                      @disabled={{eq purchase.status "revoked"}}
-                      @label="discourse_subscriptions.admin.revoke_access" {{! We'll need to add this text }}
-                      @action={{fn @controller.revokeRazorpayPurchase purchase}}
-                      @icon="user-slash"
-                      class="btn-danger"
-                    />
+                    {{#if (eq subscription.provider "Stripe")}}
+                      <DButton
+                        @disabled={{subscription.canceled}}
+                        @label="cancel"
+                        @action={{fn @controller.showCancelModal subscription}}
+                        @icon="xmark"
+                      />
+                    {{else}}
+                      <DButton
+                        @disabled={{eq subscription.status "revoked"}}
+                        @label="discourse_subscriptions.admin.revoke_access"
+                        @action={{fn @controller.revokeAccess subscription}}
+                        @icon="user-slash"
+                        class="btn-danger"
+                      />
+                    {{/if}}
                   {{/if}}
                 </td>
-                {{! --- END OF NEW BUTTON LOGIC --- }}
               </tr>
             {{/each}}
           </tbody>
         </table>
-      {{/if}}
-
-      {{#if (and (not @controller.stripeSubscriptions.length) (not @controller.razorpayPurchases.length))}}
-        <p>No subscriptions found.</p>
-      {{/if}}
+      </LoadMore>
+    {{else}}
+      <p>No subscriptions found.</p>
     {{/if}}
   </template>
 );

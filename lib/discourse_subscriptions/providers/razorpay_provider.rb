@@ -10,16 +10,16 @@ module DiscourseSubscriptions
           )
       end
 
-      def self.create_order(amount_in_cents, currency)
+      def self.create_order(amount_in_cents, currency, notes = {}) # Add notes here
         setup_credentials
 
-        # Razorpay requires a unique receipt ID for each order
         receipt_id = "sub_#{SecureRandom.hex(6)}"
 
         order_options = {
           amount: amount_in_cents,
           currency: currency,
           receipt: receipt_id,
+          notes: notes # And add notes to the options
         }
 
         ::Razorpay::Order.create(order_options)

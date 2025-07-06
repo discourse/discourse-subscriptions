@@ -2,47 +2,64 @@
 
 module DiscourseSubscriptions
   module Admin
-    class SubscriptionsController < ::ApplicationController
+    class SubscriptionsController < ::Admin::AdminController
       requires_plugin DiscourseSubscriptions::PLUGIN_NAME
 
       include DiscourseSubscriptions::Stripe
       include DiscourseSubscriptions::Group
       before_action :set_api_key
 
+      PAGE_SIZE = 50
+
       def index
         begin
-          local_subscriptions = ::DiscourseSubscriptions::Subscription.where.not(status: %w[revoked canceled]).includes(customer: :user).order(created_at: :desc)
-          stripe_ids = local_subscriptions.where(provider: 'Stripe').pluck(:external_id)
-          razorpay_records = local_subscriptions.where(provider: 'Razorpay')
-          processed_data = {
-            stripe: [],
-            razorpay: []
+          offset = params[:offset].to_i
+          local_subscriptions = ::DiscourseSubscriptions::Subscription.order(created_at: :desc).limit(PAGE_SIZE).offset(offset)
+          total_subscriptions = ::DiscourseSubscriptions::Subscription.count
+          more_records = total_subscriptions > (offset + PAGE_SIZE)
+
+          all_subscriptions = []
+          all_plans = is_stripe_configured? ? ::Stripe::Price.list(limit: 100, active: true, expand: ['data.product']) : []
+
+          local_subscriptions.each do |sub|
+            user_obj = sub.customer&.user
+            next unless user_obj
+
+            serialized_sub = {
+              id: sub.external_id,
+              provider: sub.provider.capitalize,
+              status: sub.status,
+              user: { id: user_obj.id, username: user_obj.username, avatar_template: user_obj.avatar_template_url },
+              created_at: sub.created_at.to_i,
+              expires_at: sub.expires_at&.to_i
+            }
+
+            plan = all_plans.find { |p| p.id == sub.plan_id }
+
+            if sub.provider == 'Stripe' && is_stripe_configured?
+              begin
+                api_sub = ::Stripe::Subscription.retrieve(sub.external_id)
+                plan ||= api_sub&.plan
+                serialized_sub[:status] = api_sub.status if api_sub
+                serialized_sub[:expires_at] = api_sub.cancel_at_period_end ? api_sub.current_period_end : nil if api_sub
+              rescue ::Stripe::InvalidRequestError
+                # If stripe sub is not found, we still want to show the local record
+                serialized_sub[:status] = 'not_in_stripe'
+              end
+            end
+
+            next unless plan
+            serialized_sub[:plan_name] = plan.product&.name
+            serialized_sub[:plan_nickname] = plan.nickname
+            all_subscriptions << serialized_sub
+          end
+
+          render json: {
+            subscriptions: all_subscriptions,
+            meta: { more: more_records, offset: offset + PAGE_SIZE }
           }
-          if stripe_ids.present?
-            stripe_data = ::Stripe::Subscription.list(limit: 100, status: 'all', expand: ['data.plan.product'])
-            processed_data[:stripe] = stripe_data.select { |sub| stripe_ids.include?(sub.id) }
-          end
-          if razorpay_records.present?
-            all_plans = ::Stripe::Price.list(limit: 100, active: true, expand: ['data.product'])
-            razorpay_purchases = razorpay_records.map do |sub|
-              user_obj = sub.customer&.user
-              plan = all_plans.find { |p| p.id == sub.plan_id }
-              next unless plan&.product && user_obj
-              {
-                id: sub.external_id,
-                status: sub.status,
-                user: { id: user_obj.id, username: user_obj.username, avatar_template: user_obj.avatar_template },
-                plan: { product: { name: plan.product.name } },
-                amount_dollars: plan.unit_amount / 100.0,
-                currency: plan.currency,
-                created_at: sub.created_at.to_i
-              }
-            end.compact
-            processed_data[:razorpay] = razorpay_purchases
-          end
-          render_json_dump(processed_data)
-        rescue ::Stripe::InvalidRequestError => e
-          render_json_error e.message
+        rescue => e
+          render_json_error(e.message)
         end
       end
 
@@ -63,11 +80,16 @@ module DiscourseSubscriptions
         begin
           subscription = ::DiscourseSubscriptions::Subscription.find_by(external_id: params[:id])
           return render_json_error("Subscription not found") unless subscription
+
           user = subscription.customer&.user
           plan = ::Stripe::Price.retrieve(subscription.plan_id) if subscription.plan_id
-          group = plan_group(plan) if plan
+
+          return render_json_error("Could not retrieve plan details.") if plan.nil?
+
+          group = plan_group(plan)
+
           if user && group
-            group.remove(user)
+            safely_remove_user_from_group(user, group, subscription.id)
             subscription.update(status: 'revoked')
             render json: success_json
           else
@@ -81,39 +103,72 @@ module DiscourseSubscriptions
       def grant
         params.require(%i[username plan_id])
         begin
-          user = User.find_by_username(params[:username])
+          user = ::User.find_by_username(params[:username])
           return render_json_error("User not found.") unless user
+
           plan = ::Stripe::Price.retrieve(params[:plan_id])
           return render_json_error("Plan not found.") unless plan
+
           transaction = {
             id: "manual_#{SecureRandom.hex(8)}",
             customer: "cus_manual_#{user.id}"
           }
+
           finalize_discourse_subscription(transaction, plan, user, params[:duration])
           render json: success_json
-        rescue ::Stripe::InvalidRequestError => e
+
+        rescue ActiveRecord::RecordInvalid => e
+          render_json_error(e.record.errors.full_messages.join(", "))
+        rescue => e
           render_json_error(e.message)
         end
       end
 
       private
 
-      def finalize_discourse_subscription(transaction, plan, user, duration_in_days = nil)
-        provider_name = 'manual'
-        group_name = plan.metadata.group_name if plan.metadata
-        if group_name.present?
-          group = ::Group.find_by(name: group_name)
-          group&.add(user) if group
+      def safely_remove_user_from_group(user, group_to_remove_from, current_sub_id)
+        other_subscriptions = ::DiscourseSubscriptions::Subscription
+                                .joins(:customer)
+                                .where(discourse_subscriptions_customers: { user_id: user.id })
+                                .where(status: 'active')
+                                .where.not(id: current_sub_id)
+
+        has_other_access = other_subscriptions.any? do |sub|
+          if sub.plan_id.present?
+            begin
+              other_plan = ::Stripe::Price.retrieve(sub.plan_id)
+              other_group = plan_group(other_plan)
+              other_group&.id == group_to_remove_from.id
+            rescue ::Stripe::InvalidRequestError
+              false
+            end
+          else
+            false
+          end
         end
+
+        unless has_other_access
+          group_to_remove_from.remove(user)
+        end
+      end
+
+      def finalize_discourse_subscription(transaction, plan, user, duration_in_days = nil)
+        raise ArgumentError, "User cannot be nil" if user.nil?
+        raise ArgumentError, "Plan cannot be nil" if plan.nil?
+
+        provider_name = 'manual'
+        group = plan_group(plan)
+        group&.add(user)
+
         duration = duration_in_days.present? ? duration_in_days.to_i : nil
         expires_at = duration.present? && duration > 0 ? duration.days.from_now : nil
+
         customer = ::DiscourseSubscriptions::Customer.find_or_create_by!(user_id: user.id) do |c|
           c.customer_id = transaction[:customer]
         end
-        customer.update!(
-          customer_id: transaction[:customer],
-          product_id: plan.product
-        )
+
+        customer.update!(product_id: plan.product)
+
         ::DiscourseSubscriptions::Subscription.create!(
           customer_id: customer.id,
           external_id: transaction[:id],

@@ -1,3 +1,9 @@
+//// Import all necessary stylesheets for the plugin
+//@import "common/pricing-page";
+//@import "common/campaign";
+//@import "common/subscribe";
+//@import "common/layout";
+
 // TODO: This gets overridden somewhere. It is defined in common/base/discourse.scss
 input[disabled],
 input[readonly],
@@ -78,4 +84,14 @@ table.discourse-subscriptions-user-table {
 
 .discourse-subscriptions-confirmation-billing {
   margin-right: 40px;
+}
+
+// Style for revoked subscriptions in the admin table
+tr.revoked-subscription {
+  opacity: 0.6;
+  background-color: var(--primary-very-low);
+
+  td {
+    text-decoration: line-through;
+  }
 }

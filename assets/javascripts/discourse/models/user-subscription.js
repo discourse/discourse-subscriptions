@@ -3,11 +3,20 @@ import { ajax } from "discourse/lib/ajax";
 import discourseComputed from "discourse/lib/decorators";
 import { i18n } from "discourse-i18n";
 import Plan from "discourse/plugins/discourse-subscriptions/discourse/models/plan";
+import formatCurrency from "../helpers/format-currency"; // Import the helper
 
 export default class UserSubscription extends EmberObject {
   static findAll() {
-    // This is correct: just fetch the data and let the route handle it.
     return ajax("/s/user/subscriptions", { method: "get" });
+  }
+
+  // FIX: This now watches `unit_amount` and correctly formats the currency.
+  @discourseComputed("unit_amount", "currency")
+  amountDollars(unit_amount, currency) {
+    if (unit_amount !== undefined && currency) {
+      const amount = parseFloat(unit_amount / 100).toFixed(2);
+      return formatCurrency(currency, amount);
+    }
   }
 
   @discourseComputed("status")
@@ -15,25 +24,21 @@ export default class UserSubscription extends EmberObject {
     return status === "canceled";
   }
 
-  @discourseComputed("current_period_end", "canceled_at")
-  endDate(current_period_end, canceled_at) {
-    // This is the safer version that handles one-time payments
-    if (current_period_end) {
-      return moment.unix(current_period_end).format("LL");
-    } else if (canceled_at) {
+  @discourseComputed("renews_at", "status")
+  endDate(renews_at, status) {
+    if (status === "canceled") {
       return i18n("discourse_subscriptions.user.subscriptions.cancelled");
-    } else {
-      return "N/A"; // For our one-time Razorpay purchases
+    }
+    if (renews_at) {
+      return moment.unix(renews_at).format("LL");
     }
   }
 
   @discourseComputed("discount")
   discounted(discount) {
-    // This is the safer version that handles missing discounts
     if (discount && discount.coupon) {
       const amount_off = discount.coupon.amount_off;
       const percent_off = discount.coupon.percent_off;
-
       if (amount_off) {
         return `${parseFloat(amount_off * 0.01).toFixed(2)}`;
       } else if (percent_off) {
@@ -44,7 +49,6 @@ export default class UserSubscription extends EmberObject {
     }
   }
 
-  // --- THIS METHOD IS NOW CORRECTLY INCLUDED ---
   destroy() {
     return ajax(`/s/user/subscriptions/${this.id}`, {
       method: "delete",

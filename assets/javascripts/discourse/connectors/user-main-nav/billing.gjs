@@ -14,13 +14,14 @@ export default class Billing extends Component {
     return (
       this.currentUser &&
       this.currentUser.username.toLowerCase() ===
-        this.model.username.toLowerCase()
+      this.model.username.toLowerCase()
     );
   }
 
   <template>
     {{#if this.viewingSelf}}
-      <LinkTo @route="user.billing">
+    {{! FIX: This link now goes directly to the subscriptions list }}
+      <LinkTo @route="user.billing.subscriptions">
         {{icon "far-credit-card"}}
         {{i18n "discourse_subscriptions.navigation.billing"}}
       </LinkTo>

@@ -13,43 +13,33 @@ module DiscourseSubscriptions
 
       def index
         begin
-          customer_ids = Customer.where(user_id: current_user.id).pluck(:id)
-          local_subscriptions = ::DiscourseSubscriptions::Subscription.where(customer_id: customer_ids)
+          customer = Customer.find_by(user_id: current_user.id)
+          return render json: [] unless customer
 
-          stripe_ids = local_subscriptions.where(provider: 'Stripe').pluck(:external_id)
-          razorpay_records = local_subscriptions.where(provider: 'Razorpay')
+          local_subscriptions = ::DiscourseSubscriptions::Subscription.where(customer_id: customer.id).order(created_at: :desc)
 
-          processed_data = {
-            stripe: [],
-            razorpay: []
-          }
+          all_plans = is_stripe_configured? ? ::Stripe::Price.list(limit: 100, active: true, expand: ['data.product']) : []
 
-          if stripe_ids.present?
-            stripe_data = ::Stripe::Subscription.list(limit: 100, status: 'all', expand: ['data.plan.product'])
-            processed_data[:stripe] = stripe_data.select { |sub| stripe_ids.include?(sub.id) }
-          end
+          processed_subscriptions = local_subscriptions.map do |sub|
+            plan = all_plans.find { |p| p.id == sub.plan_id }
+            next unless plan
 
-          if razorpay_records.present?
-            all_plans = ::Stripe::Price.list(limit: 100, active: true, expand: ['data.product'])
+            {
+              id: sub.external_id,
+              provider: sub.provider,
+              status: sub.status,
+              plan_nickname: plan.nickname,
+              product_name: plan.product&.name,
+              renews_at: (sub.provider == 'Stripe' && sub.status == 'active') ? ::Stripe::Subscription.retrieve(sub.external_id)&.current_period_end : nil,
+              expires_at: sub.expires_at&.to_i,
+              # --- THIS IS THE FIX ---
+              unit_amount: plan.unit_amount,
+              currency: plan.currency
+              # ---------------------
+            }
+          end.compact
 
-            razorpay_purchases = razorpay_records.map do |sub|
-              plan = all_plans.find { |p| p.id == sub.plan_id }
-              next unless plan&.product
-
-              {
-                id: sub.external_id,
-                status: sub.status, # Add the status field
-                plan: { product: { name: plan.product.name } },
-                amount_dollars: plan.unit_amount / 100.0,
-                currency: plan.currency,
-                created_at: sub.created_at.to_i
-              }
-            end.compact
-
-            processed_data[:razorpay] = razorpay_purchases.sort_by { |p| p[:created_at] }.reverse
-          end
-
-          render_json_dump(processed_data)
+          render_json_dump processed_subscriptions
 
         rescue ::Stripe::InvalidRequestError => e
           render_json_error e.message

@@ -33,4 +33,5 @@ DiscourseSubscriptions::Engine.routes.draw do
   post "/finalize_razorpay_payment" => "subscribe#finalize_razorpay_payment"
 
   post "/hooks" => "hooks#create"
+  post "/hooks/razorpay" => "hooks#razorpay"
 end

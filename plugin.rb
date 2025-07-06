@@ -15,6 +15,7 @@ gem "razorpay", "3.2.3"
 
 register_asset "stylesheets/common/main.scss"
 register_asset "stylesheets/common/layout.scss"
+register_asset "stylesheets/common/pricing-page.scss"
 register_asset "stylesheets/common/subscribe.scss"
 register_asset "stylesheets/common/campaign.scss"
 register_asset "stylesheets/mobile/main.scss"

@@ -5,16 +5,45 @@ import { tracked } from "@glimmer/tracking";
 import AdminCancelSubscription from "discourse/plugins/discourse-subscriptions/discourse/components/modal/admin-cancel-subscription";
 import { i18n } from "discourse-i18n";
 import { ajax } from "discourse/lib/ajax";
+import AdminSubscription from "../models/admin-subscription";
+import User from "discourse/models/user";
 
 export default class AdminPluginsDiscourseSubscriptionsSubscriptionsController extends Controller {
   @service modal;
   @service dialog;
   @service router;
 
-  // We need to make these properties tracked so the UI updates
-  @tracked stripeSubscriptions = [];
-  @tracked razorpayPurchases = [];
+  @tracked subscriptions = [];
+  @tracked meta = null;
+  @tracked isLoadingMore = false;
 
+  @action
+  loadMore() {
+    if (this.isLoadingMore || !this.meta?.more) {
+      return;
+    }
+
+    this.isLoadingMore = true;
+
+    ajax("/s/admin/subscriptions.json", {
+      method: "GET",
+      data: { offset: this.meta.offset },
+    })
+      .then((result) => {
+        const newSubscriptions = result.subscriptions.map((s) => {
+          if (s.user) {
+            s.user = User.create(s.user);
+          }
+          return AdminSubscription.create(s);
+        });
+
+        this.subscriptions.pushObjects(newSubscriptions);
+        this.set("meta", result.meta);
+      })
+      .finally(() => {
+        this.isLoadingMore = false;
+      });
+  }
   @action
   showCancelModal(subscription) {
     this.modal.show(AdminCancelSubscription, {
@@ -28,20 +57,19 @@ export default class AdminPluginsDiscourseSubscriptionsSubscriptionsController e
   @action
   cancelSubscription(model) {
     const subscription = model.subscription;
-    const refund = model.refund;
     const closeModal = model.closeModal;
 
-    subscription.loading = true; // Use direct assignment
+    subscription.loading = true;
 
     subscription
-      .destroy(refund)
+      .destroy()
       .then(() => {
         this.dialog.alert(i18n("discourse_subscriptions.admin.canceled"));
-        this.router.refresh("adminPlugins.discourse-subscriptions.subscriptions");
+        this.router.refresh();
       })
       .catch((data) => this.dialog.alert(data.jqXHR.responseJSON.errors.join("\n")))
       .finally(() => {
-        subscription.loading = false; // Use direct assignment
+        subscription.loading = false;
         if (closeModal) {
           closeModal();
         }
@@ -49,41 +77,22 @@ export default class AdminPluginsDiscourseSubscriptionsSubscriptionsController e
   }
 
   @action
-  revokeRazorpayPurchase(purchase) {
+  revokeAccess(subscription) {
     this.dialog.yesNoConfirm({
       message: "Are you sure you want to revoke this user's access immediately? This cannot be undone.",
       didConfirm: () => {
-        // Create a new array with the updated item for reactivity
-        this.razorpayPurchases = this.razorpayPurchases.map(p => {
-          if (p.id === purchase.id) {
-            return { ...p, loading: true };
-          }
-          return p;
-        });
+        subscription.loading = true;
 
-        ajax(`/s/admin/subscriptions/${purchase.id}/revoke`, {
+        ajax(`/s/admin/subscriptions/${subscription.id}/revoke`, {
           method: "POST",
         })
           .then(() => {
             this.dialog.alert("Access has been revoked.");
-            this.router.refresh("adminPlugins.discourse-subscriptions.subscriptions");
+            this.router.refresh();
           })
-          .catch((err) => {
-            let errorMessage = I18n.t("discourse_subscriptions.errors.unknown");
-            if (err.jqXHR?.responseJSON?.errors?.length) {
-              errorMessage = err.jqXHR.responseJSON.errors.join(", ");
-            } else if (err.message) {
-              errorMessage = err.message;
-            }
-            this.dialog.alert(errorMessage);
-          })
+          .catch((err) => this.dialog.alert(err.jqXHR.responseJSON.errors[0]))
           .finally(() => {
-            this.razorpayPurchases = this.razorpayPurchases.map(p => {
-              if (p.id === purchase.id) {
-                return { ...p, loading: false };
-              }
-              return p;
-            });
+            subscription.loading = false;
           });
       },
     });
