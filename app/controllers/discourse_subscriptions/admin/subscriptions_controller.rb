@@ -15,12 +15,10 @@ module DiscourseSubscriptions
         begin
           offset = params[:offset].to_i
 
-          # Start with the base query, joining with users to allow searching
           local_subscriptions = ::DiscourseSubscriptions::Subscription
                                   .joins(customer: :user)
                                   .order(created_at: :desc)
 
-          # FIX: If a username parameter is provided, filter the results
           if params[:username].present?
             local_subscriptions = local_subscriptions.where("users.username_lower = ?", params[:username].downcase)
           end
@@ -44,9 +42,11 @@ module DiscourseSubscriptions
               unit_amount: nil, currency: nil
             }
             plan = all_plans.find { |p| p.id == sub.plan_id }
+
             if sub.provider == 'Stripe' && is_stripe_configured?
               begin
-                api_sub = ::Stripe::Subscription.retrieve(sub.external_id)
+                # FIX: We now expand 'plan.product' to ensure we always get the product object with its name.
+                api_sub = ::Stripe::Subscription.retrieve({ id: sub.external_id, expand: ['plan.product'] })
                 plan ||= api_sub&.plan
                 serialized_sub[:status] = api_sub.status if api_sub
                 serialized_sub[:expires_at] = api_sub.cancel_at_period_end ? api_sub.current_period_end : nil if api_sub
@@ -54,6 +54,7 @@ module DiscourseSubscriptions
                 serialized_sub[:status] = 'not_in_stripe'
               end
             end
+
             if plan
               serialized_sub.merge!(
                 plan_name: plan.product&.name,
