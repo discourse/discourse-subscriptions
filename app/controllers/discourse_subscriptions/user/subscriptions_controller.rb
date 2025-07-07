@@ -13,33 +13,52 @@ module DiscourseSubscriptions
 
       def index
         begin
-          customer = Customer.find_by(user_id: current_user.id)
-          return render json: [] unless customer
+          # --- START OF FIX ---
+          # This now correctly fetches ALL subscriptions for the current user
+          # by joining through the customer table, rather than relying on a single
+          # customer record.
+          local_subscriptions = ::DiscourseSubscriptions::Subscription
+                                  .joins(:customer)
+                                  .where(discourse_subscriptions_customers: { user_id: current_user.id })
+                                  .order(created_at: :desc)
 
-          local_subscriptions = ::DiscourseSubscriptions::Subscription.where(customer_id: customer.id).order(created_at: :desc)
+          return render json: [] if local_subscriptions.empty?
 
           all_plans = is_stripe_configured? ? ::Stripe::Price.list(limit: 100, active: true, expand: ['data.product']) : []
 
           processed_subscriptions = local_subscriptions.map do |sub|
-            plan = all_plans.find { |p| p.id == sub.plan_id }
+            plan = all_plans.find { |p| p.id == sub.plan_id } if sub.plan_id
+
+            # This is the crucial fallback for older Stripe subscriptions that
+            # do not have a `plan_id` in the database.
+            if plan.nil? && sub.provider == 'Stripe' && is_stripe_configured?
+              begin
+                stripe_sub = ::Stripe::Subscription.retrieve({ id: sub.external_id, expand: ['plan.product'] })
+                plan = stripe_sub&.plan
+              rescue ::Stripe::InvalidRequestError
+                # The subscription might not exist in Stripe anymore, so we skip it.
+                next
+              end
+            end
+
+            # If we still can't find a plan, we can't display the subscription.
             next unless plan
 
             {
               id: sub.external_id,
-              provider: sub.provider,
+              provider: (sub.provider || 'Stripe').capitalize, # Safely default provider
               status: sub.status,
               plan_nickname: plan.nickname,
               product_name: plan.product&.name,
-              renews_at: (sub.provider == 'Stripe' && sub.status == 'active') ? ::Stripe::Subscription.retrieve(sub.external_id)&.current_period_end : nil,
+              renews_at: (sub.provider == 'Stripe' && sub.status == 'active' && plan.type == 'recurring') ? ::Stripe::Subscription.retrieve(sub.external_id)&.current_period_end : nil,
               expires_at: sub.expires_at&.to_i,
-              # --- THIS IS THE FIX ---
               unit_amount: plan.unit_amount,
               currency: plan.currency
-              # ---------------------
             }
-          end.compact
+          end.compact # Removes any subscriptions we had to `next` on.
 
           render_json_dump processed_subscriptions
+          # --- END OF FIX ---
 
         rescue ::Stripe::InvalidRequestError => e
           render_json_error e.message

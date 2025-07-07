@@ -1,10 +1,11 @@
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { action } from "@ember/object";
+import { LinkTo } from "@ember/routing";
 import { i18n } from "discourse-i18n";
 import htmlSafe from "discourse/helpers/html-safe";
-import formatCurrency from "../helpers/format-currency";
-import { fn } from '@ember/helper';
+import formatCurrency from "discourse/plugins/discourse-subscriptions/discourse/helpers/format-currency";
+import { fn, hash } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { eq } from 'truth-helpers';
 import DButton from "discourse/components/d-button";
@@ -36,6 +37,7 @@ export default class PricingCard extends Component {
     if (!this.args.product.plans || this.args.product.plans.length === 0) {
       return [];
     }
+
     const monthlyPlan = this.args.product.plans.find(p => p.get('recurring.interval') === 'month');
 
     return this.args.product.plans.map(plan => {
@@ -59,11 +61,17 @@ export default class PricingCard extends Component {
       if (monthlyPlan && plan.id !== monthlyPlan.id && totalMonths > 0) {
         const totalCostAtBaseRate = monthlyPlan.get('unit_amount') * totalMonths;
         const savingAmount = totalCostAtBaseRate - plan.get('unit_amount');
+
         if (savingAmount > 0) {
           savings = `Save ${formatCurrency(plan.currency, savingAmount / 100)}`;
         }
       }
-      return { planObject: plan, savings, valueText };
+
+      return {
+        planObject: plan,
+        savings,
+        valueText
+      };
     });
   }
 

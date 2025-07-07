@@ -19,6 +19,15 @@ export default class SubscribeIndexController extends Controller {
   @tracked loading = false;
   @tracked cardElement = null;
 
+  // This will store the selected plan for the product currently being viewed
+  @tracked selectedPlanForProduct = null;
+
+  // This action sets the selected plan when a radio button is clicked
+  @action
+  selectPlanFor(product, plan) {
+    this.selectedPlanForProduct = plan;
+  }
+
   @action
   startCheckout(product, plan) {
     this.productForCheckout = product;

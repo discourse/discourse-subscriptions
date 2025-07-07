@@ -108,3 +108,191 @@ tr.revoked-subscription {
     max-width: 300px;
   }
 }
+
+
+.pricing-page {
+  .pricing-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem auto;
+  }
+
+  .pricing-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--primary-low);
+    border-radius: 12px;
+    width: 320px;
+    background: var(--secondary);
+    text-align: left;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    position: relative;
+    padding-top: 1em;
+
+    &.is-popular {
+      border-color: var(--tertiary);
+      border-width: 2px;
+      transform: scale(1.02);
+    }
+
+    &:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--tertiary);
+      color: var(--secondary);
+      padding: 0.25rem 0.75rem;
+      border-radius: 15px;
+      font-size: $font-down-1;
+      font-weight: bold;
+    }
+  }
+
+  .pricing-card-header {
+    padding: 1.5rem;
+    padding-top: 1rem;
+    h3 {
+      margin: 0 0 0.75rem 0;
+      font-size: $font-up-2;
+      font-weight: 600;
+    }
+    .product-description {
+      font-size: $font-0;
+      color: var(--primary-medium);
+      min-height: 80px;
+    }
+  }
+
+  .pricing-card-details {
+    padding: 1.5rem;
+    margin-top: auto;
+    border-top: 1px solid var(--primary-low);
+  }
+
+  .plan-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+
+    .plan-option {
+      display: block;
+      border: 1px solid var(--primary-low);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      transition: border-color 0.2s, background-color 0.2s;
+
+      &:hover {
+        background-color: var(--primary-very-low);
+      }
+
+      input[type="radio"] {
+        display: none;
+
+        &:checked + .plan-option-label {
+          // This applies a border to the whole label when selected
+          // which is a better visual cue than changing the background of text.
+          // You would need to add this to the parent .plan-option instead.
+        }
+      }
+
+      // Let's apply checked styles to the whole label for a better effect
+      input[type="radio"]:checked + .plan-option-label {
+        // This is a pseudo-element trick to show a custom radio button indicator
+        &::before {
+          content: "";
+          background-color: var(--tertiary);
+          border-color: var(--tertiary);
+        }
+      }
+    }
+
+    // We apply the checked style to the parent .plan-option for the border
+    .plan-option:has(input[type="radio"]:checked) {
+      border-color: var(--tertiary);
+      background-color: var(--tertiary-very-low);
+    }
+
+    .plan-option-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+
+      // Add a pseudo-element for a custom radio button look
+      &::before {
+        content: "";
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        margin-right: 12px;
+        border-radius: 50%;
+        border: 2px solid var(--primary-low);
+        background-color: var(--secondary);
+        transition: all 0.2s;
+        flex-shrink: 0;
+      }
+
+      .plan-name-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+
+        .plan-nickname {
+          font-weight: 600;
+          color: var(--primary);
+        }
+
+        .plan-savings-badge {
+          background-color: var(--highlight-low);
+          color: var(--highlight-medium);
+          font-weight: bold;
+          font-size: $font-down-2;
+          padding: 2px 6px;
+          border-radius: 4px;
+        }
+      }
+
+      .plan-value-text {
+        font-size: $font-down-1;
+        color: var(--primary-medium);
+        font-weight: 500;
+        text-align: right;
+      }
+    }
+  }
+
+  .price {
+    text-align: center;
+    margin-bottom: 1.5rem;
+
+    .price-amount {
+      font-size: $font-up-5;
+      font-weight: bold;
+      color: var(--primary);
+    }
+    .price-interval {
+      font-size: $font-down-1;
+      color: var(--primary-medium);
+      margin-left: 0.5em;
+      text-transform: capitalize;
+    }
+  }
+
+  .btn-subscribe {
+    width: 100%;
+    padding: 0.75em;
+    font-size: $font-up-1;
+  }
+}
