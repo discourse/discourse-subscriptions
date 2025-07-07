@@ -11,8 +11,6 @@ module DiscourseSubscriptions
 
       PAGE_SIZE = 50
 
-      # In app/controllers/discourse_subscriptions/admin/subscriptions_controller.rb
-
       def index
         begin
           offset = params[:offset].to_i
@@ -72,14 +70,47 @@ module DiscourseSubscriptions
           }
 
         rescue => e
-          # --- THIS IS THE NEW, DETAILED LOGGING CODE ---
-          Rails.logger.error("Discourse Subscriptions Error in Admin::SubscriptionsController#index")
-          Rails.logger.error("Error Class: #{e.class.name}")
-          Rails.logger.error("Error Message: #{e.message}")
-          Rails.logger.error("Backtrace:\n#{e.backtrace.join("\n")}")
+          # --- NEW, MORE DETAILED LOGGING ---
+          error_message = "Discourse Subscriptions Error: Failed to process subscriptions. Class: #{e.class.name}, Message: #{e.message}, Backtrace: #{e.backtrace.join("\n")}"
+          Rails.logger.error(error_message)
+          render_json_error(error_message)
+        end
+      end
 
-          # Render a user-friendly error to the frontend
-          render_json_error("An unexpected server error occurred. Please check the server logs for detailed information.")
+      def destroy
+        params.require(:id)
+        begin
+          subscription = ::Stripe::Subscription.update(params[:id], { cancel_at_period_end: true })
+          local_sub = ::DiscourseSubscriptions::Subscription.find_by(external_id: params[:id])
+          local_sub&.update(status: subscription.status)
+          render_json_dump subscription
+        rescue ::Stripe::InvalidRequestError => e
+          render_json_error e.message
+        end
+      end
+
+      def revoke
+        params.require(:id)
+        begin
+          subscription = ::DiscourseSubscriptions::Subscription.find_by(external_id: params[:id])
+          return render_json_error("Subscription not found") unless subscription
+
+          user = subscription.customer&.user
+          plan = ::Stripe::Price.retrieve(subscription.plan_id) if subscription.plan_id
+
+          return render_json_error("Could not retrieve plan details.") if plan.nil?
+
+          group = plan_group(plan)
+
+          if user && group
+            safely_remove_user_from_group(user, group, subscription.id)
+            subscription.update(status: 'revoked')
+            render json: success_json
+          else
+            render_json_error("Could not find user or group for this subscription.")
+          end
+        rescue => e
+          render_json_error(e.message)
         end
       end
 
