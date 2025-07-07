@@ -11,12 +11,19 @@ module DiscourseSubscriptions
       before_action :set_api_key
       requires_login
 
+      # app/controllers/discourse_subscriptions/user/subscriptions_controller.rb
+
       def index
         begin
+          # --- START OF SECURITY FIX ---
+          # This query now explicitly joins through the `customer` to the `user`
+          # and filters on the `users` table. This is a more robust and secure
+          # way to ensure we only fetch subscriptions for the current user.
           local_subscriptions = ::DiscourseSubscriptions::Subscription
-                                  .joins(:customer)
-                                  .where(discourse_subscriptions_customers: { user_id: current_user.id })
+                                  .joins(customer: :user)
+                                  .where(users: { id: current_user.id })
                                   .order(created_at: :desc)
+          # --- END OF SECURITY FIX ---
 
           return render json: [] if local_subscriptions.empty?
 
@@ -27,12 +34,8 @@ module DiscourseSubscriptions
 
             if plan.nil? && (sub.provider == 'Stripe' || sub.provider.nil?) && is_stripe_configured?
               begin
-                # --- START OF FIX ---
-                # This now expands the product information through the modern `items` array,
-                # which is more reliable than using the legacy `plan` attribute.
                 stripe_sub = ::Stripe::Subscription.retrieve({ id: sub.external_id, expand: ['items.data.price.product'] })
                 plan = stripe_sub&.items&.data&.first&.price
-                # --- END OF FIX ---
               rescue ::Stripe::InvalidRequestError
                 next
               end
