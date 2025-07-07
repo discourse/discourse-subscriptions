@@ -32,6 +32,9 @@ export default function formatCurrency(currency, amount) {
     case "CZK":
       currencySign = "Kč";
       break;
+    case "SEK":
+      currencySign = "kr";
+      break;
     default:
       currencySign = "$";
   }
