@@ -11,10 +11,6 @@ module DiscourseSubscriptions
       before_action :set_api_key
       requires_login
 
-      # app/controllers/discourse_subscriptions/user/subscriptions_controller.rb
-
-      # app/controllers/discourse_subscriptions/user/subscriptions_controller.rb
-
       def index
         begin
           local_subscriptions = ::DiscourseSubscriptions::Subscription
@@ -31,8 +27,12 @@ module DiscourseSubscriptions
 
             if plan.nil? && (sub.provider == 'Stripe' || sub.provider.nil?) && is_stripe_configured?
               begin
-                stripe_sub = ::Stripe::Subscription.retrieve({ id: sub.external_id, expand: ['plan.product'] })
-                plan = stripe_sub&.plan
+                # --- START OF FIX ---
+                # This now expands the product information through the modern `items` array,
+                # which is more reliable than using the legacy `plan` attribute.
+                stripe_sub = ::Stripe::Subscription.retrieve({ id: sub.external_id, expand: ['items.data.price.product'] })
+                plan = stripe_sub&.items&.data&.first&.price
+                # --- END OF FIX ---
               rescue ::Stripe::InvalidRequestError
                 next
               end
@@ -40,11 +40,7 @@ module DiscourseSubscriptions
 
             next unless plan
 
-            # --- START OF FIX ---
-            # Changed `plan.type == 'recurring'` to the more robust `plan.recurring`
-            # to support older Stripe plan objects that don't have a `.type` attribute.
             renews_at_timestamp = (sub.provider == 'Stripe' && sub.status == 'active' && plan.recurring) ? ::Stripe::Subscription.retrieve(sub.external_id)&.current_period_end : nil
-            # --- END OF FIX ---
 
             {
               id: sub.external_id,
@@ -52,7 +48,7 @@ module DiscourseSubscriptions
               status: sub.status,
               plan_nickname: plan.nickname,
               product_name: plan.product&.name,
-              renews_at: renews_at_timestamp, # Use the variable here
+              renews_at: renews_at_timestamp,
               expires_at: sub.expires_at&.to_i,
               unit_amount: plan.unit_amount,
               currency: plan.currency
