@@ -36,7 +36,7 @@ module DiscourseSubscriptions
             next unless user_obj
 
             serialized_sub = {
-              id: sub.external_id, provider: sub.provider.capitalize, status: sub.status,
+              id: sub.external_id, provider: (sub.provider || 'Stripe').capitalize, status: sub.status,
               user: { id: user_obj.id, username: user_obj.username, avatar_template: user_obj.avatar_template_url },
               created_at: sub.created_at.to_i, expires_at: sub.expires_at&.to_i,
               unit_amount: nil, currency: nil
