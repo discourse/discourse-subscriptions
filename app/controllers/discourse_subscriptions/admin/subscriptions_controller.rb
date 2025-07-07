@@ -11,22 +11,32 @@ module DiscourseSubscriptions
 
       PAGE_SIZE = 50
 
+      # In app/controllers/discourse_subscriptions/admin/subscriptions_controller.rb
+
       def index
         begin
-          # ... (The entire 'begin' block from the previous step remains exactly the same) ...
           offset = params[:offset].to_i
-          local_subscriptions = ::DiscourseSubscriptions::Subscription.joins(customer: :user).order(created_at: :desc)
+
+          local_subscriptions = ::DiscourseSubscriptions::Subscription
+                                  .joins(customer: :user)
+                                  .order(created_at: :desc)
+
           if params[:username].present?
             local_subscriptions = local_subscriptions.where("users.username_lower = ?", params[:username].downcase)
           end
+
           total_subscriptions = local_subscriptions.count
           more_records = total_subscriptions > (offset + PAGE_SIZE)
+
           local_subscriptions = local_subscriptions.limit(PAGE_SIZE).offset(offset)
+
           all_subscriptions = []
           all_plans = is_stripe_configured? ? ::Stripe::Price.list(limit: 100, active: true, expand: ['data.product']) : []
+
           local_subscriptions.each do |sub|
             user_obj = sub.customer&.user
             next unless user_obj
+
             serialized_sub = {
               id: sub.external_id, provider: sub.provider.capitalize, status: sub.status,
               user: { id: user_obj.id, username: user_obj.username, avatar_template: user_obj.avatar_template_url },
@@ -34,6 +44,7 @@ module DiscourseSubscriptions
               unit_amount: nil, currency: nil
             }
             plan = all_plans.find { |p| p.id == sub.plan_id }
+
             if sub.provider == 'Stripe' && is_stripe_configured?
               begin
                 api_sub = ::Stripe::Subscription.retrieve({ id: sub.external_id, expand: ['plan.product'] })
@@ -44,11 +55,13 @@ module DiscourseSubscriptions
                 serialized_sub[:status] = 'not_in_stripe'
               end
             end
+
             if plan
               serialized_sub.merge!(plan_name: plan.product&.name, plan_nickname: plan.nickname, unit_amount: plan.unit_amount, currency: plan.currency)
             end
             all_subscriptions << serialized_sub
           end
+
           render json: {
             subscriptions: all_subscriptions,
             meta: {
@@ -57,14 +70,16 @@ module DiscourseSubscriptions
               username: params[:username].presence
             }
           }
-          # --- NEW, MORE DETAILED ERROR HANDLING ---
-        rescue ::Stripe::AuthenticationError => e
-          render_json_error("Stripe Authentication Error: Please check your API keys in the plugin settings. Details: #{e.message}")
-        rescue ::Stripe::InvalidRequestError => e
-          render_json_error("Stripe Invalid Request: #{e.message}")
+
         rescue => e
-          Rails.logger.error("Discourse Subscriptions Error: #{e.class} - #{e.message}\n#{e.backtrace.join("\n")}")
-          render_json_error("An unknown error occurred. Please check the server logs for more details.")
+          # --- THIS IS THE NEW, DETAILED LOGGING CODE ---
+          Rails.logger.error("Discourse Subscriptions Error in Admin::SubscriptionsController#index")
+          Rails.logger.error("Error Class: #{e.class.name}")
+          Rails.logger.error("Error Message: #{e.message}")
+          Rails.logger.error("Backtrace:\n#{e.backtrace.join("\n")}")
+
+          # Render a user-friendly error to the frontend
+          render_json_error("An unexpected server error occurred. Please check the server logs for detailed information.")
         end
       end
 
