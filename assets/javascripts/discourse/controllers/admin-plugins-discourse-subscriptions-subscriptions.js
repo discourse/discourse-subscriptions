@@ -13,36 +13,46 @@ export default class AdminPluginsDiscourseSubscriptionsSubscriptionsController e
   @service dialog;
   @service router;
 
+  queryParams = ['username'];
+  username = null;
+
   @tracked subscriptions = [];
   @tracked meta = null;
   @tracked isLoadingMore = false;
 
+  // FIX: This action is now triggered by the UserChooser component
+  @action
+  filterByUser(selectedUser) {
+    // The component provides the username directly as a string.
+    // Setting this property will automatically trigger the route to refresh
+    // because of the `refreshModel: true` setting in the route file.
+    this.set('username', selectedUser);
+  }
+
+  // FIX: New action to clear the filter
+  @action
+  clearFilter() {
+    this.router.transitionTo({ queryParams: { username: null } });
+  }
+
   @action
   loadMore() {
-    if (this.isLoadingMore || !this.meta?.more) {
-      return;
-    }
-
+    if (this.isLoadingMore || !this.meta?.more) { return; }
     this.isLoadingMore = true;
 
     ajax("/s/admin/subscriptions.json", {
       method: "GET",
-      data: { offset: this.meta.offset },
+      data: { offset: this.meta.offset, username: this.username },
     })
       .then((result) => {
         const newSubscriptions = result.subscriptions.map((s) => {
-          if (s.user) {
-            s.user = User.create(s.user);
-          }
+          if (s.user) { s.user = User.create(s.user); }
           return AdminSubscription.create(s);
         });
-
         this.subscriptions.pushObjects(newSubscriptions);
         this.set("meta", result.meta);
       })
-      .finally(() => {
-        this.isLoadingMore = false;
-      });
+      .finally(() => { this.isLoadingMore = false; });
   }
   @action
   showCancelModal(subscription) {

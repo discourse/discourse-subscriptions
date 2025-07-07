@@ -3,13 +3,20 @@ import AdminSubscription from "discourse/plugins/discourse-subscriptions/discour
 import User from "discourse/models/user";
 
 export default class AdminPluginsDiscourseSubscriptionsSubscriptionsRoute extends Route {
-  model() {
-    // Fetch the initial page of data
-    return AdminSubscription.find({ offset: 0 });
+  // FIX: This tells Ember that the 'username' URL parameter is tied to this route
+  queryParams = {
+    username: {
+      refreshModel: true // This re-runs the model() hook whenever the username changes
+    }
+  };
+
+  model(params) {
+    // FIX: Pass the search parameters to our find method
+    return AdminSubscription.find({ offset: 0, username: params.username });
   }
 
   setupController(controller, model) {
-    super.setupController(...arguments);
+    super.setupController(controller, model);
 
     if (model.unconfigured) {
       controller.set("subscriptions", []);
@@ -26,5 +33,6 @@ export default class AdminPluginsDiscourseSubscriptionsSubscriptionsRoute extend
 
     controller.set("subscriptions", subscriptions);
     controller.set("meta", model.meta);
+    controller.set("username", model.meta.username);
   }
 }

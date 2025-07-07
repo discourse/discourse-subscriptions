@@ -95,3 +95,16 @@ tr.revoked-subscription {
     text-decoration: line-through;
   }
 }
+
+// Styles for the new admin filter controls
+.subscription-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 1em;
+
+  .user-chooser {
+    flex-grow: 1;
+    max-width: 300px;
+  }
+}

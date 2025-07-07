@@ -2,13 +2,14 @@ import EmberObject from "@ember/object";
 import { ajax } from "discourse/lib/ajax";
 import discourseComputed from "discourse/lib/decorators";
 import getURL from "discourse/lib/get-url";
-import formatCurrency from "../helpers/format-currency"; // Import the helper
+import formatCurrency from "../helpers/format-currency";
 
 export default class AdminSubscription extends EmberObject {
+  // FIX: The find method now accepts parameters to pass to the API
   static find(params) {
     return ajax("/s/admin/subscriptions.json", {
       method: "get",
-      data: params
+      data: params,
     });
   }
 
@@ -28,7 +29,6 @@ export default class AdminSubscription extends EmberObject {
     return getURL(`/admin/users/${metadata.user_id}/${metadata.username}`);
   }
 
-  // FIX: This new property formats the amount and currency for display
   @discourseComputed("unit_amount", "currency")
   amountDollars(unit_amount, currency) {
     if (unit_amount !== undefined && currency) {
@@ -39,9 +39,7 @@ export default class AdminSubscription extends EmberObject {
   }
 
   destroy(refund) {
-    const data = {
-      refund,
-    };
+    const data = { refund };
     return ajax(`/s/admin/subscriptions/${this.id}`, {
       method: "delete",
       data,

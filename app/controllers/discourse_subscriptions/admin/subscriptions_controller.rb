@@ -15,15 +15,20 @@ module DiscourseSubscriptions
         begin
           offset = params[:offset].to_i
 
-          # This is the simplified, correct query without the search logic
+          # Start with the base query, joining with users to allow searching
           local_subscriptions = ::DiscourseSubscriptions::Subscription
-                                  .includes(customer: :user)
+                                  .joins(customer: :user)
                                   .order(created_at: :desc)
-                                  .limit(PAGE_SIZE)
-                                  .offset(offset)
 
-          total_subscriptions = ::DiscourseSubscriptions::Subscription.count
+          # FIX: If a username parameter is provided, filter the results
+          if params[:username].present?
+            local_subscriptions = local_subscriptions.where("users.username_lower = ?", params[:username].downcase)
+          end
+
+          total_subscriptions = local_subscriptions.count
           more_records = total_subscriptions > (offset + PAGE_SIZE)
+
+          local_subscriptions = local_subscriptions.limit(PAGE_SIZE).offset(offset)
 
           all_subscriptions = []
           all_plans = is_stripe_configured? ? ::Stripe::Price.list(limit: 100, active: true, expand: ['data.product']) : []
@@ -33,18 +38,12 @@ module DiscourseSubscriptions
             next unless user_obj
 
             serialized_sub = {
-              id: sub.external_id,
-              provider: sub.provider.capitalize,
-              status: sub.status,
+              id: sub.external_id, provider: sub.provider.capitalize, status: sub.status,
               user: { id: user_obj.id, username: user_obj.username, avatar_template: user_obj.avatar_template_url },
-              created_at: sub.created_at.to_i,
-              expires_at: sub.expires_at&.to_i,
-              unit_amount: nil,
-              currency: nil
+              created_at: sub.created_at.to_i, expires_at: sub.expires_at&.to_i,
+              unit_amount: nil, currency: nil
             }
-
             plan = all_plans.find { |p| p.id == sub.plan_id }
-
             if sub.provider == 'Stripe' && is_stripe_configured?
               begin
                 api_sub = ::Stripe::Subscription.retrieve(sub.external_id)
@@ -55,21 +54,24 @@ module DiscourseSubscriptions
                 serialized_sub[:status] = 'not_in_stripe'
               end
             end
-
             if plan
-              serialized_sub[:plan_name] = plan.product&.name
-              serialized_sub[:plan_nickname] = plan.nickname
-              # FIX: We add the amount and currency here
-              serialized_sub[:unit_amount] = plan.unit_amount
-              serialized_sub[:currency] = plan.currency
+              serialized_sub.merge!(
+                plan_name: plan.product&.name,
+                plan_nickname: plan.nickname,
+                unit_amount: plan.unit_amount,
+                currency: plan.currency
+              )
             end
-
             all_subscriptions << serialized_sub
           end
 
           render json: {
             subscriptions: all_subscriptions,
-            meta: { more: more_records, offset: offset + PAGE_SIZE }
+            meta: {
+              more: more_records,
+              offset: offset + PAGE_SIZE,
+              username: params[:username].presence
+            }
           }
 
         rescue => e
