@@ -269,6 +269,9 @@ module DiscourseSubscriptions
     def serialize_plans(plans)
       plans[:data]
         .map do |plan|
+        # Only include plans that have a price greater than 0
+        next if plan.unit_amount.to_i == 0
+
         {
           id: plan.id,
           unit_amount: plan.unit_amount,
@@ -276,10 +279,10 @@ module DiscourseSubscriptions
           type: plan.type,
           recurring: plan.recurring,
           nickname: plan.nickname,
-          # FIX: This was the missing piece. We must include the plan's metadata.
           metadata: plan.metadata.to_h
         }
       end
+        .compact # Remove any nil values created by the 'next' keyword
         .sort_by { |plan| plan[:unit_amount] }
     end
 
