@@ -8,6 +8,7 @@ module DiscourseSubscriptions
       include DiscourseSubscriptions::Stripe
       include DiscourseSubscriptions::Group
       before_action :set_api_key
+      skip_before_action :verify_authenticity_token, only: [:grant]
 
       PAGE_SIZE = 50
 
