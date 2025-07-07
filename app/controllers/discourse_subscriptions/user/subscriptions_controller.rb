@@ -11,12 +11,10 @@ module DiscourseSubscriptions
       before_action :set_api_key
       requires_login
 
+      # app/controllers/discourse_subscriptions/user/subscriptions_controller.rb
+
       def index
         begin
-          # --- START OF FIX ---
-          # This now correctly fetches ALL subscriptions for the current user
-          # by joining through the customer table, rather than relying on a single
-          # customer record.
           local_subscriptions = ::DiscourseSubscriptions::Subscription
                                   .joins(:customer)
                                   .where(discourse_subscriptions_customers: { user_id: current_user.id })
@@ -29,9 +27,10 @@ module DiscourseSubscriptions
           processed_subscriptions = local_subscriptions.map do |sub|
             plan = all_plans.find { |p| p.id == sub.plan_id } if sub.plan_id
 
-            # This is the crucial fallback for older Stripe subscriptions that
-            # do not have a `plan_id` in the database.
-            if plan.nil? && sub.provider == 'Stripe' && is_stripe_configured?
+            # --- START OF FIX ---
+            # This condition now correctly checks for subscriptions where the provider
+            # is either explicitly 'Stripe' or is 'nil' (for legacy data).
+            if plan.nil? && (sub.provider == 'Stripe' || sub.provider.nil?) && is_stripe_configured?
               begin
                 stripe_sub = ::Stripe::Subscription.retrieve({ id: sub.external_id, expand: ['plan.product'] })
                 plan = stripe_sub&.plan
@@ -40,13 +39,13 @@ module DiscourseSubscriptions
                 next
               end
             end
+            # --- END OF FIX ---
 
-            # If we still can't find a plan, we can't display the subscription.
             next unless plan
 
             {
               id: sub.external_id,
-              provider: (sub.provider || 'Stripe').capitalize, # Safely default provider
+              provider: (sub.provider || 'Stripe').capitalize,
               status: sub.status,
               plan_nickname: plan.nickname,
               product_name: plan.product&.name,
@@ -55,10 +54,9 @@ module DiscourseSubscriptions
               unit_amount: plan.unit_amount,
               currency: plan.currency
             }
-          end.compact # Removes any subscriptions we had to `next` on.
+          end.compact
 
           render_json_dump processed_subscriptions
-          # --- END OF FIX ---
 
         rescue ::Stripe::InvalidRequestError => e
           render_json_error e.message
