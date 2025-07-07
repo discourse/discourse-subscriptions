@@ -14,7 +14,14 @@ module DiscourseSubscriptions
       def index
         begin
           offset = params[:offset].to_i
-          local_subscriptions = ::DiscourseSubscriptions::Subscription.order(created_at: :desc).limit(PAGE_SIZE).offset(offset)
+
+          # This is the simplified, correct query without the search logic
+          local_subscriptions = ::DiscourseSubscriptions::Subscription
+                                  .includes(customer: :user)
+                                  .order(created_at: :desc)
+                                  .limit(PAGE_SIZE)
+                                  .offset(offset)
+
           total_subscriptions = ::DiscourseSubscriptions::Subscription.count
           more_records = total_subscriptions > (offset + PAGE_SIZE)
 
@@ -31,7 +38,9 @@ module DiscourseSubscriptions
               status: sub.status,
               user: { id: user_obj.id, username: user_obj.username, avatar_template: user_obj.avatar_template_url },
               created_at: sub.created_at.to_i,
-              expires_at: sub.expires_at&.to_i
+              expires_at: sub.expires_at&.to_i,
+              unit_amount: nil,
+              currency: nil
             }
 
             plan = all_plans.find { |p| p.id == sub.plan_id }
@@ -43,14 +52,18 @@ module DiscourseSubscriptions
                 serialized_sub[:status] = api_sub.status if api_sub
                 serialized_sub[:expires_at] = api_sub.cancel_at_period_end ? api_sub.current_period_end : nil if api_sub
               rescue ::Stripe::InvalidRequestError
-                # If stripe sub is not found, we still want to show the local record
                 serialized_sub[:status] = 'not_in_stripe'
               end
             end
 
-            next unless plan
-            serialized_sub[:plan_name] = plan.product&.name
-            serialized_sub[:plan_nickname] = plan.nickname
+            if plan
+              serialized_sub[:plan_name] = plan.product&.name
+              serialized_sub[:plan_nickname] = plan.nickname
+              # FIX: We add the amount and currency here
+              serialized_sub[:unit_amount] = plan.unit_amount
+              serialized_sub[:currency] = plan.currency
+            end
+
             all_subscriptions << serialized_sub
           end
 
@@ -58,6 +71,7 @@ module DiscourseSubscriptions
             subscriptions: all_subscriptions,
             meta: { more: more_records, offset: offset + PAGE_SIZE }
           }
+
         rescue => e
           render_json_error(e.message)
         end

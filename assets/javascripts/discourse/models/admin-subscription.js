@@ -2,18 +2,15 @@ import EmberObject from "@ember/object";
 import { ajax } from "discourse/lib/ajax";
 import discourseComputed from "discourse/lib/decorators";
 import getURL from "discourse/lib/get-url";
+import formatCurrency from "../helpers/format-currency"; // Import the helper
 
 export default class AdminSubscription extends EmberObject {
-  static find() {
-    // This now just fetches the data and lets the route handle the new structure.
-    return ajax("/s/admin/subscriptions", {
+  static find(params) {
+    return ajax("/s/admin/subscriptions.json", {
       method: "get",
+      data: params
     });
   }
-
-  //TODO build load more for both lists
-  // This function is no longer used by our new template.
-  // static loadMore(lastRecord) { ... }
 
   @discourseComputed("status")
   canceled(status) {
@@ -29,6 +26,16 @@ export default class AdminSubscription extends EmberObject {
   subscriptionUserPath(metadata) {
     if (!this.metadataUserExists) { return; }
     return getURL(`/admin/users/${metadata.user_id}/${metadata.username}`);
+  }
+
+  // FIX: This new property formats the amount and currency for display
+  @discourseComputed("unit_amount", "currency")
+  amountDollars(unit_amount, currency) {
+    if (unit_amount !== undefined && currency) {
+      const amount = parseFloat(unit_amount / 100).toFixed(2);
+      return formatCurrency(currency, amount);
+    }
+    return "";
   }
 
   destroy(refund) {
